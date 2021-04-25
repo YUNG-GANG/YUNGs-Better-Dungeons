@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "com.yungnickyoung.minecraft.betterdungeons.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "betterdungeons.refmap.json",
+  "mixins": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}
