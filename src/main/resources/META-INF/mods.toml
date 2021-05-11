@@ -2,8 +2,6 @@ modLoader="javafml"
 loaderVersion="[35,)"
 license="GPLv3"
 issueTrackerURL="https://github.com/yungnickyoung/YUNGs-Better-Dungeons/issues"
-displayURL="https://www.curseforge.com/minecraft/mc-mods/yungs-better-dungeons"
-logoFile="logo.png"
 
 [[mods]]
 modId="${modId}"
@@ -12,6 +10,8 @@ displayName="${modName}"
 credits="${modCredits}"
 authors="${modAuthor}"
 description="${modDescription}"
+logoFile="logo.png"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/yungs-better-dungeons"
 
 [[dependencies.betterdungeons]]
 modId="forge"

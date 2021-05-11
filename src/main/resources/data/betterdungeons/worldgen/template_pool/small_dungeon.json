@@ -1,0 +1,60 @@
+{
+  "name": "betterdungeons:small_dungeon",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_dungeon/shells/small_shell_5x5",
+        "processors": "betterdungeons:small_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_dungeon/shells/small_shell_7x5",
+        "processors": "betterdungeons:small_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_dungeon/shells/small_shell_7x7",
+        "processors": "betterdungeons:small_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_dungeon/shells/small_shell_9x5",
+        "processors": "betterdungeons:small_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_dungeon/shells/small_shell_9x7",
+        "processors": "betterdungeons:small_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_dungeon/shells/small_shell_9x9",
+        "processors": "betterdungeons:small_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

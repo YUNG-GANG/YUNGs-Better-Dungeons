@@ -3,7 +3,6 @@ package com.yungnickyoung.minecraft.betterdungeons.world.jigsaw;
 import com.google.common.collect.Queues;
 import com.mojang.datafixers.util.Pair;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
-import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
 import net.minecraft.block.JigsawBlock;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -123,7 +122,7 @@ public class JigsawManager {
             this.pieceCounts = new HashMap<>();
             // TODO - add piece count constraints
 //            this.pieceCounts.put(new ResourceLocation(BetterStrongholds.MOD_ID, "rooms/grand_library"), BSConfig.pieceSettings.grandLibraryMaxCount.get());
-            this.maxY = BDConfig.spiderDungeons.spiderDungeonMaxY.get();
+            this.maxY = 255;
         }
 
         public void processPiece(AbstractVillagePiece piece, MutableObject<VoxelShape> voxelShape, int boundsTop, int depth, boolean doBoundaryAdjustments) {
