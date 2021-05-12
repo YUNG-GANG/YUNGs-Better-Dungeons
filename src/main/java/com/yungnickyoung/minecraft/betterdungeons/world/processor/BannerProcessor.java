@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
 import com.yungnickyoung.minecraft.betterdungeons.init.ModProcessors;
 import com.yungnickyoung.minecraft.betterdungeons.util.Banner;
+import com.yungnickyoung.minecraft.betterdungeons.world.DungeonContext;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonType;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.AbstractBannerBlock;
@@ -22,15 +23,15 @@ import net.minecraft.world.gen.feature.template.Template;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Random;
 
 /**
  * Replaces wall banners with a banner corresponding to the dungeon type.
+ * Also removes existing banners to ensure the number of banners per structure
+ * falls within the desired range.
  */
 @MethodsReturnNonnullByDefault
 public class BannerProcessor extends StructureProcessor {
-//    public static final BannerProcessor INSTANCE = new BannerProcessor();
-//    public static final Codec<BannerProcessor> CODEC = Codec.unit(() -> INSTANCE);
-
     public static final Codec<BannerProcessor> CODEC = RecordCodecBuilder.create(codecBuilder -> codecBuilder
         .group(
             Codec.STRING
@@ -41,18 +42,6 @@ public class BannerProcessor extends StructureProcessor {
     private BannerProcessor(String dungeonType) {
         this.dungeonType = DungeonType.fromString(dungeonType);
     }
-
-//    public static final Codec<BannerProcessor> CODEC = RecordCodecBuilder.create(codecBuilder -> codecBuilder
-//    .group(
-//        Codec
-//            .mapPair(
-//                Registry.ENTITY_TYPE.fieldOf("resourcelocation"),
-//                Codec.intRange(1, Integer.MAX_VALUE).fieldOf("weight"))
-//            .codec()
-//            .listOf()
-//            .fieldOf("spawner_mob_entries")
-//            .forGetter(spawnerRandomizingProcessor -> spawnerRandomizingProcessor.spawnerRandomizingProcessor))
-//    .apply(codecBuilder, codecBuilder.stable(SpawnerRandomizingProcessor::new)));
 
     private final DungeonType dungeonType;
     public DungeonType getDungeonType() {
@@ -96,12 +85,26 @@ public class BannerProcessor extends StructureProcessor {
         if (blockInfoGlobal.state.getBlock() instanceof AbstractBannerBlock) {
             // Make sure we only operate on the placeholder banners
             if (blockInfoGlobal.state.getBlock() == Blocks.RED_WALL_BANNER && (blockInfoGlobal.nbt.get("Patterns") == null || blockInfoGlobal.nbt.getList("Patterns", 10).size() == 0)) {
+                // Fetch thread-local dungeon context
+                DungeonContext context = DungeonContext.peek();
+
+                // Check dungeon context to see if we have reached the max banner count for this structure piece
+                if (context.getBannerCount() >= 2)
+                    return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.AIR.getDefaultState(), blockInfoGlobal.nbt);
+
+                // Chance of a banner spawning
+                Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
+                if (random.nextFloat() > .1f) {
+                    return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.AIR.getDefaultState(), blockInfoGlobal.nbt);
+                }
+
                 Banner banner = getBannerForType();
                 Direction facing = blockInfoGlobal.state.get(BlockStateProperties.HORIZONTAL_FACING);
                 BlockState newState = banner.getState().with(BlockStateProperties.HORIZONTAL_FACING, facing);
                 CompoundNBT newNBT = copyNBT(banner.getNbt());
 
                 blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, newState, newNBT);
+                context.incrementBannerCount();
             }
         }
         return blockInfoGlobal;

@@ -6,18 +6,40 @@ import java.lang.ref.WeakReference;
 public class DungeonContext {
     private static final ThreadLocal<DungeonContext> CONTEXT = new ThreadLocal<>();
 
-    private final WeakReference<DungeonType> type;
+    private WeakReference<Integer> bannerCount;
+    private WeakReference<Integer> chestCount;
 
-    public DungeonContext(DungeonType type) {
-        this.type = new WeakReference<>(type);
+    public DungeonContext(int bannerCount, int chestCount) {
+        this.bannerCount = new WeakReference<>(bannerCount);
+        this.chestCount = new WeakReference<>(chestCount);
     }
 
-    public DungeonType getType() {
-        return type.get();
+    public int getBannerCount() {
+        Integer value = bannerCount.get();
+        return value == null ? 0 : value;
+    }
+
+    public int getChestCount() {
+        Integer value = chestCount.get();
+        return value == null ? 0 : value;
+    }
+
+    public void incrementBannerCount() {
+        Integer boxedVal = bannerCount.get();
+        int val = boxedVal == null ? 0 : boxedVal;
+        bannerCount.clear();
+        bannerCount = new WeakReference<>(val + 1);
+    }
+
+    public void incrementChestCount() {
+        Integer boxedVal = chestCount.get();
+        int val = boxedVal == null ? 0 : boxedVal;
+        chestCount.clear();
+        chestCount = new WeakReference<>(val + 1);
     }
 
     /**
-     * Consume the currently held StructureGenContext.
+     * Consume the currently held DungeonContext.
      * A null value means the context has already been consumed.
      */
     @Nullable
@@ -28,7 +50,7 @@ public class DungeonContext {
     }
 
     /**
-     * Peek the currently held StructureGenContext without consuming it.
+     * Peek the currently held DungeonContext without consuming it.
      * A null value means the context has already been consumed.
      */
     @Nullable
@@ -37,10 +59,10 @@ public class DungeonContext {
     }
 
     /**
-     * Should only be called right before structure generation,
+     * Should only be called right before structure processing,
      * so that processors can be guaranteed to retrieve the proper context.
      */
-    public static void push(DungeonType type) {
-        CONTEXT.set(new DungeonContext(type));
+    public static void initialize() {
+        CONTEXT.set(new DungeonContext(0, 0));
     }
 }
