@@ -29,7 +29,7 @@ public class CeilingLampPropProcessor extends StructureProcessor {
 
             // Choose lamp prop
             float f = random.nextFloat();
-            if (f < 0.25f) // Soul lantern
+            if (f < 0.1f) // Soul lantern
                 blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, Blocks.SOUL_LANTERN.getDefaultState().with(BlockStateProperties.HANGING, true), blockInfoGlobal.nbt);
             else if (f < 0.625f) // Chain
                 blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CHAIN.getDefaultState(), blockInfoGlobal.nbt);
