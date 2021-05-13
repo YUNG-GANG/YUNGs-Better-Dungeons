@@ -1,20 +1,11 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
 import com.yungnickyoung.minecraft.betterdungeons.init.ModProcessors;
-import com.yungnickyoung.minecraft.betterdungeons.util.Banner;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonContext;
-import com.yungnickyoung.minecraft.betterdungeons.world.DungeonType;
 import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.block.AbstractBannerBlock;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ChestBlock;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.gen.feature.template.IStructureProcessorType;
@@ -47,11 +38,11 @@ public class ChestProcessor extends StructureProcessor {
             } else if (chestCount == 1) { // 20% chance of second chest, per chest prop
                 Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
                 if (random.nextFloat() > .2f) {
-                    return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.AIR.getDefaultState(), blockInfoGlobal.nbt);
+                    return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
                 }
                 context.incrementChestCount();
             } else { // Can't spawn more than 2 chests
-                return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.AIR.getDefaultState(), blockInfoGlobal.nbt);
+                return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
             }
         }
         return blockInfoGlobal;

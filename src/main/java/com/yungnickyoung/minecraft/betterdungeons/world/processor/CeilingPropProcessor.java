@@ -26,7 +26,7 @@ public class CeilingPropProcessor extends StructureProcessor {
         if (blockInfoGlobal.state.isIn(Blocks.MAGENTA_STAINED_GLASS)) {
             // If ceiling isn't solid, place air since we don't want floating props
             if (!world.getBlockState(blockInfoGlobal.pos.up()).isSolid()) {
-                return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.AIR.getDefaultState(), blockInfoGlobal.nbt);
+                return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
             }
 
             Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
@@ -34,11 +34,11 @@ public class CeilingPropProcessor extends StructureProcessor {
 
             // Choose ceiling prop
             if (f < .2f) blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CHAIN.getDefaultState(), blockInfoGlobal.nbt);
-            else blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, Blocks.AIR.getDefaultState(), blockInfoGlobal.nbt);
+            else blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
         } else if (blockInfoGlobal.state.isIn(Blocks.BROWN_STAINED_GLASS)) {
             // If ceiling isn't solid, simply ignore processing since we don't want floating props
             if (!world.getBlockState(blockInfoGlobal.pos.up(2)).isSolid()) {
-                return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.AIR.getDefaultState(), blockInfoGlobal.nbt);
+                return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
             }
 
             Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
@@ -46,11 +46,11 @@ public class CeilingPropProcessor extends StructureProcessor {
 
             // Choose ceiling prop
             if (f < .5f) blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CHAIN.getDefaultState(), blockInfoGlobal.nbt);
-            else blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, Blocks.AIR.getDefaultState(), blockInfoGlobal.nbt);
+            else blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
         } else if (blockInfoGlobal.state.isIn(Blocks.CHAIN)) {
             // If ceiling isn't solid, don't place top chains for potential double chains if they would be floating
             if (!world.getBlockState(blockInfoGlobal.pos.up()).isSolid()) {
-                return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.AIR.getDefaultState(), blockInfoGlobal.nbt);
+                return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
             }
         }
 

@@ -11,6 +11,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.FlatChunkGenerator;
 import net.minecraft.world.gen.FlatGenerationSettings;
+import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.feature.Features;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.settings.DimensionStructuresSettings;
@@ -46,7 +48,7 @@ public class ModStructures {
         // Register event listeners
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ModStructures::commonSetup);
         MinecraftForge.EVENT_BUS.addListener(ModStructures::addDimensionalSpacing);
-        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, ModStructures::onBiomeLoad);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, ModStructures::onBiomeLoad);
     }
 
 
@@ -112,6 +114,9 @@ public class ModStructures {
      * Adds the appropriate structure feature to each biome as it loads in.
      */
     private static void onBiomeLoad(BiomeLoadingEvent event) {
+        // Remove vanilla dungeons
+        event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_STRUCTURES).removeIf(supplier -> supplier.get().feature.equals(Features.MONSTER_ROOM.feature));
+
         // Add dungeons to biome generation settings
         event.getGeneration().getStructures().add(() -> ModConfiguredStructures.CONFIGURED_SMALL_DUNGEON);
 //        event.getGeneration().getStructures().add(() -> ModConfiguredStructures.CONFIGURED_SPIDER_DUNGEON);

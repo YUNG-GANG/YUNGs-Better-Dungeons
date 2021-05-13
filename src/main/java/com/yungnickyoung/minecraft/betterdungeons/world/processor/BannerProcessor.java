@@ -57,6 +57,8 @@ public class BannerProcessor extends StructureProcessor {
         .pattern("ts", 0)
         .pattern("cre", 0)
         .pattern("gra", 15)
+        .customName("betterdungeons.small_dungeon.banner.skeleton")
+        .customColor("dark_gray")
         .build();
 
     public static final Banner SMALL_DUNGEON_ZOMBIE_BANNER = new Banner.Builder()
@@ -67,6 +69,8 @@ public class BannerProcessor extends StructureProcessor {
         .pattern("tts", 0)
         .pattern("bts", 0)
         .pattern("bo", 13)
+        .customName("betterdungeons.small_dungeon.banner.zombie")
+        .customColor("dark_green")
         .build();
 
     public static final Banner SMALL_DUNGEON_SPIDER_BANNER = new Banner.Builder()
@@ -77,6 +81,8 @@ public class BannerProcessor extends StructureProcessor {
         .pattern("hh", 7)
         .pattern("bs", 7)
         .pattern("gra", 15)
+        .customName("betterdungeons.small_dungeon.banner.spider")
+        .customColor("dark_red")
         .build();
 
     @ParametersAreNonnullByDefault
@@ -90,12 +96,12 @@ public class BannerProcessor extends StructureProcessor {
 
                 // Check dungeon context to see if we have reached the max banner count for this structure piece
                 if (context.getBannerCount() >= 2)
-                    return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.AIR.getDefaultState(), blockInfoGlobal.nbt);
+                    return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
 
                 // Chance of a banner spawning
                 Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
                 if (random.nextFloat() > .1f) {
-                    return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.AIR.getDefaultState(), blockInfoGlobal.nbt);
+                    return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
                 }
 
                 Banner banner = getBannerForType();

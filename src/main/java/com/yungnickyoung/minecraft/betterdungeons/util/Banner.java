@@ -5,6 +5,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.WallBannerBlock;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,8 @@ public class Banner {
 
     public static class Builder {
         private final List<BannerPattern> patterns = new ArrayList<>();
+        private TranslationTextComponent customNameTranslate;
+        private String customColor;
         private BlockState state = Blocks.BLACK_WALL_BANNER.getDefaultState();
 
         public Builder() {
@@ -88,8 +91,18 @@ public class Banner {
             return this;
         }
 
+        public Builder customName(String translatableNamePath) {
+            this.customNameTranslate = new TranslationTextComponent(translatableNamePath);
+            return this;
+        }
+
+        public Builder customColor(String colorString) {
+            this.customColor = colorString;
+            return this;
+        }
+
         public Banner build() {
-            CompoundNBT nbt = createBannerNBT(patterns);
+            CompoundNBT nbt = createBannerNBT();
             return new Banner(patterns, state, nbt);
         }
 
@@ -97,16 +110,26 @@ public class Banner {
          * Helper function that creates a complete CompoundNBT for a banner BlockState
          * with the provided patterns.
          */
-        private static CompoundNBT createBannerNBT(List<BannerPattern> patterns) {
+        private CompoundNBT createBannerNBT() {
             CompoundNBT nbt = new CompoundNBT();
             ListNBT patternList = new ListNBT();
 
             // Construct list of patterns from args
-            for (BannerPattern pattern : patterns) {
+            for (BannerPattern pattern : this.patterns) {
                 CompoundNBT patternNBT = new CompoundNBT();
                 patternNBT.putString("Pattern", pattern.getPattern());
                 patternNBT.putInt("Color", pattern.getColor());
                 patternList.add(patternNBT);
+            }
+
+            // Custom name and color
+            if (this.customColor != null || this.customNameTranslate != null) {
+                String color = this.customColor == null ? "" : String.format("\"color\":\"%s\"", this.customColor);
+                String name = this.customNameTranslate == null ? "" : String.format("\"translate\":\"%s\"", this.customNameTranslate.getKey());
+                if (this.customColor != null && this.customNameTranslate != null) name = "," + name;
+                String customNameString = "{" + color + name + "}";
+
+                nbt.putString("CustomName", customNameString);
             }
 
             // Add tags to NBT
