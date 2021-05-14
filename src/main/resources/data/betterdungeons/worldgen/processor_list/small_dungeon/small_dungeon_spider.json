@@ -2,7 +2,14 @@
   "processors": [
     {
       "processor_type": "betterdungeons:small_dungeon_banner_processor",
-      "dungeon_type": "zombie"
+      "dungeon_type": "spider"
+    },
+    {
+      "processor_type": "betterdungeons:mob_spawner_processor",
+      "spawner_mob": "minecraft:spider"
+    },
+    {
+      "processor_type": "betterdungeons:head_processor"
     },
     {
       "processor_type": "betterdungeons:small_dungeon_chest_processor"
@@ -15,10 +22,6 @@
     },
     {
       "processor_type": "betterdungeons:waterlogged_processor"
-    },
-    {
-      "processor_type": "betterdungeons:mob_spawner_processor",
-      "spawner_mob": "minecraft:zombie"
     },
     {
       "rules": [

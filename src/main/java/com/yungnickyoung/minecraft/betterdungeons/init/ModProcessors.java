@@ -15,6 +15,7 @@ public class ModProcessors {
     public static IStructureProcessorType<BannerProcessor> SMALL_DUNGEON_BANNER_PROCESSOR = () -> BannerProcessor.CODEC;
     public static IStructureProcessorType<ChestProcessor> SMALL_DUNGEON_CHEST_PROCESSOR = () -> ChestProcessor.CODEC;
     public static IStructureProcessorType<MobSpawnerProcessor> MOB_SPAWNER_PROCESSOR = () -> MobSpawnerProcessor.CODEC;
+    public static IStructureProcessorType<HeadProcessor> HEAD_PROCESSOR = () -> HeadProcessor.CODEC;
 
     public static void init() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ModProcessors::commonSetup);
@@ -28,6 +29,7 @@ public class ModProcessors {
             Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "small_dungeon_banner_processor"), SMALL_DUNGEON_BANNER_PROCESSOR);
             Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "small_dungeon_chest_processor"), SMALL_DUNGEON_CHEST_PROCESSOR);
             Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "mob_spawner_processor"), MOB_SPAWNER_PROCESSOR);
+            Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "head_processor"), HEAD_PROCESSOR);
         });
     }
 }

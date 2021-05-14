@@ -9,9 +9,9 @@ public class DungeonContext {
     private WeakReference<Integer> bannerCount;
     private WeakReference<Integer> chestCount;
 
-    public DungeonContext(int bannerCount, int chestCount) {
-        this.bannerCount = new WeakReference<>(bannerCount);
-        this.chestCount = new WeakReference<>(chestCount);
+    public DungeonContext() {
+        this.bannerCount = new WeakReference<>(0);
+        this.chestCount = new WeakReference<>(0);
     }
 
     public int getBannerCount() {
@@ -63,6 +63,6 @@ public class DungeonContext {
      * so that processors can be guaranteed to retrieve the proper context.
      */
     public static void initialize() {
-        CONTEXT.set(new DungeonContext(0, 0));
+        CONTEXT.set(new DungeonContext());
     }
 }

@@ -1,24 +1,10 @@
 {
   "processors": [
     {
-      "processor_type": "betterdungeons:small_dungeon_banner_processor",
-      "dungeon_type": "spider"
-    },
-    {
-      "processor_type": "betterdungeons:small_dungeon_chest_processor"
-    },
-    {
-      "processor_type": "betterdungeons:small_dungeon_ceiling_prop_processor"
-    },
-    {
-      "processor_type": "betterdungeons:small_dungeon_ceiling_lamp_processor"
+      "processor_type": "betterdungeons:head_processor"
     },
     {
       "processor_type": "betterdungeons:waterlogged_processor"
-    },
-    {
-      "processor_type": "betterdungeons:mob_spawner_processor",
-      "spawner_mob": "minecraft:spider"
     },
     {
       "rules": [

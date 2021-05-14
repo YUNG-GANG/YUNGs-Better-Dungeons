@@ -121,7 +121,7 @@ public class BannerProcessor extends StructureProcessor {
     }
 
     private Banner getBannerForType() {
-        switch(this.dungeonType) {
+        switch (this.dungeonType) {
             case SKELETON:
                 return SMALL_DUNGEON_SKELETON_BANNER;
             case ZOMBIE:
