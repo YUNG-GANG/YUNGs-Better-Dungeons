@@ -79,22 +79,79 @@ public class SpiderDungeonPiece extends StructurePiece {
             }
         }
 
-        // Length and radii determine the general shape of the cave
-        int length = 90;
-        float xMinRadius = 2;
-        float xMaxRadius = 4;
-        float yMinRadius = 1;
-        float yMaxRadius = 4;
-        float zMinRadius = 2;
-        float zMaxRadius = 4;
+        BlockPos caveEnd = generateTunnel(
+            world,
+            featureRand,
+            decoRand,
+            chunkPos,
+            box,
+            surface,
+            carvingMask,
+            new BlockPos(surfaceStartPos),
+            90,
+            2, 4,
+            1, 4,
+            2, 4,
+            MathHelper.clamp(featureRand.nextFloat() * ((float) -Math.PI), -2.8f, -.4f),
+            featureRand.nextFloat() * ((float) Math.PI * 2F)
+        );
 
-        // Initial pitch and yaw values determine the direction the cave will move towards
-        float yaw = featureRand.nextFloat() * ((float) Math.PI * 2F);
-        float pitch = MathHelper.clamp(featureRand.nextFloat() * ((float) -Math.PI), -2.8f, -.4f);
+        generateTunnel(
+            world,
+            featureRand,
+            decoRand,
+            chunkPos,
+            box,
+            surface,
+            carvingMask,
+            caveEnd,
+            45,
+            1, 3,
+            1, 3,
+            1, 3,
+            (float) Math.PI,
+            featureRand.nextFloat() * (float) Math.PI * 2f
+        );
 
-        float caveStartX = surfaceStartPos.getX();
-        float caveStartY = surfaceStartPos.getY();
-        float caveStartZ = surfaceStartPos.getZ();
+        generateTunnel(
+            world,
+            featureRand,
+            decoRand,
+            chunkPos,
+            box,
+            surface,
+            carvingMask,
+            caveEnd,
+            45,
+            1, 3,
+            1, 3,
+            1, 3,
+            (float) Math.PI,
+            featureRand.nextFloat() * (float) Math.PI * 2f
+        );
+
+        decorateCave(world, decoRand, chunkPos, box, carvingMask);
+
+        return true;
+    }
+
+    private BlockPos generateTunnel(ISeedReader world,
+                                    Random featureRand,
+                                    Random decoRand,
+                                    ChunkPos chunkPos,
+                                    MutableBoundingBox box,
+                                    int[] surface,
+                                    BitSet carvingMask,
+                                    BlockPos startPos,
+                                    int length,
+                                    float xMinRadius, float xMaxRadius,
+                                    float yMinRadius, float yMaxRadius,
+                                    float zMinRadius, float zMaxRadius,
+                                    float pitch, float yaw
+    ) {
+        float caveStartX = startPos.getX();
+        float caveStartY = startPos.getY();
+        float caveStartZ = startPos.getZ();
 
         float pitchModifier = 0f;
         float yawModifier = 0f;
@@ -204,7 +261,11 @@ public class SpiderDungeonPiece extends StructurePiece {
             }
         }
 
-        // Decorations
+        // Return final center position (end of this tunnel)
+        return new BlockPos(caveStartX, caveStartY, caveStartZ);
+    }
+
+    private void decorateCave(ISeedReader world, Random decoRand, ChunkPos chunkPos, MutableBoundingBox box, BitSet carvingMask) {
         carvingMask.stream().forEach(mask -> {
             if (decoRand.nextFloat() < .15f) { // Random chance of cobwebs along cave rim
                 // Grab positional info from mask
@@ -225,7 +286,5 @@ public class SpiderDungeonPiece extends StructurePiece {
                     this.setBlockState(world, Blocks.COBWEB.getDefaultState(), globalX, y, globalZ, box);
             }
         });
-
-        return true;
     }
 }
