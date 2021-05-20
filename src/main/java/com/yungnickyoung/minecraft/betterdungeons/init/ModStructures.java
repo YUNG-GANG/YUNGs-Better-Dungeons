@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.SmallDungeonStructure;
+import com.yungnickyoung.minecraft.betterdungeons.world.structure.SpiderDungeonStructure;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
@@ -37,7 +38,7 @@ import java.util.Map;
 public class ModStructures {
     public static final DeferredRegister<Structure<?>> DEFERRED_REGISTRY = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, BetterDungeons.MOD_ID);
     public static final RegistryObject<Structure<NoFeatureConfig>> SMALL_DUNGEON = DEFERRED_REGISTRY.register("small_dungeon", SmallDungeonStructure::new);
-//    public static final RegistryObject<Structure<NoFeatureConfig>> SPIDER_DUNGEON = DEFERRED_REGISTRY.register("spider_dungeon", () -> new SpiderDungeonStructure(NoFeatureConfig.field_236558_a_));
+    public static final RegistryObject<Structure<NoFeatureConfig>> SPIDER_DUNGEON = DEFERRED_REGISTRY.register("spider_dungeon", SpiderDungeonStructure::new);
 //    public static final RegistryObject<Structure<NoFeatureConfig>> SKELETON_DUNGEON = DEFERRED_REGISTRY.register("skeleton_dungeon", () -> new SkeletonDungeonStructure(NoFeatureConfig.field_236558_a_));
 //    public static final RegistryObject<Structure<NoFeatureConfig>> ZOMBIE_DUNGEON = DEFERRED_REGISTRY.register("zombie_dungeon", () -> new ZombieDungeonStructure(NoFeatureConfig.field_236558_a_));
 
@@ -59,7 +60,7 @@ public class ModStructures {
         event.enqueueWork(() -> {
             // Add dungeons to the structure map
             Structure.NAME_STRUCTURE_BIMAP.put("Small Dungeon".toLowerCase(Locale.ROOT), SMALL_DUNGEON.get());
-//            Structure.NAME_STRUCTURE_BIMAP.put("Spider Dungeon".toLowerCase(Locale.ROOT), SPIDER_DUNGEON.get());
+            Structure.NAME_STRUCTURE_BIMAP.put("Spider Dungeon".toLowerCase(Locale.ROOT), SPIDER_DUNGEON.get());
 //            Structure.NAME_STRUCTURE_BIMAP.put("Skeleton Dungeon".toLowerCase(Locale.ROOT), SKELETON_DUNGEON.get());
 //            Structure.NAME_STRUCTURE_BIMAP.put("Zombie Dungeon".toLowerCase(Locale.ROOT), ZOMBIE_DUNGEON.get());
 
@@ -71,22 +72,25 @@ public class ModStructures {
                     .putAll(DimensionStructuresSettings.field_236191_b_)
                     // TODO - edit structure separation settings & expose to config
                     .put(SMALL_DUNGEON.get(), new StructureSeparationSettings(15, 10, 34239823))
-//                    .put(SPIDER_DUNGEON.get(), new StructureSeparationSettings(30, 15, 596441294))
+                    .put(SPIDER_DUNGEON.get(), new StructureSeparationSettings(15, 10, 596441294))
 //                    .put(SKELETON_DUNGEON.get(), new StructureSeparationSettings(85, 50, 59343261))
 //                    .put(ZOMBIE_DUNGEON.get(), new StructureSeparationSettings(85, 50, 59390292))
                     .build();
 
             // Register the configured structure features
             Registry.register(WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(BetterDungeons.MOD_ID, "small_dungeon"), ModConfiguredStructures.CONFIGURED_SMALL_DUNGEON);
-//            Registry.register(WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(BetterDungeons.MOD_ID, "spider_dungeon"), ModConfiguredStructures.CONFIGURED_SPIDER_DUNGEON);
+            Registry.register(WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(BetterDungeons.MOD_ID, "spider_dungeon"), ModConfiguredStructures.CONFIGURED_SPIDER_DUNGEON);
 //            Registry.register(WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon"), ModConfiguredStructures.CONFIGURED_SKELETON_DUNGEON);
 //            Registry.register(WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE, new ResourceLocation(BetterDungeons.MOD_ID, "zombie_dungeon"), ModConfiguredStructures.CONFIGURED_ZOMBIE_DUNGEON);
 
             // Add structure features to this to prevent any issues if other mods' custom ChunkGenerators use FlatGenerationSettings.STRUCTURES
             FlatGenerationSettings.STRUCTURES.put(SMALL_DUNGEON.get(), ModConfiguredStructures.CONFIGURED_SMALL_DUNGEON);
-//            FlatGenerationSettings.STRUCTURES.put(SPIDER_DUNGEON.get(), ModConfiguredStructures.CONFIGURED_SPIDER_DUNGEON);
+            FlatGenerationSettings.STRUCTURES.put(SPIDER_DUNGEON.get(), ModConfiguredStructures.CONFIGURED_SPIDER_DUNGEON);
 //            FlatGenerationSettings.STRUCTURES.put(SKELETON_DUNGEON.get(), ModConfiguredStructures.CONFIGURED_SKELETON_DUNGEON);
 //            FlatGenerationSettings.STRUCTURES.put(ZOMBIE_DUNGEON.get(), ModConfiguredStructures.CONFIGURED_ZOMBIE_DUNGEON);
+
+            // Register pieces
+            ModStructurePieces.init();
 
             // Register separation settings for mods that might need it, like Terraforged
             WorldGenRegistries.NOISE_SETTINGS.getEntries().forEach(settings -> {
@@ -96,13 +100,13 @@ public class ModStructures {
                 if (structureMap instanceof ImmutableMap) {
                     Map<Structure<?>, StructureSeparationSettings> tempMap = new HashMap<>(structureMap);
                     tempMap.put(SMALL_DUNGEON.get(), DimensionStructuresSettings.field_236191_b_.get(SMALL_DUNGEON.get()));
-//                    tempMap.put(SPIDER_DUNGEON.get(), DimensionStructuresSettings.field_236191_b_.get(SPIDER_DUNGEON.get()));
+                    tempMap.put(SPIDER_DUNGEON.get(), DimensionStructuresSettings.field_236191_b_.get(SPIDER_DUNGEON.get()));
 //                    tempMap.put(SKELETON_DUNGEON.get(), DimensionStructuresSettings.field_236191_b_.get(SKELETON_DUNGEON.get()));
 //                    tempMap.put(ZOMBIE_DUNGEON.get(), DimensionStructuresSettings.field_236191_b_.get(ZOMBIE_DUNGEON.get()));
                     settings.getValue().getStructures().field_236193_d_ = tempMap;
                 } else {
                     structureMap.put(SMALL_DUNGEON.get(), DimensionStructuresSettings.field_236191_b_.get(SMALL_DUNGEON.get()));
-//                    structureMap.put(SPIDER_DUNGEON.get(), DimensionStructuresSettings.field_236191_b_.get(SPIDER_DUNGEON.get()));
+                    structureMap.put(SPIDER_DUNGEON.get(), DimensionStructuresSettings.field_236191_b_.get(SPIDER_DUNGEON.get()));
 //                    structureMap.put(SKELETON_DUNGEON.get(), DimensionStructuresSettings.field_236191_b_.get(SKELETON_DUNGEON.get()));
 //                    structureMap.put(ZOMBIE_DUNGEON.get(), DimensionStructuresSettings.field_236191_b_.get(ZOMBIE_DUNGEON.get()));
                 }
@@ -119,7 +123,7 @@ public class ModStructures {
 
         // Add dungeons to biome generation settings
         event.getGeneration().getStructures().add(() -> ModConfiguredStructures.CONFIGURED_SMALL_DUNGEON);
-//        event.getGeneration().getStructures().add(() -> ModConfiguredStructures.CONFIGURED_SPIDER_DUNGEON);
+        event.getGeneration().getStructures().add(() -> ModConfiguredStructures.CONFIGURED_SPIDER_DUNGEON);
 //        event.getGeneration().getStructures().add(() -> ModConfiguredStructures.CONFIGURED_SKELETON_DUNGEON);
 //        event.getGeneration().getStructures().add(() -> ModConfiguredStructures.CONFIGURED_ZOMBIE_DUNGEON);
     }
@@ -157,7 +161,7 @@ public class ModStructures {
             // We use a temp map because some mods handle immutable maps.
             Map<Structure<?>, StructureSeparationSettings> tempMap = new HashMap<>(serverWorld.getChunkProvider().generator.func_235957_b_().func_236195_a_());
             tempMap.put(ModStructures.SMALL_DUNGEON.get(), DimensionStructuresSettings.field_236191_b_.get(ModStructures.SMALL_DUNGEON.get()));
-//            tempMap.put(ModStructures.SPIDER_DUNGEON.get(), DimensionStructuresSettings.field_236191_b_.get(ModStructures.SPIDER_DUNGEON.get()));
+            tempMap.put(ModStructures.SPIDER_DUNGEON.get(), DimensionStructuresSettings.field_236191_b_.get(ModStructures.SPIDER_DUNGEON.get()));
 //            tempMap.put(ModStructures.SKELETON_DUNGEON.get(), DimensionStructuresSettings.field_236191_b_.get(ModStructures.SKELETON_DUNGEON.get()));
 //            tempMap.put(ModStructures.ZOMBIE_DUNGEON.get(), DimensionStructuresSettings.field_236191_b_.get(ModStructures.ZOMBIE_DUNGEON.get()));
             serverWorld.getChunkProvider().generator.func_235957_b_().field_236193_d_ = tempMap;

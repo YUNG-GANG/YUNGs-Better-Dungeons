@@ -35,7 +35,8 @@ public class JigsawManager {
         JigsawConfig jigsawConfig,
         ChunkGenerator chunkGenerator,
         TemplateManager templateManager,
-        BlockPos startPos, List<? super AbstractVillagePiece> components,
+        BlockPos startPos,
+        List<? super AbstractVillagePiece> components,
         Random random,
         boolean doBoundaryAdjustments,
         boolean useHeightmap

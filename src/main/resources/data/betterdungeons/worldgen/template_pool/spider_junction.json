@@ -1,0 +1,15 @@
+{
+  "name": "betterdungeons:spider_junction",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:spider_dungeon/spider_junction_0",
+        "processors": "betterdungeons:spider_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

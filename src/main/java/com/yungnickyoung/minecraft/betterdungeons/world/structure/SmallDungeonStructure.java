@@ -28,7 +28,7 @@ public class SmallDungeonStructure extends Structure<NoFeatureConfig> {
 
     @Override
     public IStartFactory<NoFeatureConfig> getStartFactory() {
-        return SmallDungeonStructure.Start::new;
+        return Start::new;
     }
 
     @Override
@@ -70,7 +70,7 @@ public class SmallDungeonStructure extends Structure<NoFeatureConfig> {
                 false
             );
 
-            // Sets the bounds of the structure once you are finished.
+            // Set the bounds of the structure once it's assembled
             this.recalculateStructureSize();
 
             // Debug log the coordinates of the center starting piece.

@@ -1,0 +1,15 @@
+{
+  "name": "betterdungeons:spider_start",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:spider_dungeon/spider_start_0",
+        "processors": "betterdungeons:spider_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}
