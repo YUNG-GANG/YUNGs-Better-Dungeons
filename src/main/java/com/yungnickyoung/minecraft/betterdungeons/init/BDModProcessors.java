@@ -8,7 +8,7 @@ import net.minecraft.world.gen.feature.template.IStructureProcessorType;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-public class ModProcessors {
+public class BDModProcessors {
     public static IStructureProcessorType<WaterloggedProcessor> WATERLOGGED_PROCESSOR = () -> WaterloggedProcessor.CODEC;
     public static IStructureProcessorType<CeilingPropProcessor> SMALL_DUNGEON_CEILING_PROP_PROCESSOR = () -> CeilingPropProcessor.CODEC;
     public static IStructureProcessorType<CeilingLampPropProcessor> SMALL_DUNGEON_CEILING_LAMP_PROCESSOR = () -> CeilingLampPropProcessor.CODEC;
@@ -19,7 +19,7 @@ public class ModProcessors {
     public static IStructureProcessorType<CobwebProcessor> COBWEB_PROCESSOR = () -> CobwebProcessor.CODEC;
 
     public static void init() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(ModProcessors::commonSetup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(BDModProcessors::commonSetup);
     }
 
     private static void commonSetup(FMLCommonSetupEvent event) {

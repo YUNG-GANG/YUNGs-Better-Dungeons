@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 
 import com.mojang.serialization.Codec;
-import com.yungnickyoung.minecraft.betterdungeons.init.ModProcessors;
+import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -42,7 +42,7 @@ public class CobwebProcessor extends StructureProcessor {
     }
 
     protected IStructureProcessorType<?> getType() {
-        return ModProcessors.COBWEB_PROCESSOR;
+        return BDModProcessors.COBWEB_PROCESSOR;
     }
 
     /**

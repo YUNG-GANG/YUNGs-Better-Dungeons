@@ -1,7 +1,9 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.structure;
 
-import com.yungnickyoung.minecraft.betterdungeons.init.ModStructurePieces;
+import com.yungnickyoung.minecraft.betterdungeons.init.BDModStructurePieces;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
@@ -25,14 +27,14 @@ public class SpiderDungeonPiece extends StructurePiece {
     private BlockPos surfaceStartPos;
 
     public SpiderDungeonPiece(BlockPos centerPos) {
-        super(ModStructurePieces.SPIDER_DUNGEON_PIECE, 0);
+        super(BDModStructurePieces.SPIDER_DUNGEON_PIECE, 0);
         this.boundingBox = new MutableBoundingBox(centerPos.getX() - 64, 1, centerPos.getZ() - 64, centerPos.getX() + 64, 256, centerPos.getZ() + 64);
         this.cornerPos = new BlockPos(centerPos.getX() - 64, 1, centerPos.getZ() - 64);
         this.surfaceStartPos = new BlockPos(centerPos.getX(), 80, centerPos.getZ());
     }
 
     public SpiderDungeonPiece(TemplateManager templateManager, CompoundNBT compoundNBT) {
-        super(ModStructurePieces.SPIDER_DUNGEON_PIECE, compoundNBT);
+        super(BDModStructurePieces.SPIDER_DUNGEON_PIECE, compoundNBT);
         int[] corner = compoundNBT.getIntArray("cornerPos");
         int[] surface = compoundNBT.getIntArray("surfaceStartPos");
         this.cornerPos = new BlockPos(corner[0], corner[1], corner[2]);
@@ -78,7 +80,7 @@ public class SpiderDungeonPiece extends StructurePiece {
         }
 
         // Length and radii determine the general shape of the cave
-        int length = 60;
+        int length = 90;
         float xMinRadius = 2;
         float xMaxRadius = 4;
         float yMinRadius = 1;
@@ -136,7 +138,7 @@ public class SpiderDungeonPiece extends StructurePiece {
             maxZ = MathHelper.clamp(maxZ, 0, 15);
 
             // DEBUG
-            this.setBlockState(world, Blocks.DIAMOND_BLOCK.getDefaultState(), (int) caveStartX, (int) caveStartY, (int) caveStartZ, box);
+//            this.setBlockState(world, Blocks.DIAMOND_BLOCK.getDefaultState(), (int) caveStartX, (int) caveStartY, (int) caveStartZ, box);
 
             // -- Carve sphere -- //
             for (float x = minX; x <= maxX; x++) {
@@ -175,7 +177,8 @@ public class SpiderDungeonPiece extends StructurePiece {
                         int mask = (int)x | (int)z << 4 | ((int)(y)) << 8;
 
                         // Carve out blocks within the ellipsoid. Blocks immediately outside the ellipsoid will be turned into a cobblestone shell.
-                        if (!carvingMask.get(mask) && radialXDist * radialXDist + radialYDist * radialYDist + radialZDist * radialZDist < 1.0) {
+                        float radialDist = radialXDist * radialXDist + radialYDist * radialYDist + radialZDist * radialZDist;
+                        if (!carvingMask.get(mask) && radialDist < 1.0) {
                             if (this.getBlockStateFromPos(world, globalX, globalY, globalZ, box).getBlock() != Blocks.DIAMOND_BLOCK.getBlock()) {
                                 this.setBlockState(world, Blocks.CAVE_AIR.getDefaultState(), globalX, globalY, globalZ, box);
                                 carvingMask.set(mask);
@@ -186,9 +189,11 @@ public class SpiderDungeonPiece extends StructurePiece {
                             float radialXDistShell = (globalX - caveStartX + .5f) / (xRadius + 1.2f);
                             float radialYDistShell = (y - caveStartY - .5f) / (yRadius + 1.2f);
                             float radialZDistShell = (globalZ - caveStartZ + .5f) / (zRadius + 1.2f);
-                            if (!carvingMask.get(mask) && radialXDistShell * radialXDistShell + radialYDistShell * radialYDistShell + radialZDistShell * radialZDistShell < 1.0) {
-                                if (this.getBlockStateFromPos(world, globalX, globalY, globalZ, box).getBlock() != Blocks.DIAMOND_BLOCK.getBlock()) {
-                                    if (this.getBlockStateFromPos(world, globalX, globalY, globalZ, box).isAir() || this.getBlockStateFromPos(world, globalX, globalY, globalZ, box).getMaterial().isLiquid() || decoRand.nextFloat() < .5f) {
+                            float radialDistShell = radialXDistShell * radialXDistShell + radialYDistShell * radialYDistShell + radialZDistShell * radialZDistShell;
+                            if (!carvingMask.get(mask) && radialDistShell < 1.0) {
+                                BlockState state = this.getBlockStateFromPos(world, globalX, globalY, globalZ, box);
+                                if (state.getBlock() != Blocks.DIAMOND_BLOCK.getBlock()) {
+                                    if (state.isAir() || state.getFluidState().getFluid() != Fluids.EMPTY || decoRand.nextFloat() < .2f) {
                                         this.setBlockState(world, Blocks.COBBLESTONE.getDefaultState(), globalX, globalY, globalZ, box);
                                     }
                                 }
@@ -198,6 +203,28 @@ public class SpiderDungeonPiece extends StructurePiece {
                 }
             }
         }
+
+        // Decorations
+        carvingMask.stream().forEach(mask -> {
+            if (decoRand.nextFloat() < .15f) { // Random chance of cobwebs along cave rim
+                // Grab positional info from mask
+                int x = mask & 0xF;
+                int z = mask >> 4 & 0xF;
+                int y = mask >> 8 & 0xFF;
+                int globalX = x + chunkPos.x * 16;
+                int globalZ = z + chunkPos.z * 16;
+
+                // Ensure it's only placed alongside a wall
+                if (this.getBlockStateFromPos(world, globalX - 1, y, globalZ, box).isSolid()
+                    || this.getBlockStateFromPos(world, globalX + 1, y, globalZ, box).isSolid()
+                    || this.getBlockStateFromPos(world, globalX, y, globalZ - 1, box).isSolid()
+                    || this.getBlockStateFromPos(world, globalX, y, globalZ + 1, box).isSolid()
+                    || this.getBlockStateFromPos(world, globalX, y - 1, globalZ, box).isSolid()
+                    || this.getBlockStateFromPos(world, globalX, y + 1, globalZ, box).isSolid()
+                )
+                    this.setBlockState(world, Blocks.COBWEB.getDefaultState(), globalX, y, globalZ, box);
+            }
+        });
 
         return true;
     }

@@ -2,7 +2,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.yungnickyoung.minecraft.betterdungeons.init.ModProcessors;
+import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.SpawnerBlock;
 import net.minecraft.nbt.CompoundNBT;
@@ -63,6 +63,6 @@ public class MobSpawnerProcessor extends StructureProcessor {
     }
 
     protected IStructureProcessorType<?> getType() {
-        return ModProcessors.MOB_SPAWNER_PROCESSOR;
+        return BDModProcessors.MOB_SPAWNER_PROCESSOR;
     }
 }

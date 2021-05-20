@@ -8,7 +8,7 @@ import net.minecraft.world.gen.feature.structure.IStructurePieceType;
 
 import java.util.Locale;
 
-public class ModStructurePieces {
+public class BDModStructurePieces {
     public static IStructurePieceType SPIDER_DUNGEON_PIECE;
 
     public static void init() {

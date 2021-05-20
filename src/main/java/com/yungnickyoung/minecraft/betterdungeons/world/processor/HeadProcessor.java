@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 
 import com.mojang.serialization.Codec;
-import com.yungnickyoung.minecraft.betterdungeons.init.ModProcessors;
+import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -29,6 +29,6 @@ public class HeadProcessor extends StructureProcessor {
     }
 
     protected IStructureProcessorType<?> getType() {
-        return ModProcessors.SMALL_DUNGEON_CEILING_PROP_PROCESSOR;
+        return BDModProcessors.SMALL_DUNGEON_CEILING_PROP_PROCESSOR;
     }
 }

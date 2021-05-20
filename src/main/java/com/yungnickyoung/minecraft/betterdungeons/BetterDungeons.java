@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons;
 
-import com.yungnickyoung.minecraft.betterdungeons.init.ModProcessors;
-import com.yungnickyoung.minecraft.betterdungeons.init.ModStructures;
+import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
+import com.yungnickyoung.minecraft.betterdungeons.init.BDModStructures;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,8 +16,8 @@ public class BetterDungeons {
     }
 
     private void init() {
-        ModProcessors.init();
-        ModStructures.init();
         //ModConfig.init();
+        BDModProcessors.init();
+        BDModStructures.init();
     }
 }

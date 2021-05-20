@@ -3,7 +3,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
-import com.yungnickyoung.minecraft.betterdungeons.init.ModProcessors;
+import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import com.yungnickyoung.minecraft.betterdungeons.util.Banner;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonContext;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonType;
@@ -117,7 +117,7 @@ public class BannerProcessor extends StructureProcessor {
     }
 
     protected IStructureProcessorType<?> getType() {
-        return ModProcessors.SMALL_DUNGEON_BANNER_PROCESSOR;
+        return BDModProcessors.SMALL_DUNGEON_BANNER_PROCESSOR;
     }
 
     private Banner getBannerForType() {

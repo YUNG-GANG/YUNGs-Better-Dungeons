@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 
 import com.mojang.serialization.Codec;
-import com.yungnickyoung.minecraft.betterdungeons.init.ModProcessors;
+import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonContext;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Blocks;
@@ -49,6 +49,6 @@ public class ChestProcessor extends StructureProcessor {
     }
 
     protected IStructureProcessorType<?> getType() {
-        return ModProcessors.SMALL_DUNGEON_CHEST_PROCESSOR;
+        return BDModProcessors.SMALL_DUNGEON_CHEST_PROCESSOR;
     }
 }
