@@ -2,7 +2,6 @@ buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
         maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-        jcenter()
         mavenCentral()
     }
     dependencies {
@@ -10,7 +9,9 @@ buildscript {
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
+
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.spongepowered.mixin'
 
 // Maven info
 version = "${modMinecraftVersion}-${modVersion}"
@@ -25,62 +26,36 @@ minecraft {
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
-    // Default run configurations.
-    // These can be tweaked, removed, or duplicated as needed.
     runs {
         client {
             workingDirectory project.file('run')
             arg "-mixin.config=" + modId + ".mixins.json"
-            property 'mixin.env.disableRefMap', 'true'
-
-            // Recommended logging data for a userdev environment
+//            property 'mixin.env.disableRefMap', 'true'
 //            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
 //            property 'forge.logging.console.level', 'debug'
 
-            mods {
-                betterdungeons {
-                    source sourceSets.main
-                }
-            }
+            mods { betterdungeons { source sourceSets.main } }
         }
 
         server {
             workingDirectory project.file('run')
             arg "-mixin.config=" + modId + ".mixins.json"
-            property 'mixin.env.disableRefMap', 'true'
-
-            // Recommended logging data for a userdev environment
+//            property 'mixin.env.disableRefMap', 'true'
 //            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
 //            property 'forge.logging.console.level', 'debug'
 
-            mods {
-                betterdungeons {
-                    source sourceSets.main
-                }
-            }
+            mods { betterdungeons { source sourceSets.main } }
         }
 
         data {
             workingDirectory project.file('run')
-
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
-            property 'forge.logging.console.level', 'debug'
+//            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+//            property 'forge.logging.console.level', 'debug'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
             args '--mod', 'betterdungeons', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
-            mods {
-                betterdungeons {
-                    source sourceSets.main
-                }
-            }
+            mods { betterdungeons { source sourceSets.main } }
         }
     }
 }
@@ -95,24 +70,9 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:" + modMinecraftVersion + "-" + modForgeVersion
     compile fg.deobf("com.yungnickyoung.minecraft.yungsapi:YungsApi:${yungsApiVersion}")
-
-    // You may put jars on which you depend on in ./libs or you may define them like so..
-    // compile "some.group:artifact:version:classifier"
-    // compile "some.group:artifact:version"
-
-    // Real examples
-    // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
-    // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
-    // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // These dependencies get remapped to your current MCP mappings
-    // deobf 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // For more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
+    if (System.getProperty("idea.sync.active") != "true") {
+        annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
+    }
 }
 
 processResources {
@@ -162,13 +122,7 @@ jar {
     }
 }
 
-// Example configuration to allow pubishing using the maven-publish task
-// This is the preferred method to reobfuscate your jar file
 jar.finalizedBy('reobfJar')
-// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
-//publish.dependsOn('reobfJar')
-
-apply plugin: 'org.spongepowered.mixin'
 
 mixin {
     add sourceSets.main, "${modId}.refmap.json"
