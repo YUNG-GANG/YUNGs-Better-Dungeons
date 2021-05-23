@@ -1,6 +1,6 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.structure;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModStructurePieces;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;
@@ -9,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.loot.LootTables;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.MobSpawnerTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -29,12 +30,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.BitSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class SpiderDungeonPiece extends StructurePiece {
     private final BlockPos cornerPos;
     private final BlockPos surfaceStartPos;
 
-    private static final List<Block> BLOCK_BLACKLIST = Lists.newArrayList(Blocks.DIAMOND_BLOCK, Blocks.WHITE_WOOL, Blocks.SPAWNER);
+    private static final Set<Block> BLOCK_BLACKLIST = Sets.newHashSet(Blocks.DIAMOND_BLOCK, Blocks.WHITE_WOOL, Blocks.SPAWNER, Blocks.CHEST);
 
     public SpiderDungeonPiece(BlockPos centerPos) {
         super(BDModStructurePieces.SPIDER_DUNGEON_PIECE, 0);
@@ -95,7 +97,7 @@ public class SpiderDungeonPiece extends StructurePiece {
         generateSmallTunnel(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos, smallCaveStart);
         generateSmallTunnel(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos, smallCaveStart);
         generateSmallTunnel(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos, smallCaveStart);
-        generateRoom(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos);
+        generateNest(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos);
 
         smallCaveStart = generateBigTunnel(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos);
         smallCaveStart.angle += 0.3f; // Offset angle a bit before spawning small tunnels to avoid overlap w/ main tunnel
@@ -103,22 +105,14 @@ public class SpiderDungeonPiece extends StructurePiece {
         generateSmallTunnel(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos, smallCaveStart);
         generateSmallTunnel(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos, smallCaveStart);
         generateSmallTunnel(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos, smallCaveStart);
-        generateRoom(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos);
+        generateNest(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos);
 
         decorateCave(world, decoRand, chunkPos, box, carvingMask);
 
         return true;
     }
 
-    private CaveStart generateBigTunnel(ISeedReader world,
-                                        Random featureRand,
-                                        Random decoRand,
-                                        ChunkPos chunkPos,
-                                        MutableBoundingBox box,
-                                        int[] surface,
-                                        BitSet carvingMask,
-                                        BlockPos startPos
-    ) {
+    private CaveStart generateBigTunnel(ISeedReader world, Random featureRand, Random decoRand, ChunkPos chunkPos, MutableBoundingBox box, int[] surface, BitSet carvingMask, BlockPos startPos) {
         int length = 30;
 
         float xMinRadius = 2, xMaxRadius = 2.5f,
@@ -244,16 +238,7 @@ public class SpiderDungeonPiece extends StructurePiece {
         );
     }
 
-    private void generateSmallTunnel(ISeedReader world,
-                                     Random featureRand,
-                                     Random decoRand,
-                                     ChunkPos chunkPos,
-                                     MutableBoundingBox box,
-                                     int[] surface,
-                                     BitSet carvingMask,
-                                     BlockPos startPos,
-                                     CaveStart caveStart
-    ) {
+    private void generateSmallTunnel(ISeedReader world, Random featureRand, Random decoRand, ChunkPos chunkPos, MutableBoundingBox box, int[] surface, BitSet carvingMask, BlockPos startPos, CaveStart caveStart) {
         int length = 30;
 
         float xMinRadius = 1, xMaxRadius = 1.5f,
@@ -360,7 +345,7 @@ public class SpiderDungeonPiece extends StructurePiece {
                             if (!carvingMask.get(mask) && radialDistShell < 1.0) {
                                 BlockState state = this.getBlockStateFromPos(world, globalX, globalY, globalZ, box);
                                 if (!BLOCK_BLACKLIST.contains(state.getBlock())) {
-                                    if (state.isAir() || state.getFluidState().getFluid() != Fluids.EMPTY || decoRand.nextFloat() < .2f) {
+                                    if (state.isAir() || state.getFluidState().getFluid() != Fluids.EMPTY || decoRand.nextFloat() < .4f) {
                                         this.setBlockState(world, Blocks.COBBLESTONE.getDefaultState(), globalX, globalY, globalZ, box);
                                     }
                                 }
@@ -370,9 +355,11 @@ public class SpiderDungeonPiece extends StructurePiece {
                 }
             }
         }
+
+        generateEggRoom(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, new BlockPos(caveStartX, caveStartY, caveStartZ));
     }
 
-    private void generateRoom(ISeedReader world, Random featureRand, Random decoRand, ChunkPos chunkPos, MutableBoundingBox box, int[] surface, BitSet carvingMask, BlockPos startPos) {
+    private void generateNest(ISeedReader world, Random featureRand, Random decoRand, ChunkPos chunkPos, MutableBoundingBox box, int[] surface, BitSet carvingMask, BlockPos startPos) {
         float xMinRadius = 6, xMaxRadius = 10,
               yMinRadius = 4, yMaxRadius = 6,
               zMinRadius = 6, zMaxRadius = 10;
@@ -471,7 +458,7 @@ public class SpiderDungeonPiece extends StructurePiece {
         }
 
         // Place wool cocoon
-        this.replaceAirSphereRandomized(world, box, (int) caveStartX, (int) caveStartY + 1, (int) caveStartZ, 2, decoRand, .5f, BlockSetSelector.from(Blocks.WHITE_WOOL.getDefaultState()));
+        this.placeSphereRandomized(world, box, (int) caveStartX, (int) caveStartY + 1, (int) caveStartZ, 2, decoRand, .5f, BlockSetSelector.from(Blocks.WHITE_WOOL.getDefaultState()), true);
 
         // Guarantee wool immediately around spawner
         this.setBlockState(world, Blocks.WHITE_WOOL.getDefaultState(), (int) caveStartX + 1, (int) caveStartY + 1, (int) caveStartZ, box);
@@ -481,16 +468,140 @@ public class SpiderDungeonPiece extends StructurePiece {
         this.setBlockState(world, Blocks.WHITE_WOOL.getDefaultState(), (int) caveStartX, (int) caveStartY, (int) caveStartZ, box);
 
         // Surround cocoon with more cobweb
-        this.replaceAirSphereRandomized(world, box, (int) caveStartX, (int) caveStartY + 1, (int) caveStartZ, 3, decoRand, .5f, BlockSetSelector.from(Blocks.COBWEB.getDefaultState()));
+        this.placeSphereRandomized(world, box, (int) caveStartX, (int) caveStartY + 1, (int) caveStartZ, 3, decoRand, .5f, BlockSetSelector.from(Blocks.COBWEB.getDefaultState()), true);
 
         // Place spawner
         this.setBlockState(world, Blocks.SPAWNER.getDefaultState(), (int) caveStartX, (int) caveStartY + 1, (int) caveStartZ, box);
-        TileEntity spawnerTileEntity = world.getTileEntity(startPos.offset(Direction.UP));
         if (box.isVecInside(startPos)) {
+            TileEntity spawnerTileEntity = world.getTileEntity(startPos.offset(Direction.UP));
             if (spawnerTileEntity instanceof MobSpawnerTileEntity) {
                 ((MobSpawnerTileEntity) spawnerTileEntity).getSpawnerBaseLogic().setEntityType(EntityType.CAVE_SPIDER);
             } else {
-                BetterDungeons.LOGGER.warn("Expected spawner entity at {}, but found none!", startPos.offset(Direction.UP));
+                BetterDungeons.LOGGER.warn("Expected cave spider spawner entity at {}, but found none!", startPos.offset(Direction.UP));
+            }
+        }
+    }
+
+    private void generateEggRoom(ISeedReader world, Random featureRand, Random decoRand, ChunkPos chunkPos, MutableBoundingBox box, int[] surface, BitSet carvingMask, BlockPos startPos) {
+        float xMinRadius = 2, xMaxRadius = 3,
+              yMinRadius = 2, yMaxRadius = 3f,
+              zMinRadius = 2, zMaxRadius = 3;
+
+        float xRadius = featureRand.nextFloat() * (xMaxRadius - xMinRadius) + xMinRadius;
+        float yRadius = featureRand.nextFloat() * (yMaxRadius - yMinRadius) + yMinRadius;
+        float zRadius = featureRand.nextFloat() * (zMaxRadius - zMinRadius) + zMinRadius;
+
+        float caveStartX = startPos.getX(),
+              caveStartY = startPos.getY(),
+              caveStartZ = startPos.getZ();
+
+        // Min and max values we need to consider for carving
+        int minX = MathHelper.floor(caveStartX - xRadius) - chunkPos.x * 16 - 1;
+        int maxX = MathHelper.floor(caveStartX + xRadius) - chunkPos.x * 16 + 1;
+        int minY = MathHelper.clamp(MathHelper.floor(caveStartY - yRadius) - 1, 0, 255);
+        int maxY = MathHelper.clamp(MathHelper.floor(caveStartY + yRadius) + 1, 0, 255);
+        int minZ = MathHelper.floor(caveStartZ - zRadius) - chunkPos.z * 16 - 1;
+        int maxZ = MathHelper.floor(caveStartZ + zRadius) - chunkPos.z * 16 + 1;
+
+        // Clamp min/max values to ensure the coordinates are chunk-local
+        minX = MathHelper.clamp(minX, 0, 15);
+        maxX = MathHelper.clamp(maxX, 0, 15);
+        minZ = MathHelper.clamp(minZ, 0, 15);
+        maxZ = MathHelper.clamp(maxZ, 0, 15);
+
+        // Carve out room and surround with cobblestone shell
+        for (float x = minX; x <= maxX; x++) {
+            // Get global coordinate
+            int globalX = (int)x + chunkPos.x * 16;
+
+            // No need to consider blocks outside this chunk
+            if (globalX < chunkPos.getXStart() || globalX > chunkPos.getXEnd()) continue;
+
+            // Distance along the rotated x-axis from the center of this ellipsoid.
+            // You can think of this value as (x/a), where a is the length of the ellipsoid's radius in the rotated x-direction.
+            float radialXDist = (globalX - caveStartX + .5f) / xRadius;
+
+            for (float z = minZ; z <= maxZ; z++) {
+                // Get global coordinate
+                int globalZ = (int)z + chunkPos.z * 16;
+
+                // No need to consider blocks outside this chunk
+                if (globalZ < chunkPos.getZStart() || globalZ > chunkPos.getZEnd()) continue;
+
+                // Distance along the rotated z-axis from the center of this ellipsoid.
+                // You can think of this value as (z/b), where b is the length of the ellipsoid's radius in the rotated z-direction.
+                float radialZDist = (globalZ - caveStartZ + .5f) / zRadius;
+
+                for (float y = minY; y <= maxY; y++) {
+                    int globalY = (int)y; // y-coord does not require any conversion
+
+                    // Don't go above surface
+                    if (globalY > surface[((int)(x) % 16) * 16 + ((int)(z) % 16)]) break;
+
+                    // Distance along the y-axis from the center of this ellipsoid.
+                    // You can think of this value as (y/c), where c is the length of the ellipsoid's radius in the y-direction.
+                    float radialYDist = (y - caveStartY - .5f) / yRadius;
+
+                    // Calculate the carving mask for this block
+                    int mask = (int)x | (int)z << 4 | ((int)(y)) << 8;
+
+                    // Carve out blocks within the ellipsoid. Blocks immediately outside the ellipsoid will be turned into a cobblestone shell.
+                    float radialDist = radialXDist * radialXDist + radialYDist * radialYDist + radialZDist * radialZDist;
+                    if (radialDist < 1.0) {
+                        if (!carvingMask.get(mask)) {
+                            if (!BLOCK_BLACKLIST.contains(this.getBlockStateFromPos(world, globalX, globalY, globalZ, box).getBlock())) {
+                                this.setBlockState(world, Blocks.CAVE_AIR.getDefaultState(), globalX, globalY, globalZ, box);
+                                carvingMask.set(mask);
+                            }
+                        }
+                    } else {
+                        // Calculate radial distances for each of the three axes (same logic as above), but for a slightly enlarged ellipsoid.
+                        // This will be used to give the cave an outer cobblestone shell.
+                        float radialXDistShell = (globalX - caveStartX + .5f) / (xRadius + 1.2f);
+                        float radialYDistShell = (y - caveStartY - .5f) / (yRadius + 1.2f);
+                        float radialZDistShell = (globalZ - caveStartZ + .5f) / (zRadius + 1.2f);
+                        float radialDistShell = radialXDistShell * radialXDistShell + radialYDistShell * radialYDistShell + radialZDistShell * radialZDistShell;
+                        if (radialDistShell < 1.0 && !carvingMask.get(mask)) {
+                            BlockState state = this.getBlockStateFromPos(world, globalX, globalY, globalZ, box);
+                            if (!BLOCK_BLACKLIST.contains(state.getBlock())) {
+                                if (state.isAir() || state.getFluidState().getFluid() != Fluids.EMPTY || decoRand.nextFloat() < .8f) {
+                                    this.setBlockState(world, Blocks.COBBLESTONE.getDefaultState(), globalX, globalY, globalZ, box);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        BlockPos chestPos = new BlockPos((int) caveStartX, (int) caveStartY - (int) yRadius + 1, (int) caveStartZ);
+
+        // Place wool egg
+        this.placeSphereRandomized(world, box, chestPos, 2, decoRand, .5f, BlockSetSelector.from(Blocks.WHITE_WOOL.getDefaultState()), false);
+
+        // Guarantee wool immediately around chest
+        this.setBlockState(world, Blocks.WHITE_WOOL.getDefaultState(), chestPos.getX() + 1, chestPos.getY(), chestPos.getZ(), box);
+        this.setBlockState(world, Blocks.WHITE_WOOL.getDefaultState(), chestPos.getX() - 1, chestPos.getY(), chestPos.getZ(), box);
+        this.setBlockState(world, Blocks.WHITE_WOOL.getDefaultState(), chestPos.getX(), chestPos.getY(), chestPos.getZ() + 1, box);
+        this.setBlockState(world, Blocks.WHITE_WOOL.getDefaultState(), chestPos.getX(), chestPos.getY(), chestPos.getZ() - 1, box);
+        this.setBlockState(world, Blocks.WHITE_WOOL.getDefaultState(), chestPos.getX(), chestPos.getY() - 1, chestPos.getZ(), box);
+        this.setBlockState(world, Blocks.WHITE_WOOL.getDefaultState(), chestPos.getX(), chestPos.getY() + 1, chestPos.getZ(), box);
+
+        // Surround egg with more cobweb
+        this.placeSphereRandomized(world, box, chestPos.getX(), chestPos.getY(), chestPos.getZ(), 2, decoRand, .4f, BlockSetSelector.from(Blocks.COBWEB.getDefaultState()), true);
+
+        // Place chest or spawner
+        if (featureRand.nextFloat() < .5f) {
+            this.generateChest(world, box, featureRand, chestPos.getX(), chestPos.getY(), chestPos.getZ(), LootTables.CHESTS_SIMPLE_DUNGEON); // TODO - custom loot?
+        } else {
+            if (box.isVecInside(chestPos)) {
+                this.setBlockState(world, Blocks.SPAWNER.getDefaultState(), chestPos.getX(), chestPos.getY(), chestPos.getZ(), box);
+                TileEntity spawnerTileEntity = world.getTileEntity(chestPos);
+                if (spawnerTileEntity instanceof MobSpawnerTileEntity) {
+                    ((MobSpawnerTileEntity) spawnerTileEntity).getSpawnerBaseLogic().setEntityType(EntityType.SPIDER);
+                } else {
+                    BetterDungeons.LOGGER.warn("Expected spider spawner entity at {}, but found none!", chestPos);
+                }
             }
         }
     }
@@ -531,20 +642,23 @@ public class SpiderDungeonPiece extends StructurePiece {
         }
     }
 
-    protected void replaceAirSphereRandomized(ISeedReader world, MutableBoundingBox box, BlockPos center, int radius, Random rand, float chance, BlockSetSelector blockSelector) {
-        for (int x = -radius; x <= radius; x++) {
-            for (int z = -radius; z <= radius; z++) {
-                for (int y = -radius; y <= radius; y++) {
+    protected void placeSphereRandomized(ISeedReader world, MutableBoundingBox box, BlockPos center, float radius, Random rand, float chance, BlockSetSelector blockSelector, boolean replaceOnlyAir) {
+        for (float x = -radius; x <= radius; x++) {
+            for (float z = -radius; z <= radius; z++) {
+                for (float y = -radius; y <= radius; y++) {
                     if (x * x + y * y + z * z < radius * radius) {
-                        if (rand.nextFloat() < chance && this.getBlockStateFromPos(world, x + center.getX(), y + center.getY(), z + center.getZ(), box).isAir())
-                            this.setBlockState(world, blockSelector.get(rand), x + center.getX(), y + center.getY(), z + center.getZ(), box);
+                        if (!replaceOnlyAir || this.getBlockStateFromPos(world, (int) x + center.getX(), (int) y + center.getY(), (int) z + center.getZ(), box).isAir()) {
+                            if (rand.nextFloat() < chance) {
+                                this.setBlockState(world, blockSelector.get(rand), (int) x + center.getX(), (int) y + center.getY(), (int) z + center.getZ(), box);
+                            }
+                        }
                     }
                 }
             }
         }
     }
 
-    protected void replaceAirSphereRandomized(ISeedReader world, MutableBoundingBox box, int centerX, int centerY, int centerZ, int radius, Random rand, float chance, BlockSetSelector blockSelector) {
-        replaceAirSphereRandomized(world, box, new BlockPos(centerX, centerY, centerZ), radius, rand, chance, blockSelector);
+    protected void placeSphereRandomized(ISeedReader world, MutableBoundingBox box, int centerX, int centerY, int centerZ, float radius, Random rand, float chance, BlockSetSelector blockSelector, boolean replaceOnlyAir) {
+        placeSphereRandomized(world, box, new BlockPos(centerX, centerY, centerZ), radius, rand, chance, blockSelector, replaceOnlyAir);
     }
 }
