@@ -1,4 +1,4 @@
-package com.yungnickyoung.minecraft.betterdungeons.world.structure;
+package com.yungnickyoung.minecraft.betterdungeons.world.structure.small_dungeon;
 
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
 import com.yungnickyoung.minecraft.betterdungeons.world.jigsaw.JigsawConfig;
@@ -43,7 +43,7 @@ public class SmallDungeonStructure extends Structure<NoFeatureConfig> {
 
         @Override
         public void func_230364_a_(DynamicRegistries dynamicRegistryManager, ChunkGenerator chunkGenerator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoFeatureConfig config) {
-            // Turns the chunk coordinates into actual coordinates we can use. (Gets center of that chunk)
+            // Generate from the center of the chunk
             int x = (chunkX << 4) + 7;
             int z = (chunkZ << 4) + 7;
 

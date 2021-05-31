@@ -1,4 +1,4 @@
-package com.yungnickyoung.minecraft.betterdungeons.world.structure;
+package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon;
 
 import com.google.common.collect.Sets;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
@@ -82,7 +82,6 @@ public class SpiderDungeonPiece extends StructurePiece {
         BitSet carvingMask = new BitSet(65536);
 
         // Surface
-//        if (surfaceStartPos.getY() == 0) surfaceStartPos.setPos(world.getHeight(Heightmap.Type.WORLD_SURFACE_WG, this.surfaceStartPos));
         int[] surface = new int[256];
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
@@ -91,20 +90,24 @@ public class SpiderDungeonPiece extends StructurePiece {
             }
         }
 
+        // Generate first main tunnel and attached room w/ small tunnels
         CaveStart smallCaveStart = generateBigTunnel(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, new BlockPos(surfaceStartPos));
         smallCaveStart.angle += 0.3f; // Offset angle a bit before spawning small tunnels to avoid overlap w/ main tunnel
         generateSmallTunnel(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos, smallCaveStart);
         generateSmallTunnel(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos, smallCaveStart);
         generateSmallTunnel(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos, smallCaveStart);
-        generateSmallTunnel(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos, smallCaveStart);
+        if (featureRand.nextFloat() < .5f) // 4th small tunnel is not guaranteed
+            generateSmallTunnel(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos, smallCaveStart);
         generateNest(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos);
 
+        // Generate second main tunnel and attached room w/ small tunnels
         smallCaveStart = generateBigTunnel(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos);
         smallCaveStart.angle += 0.3f; // Offset angle a bit before spawning small tunnels to avoid overlap w/ main tunnel
         generateSmallTunnel(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos, smallCaveStart);
         generateSmallTunnel(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos, smallCaveStart);
         generateSmallTunnel(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos, smallCaveStart);
-        generateSmallTunnel(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos, smallCaveStart);
+        if (featureRand.nextFloat() < .5f) // 4th small tunnel is not guaranteed
+            generateSmallTunnel(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos, smallCaveStart);
         generateNest(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, smallCaveStart.startPos);
 
         decorateCave(world, decoRand, chunkPos, box, carvingMask);
@@ -356,7 +359,8 @@ public class SpiderDungeonPiece extends StructurePiece {
             }
         }
 
-        generateEggRoom(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, new BlockPos(caveStartX, caveStartY, caveStartZ));
+        if (featureRand.nextFloat() < .8f) // Chance of egg room
+            generateEggRoom(world, featureRand, decoRand, chunkPos, box, surface, carvingMask, new BlockPos(caveStartX, caveStartY, caveStartZ));
     }
 
     private void generateNest(ISeedReader world, Random featureRand, Random decoRand, ChunkPos chunkPos, MutableBoundingBox box, int[] surface, BitSet carvingMask, BlockPos startPos) {
@@ -591,7 +595,7 @@ public class SpiderDungeonPiece extends StructurePiece {
         this.placeSphereRandomized(world, box, chestPos.getX(), chestPos.getY(), chestPos.getZ(), 2, decoRand, .4f, BlockSetSelector.from(Blocks.COBWEB.getDefaultState()), true);
 
         // Place chest or spawner
-        if (featureRand.nextFloat() < .5f) {
+        if (featureRand.nextFloat() < .75f) {
             this.generateChest(world, box, featureRand, chestPos.getX(), chestPos.getY(), chestPos.getZ(), LootTables.CHESTS_SIMPLE_DUNGEON); // TODO - custom loot?
         } else {
             if (box.isVecInside(chestPos)) {

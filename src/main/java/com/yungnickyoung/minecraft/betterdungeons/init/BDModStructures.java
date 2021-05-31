@@ -3,12 +3,13 @@ package com.yungnickyoung.minecraft.betterdungeons.init;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
-import com.yungnickyoung.minecraft.betterdungeons.world.structure.SmallDungeonStructure;
-import com.yungnickyoung.minecraft.betterdungeons.world.structure.SpiderDungeonStructure;
+import com.yungnickyoung.minecraft.betterdungeons.world.structure.small_dungeon.SmallDungeonStructure;
+import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.SpiderDungeonStructure;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.FlatChunkGenerator;
 import net.minecraft.world.gen.FlatGenerationSettings;
@@ -71,8 +72,8 @@ public class BDModStructures {
                 ImmutableMap.<Structure<?>, StructureSeparationSettings>builder()
                     .putAll(DimensionStructuresSettings.field_236191_b_)
                     // TODO - edit structure separation settings & expose to config
-                    .put(SMALL_DUNGEON.get(), new StructureSeparationSettings(15, 10, 34239823))
-                    .put(SPIDER_DUNGEON.get(), new StructureSeparationSettings(15, 10, 596523129))
+                    .put(SMALL_DUNGEON.get(), new StructureSeparationSettings(32, 8, 34239823))
+                    .put(SPIDER_DUNGEON.get(), new StructureSeparationSettings(32, 8, 596523129))
 //                    .put(SKELETON_DUNGEON.get(), new StructureSeparationSettings(85, 50, 59343261))
 //                    .put(ZOMBIE_DUNGEON.get(), new StructureSeparationSettings(85, 50, 59390292))
                     .build();
@@ -120,6 +121,10 @@ public class BDModStructures {
     private static void onBiomeLoad(BiomeLoadingEvent event) {
         // Remove vanilla dungeons
         event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_STRUCTURES).removeIf(supplier -> supplier.get().feature.equals(Features.MONSTER_ROOM.feature));
+
+        // Don't spawn in water biomes
+        if (event.getCategory() == Biome.Category.OCEAN || event.getCategory() == Biome.Category.RIVER || event.getCategory() == Biome.Category.BEACH)
+            return;
 
         // Add dungeons to biome generation settings
         event.getGeneration().getStructures().add(() -> BDModConfiguredStructures.CONFIGURED_SMALL_DUNGEON);

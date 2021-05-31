@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.init;
 
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
-import com.yungnickyoung.minecraft.betterdungeons.world.structure.SpiderDungeonPiece;
+import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.SpiderDungeonPiece;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.structure.IStructurePieceType;

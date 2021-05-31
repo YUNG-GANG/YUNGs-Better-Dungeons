@@ -3,6 +3,9 @@ package com.yungnickyoung.minecraft.betterdungeons.world;
 import javax.annotation.Nullable;
 import java.lang.ref.WeakReference;
 
+/**
+ * Stores information during dungeon generation for later use.
+ */
 public class DungeonContext {
     private static final ThreadLocal<DungeonContext> CONTEXT = new ThreadLocal<>();
 
