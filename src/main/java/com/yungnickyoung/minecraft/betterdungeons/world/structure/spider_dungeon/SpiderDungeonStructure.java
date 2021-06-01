@@ -58,8 +58,9 @@ public class SpiderDungeonStructure extends Structure<NoFeatureConfig> {
         @Override
         @ParametersAreNonnullByDefault
         public void func_230364_a_(DynamicRegistries registryManager, ChunkGenerator chunkGenerator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoFeatureConfig config) {
-            BlockPos startingPos = new BlockPos((chunkX << 4), 40, (chunkZ << 4));
-            StructurePiece startPiece = new SpiderDungeonPiece(startingPos);
+            int startX = chunkX << 4;
+            int startZ = chunkZ << 4;
+            StructurePiece startPiece = new SpiderDungeonBigTunnelPiece(startX, startZ);
             this.components.add(startPiece);
             startPiece.buildComponent(startPiece, this.components, this.rand);
 
