@@ -39,6 +39,9 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
                                Y_MINRADIUS = 2, Y_MAXRADIUS = 3,
                                Z_MINRADIUS = 2, Z_MAXRADIUS = 3;
 
+    private static final BlockSetSelector WOOL_SELECTOR = BlockSetSelector.from(Blocks.WHITE_WOOL.getDefaultState());
+    private static final BlockSetSelector COBWEB_SELECTOR = BlockSetSelector.from(Blocks.COBWEB.getDefaultState());
+
     public SpiderDungeonEggRoomPiece(BlockPos startPos, int pieceChainLength) {
         super(BDModStructurePieces.SPIDER_DUNGEON_EGG_ROOM_PIECE, pieceChainLength);
         this.boundingBox = new MutableBoundingBox(startPos.getX() - 64, 1, startPos.getZ() - 64, startPos.getX() + 64, 256, startPos.getZ() + 64);
@@ -184,7 +187,7 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
         BlockPos chestPos = new BlockPos((int) caveStartX, (int) caveStartY - (int) yRadius + 1, (int) caveStartZ);
 
         // Place wool egg
-        this.placeSphereRandomized(world, box, chestPos, 2, decoRand, .5f, BlockSetSelector.from(Blocks.WHITE_WOOL.getDefaultState()), false);
+        this.placeSphereRandomized(world, box, chestPos, 2, decoRand, .5f, WOOL_SELECTOR, false);
 
         // Guarantee wool immediately around chest
         this.setBlockState(world, Blocks.WHITE_WOOL.getDefaultState(), chestPos.getX() + 1, chestPos.getY(), chestPos.getZ(), box);
@@ -195,7 +198,7 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
         this.setBlockState(world, Blocks.WHITE_WOOL.getDefaultState(), chestPos.getX(), chestPos.getY() + 1, chestPos.getZ(), box);
 
         // Surround egg with more cobweb
-        this.placeSphereRandomized(world, box, chestPos.getX(), chestPos.getY(), chestPos.getZ(), 2, decoRand, .4f, BlockSetSelector.from(Blocks.COBWEB.getDefaultState()), true);
+        this.placeSphereRandomized(world, box, chestPos.getX(), chestPos.getY(), chestPos.getZ(), 2, decoRand, .4f, COBWEB_SELECTOR, true);
 
         // Place chest or spawner
         if (random.nextFloat() < .75f) {

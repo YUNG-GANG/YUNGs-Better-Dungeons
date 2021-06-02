@@ -39,6 +39,13 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
                                Y_MINRADIUS = 4, Y_MAXRADIUS = 6,
                                Z_MINRADIUS = 6, Z_MAXRADIUS = 10;
 
+    private static final BlockSetSelector SHELL_SELECTOR = new BlockSetSelector()
+        .addBlock(Blocks.COBBLESTONE.getDefaultState(), .7f)
+        .addBlock(Blocks.COBWEB.getDefaultState(), .15f)
+        .addBlock(Blocks.CAVE_AIR.getDefaultState(), .15f);
+    private static final BlockSetSelector COBWEB_SELECTOR = BlockSetSelector.from(Blocks.COBWEB.getDefaultState());
+    private static final BlockSetSelector WOOL_SELECTOR = BlockSetSelector.from(Blocks.WHITE_WOOL.getDefaultState());
+
     public SpiderDungeonNestPiece(BlockPos startPos, int pieceChainLength) {
         super(BDModStructurePieces.SPIDER_DUNGEON_NEST_PIECE, pieceChainLength);
         this.boundingBox = new MutableBoundingBox(startPos.getX() - 64, 1, startPos.getZ() - 64, startPos.getX() + 64, 256, startPos.getZ() + 64);
@@ -167,16 +174,20 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
                         float radialZDistShell = (globalZ - caveStartZ + .5f) / (zRadius + 1.2f);
                         float radialDistShell = radialXDistShell * radialXDistShell + radialYDistShell * radialYDistShell + radialZDistShell * radialZDistShell;
                         if (radialDistShell < 1.0) {
-                            if (globalX == caveStartX && globalZ == caveStartZ && globalY > caveStartY) {
+                            if (globalX == caveStartX && globalZ == caveStartZ && globalY > caveStartY) { // Guarantee wool up to ceiling
                                 this.setBlockState(world, Blocks.WHITE_WOOL.getDefaultState(), globalX, globalY, globalZ, box);
-                            } else if (!carvingMask.get(mask)) {
+                            } else if (!carvingMask.get(mask)) { // Only place cobble shell on outer rim
                                 BlockState state = this.getBlockStateFromPos(world, globalX, globalY, globalZ, box);
-                                // Make sure block is not blacklisted AND not air.
-                                // The check for air ensures the shells will not block off the connecting tunnels,
-                                // but as a result they could get destroyed by cave gen?
-                                // TODO - reconsider?
-                                if (!BLOCK_BLACKLIST.contains(state.getBlock()) && state.getMaterial() != Material.AIR) {
-                                    if (state.isAir() || state.getFluidState().getFluid() != Fluids.EMPTY || decoRand.nextFloat() < .8f) {
+//                                if (!BLOCK_BLACKLIST.contains(state.getBlock())) { // Ignore blacklisted blocks
+//                                    if (y <= minY + 3 || y >= maxY) { // Force generation of floor and ceiling.
+//                                        // We use a selector with a chance of cobweb in order to expose the openings to big tunnels
+//                                        this.setBlockState(world, decoRand, SHELL_SELECTOR, globalX, globalY, globalZ, box);
+//                                    } else if ((state.getMaterial() != Material.AIR)) { // Block must be non-air OR part of floor or ceiling
+//                                        this.setBlockState(world, Blocks.COBBLESTONE.getDefaultState(), globalX, globalY, globalZ, box);
+//                                    }
+//                                }
+                                if (!BLOCK_BLACKLIST.contains(state.getBlock()) && state.getMaterial() != Material.AIR) { // Ignore blacklisted blocks and air
+                                    if (state.getFluidState().getFluid() != Fluids.EMPTY || decoRand.nextFloat() < .8f) {
                                         this.setBlockState(world, Blocks.COBBLESTONE.getDefaultState(), globalX, globalY, globalZ, box);
                                     }
                                 }
@@ -188,7 +199,7 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
         }
 
         // Place wool cocoon
-        this.placeSphereRandomized(world, box, (int) caveStartX, (int) caveStartY + 1, (int) caveStartZ, 2, decoRand, .5f, BlockSetSelector.from(Blocks.WHITE_WOOL.getDefaultState()), true);
+        this.placeSphereRandomized(world, box, (int) caveStartX, (int) caveStartY + 1, (int) caveStartZ, 2, decoRand, .5f, WOOL_SELECTOR, true);
 
         // Guarantee wool immediately around spawner
         this.setBlockState(world, Blocks.WHITE_WOOL.getDefaultState(), (int) caveStartX + 1, (int) caveStartY + 1, (int) caveStartZ, box);
@@ -198,7 +209,7 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
         this.setBlockState(world, Blocks.WHITE_WOOL.getDefaultState(), (int) caveStartX, (int) caveStartY, (int) caveStartZ, box);
 
         // Surround cocoon with more cobweb
-        this.placeSphereRandomized(world, box, (int) caveStartX, (int) caveStartY + 1, (int) caveStartZ, 3, decoRand, .5f, BlockSetSelector.from(Blocks.COBWEB.getDefaultState()), true);
+        this.placeSphereRandomized(world, box, (int) caveStartX, (int) caveStartY + 1, (int) caveStartZ, 3, decoRand, .5f, COBWEB_SELECTOR, true);
 
         // Place spawner
         this.setBlockState(world, Blocks.SPAWNER.getDefaultState(), (int) caveStartX, (int) caveStartY + 1, (int) caveStartZ, box);

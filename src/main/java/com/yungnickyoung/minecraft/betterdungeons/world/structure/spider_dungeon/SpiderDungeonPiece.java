@@ -3,6 +3,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeo
 import com.google.common.collect.Sets;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
@@ -71,5 +72,10 @@ public abstract class SpiderDungeonPiece extends StructurePiece {
 
     protected void placeSphereRandomized(ISeedReader world, MutableBoundingBox box, int centerX, int centerY, int centerZ, float radius, Random rand, float chance, BlockSetSelector blockSelector, boolean replaceOnlyAir) {
         placeSphereRandomized(world, box, new BlockPos(centerX, centerY, centerZ), radius, rand, chance, blockSelector, replaceOnlyAir);
+    }
+
+    protected void setBlockState(ISeedReader worldIn, Random random, BlockSetSelector selector, int x, int y, int z, MutableBoundingBox boundingboxIn) {
+        BlockState blockState = selector.get(random);
+        this.setBlockState(worldIn, blockState, x, y, z, boundingboxIn);
     }
 }

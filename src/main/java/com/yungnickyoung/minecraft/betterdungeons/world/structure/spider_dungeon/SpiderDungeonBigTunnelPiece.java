@@ -173,10 +173,11 @@ public class SpiderDungeonBigTunnelPiece extends SpiderDungeonPiece {
             }
         }
 
-        // ---- Begin generating big tunnel ---- //
         float caveStartX = startPos.getX(),
               caveStartY = startPos.getY(),
               caveStartZ = startPos.getZ();
+
+        // ---- Begin generating big tunnel ---- //
 
         for (int i = 0; i < LENGTH; i++) {
             float pitchY = MathHelper.sin(this.pitch);
@@ -268,6 +269,7 @@ public class SpiderDungeonBigTunnelPiece extends SpiderDungeonPiece {
                                     }
                                 }
                             }
+
                         }
                     }
                 }
