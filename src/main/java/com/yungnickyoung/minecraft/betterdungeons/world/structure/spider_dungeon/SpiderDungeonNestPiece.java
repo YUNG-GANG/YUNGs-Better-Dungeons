@@ -76,6 +76,14 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
         this.xRadius = rand.nextFloat() * (X_MAXRADIUS - X_MINRADIUS) + X_MINRADIUS;
         this.yRadius = rand.nextFloat() * (Y_MAXRADIUS - Y_MINRADIUS) + Y_MINRADIUS;
         this.zRadius = rand.nextFloat() * (Z_MAXRADIUS - Z_MINRADIUS) + Z_MINRADIUS;
+
+        // Update bounding box
+        this.boundingBox.minX = this.startPos.getX() - (int) this.xRadius - 4;
+        this.boundingBox.maxX = this.startPos.getX() + (int) this.xRadius + 4;
+        this.boundingBox.minY = this.startPos.getY() - (int) this.yRadius - 4;
+        this.boundingBox.maxY = this.startPos.getY() + (int) this.yRadius + 4;
+        this.boundingBox.minZ = this.startPos.getZ() - (int) this.zRadius - 4;
+        this.boundingBox.maxZ = this.startPos.getZ() + (int) this.zRadius + 4;
     }
 
     /**

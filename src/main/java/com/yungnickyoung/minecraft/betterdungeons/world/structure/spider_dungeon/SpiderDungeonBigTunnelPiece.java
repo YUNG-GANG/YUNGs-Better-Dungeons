@@ -85,6 +85,14 @@ public class SpiderDungeonBigTunnelPiece extends SpiderDungeonPiece {
         this.yaws[0] = rand.nextFloat() * ((float) Math.PI * 2F);
         float yawModifier = 0f;
 
+        // Track min/max values for adjusting bounding box
+        int minX = Integer.MAX_VALUE;
+        int maxX = Integer.MIN_VALUE;
+        int minY = Integer.MAX_VALUE;
+        int maxY = Integer.MIN_VALUE;
+        int minZ = Integer.MAX_VALUE;
+        int maxZ = Integer.MIN_VALUE;
+
         // Center position of tunnel
         float caveStartX = startPos.getX(),
               caveStartY = startPos.getY(),
@@ -94,17 +102,41 @@ public class SpiderDungeonBigTunnelPiece extends SpiderDungeonPiece {
         caveStartY += MathHelper.sin(pitchY);
         caveStartZ += MathHelper.sin(this.yaws[0]) * pitchXZ;
 
+        // Check for min/max bounds
+        if (caveStartX - X_MAXRADIUS - 4 < minX) minX = (int) caveStartX - (int) X_MAXRADIUS - 4;
+        if (caveStartX + X_MAXRADIUS + 4 > maxX) maxX = (int) caveStartX + (int) X_MAXRADIUS + 4;
+        if (caveStartY - Y_MAXRADIUS - 4 < minY) minY = (int) caveStartY - (int) Y_MAXRADIUS - 4;
+        if (caveStartY + Y_MAXRADIUS + 4 > maxY) maxY = (int) caveStartY + (int) Y_MAXRADIUS + 4;
+        if (caveStartZ - Z_MAXRADIUS - 4 < minZ) minZ = (int) caveStartZ - (int) Z_MAXRADIUS - 4;
+        if (caveStartZ + Z_MAXRADIUS + 4 > maxZ) maxZ = (int) caveStartZ + (int) Z_MAXRADIUS + 4;
+
         for (int i = 1; i < LENGTH; i++) {
             // Tweak yaw for next iteration
             yawModifier = yawModifier * 0.75F;
             yawModifier += rand.nextFloat() * rand.nextFloat();
             this.yaws[i] = this.yaws[i - 1] + yawModifier * 0.01f;
 
-            // Center of this sphere
+            // Center of next sphere
             caveStartX += MathHelper.cos(this.yaws[i]) * pitchXZ;
             caveStartY += MathHelper.sin(pitchY);
             caveStartZ += MathHelper.sin(this.yaws[i]) * pitchXZ;
+
+            // Check for min/max bounds
+            if (caveStartX - X_MAXRADIUS - 4 < minX) minX = (int) caveStartX - (int) X_MAXRADIUS - 4;
+            if (caveStartX + X_MAXRADIUS + 4 > maxX) maxX = (int) caveStartX + (int) X_MAXRADIUS + 4;
+            if (caveStartY - Y_MAXRADIUS - 4 < minY) minY = (int) caveStartY - (int) Y_MAXRADIUS - 4;
+            if (caveStartY + Y_MAXRADIUS + 4 > maxY) maxY = (int) caveStartY + (int) Y_MAXRADIUS + 4;
+            if (caveStartZ - Z_MAXRADIUS - 4 < minZ) minZ = (int) caveStartZ - (int) Z_MAXRADIUS - 4;
+            if (caveStartZ + Z_MAXRADIUS + 4 > maxZ) maxZ = (int) caveStartZ + (int) Z_MAXRADIUS + 4;
         }
+
+        // Update bounding box
+        this.boundingBox.minX = minX;
+        this.boundingBox.maxX = maxX;
+        this.boundingBox.minY = minY;
+        this.boundingBox.maxY = maxY;
+        this.boundingBox.minZ = minZ;
+        this.boundingBox.maxZ = maxZ;
 
         this.endPos = new BlockPos(caveStartX, caveStartY, caveStartZ);
 
