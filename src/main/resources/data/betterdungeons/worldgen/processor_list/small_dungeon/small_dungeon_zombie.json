@@ -27,6 +27,9 @@
       "processor_type": "betterdungeons:small_dungeon_leg_processor"
     },
     {
+      "processor_type": "betterdungeons:small_dungeon_ceiling_processor"
+    },
+    {
       "processor_type": "betterdungeons:waterlogged_processor"
     },
     {

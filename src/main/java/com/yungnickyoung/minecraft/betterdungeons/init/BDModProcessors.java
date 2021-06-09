@@ -24,6 +24,7 @@ public class BDModProcessors {
     public static IStructureProcessorType<SmallDungeonChestProcessor> SMALL_DUNGEON_CHEST_PROCESSOR = () -> SmallDungeonChestProcessor.CODEC;
     public static IStructureProcessorType<SmallDungeonCobblestoneProcessor> SMALL_DUNGEON_COBBLE_PROCESSOR = () -> SmallDungeonCobblestoneProcessor.CODEC;
     public static IStructureProcessorType<SmallDungeonLegProcessor> SMALL_DUNGEON_LEG_PROCESSOR = () -> SmallDungeonLegProcessor.CODEC;
+    public static IStructureProcessorType<SmallDungeonCeilingProcessor> SMALL_DUNGEON_CEILING_PROCESSOR = () -> SmallDungeonCeilingProcessor.CODEC;
 
     public static void init() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(BDModProcessors::commonSetup);
@@ -44,6 +45,7 @@ public class BDModProcessors {
             Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "small_dungeon_chest_processor"), SMALL_DUNGEON_CHEST_PROCESSOR);
             Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "small_dungeon_cobblestone_processor"), SMALL_DUNGEON_COBBLE_PROCESSOR);
             Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "small_dungeon_leg_processor"), SMALL_DUNGEON_LEG_PROCESSOR);
+            Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "small_dungeon_ceiling_processor"), SMALL_DUNGEON_CEILING_PROCESSOR);
         });
     }
 }
