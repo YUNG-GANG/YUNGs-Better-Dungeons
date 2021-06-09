@@ -1,6 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon;
 
 import com.mojang.serialization.Codec;
+import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonContext;
 import mcp.MethodsReturnNonnullByDefault;
@@ -33,15 +34,15 @@ public class SmallDungeonChestProcessor extends StructureProcessor {
             DungeonContext context = DungeonContext.peek();
             int chestCount = DungeonContext.peek().getChestCount();
 
-            if (chestCount == 0) { // Ensure there is at least one chest
+            if (chestCount < BDConfig.smallDungeons.chestMinCount.get()) { // Ensure there is at least minimum amount of chests
                 context.incrementChestCount();
-            } else if (chestCount == 1) { // 20% chance of second chest, per chest prop
+            } else if (chestCount < BDConfig.smallDungeons.chestMaxCount.get()) { // 20% chance of additional chest, per chest prop
                 Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
                 if (random.nextFloat() > .2f) {
                     return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
                 }
                 context.incrementChestCount();
-            } else { // Can't spawn more than 2 chests
+            } else { // Can't spawn more than max chests
                 return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
             }
         }

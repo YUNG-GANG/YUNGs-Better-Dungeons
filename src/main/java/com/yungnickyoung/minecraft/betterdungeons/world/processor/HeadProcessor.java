@@ -1,6 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 
 import com.mojang.serialization.Codec;
+import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.AbstractSkullBlock;
@@ -24,7 +25,9 @@ public class HeadProcessor extends StructureProcessor {
     @Override
     public Template.BlockInfo process(IWorldReader world, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Template.BlockInfo blockInfoLocal, Template.BlockInfo blockInfoGlobal, PlacementSettings structurePlacementData, @Nullable Template template) {
         if (blockInfoGlobal.state.getBlock() instanceof AbstractSkullBlock) {
-            // TODO - config option for disabling heads
+            if (!BDConfig.general.enableHeads.get()) {
+                blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
+            }
         }
         return blockInfoGlobal;
     }

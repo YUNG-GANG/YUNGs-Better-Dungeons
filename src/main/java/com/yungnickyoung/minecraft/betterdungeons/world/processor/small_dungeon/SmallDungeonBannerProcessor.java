@@ -3,6 +3,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
+import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import com.yungnickyoung.minecraft.betterdungeons.util.Banner;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonContext;
@@ -47,9 +48,6 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
     public DungeonType getDungeonType() {
         return this.dungeonType;
     }
-
-    // Max banner count per small dungeon
-    private static final int MAX_BANNER_COUNT = 2;
 
     // All banners
     public static final Banner SMALL_DUNGEON_SKELETON_BANNER = new Banner.Builder()
@@ -98,7 +96,7 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
                 DungeonContext context = DungeonContext.peek();
 
                 // Check dungeon context to see if we have reached the max banner count for this structure piece
-                if (context.getBannerCount() >= MAX_BANNER_COUNT)
+                if (context.getBannerCount() >= BDConfig.smallDungeons.bannerMaxCount.get())
                     return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
 
                 // Chance of a banner spawning

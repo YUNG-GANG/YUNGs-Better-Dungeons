@@ -1,6 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece;
 
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
+import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModStructurePieces;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -36,8 +37,11 @@ public class SpiderDungeonBigTunnelPiece extends SpiderDungeonPiece {
                                Y_MINRADIUS = 2, Y_MAXRADIUS = 2.5f,
                                Z_MINRADIUS = 2, Z_MAXRADIUS = 2.5f;
 
-    public SpiderDungeonBigTunnelPiece(int startX, int startZ) { // Constructor used by starting piece
-        this(new BlockPos(startX, 70, startZ), 0); // TODO - config setting for y-val (min/max range?)
+    public SpiderDungeonBigTunnelPiece(int startX, int startZ, Random random) { // Constructor used by starting piece
+        this(new BlockPos(startX,
+                random.nextInt(BDConfig.spiderDungeons.spiderDungeonStartMaxY.get() - BDConfig.spiderDungeons.spiderDungeonStartMinY.get()) + BDConfig.spiderDungeons.spiderDungeonStartMinY.get(),
+                startZ),
+            0);
     }
 
     public SpiderDungeonBigTunnelPiece(BlockPos startPos, int pieceChainLength) {

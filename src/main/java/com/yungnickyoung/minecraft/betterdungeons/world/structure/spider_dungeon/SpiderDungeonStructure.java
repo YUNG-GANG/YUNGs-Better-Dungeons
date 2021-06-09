@@ -62,7 +62,8 @@ public class SpiderDungeonStructure extends Structure<NoFeatureConfig> {
             int startX = chunkX << 4;
             int startZ = chunkZ << 4;
 
-            StructurePiece startPiece = new SpiderDungeonBigTunnelPiece(startX, startZ); // Spider dungeons use traditional code-based structure gen instead of Jigsaw
+            // Spider dungeons use traditional code-based structure gen instead of Jigsaw
+            StructurePiece startPiece = new SpiderDungeonBigTunnelPiece(startX, startZ, this.rand);
             this.components.add(startPiece);
             startPiece.buildComponent(startPiece, this.components, this.rand);
 

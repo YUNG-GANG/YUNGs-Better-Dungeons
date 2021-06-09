@@ -1,6 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.structure.small_dungeon;
 
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
+import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
 import com.yungnickyoung.minecraft.betterdungeons.world.jigsaw.JigsawConfig;
 import com.yungnickyoung.minecraft.betterdungeons.world.jigsaw.JigsawManager;
 import mcp.MethodsReturnNonnullByDefault;
@@ -47,8 +48,8 @@ public class SmallDungeonStructure extends Structure<NoFeatureConfig> {
             int x = (chunkX << 4) + 7;
             int z = (chunkZ << 4) + 7;
 
-            int minY = 15;
-            int maxY = 60;
+            int minY = BDConfig.smallDungeons.smallDungeonMinY.get();
+            int maxY = BDConfig.smallDungeons.smallDungeonMaxY.get();
             int y = rand.nextInt(maxY - minY) + minY;
 
             BlockPos blockpos = new BlockPos(x, y, z);
