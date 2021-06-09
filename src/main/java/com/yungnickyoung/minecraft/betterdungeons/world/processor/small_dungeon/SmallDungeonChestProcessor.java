@@ -1,4 +1,4 @@
-package com.yungnickyoung.minecraft.betterdungeons.world.processor;
+package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon;
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
@@ -21,9 +21,9 @@ import java.util.Random;
  * Replaces some chests with air, ensuring at least 1 per dungeon but no more than 2.
  */
 @MethodsReturnNonnullByDefault
-public class ChestProcessor extends StructureProcessor {
-    public static final ChestProcessor INSTANCE = new ChestProcessor();
-    public static final Codec<ChestProcessor> CODEC = Codec.unit(() -> INSTANCE);
+public class SmallDungeonChestProcessor extends StructureProcessor {
+    public static final SmallDungeonChestProcessor INSTANCE = new SmallDungeonChestProcessor();
+    public static final Codec<SmallDungeonChestProcessor> CODEC = Codec.unit(() -> INSTANCE);
 
     @ParametersAreNonnullByDefault
     @Override

@@ -11,6 +11,9 @@ public class BetterDungeons {
     public static final String MOD_ID = "betterdungeons";
     public static final Logger LOGGER = LogManager.getLogger();
 
+    // Global var for placing debug blocks when generating spider dungeons
+    public static final boolean DEBUG_MODE = false;
+
     public BetterDungeons() {
         init();
     }

@@ -1,5 +1,6 @@
-package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon;
+package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece;
 
+import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModStructurePieces;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -198,7 +199,8 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
             maxZ = MathHelper.clamp(maxZ, 0, 15);
 
             // DEBUG
-//            this.setBlockState(world, Blocks.DIAMOND_BLOCK.getDefaultState(), (int) caveStartX, (int) caveStartY, (int) caveStartZ, box);
+            if (BetterDungeons.DEBUG_MODE)
+                this.setBlockState(world, Blocks.DIAMOND_BLOCK.getDefaultState(), (int) caveStartX, (int) caveStartY, (int) caveStartZ, box);
 
             // -- Carve sphere -- //
             for (float x = minX; x <= maxX; x++) {

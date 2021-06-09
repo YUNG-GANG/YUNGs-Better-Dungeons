@@ -1,10 +1,10 @@
 package com.yungnickyoung.minecraft.betterdungeons.init;
 
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
-import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.SpiderDungeonBigTunnelPiece;
-import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.SpiderDungeonEggRoomPiece;
-import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.SpiderDungeonNestPiece;
-import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.SpiderDungeonSmallTunnelPiece;
+import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece.SpiderDungeonBigTunnelPiece;
+import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece.SpiderDungeonEggRoomPiece;
+import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece.SpiderDungeonNestPiece;
+import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece.SpiderDungeonSmallTunnelPiece;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.structure.IStructurePieceType;

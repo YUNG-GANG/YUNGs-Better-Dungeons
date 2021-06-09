@@ -1,4 +1,4 @@
-package com.yungnickyoung.minecraft.betterdungeons.world.processor;
+package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon;
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
@@ -16,9 +16,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
 @MethodsReturnNonnullByDefault
-public class CeilingPropProcessor extends StructureProcessor {
-    public static final CeilingPropProcessor INSTANCE = new CeilingPropProcessor();
-    public static final Codec<CeilingPropProcessor> CODEC = Codec.unit(() -> INSTANCE);
+public class SmallDungeonCeilingPropProcessor extends StructureProcessor {
+    public static final SmallDungeonCeilingPropProcessor INSTANCE = new SmallDungeonCeilingPropProcessor();
+    public static final Codec<SmallDungeonCeilingPropProcessor> CODEC = Codec.unit(() -> INSTANCE);
 
     @ParametersAreNonnullByDefault
     @Override

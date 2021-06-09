@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
- * Sets mob spawners to spawn the proper mob based on the dungeon type.
+ * Sets mob spawners to spawn the proper mob based on its spawner_mob JSON entry.
  */
 @MethodsReturnNonnullByDefault
 public class MobSpawnerProcessor extends StructureProcessor {

@@ -1,4 +1,4 @@
-package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon;
+package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece;
 
 import com.google.common.collect.Sets;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;

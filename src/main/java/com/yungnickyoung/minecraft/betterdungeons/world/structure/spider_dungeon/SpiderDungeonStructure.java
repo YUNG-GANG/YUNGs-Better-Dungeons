@@ -2,9 +2,9 @@ package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeo
 
 import com.google.common.collect.ImmutableList;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
+import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece.SpiderDungeonBigTunnelPiece;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.EntityType;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.util.registry.DynamicRegistries;
 import net.minecraft.world.biome.Biome;
@@ -36,6 +36,7 @@ public class SpiderDungeonStructure extends Structure<NoFeatureConfig> {
         return GenerationStage.Decoration.UNDERGROUND_STRUCTURES;
     }
 
+    // Spider dungeons can only spawn spiders
     private static final List<MobSpawnInfo.Spawners> STRUCTURE_MONSTERS = ImmutableList.of(
         new MobSpawnInfo.Spawners(EntityType.SPIDER, 100, 4, 15)
     );
@@ -60,40 +61,13 @@ public class SpiderDungeonStructure extends Structure<NoFeatureConfig> {
         public void func_230364_a_(DynamicRegistries registryManager, ChunkGenerator chunkGenerator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoFeatureConfig config) {
             int startX = chunkX << 4;
             int startZ = chunkZ << 4;
-            StructurePiece startPiece = new SpiderDungeonBigTunnelPiece(startX, startZ);
+
+            StructurePiece startPiece = new SpiderDungeonBigTunnelPiece(startX, startZ); // Spider dungeons use traditional code-based structure gen instead of Jigsaw
             this.components.add(startPiece);
             startPiece.buildComponent(startPiece, this.components, this.rand);
 
-//             Set the bounds of the structure once it's assembled
+            // Set the bounds of the structure once it's assembled
             this.recalculateStructureSize();
-
-//            // Turns the chunk coordinates into actual coordinates we can use. (Gets center of that chunk)
-//            int x = (chunkX << 4) + 7;
-//            int z = (chunkZ << 4) + 7;
-//
-//            int y = 80;
-//
-//            BlockPos blockpos = new BlockPos(x, y, z);
-//            JigsawConfig jigsawConfig = new JigsawConfig(
-//                () -> registryManager.getRegistry(Registry.JIGSAW_POOL_KEY).getOrDefault(new ResourceLocation(BetterDungeons.MOD_ID, "spider_start")),
-//                20
-//            );
-//
-//            // Generate the structure
-//            JigsawManager.assembleJigsawStructure(
-//                registryManager,
-//                jigsawConfig,
-//                chunkGenerator,
-//                templateManagerIn,
-//                blockpos,
-//                this.components,
-//                this.rand,
-//                false,
-//                false
-//            );
-//
-//            // Set the bounds of the structure once it's assembled
-//            this.recalculateStructureSize();
 
             // Debug log the coordinates of the center starting piece.
             BetterDungeons.LOGGER.debug("Spider Dungeon at {} {} {}",

@@ -1,4 +1,4 @@
-package com.yungnickyoung.minecraft.betterdungeons.world.processor;
+package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -31,15 +31,15 @@ import java.util.Random;
  * falls within the desired range.
  */
 @MethodsReturnNonnullByDefault
-public class BannerProcessor extends StructureProcessor {
-    public static final Codec<BannerProcessor> CODEC = RecordCodecBuilder.create(codecBuilder -> codecBuilder
+public class SmallDungeonBannerProcessor extends StructureProcessor {
+    public static final Codec<SmallDungeonBannerProcessor> CODEC = RecordCodecBuilder.create(codecBuilder -> codecBuilder
         .group(
             Codec.STRING
                 .fieldOf("dungeon_type")
-                .forGetter(bannerProcessor -> bannerProcessor.getDungeonType().getName()))
-        .apply(codecBuilder, codecBuilder.stable(BannerProcessor::new)));
+                .forGetter(smallDungeonBannerProcessor -> smallDungeonBannerProcessor.getDungeonType().getName()))
+        .apply(codecBuilder, codecBuilder.stable(SmallDungeonBannerProcessor::new)));
 
-    private BannerProcessor(String dungeonType) {
+    private SmallDungeonBannerProcessor(String dungeonType) {
         this.dungeonType = DungeonType.fromString(dungeonType);
     }
 
@@ -47,6 +47,9 @@ public class BannerProcessor extends StructureProcessor {
     public DungeonType getDungeonType() {
         return this.dungeonType;
     }
+
+    // Max banner count per small dungeon
+    private static final int MAX_BANNER_COUNT = 2;
 
     // All banners
     public static final Banner SMALL_DUNGEON_SKELETON_BANNER = new Banner.Builder()
@@ -95,7 +98,7 @@ public class BannerProcessor extends StructureProcessor {
                 DungeonContext context = DungeonContext.peek();
 
                 // Check dungeon context to see if we have reached the max banner count for this structure piece
-                if (context.getBannerCount() >= 2)
+                if (context.getBannerCount() >= MAX_BANNER_COUNT)
                     return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
 
                 // Chance of a banner spawning
