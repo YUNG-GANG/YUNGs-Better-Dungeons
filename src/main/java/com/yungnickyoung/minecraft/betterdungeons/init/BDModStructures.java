@@ -3,6 +3,7 @@ package com.yungnickyoung.minecraft.betterdungeons.init;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
+import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.small_dungeon.SmallDungeonStructure;
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.SpiderDungeonStructure;
 import net.minecraft.util.ResourceLocation;
@@ -72,8 +73,8 @@ public class BDModStructures {
                 ImmutableMap.<Structure<?>, StructureSeparationSettings>builder()
                     .putAll(DimensionStructuresSettings.field_236191_b_)
                     // TODO - edit structure separation settings & expose to config
-                    .put(SMALL_DUNGEON.get(), new StructureSeparationSettings(32, 8, 34239823))
-                    .put(SPIDER_DUNGEON.get(), new StructureSeparationSettings(32, 8, 596523129))
+                    .put(SMALL_DUNGEON.get(), new StructureSeparationSettings(BDConfig.smallDungeons.smallDungeonSeparationDistance.get(), BDConfig.smallDungeons.smallDungeonSeparationDistance.get() / 2, 34239823))
+                    .put(SPIDER_DUNGEON.get(), new StructureSeparationSettings(BDConfig.spiderDungeons.spiderDungeonSeparationDistance.get(), BDConfig.spiderDungeons.spiderDungeonSeparationDistance.get() / 2, 596523129))
 //                    .put(SKELETON_DUNGEON.get(), new StructureSeparationSettings(85, 50, 59343261))
 //                    .put(ZOMBIE_DUNGEON.get(), new StructureSeparationSettings(85, 50, 59390292))
                     .build();
@@ -127,8 +128,12 @@ public class BDModStructures {
             return;
 
         // Add dungeons to biome generation settings
-        event.getGeneration().getStructures().add(() -> BDModConfiguredStructures.CONFIGURED_SMALL_DUNGEON);
-        event.getGeneration().getStructures().add(() -> BDModConfiguredStructures.CONFIGURED_SPIDER_DUNGEON);
+        if (BDConfig.smallDungeons.enableSmallDungeons.get())
+            event.getGeneration().getStructures().add(() -> BDModConfiguredStructures.CONFIGURED_SMALL_DUNGEON);
+
+        if (BDConfig.spiderDungeons.enableSpiderDungeons.get())
+            event.getGeneration().getStructures().add(() -> BDModConfiguredStructures.CONFIGURED_SPIDER_DUNGEON);
+
 //        event.getGeneration().getStructures().add(() -> ModConfiguredStructures.CONFIGURED_SKELETON_DUNGEON);
 //        event.getGeneration().getStructures().add(() -> ModConfiguredStructures.CONFIGURED_ZOMBIE_DUNGEON);
     }

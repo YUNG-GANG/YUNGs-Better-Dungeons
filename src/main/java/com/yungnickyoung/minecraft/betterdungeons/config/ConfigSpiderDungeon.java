@@ -5,6 +5,8 @@ import net.minecraftforge.common.ForgeConfigSpec;
 public class ConfigSpiderDungeon {
     public final ForgeConfigSpec.ConfigValue<Integer> spiderDungeonStartMinY;
     public final ForgeConfigSpec.ConfigValue<Integer> spiderDungeonStartMaxY;
+    public final ForgeConfigSpec.ConfigValue<Boolean> enableSpiderDungeons;
+    public final ForgeConfigSpec.ConfigValue<Integer> spiderDungeonSeparationDistance;
 
     public ConfigSpiderDungeon(final ForgeConfigSpec.Builder BUILDER) {
         BUILDER
@@ -31,6 +33,21 @@ public class ConfigSpiderDungeon {
                 " Default: 71")
             .worldRestart()
             .define("Spider Dungeon Max Start Y", 71);
+
+        enableSpiderDungeons = BUILDER
+            .comment(
+                " Whether or not Spider Dungeons from Better Dungeons should spawn.\n" +
+                " Default: true")
+            .worldRestart()
+            .define("Spawn Spider Dungeons", true);
+
+        spiderDungeonSeparationDistance = BUILDER
+            .comment(
+                " The average number of chunks between adjacent Spider Dungeons.\n" +
+                " This controls how often Spider Dungeons spawn. Higher value = more rare.\n" +
+                " Default: 48")
+            .worldRestart()
+            .define("Spider Dungeon Average Separation Distance", 48);
 
         BUILDER.pop();
     }
