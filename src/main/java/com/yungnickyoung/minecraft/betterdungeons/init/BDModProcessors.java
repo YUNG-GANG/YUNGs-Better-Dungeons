@@ -3,6 +3,7 @@ package com.yungnickyoung.minecraft.betterdungeons.init;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
 import com.yungnickyoung.minecraft.betterdungeons.world.processor.*;
 import com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dungeon.RuinedStoneBrickProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dungeon.SkeletonDungeonLegProcessor;
 import com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dungeon.SkeletonMobSpawnerProcessor;
 import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon.*;
 import com.yungnickyoung.minecraft.betterdungeons.world.processor.CobwebProcessor;
@@ -31,6 +32,7 @@ public class BDModProcessors {
     // Skeleton dungeons
     public static IStructureProcessorType<RuinedStoneBrickProcessor> SKELETON_DUNGEON_RUINED_STONE_BRICKS_PROCESSOR = () -> RuinedStoneBrickProcessor.CODEC;
     public static IStructureProcessorType<SkeletonMobSpawnerProcessor> SKELETON_MOB_SPAWNER_PROCESSOR = () -> SkeletonMobSpawnerProcessor.CODEC;
+    public static IStructureProcessorType<SkeletonDungeonLegProcessor> SKELETON_DUNGEON_LEG_PROCESSOR = () -> SkeletonDungeonLegProcessor.CODEC;
 
     public static void init() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(BDModProcessors::commonSetup);
@@ -56,6 +58,7 @@ public class BDModProcessors {
             // Skeleton dungeons
             Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon_ruined_stone_bricks_processor"), SKELETON_DUNGEON_RUINED_STONE_BRICKS_PROCESSOR);
             Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_mob_spawner_processor"), SKELETON_MOB_SPAWNER_PROCESSOR);
+            Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon_leg_processor"), SKELETON_DUNGEON_LEG_PROCESSOR);
         });
     }
 }
