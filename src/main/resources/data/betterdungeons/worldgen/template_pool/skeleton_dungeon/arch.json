@@ -1,0 +1,114 @@
+{
+  "name": "betterdungeons:arch",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:skeleton_dungeon/arches/arch_0",
+        "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:skeleton_dungeon/arches/arch_1",
+        "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:skeleton_dungeon/arches/arch_2",
+        "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:skeleton_dungeon/arches/arch_3",
+        "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:skeleton_dungeon/arches/arch_4",
+        "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:skeleton_dungeon/arches/arch_5",
+        "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:skeleton_dungeon/arches/arch_6",
+        "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:skeleton_dungeon/arches/arch_7",
+        "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:skeleton_dungeon/arches/arch_8",
+        "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:skeleton_dungeon/arches/arch_9",
+        "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:skeleton_dungeon/arches/arch_10",
+        "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:skeleton_dungeon/arches/arch_11",
+        "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

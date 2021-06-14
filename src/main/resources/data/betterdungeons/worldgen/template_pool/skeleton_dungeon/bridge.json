@@ -1,0 +1,24 @@
+{
+  "name": "betterdungeons:bridge",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:skeleton_dungeon/bridges/bridge_stone",
+        "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:skeleton_dungeon/bridges/bridge_wood",
+        "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

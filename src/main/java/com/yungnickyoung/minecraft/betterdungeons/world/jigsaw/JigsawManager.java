@@ -119,10 +119,32 @@ public class JigsawManager {
             this.templateManager = templateManager;
             this.structurePieces = structurePieces;
             this.rand = rand;
-            // Initialize piece counts
+            // Initialize max piece counts
             this.pieceCounts = new HashMap<>();
-            // TODO - add piece count constraints
-//            this.pieceCounts.put(new ResourceLocation(BetterStrongholds.MOD_ID, "rooms/grand_library"), BSConfig.pieceSettings.grandLibraryMaxCount.get());
+            // Limit pieces in skeleton dungeons to ensure variation
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/stair2/stair2_0"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/stair2/stair2_1"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/stair2/stair2_2"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/stair2/stair2_3"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/stair2/stair2_4"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/stair2/stair2_5"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/bridges/bridge_stone"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/bridges/bridge_wood"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/bridges/bridge_big_0"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/bridges/bridge_big_1"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/bridges/bridge_big_2"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_0"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_1"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_2"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_3"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_4"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_5"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_6"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_7"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_8"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_9"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_10"), 1);
+            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_11"), 1);
             this.maxY = 255;
         }
 
