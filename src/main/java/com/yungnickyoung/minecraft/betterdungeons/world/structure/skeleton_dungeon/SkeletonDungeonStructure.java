@@ -3,8 +3,8 @@ package com.yungnickyoung.minecraft.betterdungeons.world.structure.skeleton_dung
 import com.google.common.collect.ImmutableList;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
 import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
-import com.yungnickyoung.minecraft.betterdungeons.world.jigsaw.YungJigsawConfig;
-import com.yungnickyoung.minecraft.betterdungeons.world.jigsaw.YungJigsawManager;
+import com.yungnickyoung.minecraft.yungsapi.api.YungJigsawConfig;
+import com.yungnickyoung.minecraft.yungsapi.api.YungJigsawManager;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;

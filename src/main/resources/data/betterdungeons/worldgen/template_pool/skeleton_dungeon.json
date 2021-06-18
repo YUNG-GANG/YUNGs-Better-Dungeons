@@ -5,11 +5,11 @@
     {
       "weight": 1,
       "element": {
-        "name": "betterdungeons:skeleton_dungeon/skeleton_shell",
+        "name": "skeleton_shell",
         "location": "betterdungeons:skeleton_dungeon/skeleton_shell",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "betterdungeons:yung_single_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     }
   ]
