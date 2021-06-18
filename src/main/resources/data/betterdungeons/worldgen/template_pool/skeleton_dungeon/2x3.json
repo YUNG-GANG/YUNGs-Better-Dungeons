@@ -5,109 +5,121 @@
     {
       "weight": 1,
       "element": {
+        "name": "2x3_0",
         "location": "betterdungeons:skeleton_dungeon/2x3/2x3_0",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "2x3_1",
         "location": "betterdungeons:skeleton_dungeon/2x3/2x3_1",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "2x3_2",
         "location": "betterdungeons:skeleton_dungeon/2x3/2x3_2",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
-        "location": "betterdungeons:skeleton_dungeon/2x3/2x3_3",
+        "name": "2x3_3",
+        "location": "2x3_3",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "2x3_4",
         "location": "betterdungeons:skeleton_dungeon/2x3/2x3_4",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "2x3_5",
         "location": "betterdungeons:skeleton_dungeon/2x3/2x3_5",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "2x3_6",
         "location": "betterdungeons:skeleton_dungeon/2x3/2x3_6",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "2x3_7",
         "location": "betterdungeons:skeleton_dungeon/2x3/2x3_7",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "2x3_8",
         "location": "betterdungeons:skeleton_dungeon/2x3/2x3_8",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "2x3_9",
         "location": "betterdungeons:skeleton_dungeon/2x3/2x3_9",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "2x3_10",
         "location": "betterdungeons:skeleton_dungeon/2x3/2x3_10",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "2x3_11",
         "location": "betterdungeons:skeleton_dungeon/2x3/2x3_empty",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     }
   ]

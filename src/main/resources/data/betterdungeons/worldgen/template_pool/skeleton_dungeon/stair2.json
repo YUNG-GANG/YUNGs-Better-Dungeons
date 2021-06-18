@@ -5,55 +5,67 @@
     {
       "weight": 1,
       "element": {
+        "name": "stair2_0",
         "location": "betterdungeons:skeleton_dungeon/stair2/stair2_0",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "max_count": 1,
+        "element_type": "betterdungeons:yung_max_count_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "stair2_1",
         "location": "betterdungeons:skeleton_dungeon/stair2/stair2_1",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "max_count": 1,
+        "element_type": "betterdungeons:yung_max_count_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "stair2_2",
         "location": "betterdungeons:skeleton_dungeon/stair2/stair2_2",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "max_count": 1,
+        "element_type": "betterdungeons:yung_max_count_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "stair2_3",
         "location": "betterdungeons:skeleton_dungeon/stair2/stair2_3",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "max_count": 1,
+        "element_type": "betterdungeons:yung_max_count_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "stair2_4",
         "location": "betterdungeons:skeleton_dungeon/stair2/stair2_4",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "max_count": 1,
+        "element_type": "betterdungeons:yung_max_count_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "stair2_5",
         "location": "betterdungeons:skeleton_dungeon/stair2/stair2_5",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "max_count": 1,
+        "element_type": "betterdungeons:yung_max_count_single_element"
       }
     }
   ]

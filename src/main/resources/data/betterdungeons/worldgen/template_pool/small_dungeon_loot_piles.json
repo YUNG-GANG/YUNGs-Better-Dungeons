@@ -5,91 +5,101 @@
     {
       "weight": 7,
       "element": {
+        "name": "betterdungeons:small_dungeon/loot_piles/loot_pile_empty",
         "location": "betterdungeons:small_dungeon/loot_piles/loot_pile_empty",
         "processors": "minecraft:empty",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "betterdungeons:small_dungeon/loot_piles/loot_pile_0",
         "location": "betterdungeons:small_dungeon/loot_piles/loot_pile_0",
         "processors": "betterdungeons:small_dungeon/small_dungeon_loot_pile",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "betterdungeons:small_dungeon/loot_piles/loot_pile_1",
         "location": "betterdungeons:small_dungeon/loot_piles/loot_pile_1",
         "processors": "betterdungeons:small_dungeon/small_dungeon_loot_pile",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "betterdungeons:small_dungeon/loot_piles/loot_pile_2",
         "location": "betterdungeons:small_dungeon/loot_piles/loot_pile_2",
         "processors": "betterdungeons:small_dungeon/small_dungeon_loot_pile",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "betterdungeons:small_dungeon/loot_piles/loot_pile_3",
         "location": "betterdungeons:small_dungeon/loot_piles/loot_pile_3",
         "processors": "betterdungeons:small_dungeon/small_dungeon_loot_pile",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "betterdungeons:small_dungeon/loot_piles/loot_pile_4",
         "location": "betterdungeons:small_dungeon/loot_piles/loot_pile_4",
         "processors": "betterdungeons:small_dungeon/small_dungeon_loot_pile",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "betterdungeons:small_dungeon/loot_piles/loot_pile_5",
         "location": "betterdungeons:small_dungeon/loot_piles/loot_pile_5",
         "processors": "betterdungeons:small_dungeon/small_dungeon_loot_pile",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "betterdungeons:small_dungeon/loot_piles/loot_pile_6",
         "location": "betterdungeons:small_dungeon/loot_piles/loot_pile_6",
         "processors": "betterdungeons:small_dungeon/small_dungeon_loot_pile",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "betterdungeons:small_dungeon/loot_piles/loot_pile_7",
         "location": "betterdungeons:small_dungeon/loot_piles/loot_pile_7",
         "processors": "betterdungeons:small_dungeon/small_dungeon_loot_pile",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "betterdungeons:small_dungeon/loot_piles/loot_pile_8",
         "location": "betterdungeons:small_dungeon/loot_piles/loot_pile_8",
         "processors": "betterdungeons:small_dungeon/small_dungeon_loot_pile",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     }
   ]

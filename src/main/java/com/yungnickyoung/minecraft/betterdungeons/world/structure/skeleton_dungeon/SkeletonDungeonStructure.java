@@ -3,8 +3,8 @@ package com.yungnickyoung.minecraft.betterdungeons.world.structure.skeleton_dung
 import com.google.common.collect.ImmutableList;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
 import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
-import com.yungnickyoung.minecraft.betterdungeons.world.jigsaw.JigsawConfig;
-import com.yungnickyoung.minecraft.betterdungeons.world.jigsaw.JigsawManager;
+import com.yungnickyoung.minecraft.betterdungeons.world.jigsaw.YungJigsawConfig;
+import com.yungnickyoung.minecraft.betterdungeons.world.jigsaw.YungJigsawManager;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
@@ -72,13 +72,13 @@ public class SkeletonDungeonStructure extends Structure<NoFeatureConfig> {
             int y = rand.nextInt(maxY - minY) + minY;
 
             BlockPos blockpos = new BlockPos(x, y, z);
-            JigsawConfig jigsawConfig = new JigsawConfig(
+            YungJigsawConfig jigsawConfig = new YungJigsawConfig(
                 () -> dynamicRegistryManager.getRegistry(Registry.JIGSAW_POOL_KEY).getOrDefault(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon")),
                 20
             );
 
             // Generate the structure
-            JigsawManager.assembleJigsawStructure(
+            YungJigsawManager.assembleJigsawStructure(
                 dynamicRegistryManager,
                 jigsawConfig,
                 chunkGenerator,

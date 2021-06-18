@@ -3,6 +3,8 @@ package com.yungnickyoung.minecraft.betterdungeons.world.jigsaw;
 import com.google.common.collect.Queues;
 import com.mojang.datafixers.util.Pair;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
+import com.yungnickyoung.minecraft.betterdungeons.world.jigsaw.piece.IYungJigsawPiece;
+import com.yungnickyoung.minecraft.betterdungeons.world.jigsaw.piece.YungMaxCountJigsawPiece;
 import net.minecraft.block.JigsawBlock;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -29,10 +31,10 @@ import java.util.*;
 /**
  * Reimplementation of {@link net.minecraft.world.gen.feature.jigsaw.JigsawManager} with additional options.
  */
-public class JigsawManager {
+public class YungJigsawManager {
     public static void assembleJigsawStructure(
         DynamicRegistries dynamicRegistryManager,
-        JigsawConfig jigsawConfig,
+        YungJigsawConfig jigsawConfig,
         ChunkGenerator chunkGenerator,
         TemplateManager templateManager,
         BlockPos startPos,
@@ -109,7 +111,8 @@ public class JigsawManager {
         private final List<? super AbstractVillagePiece> structurePieces;
         private final Random rand;
         public final Deque<Entry> availablePieces = Queues.newArrayDeque();
-        private final Map<ResourceLocation, Integer> pieceCounts;
+        private final Map<String, Integer> pieceCounts;
+        private final Map<String, Integer> maxPieceCounts;
         private final int maxY;
 
         public Assembler(Registry<JigsawPattern> patternRegistry, int maxDepth, ChunkGenerator chunkGenerator, TemplateManager templateManager, List<? super AbstractVillagePiece> structurePieces, Random rand) {
@@ -119,32 +122,8 @@ public class JigsawManager {
             this.templateManager = templateManager;
             this.structurePieces = structurePieces;
             this.rand = rand;
-            // Initialize max piece counts
             this.pieceCounts = new HashMap<>();
-            // Limit pieces in skeleton dungeons to ensure variation
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/stair2/stair2_0"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/stair2/stair2_1"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/stair2/stair2_2"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/stair2/stair2_3"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/stair2/stair2_4"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/stair2/stair2_5"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/bridges/bridge_stone"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/bridges/bridge_wood"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/bridges/bridge_big_0"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/bridges/bridge_big_1"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/bridges/bridge_big_2"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_0"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_1"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_2"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_3"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_4"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_5"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_6"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_7"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_8"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_9"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_10"), 1);
-            this.pieceCounts.put(new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon/arches/arch_11"), 1);
+            this.maxPieceCounts = new HashMap<>();
             this.maxY = 255;
         }
 
@@ -255,17 +234,41 @@ public class JigsawManager {
 
                 JigsawPiece candidatePiece = chosenPiecePair.getFirst();
 
-                // Vanilla check. Not sure on the implications of this.
+                // Abort if we reach an empty piece.
+                // Not sure if aborting is necessary here, but this is vanilla behavior.
                 if (candidatePiece == EmptyJigsawPiece.INSTANCE) {
                     return null;
                 }
 
+                // Abort if piece is not a YUNG piece.
+                // YUNG pieces are required since they all have "name" entries, allowing for
+                // piece selection optimization performed in this algorithm.
+                if (!(candidatePiece instanceof IYungJigsawPiece)) {
+                    BetterDungeons.LOGGER.error("Invalid jigsaw piece {}. When using the YUNG Jigsaw Manager, all pieces must be YUNG types!", candidatePiece.toString());
+                    return null;
+                }
+
+                // Get the piece's name
+                String pieceName = ((IYungJigsawPiece) candidatePiece).getName();
+
                 // Before performing any logic, check to ensure we haven't reached the max number of instances of this piece.
-                // This logic is my own additional logic - vanilla does not offer this behavior.
-                ResourceLocation pieceName = ((SingleJigsawPiece)candidatePiece).field_236839_c_.left().get();
-                if (this.pieceCounts.containsKey(pieceName)) {
-                    if (this.pieceCounts.get(pieceName) <= 0) {
-                        // Remove this piece from the list of candidates and retry.
+                // This is my own additional feature - vanilla does not offer this behavior.
+                if (candidatePiece instanceof YungMaxCountJigsawPiece) {
+                    int maxCount = ((YungMaxCountJigsawPiece) candidatePiece).getMaxCount();
+
+                    // Check if max count of this piece does not match stored max count for this name.
+                    // This can happen when the same name is reused across pools, but the max count values are different.
+                    if (this.maxPieceCounts.containsKey(pieceName) && this.maxPieceCounts.get(pieceName) != maxCount) {
+                        BetterDungeons.LOGGER.error("YUNG Jigsaw piece with name {} and max_count {} does not match stored max_count of {}!", pieceName, maxCount, this.maxPieceCounts.get(pieceName));
+                        BetterDungeons.LOGGER.error("This can happen when multiple pieces across pools use the same name, but have different max_count values.");
+                        BetterDungeons.LOGGER.error("Please change these max_count values to match. Using max_count={} for now...", maxCount);
+                    }
+
+                    // Update stored maxCount entry
+                    this.maxPieceCounts.put(pieceName, maxCount);
+
+                    // Remove this piece from the list of candidates and retry if we reached the max count
+                    if (this.pieceCounts.getOrDefault(pieceName, 0) >= maxCount) {
                         totalWeightSum -= chosenPiecePair.getSecond();
                         candidatePieces.remove(chosenPiecePair);
                         continue;
@@ -421,9 +424,10 @@ public class JigsawManager {
                                 if (depth + 1 <= this.maxDepth) {
                                     this.availablePieces.addLast(new Entry(newPiece, pieceVoxelShape, targetPieceBoundsTop, depth + 1));
                                 }
-                                // Update piece count, if an entry exists for this piece
-                                if (this.pieceCounts.containsKey(pieceName)) {
-                                    this.pieceCounts.put(pieceName, this.pieceCounts.get(pieceName) - 1);
+
+                                // Update piece count, if piece is of max count type
+                                if (candidatePiece instanceof YungMaxCountJigsawPiece) {
+                                    this.pieceCounts.put(pieceName, this.pieceCounts.getOrDefault(pieceName, 0) + 1);
                                 }
                                 return candidatePiece;
                             }

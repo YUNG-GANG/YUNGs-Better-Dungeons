@@ -5,19 +5,23 @@
     {
       "weight": 1,
       "element": {
+        "name": "bridge_stone",
         "location": "betterdungeons:skeleton_dungeon/bridges/bridge_stone",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "max_count": 1,
+        "element_type": "betterdungeons:yung_max_count_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "bridge_wood",
         "location": "betterdungeons:skeleton_dungeon/bridges/bridge_wood",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "max_count": 1,
+        "element_type": "betterdungeons:yung_max_count_single_element"
       }
     }
   ]

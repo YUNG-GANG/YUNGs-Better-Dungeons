@@ -5,64 +5,71 @@
     {
       "weight": 3,
       "element": {
+        "name": "campfire_prop_0",
         "location": "betterdungeons:skeleton_dungeon/campfire_prop/campfire_prop_0",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "campfire_prop_1",
         "location": "betterdungeons:skeleton_dungeon/campfire_prop/campfire_prop_1",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "campfire_prop_2",
         "location": "betterdungeons:skeleton_dungeon/campfire_prop/campfire_prop_2",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "campfire_prop_3",
         "location": "betterdungeons:skeleton_dungeon/campfire_prop/campfire_prop_3",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "campfire_prop_4",
         "location": "betterdungeons:skeleton_dungeon/campfire_prop/campfire_prop_4",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "campfire_prop_5",
         "location": "betterdungeons:skeleton_dungeon/campfire_prop/campfire_prop_5",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     },
     {
       "weight": 1,
       "element": {
+        "name": "campfire_prop_6",
         "location": "betterdungeons:skeleton_dungeon/campfire_prop/campfire_prop_6",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "betterdungeons:yung_single_element"
       }
     }
   ]
