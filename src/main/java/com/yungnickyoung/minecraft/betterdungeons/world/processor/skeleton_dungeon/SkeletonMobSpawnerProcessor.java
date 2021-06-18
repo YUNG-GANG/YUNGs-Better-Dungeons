@@ -46,16 +46,16 @@ public class SkeletonMobSpawnerProcessor extends StructureProcessor {
             blockInfoGlobal.nbt.getList("SpawnPotentials", spawnPotentials.getId()).clear();
             blockInfoGlobal.nbt.getList("SpawnPotentials", spawnPotentials.getId()).add(0, spawnPotentials);
 
-            // Increase player range from default of 16 to 22
-            blockInfoGlobal.nbt.putShort("RequiredPlayerRange", (short)22);
+            // Player range (default 16)
+            blockInfoGlobal.nbt.putShort("RequiredPlayerRange", (short)16);
 
-            // Increase range at which skeletons can spawn from spawner
+            // Range at which skeletons can spawn from spawner
             blockInfoGlobal.nbt.putShort("SpawnRange", (short)8);
 
-            // Increase max nearby entities allowed
+            // Max nearby entities allowed
             blockInfoGlobal.nbt.putShort("MaxNearbyEntities", (short)8);
 
-            // Decrease time between spawn attempts
+            // Time between spawn attempts (default 800)
             blockInfoGlobal.nbt.putShort("MaxSpawnDelay", (short)650);
         }
         return blockInfoGlobal;

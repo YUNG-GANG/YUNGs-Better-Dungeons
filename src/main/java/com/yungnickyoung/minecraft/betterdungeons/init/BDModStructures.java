@@ -121,24 +121,31 @@ public class BDModStructures {
      * Adds the appropriate structure feature to each biome as it loads in.
      */
     private static void onBiomeLoad(BiomeLoadingEvent event) {
-        // Remove vanilla dungeons
-        event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_STRUCTURES).removeIf(supplier -> supplier.get().feature.equals(Features.MONSTER_ROOM.feature));
+        // Only generate in biomes w/ vanilla dungeons
+        if (event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_STRUCTURES)
+            .stream()
+            .anyMatch(supplier -> supplier.get().feature.equals(Features.MONSTER_ROOM.feature))
+        ) {
+            // Remove vanilla dungeon
+            if (BDConfig.general.removeVanillaDungeons.get())
+                event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_STRUCTURES).removeIf(s -> s.get().feature.equals(Features.MONSTER_ROOM.feature));
 
-        // Don't spawn in water biomes
-        if (event.getCategory() == Biome.Category.OCEAN || event.getCategory() == Biome.Category.RIVER || event.getCategory() == Biome.Category.BEACH)
-            return;
+            // Don't spawn in water biomes
+            if (event.getCategory() == Biome.Category.OCEAN || event.getCategory() == Biome.Category.RIVER || event.getCategory() == Biome.Category.BEACH)
+                return;
 
-        // Add dungeons to biome generation settings
-        if (BDConfig.smallDungeons.enableSmallDungeons.get())
-            event.getGeneration().getStructures().add(() -> BDModConfiguredStructures.CONFIGURED_SMALL_DUNGEON);
+            // Add dungeons to biome generation settings
+            if (BDConfig.smallDungeons.enableSmallDungeons.get())
+                event.getGeneration().getStructures().add(() -> BDModConfiguredStructures.CONFIGURED_SMALL_DUNGEON);
 
-        if (BDConfig.spiderDungeons.enableSpiderDungeons.get())
-            event.getGeneration().getStructures().add(() -> BDModConfiguredStructures.CONFIGURED_SPIDER_DUNGEON);
+            if (BDConfig.spiderDungeons.enableSpiderDungeons.get())
+                event.getGeneration().getStructures().add(() -> BDModConfiguredStructures.CONFIGURED_SPIDER_DUNGEON);
 
-        if (BDConfig.skeletonDungeons.enableSkeletonDungeons.get())
-            event.getGeneration().getStructures().add(() -> BDModConfiguredStructures.CONFIGURED_SKELETON_DUNGEON);
+            if (BDConfig.skeletonDungeons.enableSkeletonDungeons.get())
+                event.getGeneration().getStructures().add(() -> BDModConfiguredStructures.CONFIGURED_SKELETON_DUNGEON);
 
 //        event.getGeneration().getStructures().add(() -> ModConfiguredStructures.CONFIGURED_ZOMBIE_DUNGEON);
+        }
     }
 
     /**

@@ -31,7 +31,7 @@ public class SkeletonDungeonLegProcessor extends StructureProcessor {
     public static final Codec<SkeletonDungeonLegProcessor> CODEC = Codec.unit(() -> INSTANCE);
 
     private static final BlockSetSelector COBBLE_SELECTOR = new BlockSetSelector(Blocks.COBBLESTONE.getDefaultState())
-        .addBlock(Blocks.MOSSY_COBBLESTONE.getDefaultState(), 0.3f);
+        .addBlock(Blocks.MOSSY_COBBLESTONE.getDefaultState(), 0.5f);
 
     @ParametersAreNonnullByDefault
     @Override

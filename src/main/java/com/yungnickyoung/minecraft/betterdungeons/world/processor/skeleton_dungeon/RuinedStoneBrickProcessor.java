@@ -27,8 +27,7 @@ public class RuinedStoneBrickProcessor extends StructureProcessor {
 
     private static final BlockSetSelector STONE_BRICK_SELECTOR = new BlockSetSelector(Blocks.STONE_BRICKS.getDefaultState())
         .addBlock(Blocks.MOSSY_STONE_BRICKS.getDefaultState(), 0.3f)
-        .addBlock(Blocks.CRACKED_STONE_BRICKS.getDefaultState(), 0.2f)
-        .addBlock(Blocks.INFESTED_STONE_BRICKS.getDefaultState(), 0.05f);
+        .addBlock(Blocks.CRACKED_STONE_BRICKS.getDefaultState(), 0.2f);
 
     @ParametersAreNonnullByDefault
     @Override
