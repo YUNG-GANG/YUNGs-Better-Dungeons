@@ -5,181 +5,163 @@
     {
       "weight": 1,
       "element": {
-        "name": "small_shell_5x5_skeleton",
         "location": "betterdungeons:small_dungeon/shells/small_shell_5x5",
         "processors": "betterdungeons:small_dungeon/small_dungeon_skeleton",
         "projection": "rigid",
-        "element_type": "yungsapi:yung_single_element"
+        "element_type": "minecraft:single_pool_element"
       }
     },
     {
       "weight": 1,
       "element": {
-        "name": "small_shell_5x5_spider",
         "location": "betterdungeons:small_dungeon/shells/small_shell_5x5",
         "processors": "betterdungeons:small_dungeon/small_dungeon_spider",
         "projection": "rigid",
-        "element_type": "yungsapi:yung_single_element"
+        "element_type": "minecraft:single_pool_element"
       }
     },
     {
       "weight": 2,
       "element": {
-        "name": "small_shell_5x5_zombie",
         "location": "betterdungeons:small_dungeon/shells/small_shell_5x5",
         "processors": "betterdungeons:small_dungeon/small_dungeon_zombie",
         "projection": "rigid",
-        "element_type": "yungsapi:yung_single_element"
+        "element_type": "minecraft:single_pool_element"
       }
     },
     {
       "weight": 1,
       "element": {
-        "name": "small_shell_7x5_skeleton",
         "location": "betterdungeons:small_dungeon/shells/small_shell_7x5",
         "processors": "betterdungeons:small_dungeon/small_dungeon_skeleton",
         "projection": "rigid",
-        "element_type": "yungsapi:yung_single_element"
+        "element_type": "minecraft:single_pool_element"
       }
     },
     {
       "weight": 1,
       "element": {
-        "name": "small_shell_7x5_spider",
         "location": "betterdungeons:small_dungeon/shells/small_shell_7x5",
         "processors": "betterdungeons:small_dungeon/small_dungeon_spider",
         "projection": "rigid",
-        "element_type": "yungsapi:yung_single_element"
+        "element_type": "minecraft:single_pool_element"
       }
     },
     {
       "weight": 2,
       "element": {
-        "name": "small_shell_7x5_zombie",
         "location": "betterdungeons:small_dungeon/shells/small_shell_7x5",
         "processors": "betterdungeons:small_dungeon/small_dungeon_zombie",
         "projection": "rigid",
-        "element_type": "yungsapi:yung_single_element"
+        "element_type": "minecraft:single_pool_element"
       }
     },
     {
       "weight": 1,
       "element": {
-        "name": "small_shell_7x7_skeleton",
         "location": "betterdungeons:small_dungeon/shells/small_shell_7x7",
         "processors": "betterdungeons:small_dungeon/small_dungeon_skeleton",
         "projection": "rigid",
-        "element_type": "yungsapi:yung_single_element"
+        "element_type": "minecraft:single_pool_element"
       }
     },
     {
       "weight": 1,
       "element": {
-        "name": "small_shell_7x7_spider",
         "location": "betterdungeons:small_dungeon/shells/small_shell_7x7",
         "processors": "betterdungeons:small_dungeon/small_dungeon_spider",
         "projection": "rigid",
-        "element_type": "yungsapi:yung_single_element"
+        "element_type": "minecraft:single_pool_element"
       }
     },
     {
       "weight": 2,
       "element": {
-        "name": "small_shell_7x7_zombie",
         "location": "betterdungeons:small_dungeon/shells/small_shell_7x7",
         "processors": "betterdungeons:small_dungeon/small_dungeon_zombie",
         "projection": "rigid",
-        "element_type": "yungsapi:yung_single_element"
+        "element_type": "minecraft:single_pool_element"
       }
     },
     {
       "weight": 1,
       "element": {
-        "name": "small_shell_9x5_skeleton",
         "location": "betterdungeons:small_dungeon/shells/small_shell_9x5",
         "processors": "betterdungeons:small_dungeon/small_dungeon_skeleton",
         "projection": "rigid",
-        "element_type": "yungsapi:yung_single_element"
+        "element_type": "minecraft:single_pool_element"
       }
     },
     {
       "weight": 1,
       "element": {
-        "name": "small_shell_9x5_spider",
         "location": "betterdungeons:small_dungeon/shells/small_shell_9x5",
         "processors": "betterdungeons:small_dungeon/small_dungeon_spider",
         "projection": "rigid",
-        "element_type": "yungsapi:yung_single_element"
+        "element_type": "minecraft:single_pool_element"
       }
     },
     {
       "weight": 2,
       "element": {
-        "name": "small_shell_9x5_zombie",
         "location": "betterdungeons:small_dungeon/shells/small_shell_9x5",
         "processors": "betterdungeons:small_dungeon/small_dungeon_zombie",
         "projection": "rigid",
-        "element_type": "yungsapi:yung_single_element"
+        "element_type": "minecraft:single_pool_element"
       }
     },
     {
       "weight": 1,
       "element": {
-        "name": "small_shell_9x7_skeleton",
         "location": "betterdungeons:small_dungeon/shells/small_shell_9x7",
         "processors": "betterdungeons:small_dungeon/small_dungeon_skeleton",
         "projection": "rigid",
-        "element_type": "yungsapi:yung_single_element"
+        "element_type": "minecraft:single_pool_element"
       }
     },
     {
       "weight": 1,
       "element": {
-        "name": "small_shell_9x7_spider",
         "location": "betterdungeons:small_dungeon/shells/small_shell_9x7",
         "processors": "betterdungeons:small_dungeon/small_dungeon_spider",
         "projection": "rigid",
-        "element_type": "yungsapi:yung_single_element"
+        "element_type": "minecraft:single_pool_element"
       }
     },
     {
       "weight": 2,
       "element": {
-        "name": "small_shell_9x7_zombie",
         "location": "betterdungeons:small_dungeon/shells/small_shell_9x7",
         "processors": "betterdungeons:small_dungeon/small_dungeon_zombie",
         "projection": "rigid",
-        "element_type": "yungsapi:yung_single_element"
+        "element_type": "minecraft:single_pool_element"
       }
     },
     {
       "weight": 1,
       "element": {
-        "name": "small_shell_9x9_skeleton",
         "location": "betterdungeons:small_dungeon/shells/small_shell_9x9",
         "processors": "betterdungeons:small_dungeon/small_dungeon_skeleton",
         "projection": "rigid",
-        "element_type": "yungsapi:yung_single_element"
+        "element_type": "minecraft:single_pool_element"
       }
     },
     {
       "weight": 1,
       "element": {
-        "name": "small_shell_9x9_spider",
         "location": "betterdungeons:small_dungeon/shells/small_shell_9x9",
         "processors": "betterdungeons:small_dungeon/small_dungeon_spider",
         "projection": "rigid",
-        "element_type": "yungsapi:yung_single_element"
+        "element_type": "minecraft:single_pool_element"
       }
     },
     {
       "weight": 2,
       "element": {
-        "name": "small_shell_9x9_zombie",
         "location": "betterdungeons:small_dungeon/shells/small_shell_9x9",
         "processors": "betterdungeons:small_dungeon/small_dungeon_zombie",
         "projection": "rigid",
-        "element_type": "yungsapi:yung_single_element"
+        "element_type": "minecraft:single_pool_element"
       }
     }
   ]

@@ -5,11 +5,10 @@
     {
       "weight": 1,
       "element": {
-        "name": "stair_bottom",
         "location": "betterdungeons:skeleton_dungeon/stair_bottom/stair_bottom",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
-        "element_type": "yungsapi:yung_single_element"
+        "element_type": "minecraft:single_pool_element"
       }
     }
   ]
