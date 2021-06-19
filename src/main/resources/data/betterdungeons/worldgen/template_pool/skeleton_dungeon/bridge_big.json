@@ -56,6 +56,17 @@
         "max_count": 1,
         "element_type": "yungsapi:max_count_single_element"
       }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "name": "bridge_big_3",
+        "location": "betterdungeons:skeleton_dungeon/bridges/bridge_big_3",
+        "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
+        "projection": "rigid",
+        "max_count": 1,
+        "element_type": "yungsapi:max_count_single_element"
+      }
     }
   ]
 }
