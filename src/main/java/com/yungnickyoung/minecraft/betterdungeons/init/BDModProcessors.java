@@ -7,6 +7,9 @@ import com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dunge
 import com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dungeon.SkeletonMobSpawnerProcessor;
 import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon.*;
 import com.yungnickyoung.minecraft.betterdungeons.world.processor.CobwebProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon.ZombieDungeonCubbyProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon.ZombieDungeonStairProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon.ZombieMobSpawnerProcessor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.template.IStructureProcessorType;
@@ -34,6 +37,11 @@ public class BDModProcessors {
     public static IStructureProcessorType<SkeletonMobSpawnerProcessor> SKELETON_MOB_SPAWNER_PROCESSOR = () -> SkeletonMobSpawnerProcessor.CODEC;
     public static IStructureProcessorType<SkeletonDungeonLegProcessor> SKELETON_DUNGEON_LEG_PROCESSOR = () -> SkeletonDungeonLegProcessor.CODEC;
 
+    // Zombie dungeons
+    public static IStructureProcessorType<ZombieDungeonCubbyProcessor> ZOMBIE_DUNGEON_CUBBY_PROCESSOR = () -> ZombieDungeonCubbyProcessor.CODEC;
+    public static IStructureProcessorType<ZombieDungeonStairProcessor> ZOMBIE_DUNGEON_STAIR_PROCESSOR = () -> ZombieDungeonStairProcessor.CODEC;
+    public static IStructureProcessorType<ZombieMobSpawnerProcessor> ZOMBIE_MOB_SPAWNER_PROCESSOR = () -> ZombieMobSpawnerProcessor.CODEC;
+
     public static void init() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(BDModProcessors::commonSetup);
     }
@@ -59,6 +67,11 @@ public class BDModProcessors {
             Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon_ruined_stone_bricks_processor"), SKELETON_DUNGEON_RUINED_STONE_BRICKS_PROCESSOR);
             Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_mob_spawner_processor"), SKELETON_MOB_SPAWNER_PROCESSOR);
             Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon_leg_processor"), SKELETON_DUNGEON_LEG_PROCESSOR);
+
+            // Zombie dungeons
+            Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "zombie_dungeon_cubby_processor"), ZOMBIE_DUNGEON_CUBBY_PROCESSOR);
+            Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "zombie_dungeon_stair_processor"), ZOMBIE_DUNGEON_STAIR_PROCESSOR);
+            Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "zombie_mob_spawner_processor"), ZOMBIE_MOB_SPAWNER_PROCESSOR);
         });
     }
 }

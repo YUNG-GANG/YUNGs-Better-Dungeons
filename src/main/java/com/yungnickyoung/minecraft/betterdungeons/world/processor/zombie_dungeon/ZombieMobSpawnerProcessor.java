@@ -1,4 +1,4 @@
-package com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dungeon;
+package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon;
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
@@ -17,29 +17,37 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
- * Sets mob spawners to spawn skeletons.
- * Also buffs spawners to spawn more enemies more frequently, at a greater distance.
+ * Sets mob spawners to spawn zombies.
+ * Also tweaks the default spawner parameters.
  */
 @MethodsReturnNonnullByDefault
-public class SkeletonMobSpawnerProcessor extends StructureProcessor {
-    public static final SkeletonMobSpawnerProcessor INSTANCE = new SkeletonMobSpawnerProcessor();
-    public static final Codec<SkeletonMobSpawnerProcessor> CODEC = Codec.unit(() -> INSTANCE);
+public class ZombieMobSpawnerProcessor extends StructureProcessor {
+    public static final ZombieMobSpawnerProcessor INSTANCE = new ZombieMobSpawnerProcessor();
+    public static final Codec<ZombieMobSpawnerProcessor> CODEC = Codec.unit(() -> INSTANCE);
 
     @ParametersAreNonnullByDefault
     @Override
     public Template.BlockInfo process(IWorldReader worldReader, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Template.BlockInfo blockInfoLocal, Template.BlockInfo blockInfoGlobal, PlacementSettings structurePlacementData, @Nullable Template template) {
         if (blockInfoGlobal.state.getBlock() instanceof SpawnerBlock) {
+            // First initialize NBT if it's null for some reason
+            if (blockInfoGlobal.nbt == null) {
+                CompoundNBT newNBT = new CompoundNBT();
+                newNBT.putShort("SpawnCount", (short) 4);
+                newNBT.putString("id", "minecraft:mob_spawner");
+                newNBT.putShort("MinSpawnDelay", (short) 200);
+                blockInfoGlobal.nbt = newNBT;
+            }
+
             // Update the spawner block's NBT
             // SpawnData
             CompoundNBT spawnData = new CompoundNBT();
-            spawnData.putString("id", "minecraft:skeleton");
-            blockInfoGlobal.nbt.remove("SpawnData");
+            spawnData.putString("id", "minecraft:zombie");
             blockInfoGlobal.nbt.put("SpawnData", spawnData);
 
             // SpawnPotentials
             CompoundNBT spawnPotentials = new CompoundNBT();
             CompoundNBT spawnPotentialsEntity = new CompoundNBT();
-            spawnPotentialsEntity.putString("id", "minecraft:skeleton");
+            spawnPotentialsEntity.putString("id", "minecraft:zombie");
             spawnPotentials.put("Entity", spawnPotentialsEntity);
             spawnPotentials.put("Weight", IntNBT.valueOf(1));
             blockInfoGlobal.nbt.getList("SpawnPotentials", spawnPotentials.getId()).clear();
@@ -48,19 +56,19 @@ public class SkeletonMobSpawnerProcessor extends StructureProcessor {
             // Player range (default 16)
             blockInfoGlobal.nbt.putShort("RequiredPlayerRange", (short)16);
 
-            // Range at which skeletons can spawn from spawner
-            blockInfoGlobal.nbt.putShort("SpawnRange", (short)8);
+            // Range at which skeletons can spawn from spawner (default 4?)
+            blockInfoGlobal.nbt.putShort("SpawnRange", (short)4);
 
-            // Max nearby entities allowed
-            blockInfoGlobal.nbt.putShort("MaxNearbyEntities", (short)8);
+            // Max nearby entities allowed (default 6)
+            blockInfoGlobal.nbt.putShort("MaxNearbyEntities", (short)6);
 
             // Time between spawn attempts (default 800)
-            blockInfoGlobal.nbt.putShort("MaxSpawnDelay", (short)650);
+            blockInfoGlobal.nbt.putShort("MaxSpawnDelay", (short)800);
         }
         return blockInfoGlobal;
     }
 
     protected IStructureProcessorType<?> getType() {
-        return BDModProcessors.SKELETON_MOB_SPAWNER_PROCESSOR;
+        return BDModProcessors.ZOMBIE_MOB_SPAWNER_PROCESSOR;
     }
 }

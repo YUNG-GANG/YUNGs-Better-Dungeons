@@ -1,0 +1,15 @@
+{
+  "name": "betterdungeons:big_stairs",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/big_stairs_0",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

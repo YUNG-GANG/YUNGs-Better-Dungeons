@@ -9,6 +9,7 @@ public class BDConfig {
     public static final ConfigGeneral general;
     public static final ConfigSpiderDungeon spiderDungeons;
     public static final ConfigSkeletonDungeon skeletonDungeons;
+    public static final ConfigZombieDungeon zombieDungeons;
     public static final ConfigSmallDungeons smallDungeons;
 
     static {
@@ -17,6 +18,7 @@ public class BDConfig {
         general = new ConfigGeneral(BUILDER);
         spiderDungeons = new ConfigSpiderDungeon(BUILDER);
         skeletonDungeons = new ConfigSkeletonDungeon(BUILDER);
+        zombieDungeons = new ConfigZombieDungeon(BUILDER);
         smallDungeons = new ConfigSmallDungeons(BUILDER);
 
         BUILDER.pop();
