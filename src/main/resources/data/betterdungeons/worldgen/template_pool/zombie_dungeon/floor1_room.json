@@ -3,7 +3,7 @@
   "fallback": "minecraft:empty",
   "elements": [
     {
-      "weight": 1,
+      "weight": 15,
       "element": {
         "location": "betterdungeons:zombie_dungeon/floor1/floor1_room_0",
         "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
@@ -12,7 +12,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 15,
       "element": {
         "location": "betterdungeons:zombie_dungeon/floor1/floor1_room_1",
         "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
@@ -21,12 +21,24 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 15,
       "element": {
         "location": "betterdungeons:zombie_dungeon/floor1/floor1_room_2",
         "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
+      }
+    },
+
+    {
+      "weight": 1,
+      "element": {
+        "name": "floor1_specialroom_0",
+        "location": "betterdungeons:zombie_dungeon/floor1/floor1_specialroom_0",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
+        "projection": "rigid",
+        "max_count": 1,
+        "element_type": "yungsapi:max_count_single_element"
       }
     }
   ]

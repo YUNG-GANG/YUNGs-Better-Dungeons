@@ -10,6 +10,12 @@
       "processor_type": "betterdungeons:zombie_mob_spawner_processor"
     },
     {
+      "processor_type": "betterdungeons:zombie_ruined_cobble_processor"
+    },
+    {
+      "processor_type": "betterdungeons:zombie_main_stairs_processor"
+    },
+    {
       "processor_type": "betterdungeons:waterlogged_processor"
     },
     {
@@ -72,6 +78,19 @@
           "input_predicate": {
             "block": "minecraft:mossy_cobblestone",
             "probability": 0.5,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:mossy_cobblestone"
+          },
+          "input_predicate": {
+            "block": "minecraft:cobblestone",
+            "probability": 0.2,
             "predicate_type": "minecraft:random_block_match"
           },
           "location_predicate": {

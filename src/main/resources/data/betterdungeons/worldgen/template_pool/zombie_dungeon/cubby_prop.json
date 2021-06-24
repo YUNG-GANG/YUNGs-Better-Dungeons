@@ -3,7 +3,7 @@
   "fallback": "minecraft:empty",
   "elements": [
     {
-      "weight": 10,
+      "weight": 2,
       "element": {
         "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_0",
         "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
@@ -69,6 +69,15 @@
       "weight": 10,
       "element": {
         "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_7",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_8",
         "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
