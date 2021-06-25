@@ -2,7 +2,6 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeo
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
-import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -16,18 +15,18 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
- * Replaces cobble w/ air in zombie dungeons when air is already there,
+ * Replaces certain blocks w/ air in zombie dungeons when air is already there,
  * giving them a more natural, ruined look that opens up to caves.
  */
 @MethodsReturnNonnullByDefault
-public class ZombieRuinedCobblestoneProcessor extends StructureProcessor {
-    public static final ZombieRuinedCobblestoneProcessor INSTANCE = new ZombieRuinedCobblestoneProcessor();
-    public static final Codec<ZombieRuinedCobblestoneProcessor> CODEC = Codec.unit(() -> INSTANCE);
+public class ZombieRotProcessor extends StructureProcessor {
+    public static final ZombieRotProcessor INSTANCE = new ZombieRotProcessor();
+    public static final Codec<ZombieRotProcessor> CODEC = Codec.unit(() -> INSTANCE);
 
     @ParametersAreNonnullByDefault
     @Override
     public Template.BlockInfo process(IWorldReader world, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Template.BlockInfo blockInfoLocal, Template.BlockInfo blockInfoGlobal, PlacementSettings structurePlacementData, @Nullable Template template) {
-        if (blockInfoGlobal.state.getBlock() == Blocks.COBBLESTONE) {
+        if (blockInfoGlobal.state.getBlock() == Blocks.COBBLESTONE || blockInfoGlobal.state.getBlock() == Blocks.CYAN_TERRACOTTA || blockInfoGlobal.state.getBlock() == Blocks.COBBLESTONE_STAIRS) {
             if (world.getBlockState(blockInfoGlobal.pos).isAir()) {
                 blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
             }
@@ -36,6 +35,6 @@ public class ZombieRuinedCobblestoneProcessor extends StructureProcessor {
     }
 
     protected IStructureProcessorType<?> getType() {
-        return BDModProcessors.ZOMBIE_RUINED_COBBLE_PROCESSOR;
+        return BDModProcessors.ZOMBIE_ROT_PROCESSOR;
     }
 }

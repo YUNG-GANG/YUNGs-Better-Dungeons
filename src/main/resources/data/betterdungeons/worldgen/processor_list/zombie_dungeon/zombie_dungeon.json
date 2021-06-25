@@ -10,7 +10,7 @@
       "processor_type": "betterdungeons:zombie_mob_spawner_processor"
     },
     {
-      "processor_type": "betterdungeons:zombie_ruined_cobble_processor"
+      "processor_type": "betterdungeons:zombie_rot_processor"
     },
     {
       "processor_type": "betterdungeons:zombie_main_stairs_processor"

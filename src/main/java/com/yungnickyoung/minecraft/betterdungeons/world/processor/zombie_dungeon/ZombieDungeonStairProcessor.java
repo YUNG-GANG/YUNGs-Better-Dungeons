@@ -37,14 +37,19 @@ public class ZombieDungeonStairProcessor extends StructureProcessor {
     @Override
     public Template.BlockInfo process(IWorldReader world, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Template.BlockInfo blockInfoLocal, Template.BlockInfo blockInfoGlobal, PlacementSettings structurePlacementData, @Nullable Template template) {
         if (blockInfoGlobal.state.getBlock() == Blocks.COBBLESTONE_STAIRS) {
-            BlockState newBlock = SELECTOR.get(structurePlacementData.getRandom(blockInfoGlobal.pos));
-            if (newBlock.getBlock() instanceof StairsBlock) {
-                newBlock = newBlock
-                    .with(StairsBlock.FACING, blockInfoGlobal.state.get(StairsBlock.FACING))
-                    .with(StairsBlock.HALF, blockInfoGlobal.state.get(StairsBlock.HALF))
-                    .with(StairsBlock.SHAPE, blockInfoGlobal.state.get(StairsBlock.SHAPE));
+            if (world.getBlockState(blockInfoGlobal.pos).isAir()) {
+                // Don't replace air to maintain rotted look
+                blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
+            } else {
+                BlockState newBlock = SELECTOR.get(structurePlacementData.getRandom(blockInfoGlobal.pos));
+                if (newBlock.getBlock() instanceof StairsBlock) {
+                    newBlock = newBlock
+                        .with(StairsBlock.FACING, blockInfoGlobal.state.get(StairsBlock.FACING))
+                        .with(StairsBlock.HALF, blockInfoGlobal.state.get(StairsBlock.HALF))
+                        .with(StairsBlock.SHAPE, blockInfoGlobal.state.get(StairsBlock.SHAPE));
+                }
+                blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, newBlock, blockInfoGlobal.nbt);
             }
-            blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, newBlock, blockInfoGlobal.nbt);
         }
         return blockInfoGlobal;
     }
