@@ -1,9 +1,9 @@
 {
-  "name": "betterdungeons:cubby_prop",
+  "name": "betterdungeons:cubby_sm_prop",
   "fallback": "betterdungeons:zombie_dungeon/cubby_prop",
   "elements": [
     {
-      "weight": 2,
+      "weight": 10,
       "element": {
         "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_0",
         "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
@@ -84,7 +84,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 4,
       "element": {
         "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_spawner_0",
         "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
@@ -93,7 +93,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 4,
       "element": {
         "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_spawner_1",
         "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
@@ -102,18 +102,9 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 4,
       "element": {
         "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_spawner_2",
-        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 20,
-      "element": {
-        "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_empty",
         "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"

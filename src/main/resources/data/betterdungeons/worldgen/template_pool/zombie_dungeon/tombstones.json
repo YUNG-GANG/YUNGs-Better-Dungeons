@@ -1,0 +1,168 @@
+{
+  "name": "betterdungeons:tombstones",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_empty_closed",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_empty_open_0",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_empty_open_1",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_skull_closed",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_skull_open_0",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_skull_open_1",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_flower_closed",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_flower_open_0",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_flower_open_1",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_chest_closed",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_chest_open_0",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_chest_open_1",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_bow_closed",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_bow_open_0",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_bow_open_1",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_spawner_closed",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_spawner_open_0",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_spawner_open_1",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

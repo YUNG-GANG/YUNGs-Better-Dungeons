@@ -74,7 +74,7 @@ public class ZombieDungeonStructure extends Structure<NoFeatureConfig> {
             BlockPos blockpos = new BlockPos(x, y, z);
             YungJigsawConfig jigsawConfig = new YungJigsawConfig(
                 () -> dynamicRegistryManager.getRegistry(Registry.JIGSAW_POOL_KEY).getOrDefault(new ResourceLocation(BetterDungeons.MOD_ID, "zombie_dungeon")),
-                10
+                7
             );
 
             // Generate the structure

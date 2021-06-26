@@ -28,6 +28,69 @@
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/floor1/floor1_hall_terminator_3",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/floor1/floor1_hall_terminator_4",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/floor2/floor2_hall_terminator_0",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/floor2/floor2_hall_terminator_1",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/floor2/floor2_hall_terminator_2",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/floor2/floor2_hall_terminator_3",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/floor2/floor2_hall_terminator_4",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
     }
   ]
 }
