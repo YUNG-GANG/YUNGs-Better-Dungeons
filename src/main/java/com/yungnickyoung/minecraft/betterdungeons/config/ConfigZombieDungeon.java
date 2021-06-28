@@ -7,6 +7,7 @@ public class ConfigZombieDungeon {
     public final ForgeConfigSpec.ConfigValue<Integer> zombieDungeonStartMaxY;
     public final ForgeConfigSpec.ConfigValue<Boolean> enableZombieDungeons;
     public final ForgeConfigSpec.ConfigValue<Integer> zombieDungeonSeparationDistance;
+    public final ForgeConfigSpec.ConfigValue<Integer> zombieDungeonMaxSurfaceStaircaseLength;
 
     public ConfigZombieDungeon(final ForgeConfigSpec.Builder BUILDER) {
         BUILDER
@@ -46,6 +47,15 @@ public class ConfigZombieDungeon {
                 " Default: 48")
             .worldRestart()
             .define("Zombie Dungeon Average Separation Distance", 48);
+
+        zombieDungeonMaxSurfaceStaircaseLength = BUILDER
+            .comment(
+                " The longest distance that can be checked when attempting to generate a surface entrance staircase.\n" +
+                " Making this too large may cause problems.\n" +
+                " Default: 20")
+            .worldRestart()
+            .define("Zombie Dungeon Surface Entrance Staircase Max Length", 20);
+
 
         BUILDER.pop();
     }

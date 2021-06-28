@@ -2,6 +2,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeo
 
 import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
+import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;
 import mcp.MethodsReturnNonnullByDefault;
@@ -67,7 +68,7 @@ public class ZombieMainStairsProcessor extends StructureProcessor {
             }
 
             // Check if the surface is close enough to warrant a staircase
-            int maxLength = 20; // Max distance our staircase can go horizontally
+            int maxLength = BDConfig.zombieDungeons.zombieDungeonMaxSurfaceStaircaseLength.get(); // Max distance our staircase can go horizontally
 
             // The highest allowable position at the end of the staircase
             BlockPos maxSurfacePos = blockInfoGlobal.pos.offset(facing, maxLength).offset(Direction.UP, maxLength);
