@@ -1,6 +1,6 @@
 {
   "name": "betterdungeons:tombstones",
-  "fallback": "minecraft:empty",
+  "fallback": "betterdungeons:zombie_dungeon/tombstones",
   "elements": [
     {
       "weight": 1,

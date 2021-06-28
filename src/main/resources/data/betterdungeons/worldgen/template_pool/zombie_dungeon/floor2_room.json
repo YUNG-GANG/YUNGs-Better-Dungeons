@@ -1,15 +1,15 @@
 {
   "name": "betterdungeons:floor2_room",
-  "fallback": "betterdungeons:zombie_dungeon/terminators",
+  "fallback": "betterdungeons:zombie_dungeon/terminators/floor2_room_terminators",
   "elements": [
     {
       "weight": 3,
       "element": {
         "name": "floor2_room_0",
-        "location": "betterdungeons:zombie_dungeon/floor2/floor2_room_0",
+        "location": "betterdungeons:zombie_dungeon/floor2/room/floor2_room_0",
         "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
         "projection": "rigid",
-        "max_count": 4,
+        "max_count": 6,
         "element_type": "yungsapi:max_count_single_element"
       }
     },
@@ -17,10 +17,10 @@
       "weight": 3,
       "element": {
         "name": "floor2_room_2",
-        "location": "betterdungeons:zombie_dungeon/floor2/floor2_room_2",
+        "location": "betterdungeons:zombie_dungeon/floor2/room/floor2_room_2",
         "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
         "projection": "rigid",
-        "max_count": 4,
+        "max_count": 6,
         "element_type": "yungsapi:max_count_single_element"
       }
     },
@@ -29,10 +29,10 @@
       "weight": 1,
       "element": {
         "name": "floor2_room_3",
-        "location": "betterdungeons:zombie_dungeon/floor2/floor2_room_3",
+        "location": "betterdungeons:zombie_dungeon/floor2/room/floor2_room_3",
         "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
         "projection": "rigid",
-        "max_count": 4,
+        "max_count": 6,
         "element_type": "yungsapi:max_count_single_element"
       }
     }

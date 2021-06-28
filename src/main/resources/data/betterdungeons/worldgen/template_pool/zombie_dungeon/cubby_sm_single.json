@@ -1,6 +1,6 @@
 {
   "name": "betterdungeons:cubby_sm_single",
-  "fallback": "minecraft:empty",
+  "fallback": "betterdungeons:zombie_dungeon/cubby_sm_single",
   "elements": [
     {
       "weight": 1,
