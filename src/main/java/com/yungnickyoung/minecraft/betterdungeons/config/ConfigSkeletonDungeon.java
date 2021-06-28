@@ -43,9 +43,9 @@ public class ConfigSkeletonDungeon {
             .comment(
                 " The average number of chunks between adjacent Skeleton Dungeons.\n" +
                 " This controls how often Skeleton Dungeons spawn. Higher value = more rare.\n" +
-                " Default: 48")
+                " Default: 46")
             .worldRestart()
-            .define("Skeleton Dungeon Average Separation Distance", 48);
+            .define("Skeleton Dungeon Average Separation Distance", 46);
 
         BUILDER.pop();
     }

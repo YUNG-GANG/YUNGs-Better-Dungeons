@@ -45,9 +45,9 @@ public class ConfigSpiderDungeon {
             .comment(
                 " The average number of chunks between adjacent Spider Dungeons.\n" +
                 " This controls how often Spider Dungeons spawn. Higher value = more rare.\n" +
-                " Default: 48")
+                " Default: 44")
             .worldRestart()
-            .define("Spider Dungeon Average Separation Distance", 48);
+            .define("Spider Dungeon Average Separation Distance", 44);
 
         BUILDER.pop();
     }
