@@ -74,7 +74,6 @@ public class BDModStructures {
             DimensionStructuresSettings.field_236191_b_ =
                 ImmutableMap.<Structure<?>, StructureSeparationSettings>builder()
                     .putAll(DimensionStructuresSettings.field_236191_b_)
-                    // TODO - edit structure separation settings & expose to config
                     .put(SMALL_DUNGEON.get(), new StructureSeparationSettings(BDConfig.smallDungeons.smallDungeonSeparationDistance.get(), BDConfig.smallDungeons.smallDungeonSeparationDistance.get() / 2, 34239823))
                     .put(SPIDER_DUNGEON.get(), new StructureSeparationSettings(BDConfig.spiderDungeons.spiderDungeonSeparationDistance.get(), BDConfig.spiderDungeons.spiderDungeonSeparationDistance.get() / 2, 596523129))
                     .put(SKELETON_DUNGEON.get(), new StructureSeparationSettings(BDConfig.skeletonDungeons.skeletonDungeonSeparationDistance.get(), BDConfig.skeletonDungeons.skeletonDungeonSeparationDistance.get() / 2, 732581671))

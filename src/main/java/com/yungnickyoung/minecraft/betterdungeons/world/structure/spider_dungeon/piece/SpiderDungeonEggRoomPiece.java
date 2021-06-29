@@ -179,8 +179,7 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
                             BlockState state = this.getBlockStateFromPos(world, globalX, globalY, globalZ, box);
                             // Make sure block is not blacklisted AND not air.
                             // The check for air ensures the shells will not block off the connecting tunnels,
-                            // but as a result they could get destroyed by cave gen?
-                            // TODO - reconsider?
+                            // but as a result they could get destroyed by cave gen
                             if (!BLOCK_BLACKLIST.contains(state.getBlock()) && state.getMaterial() != Material.AIR) {
                                 if (state.isAir() || state.getFluidState().getFluid() != Fluids.EMPTY || decoRand.nextFloat() < .8f) {
                                     this.setBlockState(world, Blocks.COBBLESTONE.getDefaultState(), globalX, globalY, globalZ, box);
@@ -210,7 +209,7 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
 
         // Place chest or spawner
         if (random.nextFloat() < .75f) {
-            this.generateChest(world, box, random, chestPos.getX(), chestPos.getY(), chestPos.getZ(), LootTables.CHESTS_SIMPLE_DUNGEON); // TODO - custom loot?
+            this.generateChest(world, box, random, chestPos.getX(), chestPos.getY(), chestPos.getZ(), LootTables.CHESTS_SIMPLE_DUNGEON); // TODO - custom loot
         } else {
             if (box.isVecInside(chestPos)) {
                 this.setBlockState(world, Blocks.SPAWNER.getDefaultState(), chestPos.getX(), chestPos.getY(), chestPos.getZ(), box);
