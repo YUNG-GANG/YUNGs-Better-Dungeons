@@ -5,33 +5,6 @@
     {
       "weight": 1,
       "element": {
-        "location": "betterdungeons:skeleton_dungeon/3x3/3x3_0",
-        "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 1,
-      "element": {
-        "location": "betterdungeons:skeleton_dungeon/3x3/3x3_1",
-        "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 1,
-      "element": {
-        "location": "betterdungeons:skeleton_dungeon/3x3/3x3_2",
-        "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 1,
-      "element": {
         "location": "betterdungeons:skeleton_dungeon/3x3/3x3_3",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
