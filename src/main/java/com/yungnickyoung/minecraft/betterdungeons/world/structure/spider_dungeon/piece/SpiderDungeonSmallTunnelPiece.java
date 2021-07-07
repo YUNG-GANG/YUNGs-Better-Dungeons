@@ -74,7 +74,7 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
     @ParametersAreNonnullByDefault
     public void buildComponent(StructurePiece piece, List<StructurePiece> pieceList, Random rand) {
         // Determine pitch
-        this.pitch = rand.nextFloat() * (float) Math.PI / 3f - ((float) Math.PI / 6f);
+        this.pitch = rand.nextFloat() * (float) Math.PI / 4f - ((float) Math.PI / 6f);
         float pitchY = MathHelper.sin(this.pitch);
         float pitchXZ = MathHelper.cos(this.pitch); // Allows for steep drops
 

@@ -208,7 +208,7 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
         this.placeSphereRandomized(world, box, chestPos.getX(), chestPos.getY(), chestPos.getZ(), 2, decoRand, .4f, COBWEB_SELECTOR, true);
 
         // Place chest or spawner
-        if (random.nextFloat() < .75f) {
+        if (random.nextFloat() < .6f) {
             this.generateChest(world, box, random, chestPos.getX(), chestPos.getY(), chestPos.getZ(), LootTables.CHESTS_SIMPLE_DUNGEON); // TODO - custom loot
         } else {
             if (box.isVecInside(chestPos)) {
