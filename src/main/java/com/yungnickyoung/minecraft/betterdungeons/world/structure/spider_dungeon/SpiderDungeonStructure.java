@@ -36,9 +36,10 @@ public class SpiderDungeonStructure extends Structure<NoFeatureConfig> {
         return GenerationStage.Decoration.UNDERGROUND_STRUCTURES;
     }
 
-    // Spider dungeons can only spawn spiders
+    // Spider dungeons can only spawn spiders & cave spiders
     private static final List<MobSpawnInfo.Spawners> STRUCTURE_MONSTERS = ImmutableList.of(
-        new MobSpawnInfo.Spawners(EntityType.SPIDER, 100, 4, 15)
+        new MobSpawnInfo.Spawners(EntityType.SPIDER, 100, 4, 15),
+        new MobSpawnInfo.Spawners(EntityType.CAVE_SPIDER, 50, 4, 8)
     );
 
     @Override
