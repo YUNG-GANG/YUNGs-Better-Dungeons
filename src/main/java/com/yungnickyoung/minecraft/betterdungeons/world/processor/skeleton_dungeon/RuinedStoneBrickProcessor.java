@@ -5,6 +5,8 @@ import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.SlabBlock;
+import net.minecraft.state.properties.SlabType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.gen.feature.template.IStructureProcessorType;
@@ -29,6 +31,9 @@ public class RuinedStoneBrickProcessor extends StructureProcessor {
         .addBlock(Blocks.MOSSY_STONE_BRICKS.getDefaultState(), 0.3f)
         .addBlock(Blocks.CRACKED_STONE_BRICKS.getDefaultState(), 0.2f);
 
+    private static final BlockSetSelector STONE_BRICK_SLAB_SELECTOR = new BlockSetSelector(Blocks.STONE_BRICK_SLAB.getDefaultState().with(SlabBlock.TYPE, SlabType.TOP))
+        .addBlock(Blocks.MOSSY_STONE_BRICK_SLAB.getDefaultState().with(SlabBlock.TYPE, SlabType.TOP), 0.3f);
+
     @ParametersAreNonnullByDefault
     @Override
     public Template.BlockInfo process(IWorldReader world, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Template.BlockInfo blockInfoLocal, Template.BlockInfo blockInfoGlobal, PlacementSettings structurePlacementData, @Nullable Template template) {
@@ -37,6 +42,12 @@ public class RuinedStoneBrickProcessor extends StructureProcessor {
                 blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
             } else {
                 blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, STONE_BRICK_SELECTOR.get(structurePlacementData.getRandom(blockInfoGlobal.pos)), blockInfoGlobal.nbt);
+            }
+        } else if (blockInfoGlobal.state.getBlock() == Blocks.PRISMARINE_BRICK_SLAB) {
+            if (world.getBlockState(blockInfoGlobal.pos).isAir()) {
+                blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
+            } else {
+                blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, STONE_BRICK_SLAB_SELECTOR.get(structurePlacementData.getRandom(blockInfoGlobal.pos)), blockInfoGlobal.nbt);
             }
         }
         return blockInfoGlobal;

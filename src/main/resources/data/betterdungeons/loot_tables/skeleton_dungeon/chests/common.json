@@ -10,17 +10,17 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 7,
+          "weight": 5,
           "name": "minecraft:golden_apple"
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
+          "weight": 1,
           "name": "minecraft:enchanted_golden_apple"
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
+          "weight": 2,
           "functions": [
             {
               "function": "minecraft:enchant_randomly",
