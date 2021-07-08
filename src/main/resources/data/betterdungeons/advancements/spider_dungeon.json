@@ -1,0 +1,30 @@
+{
+  "parent": "betterdungeons:root",
+  "display": {
+    "icon": {
+      "item": "minecraft:string"
+    },
+    "title": {
+      "translate": "Queen's Nest"
+    },
+    "description": {
+      "translate": "Discover a Spider Cave"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "in_better_spider_dungeon": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "feature": "spider dungeon"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "in_better_spider_dungeon"
+    ]
+  ]
+}

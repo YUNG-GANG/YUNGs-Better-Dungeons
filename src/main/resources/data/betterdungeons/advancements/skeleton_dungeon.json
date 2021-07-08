@@ -1,0 +1,30 @@
+{
+  "parent": "betterdungeons:root",
+  "display": {
+    "icon": {
+      "item": "minecraft:skeleton_skull"
+    },
+    "title": {
+      "translate": "Fortress of the Undead"
+    },
+    "description": {
+      "translate": "Enter a Skeleton Fortress"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "in_better_skeleton_dungeon": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "feature": "skeleton dungeon"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "in_better_skeleton_dungeon"
+    ]
+  ]
+}

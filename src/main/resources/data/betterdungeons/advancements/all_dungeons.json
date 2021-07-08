@@ -1,0 +1,57 @@
+{
+  "parent": "betterdungeons:root",
+  "display": {
+    "icon": {
+      "item": "minecraft:diamond_sword"
+    },
+    "title": {
+      "translate": "Professional Dungeoneer"
+    },
+    "description": {
+      "translate": "Explore all of the Better Dungeons!"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "in_better_monster_room": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "feature": "small dungeon"
+      }
+    },
+    "in_better_zombie_dungeon": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "feature": "zombie dungeon"
+      }
+    },
+    "in_better_skeleton_dungeon": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "feature": "skeleton dungeon"
+      }
+    },
+    "in_better_spider_dungeon": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "feature": "spider dungeon"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "in_better_monster_room"
+    ],
+    [
+      "in_better_zombie_dungeon"
+    ],
+    [
+      "in_better_skeleton_dungeon"
+    ],
+    [
+      "in_better_spider_dungeon"
+    ]
+  ]
+}
