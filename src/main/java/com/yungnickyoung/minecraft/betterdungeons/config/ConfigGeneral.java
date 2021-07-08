@@ -5,6 +5,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 public class ConfigGeneral {
     public final ForgeConfigSpec.ConfigValue<Boolean> enableHeads;
     public final ForgeConfigSpec.ConfigValue<Boolean> removeVanillaDungeons;
+    public final ForgeConfigSpec.ConfigValue<Boolean> enableNetherBlocks;
 
     public ConfigGeneral(final ForgeConfigSpec.Builder BUILDER) {
         BUILDER
@@ -29,6 +30,16 @@ public class ConfigGeneral {
                 " Default: true")
             .worldRestart()
             .define("Remove Vanilla Dungeons", true);
+
+        enableNetherBlocks = BUILDER
+            .comment(
+                " Some dungeons can rarely spawn Nether-related blocks such as soul sand, soul campfires, and soul lanterns.\n" +
+                " Note that the blocks will be purely decorative - nothing progression-breaking like Ancient Debris.\n" +
+                " Set this to false to prevent any Nether-related blocks from spawning in dungeons.\n" +
+                " This option may be useful for some modpack creators.\n" +
+                " Default: true")
+            .worldRestart()
+            .define("Enable Nether Blocks in Dungeons", true);
 
         BUILDER.pop();
     }

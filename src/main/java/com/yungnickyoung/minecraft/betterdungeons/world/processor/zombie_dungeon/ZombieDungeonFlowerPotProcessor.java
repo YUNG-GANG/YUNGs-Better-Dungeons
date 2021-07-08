@@ -5,7 +5,6 @@ import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Blocks;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.gen.feature.template.IStructureProcessorType;

@@ -4,6 +4,9 @@
       "processor_type": "betterdungeons:head_processor"
     },
     {
+      "processor_type": "betterdungeons:nether_block_processor"
+    },
+    {
       "processor_type": "betterdungeons:skeleton_mob_spawner_processor"
     },
     {

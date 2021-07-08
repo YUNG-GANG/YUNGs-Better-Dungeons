@@ -228,10 +228,13 @@ public class ZombieMainStairsProcessor extends StructureProcessor {
             this.setBlockState(world, Blocks.SMOOTH_STONE.getDefaultState(), rightPos.offset(Direction.UP, 3), structurePlacementData.getMirror(), structurePlacementData.getRotation());
 
             // Chance of hanging soul lantern
+            BlockState lanternBlock = BDConfig.general.enableNetherBlocks.get()
+                ? Blocks.SOUL_LANTERN.getDefaultState().with(LanternBlock.HANGING, true)
+                : Blocks.LANTERN.getDefaultState().with(LanternBlock.HANGING, true);
             if (random.nextFloat() < .25f)
-                this.setBlockState(world, Blocks.SOUL_LANTERN.getDefaultState().with(LanternBlock.HANGING, true), leftPos.offset(Direction.UP, 1), structurePlacementData.getMirror(), structurePlacementData.getRotation());
+                this.setBlockState(world, lanternBlock, leftPos.offset(Direction.UP, 1), structurePlacementData.getMirror(), structurePlacementData.getRotation());
             else if (random.nextFloat() < .25f)
-                this.setBlockState(world, Blocks.SOUL_LANTERN.getDefaultState().with(LanternBlock.HANGING, true), rightPos.offset(Direction.UP, 1), structurePlacementData.getMirror(), structurePlacementData.getRotation());
+                this.setBlockState(world, lanternBlock, rightPos.offset(Direction.UP, 1), structurePlacementData.getMirror(), structurePlacementData.getRotation());
 
             // Andesite corners
             leftPos.move(facing.rotateYCCW()); // corner
