@@ -3,8 +3,8 @@
   "pools": [
     {
       "rolls": {
-        "min": 2.0,
-        "max": 4.0,
+        "min": 1.0,
+        "max": 2.0,
         "type": "minecraft:uniform"
       },
       "entries": [
@@ -15,17 +15,22 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 5,
+          "name": "minecraft:saddle"
+        },
+        {
+          "type": "minecraft:item",
           "weight": 1,
           "name": "minecraft:enchanted_golden_apple"
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
+          "weight": 3,
           "functions": [
             {
               "function": "minecraft:enchant_randomly",
               "enchantments": [
-                "smite"
+                "bane_of_arthropods"
               ]
             }
           ],
@@ -33,244 +38,231 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
+          "weight": 20,
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
             }
           ],
           "name": "minecraft:book"
+        }
+      ]
+    },
+    {
+      "rolls": {
+        "min": 3.0,
+        "max": 6.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{Potion: \"minecraft:weakness\"}"
+            }
+          ],
+          "name": "minecraft:potion"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{Potion: \"minecraft:slowness\"}"
+            }
+          ],
+          "name": "minecraft:potion"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{Potion: \"minecraft:harming\"}"
+            }
+          ],
+          "name": "minecraft:potion"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{Potion: \"minecraft:strong_harming\"}"
+            }
+          ],
+          "name": "minecraft:potion"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{Potion: \"minecraft:invisibility\"}"
+            }
+          ],
+          "name": "minecraft:potion"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{Potion: \"minecraft:weakness\"}"
+            }
+          ],
+          "name": "minecraft:splash_potion"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{Potion: \"minecraft:slowness\"}"
+            }
+          ],
+          "name": "minecraft:splash_potion"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{Potion: \"minecraft:harming\"}"
+            }
+          ],
+          "name": "minecraft:splash_potion"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{Potion: \"minecraft:strong_harming\"}"
+            }
+          ],
+          "name": "minecraft:splash_potion"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{Potion: \"minecraft:invisibility\"}"
+            }
+          ],
+          "name": "minecraft:splash_potion"
+        }
+      ]
+    },
+    {
+      "rolls": {
+        "min": 3.0,
+        "max": 4.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2.0,
+                "max": 5.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "minecraft:spider_eye"
         },
         {
           "type": "minecraft:item",
           "weight": 3,
           "functions": [
             {
-              "function": "minecraft:enchant_randomly"
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2.0,
+                "max": 5.0,
+                "type": "minecraft:uniform"
+              }
             }
           ],
-          "name": "minecraft:bow"
+          "name": "minecraft:coal"
         },
         {
           "type": "minecraft:item",
-          "weight": 1,
+          "weight": 3,
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
                 "min": 2.0,
-                "max": 6.0,
+                "max": 5.0,
                 "type": "minecraft:uniform"
               }
-            },
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{Potion: \"minecraft:slowness\"}"
             }
           ],
-          "name": "minecraft:tipped_arrow"
+          "name": "minecraft:beetroot_seeds"
         },
         {
           "type": "minecraft:item",
-          "weight": 1,
+          "weight": 3,
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
                 "min": 2.0,
-                "max": 6.0,
+                "max": 5.0,
                 "type": "minecraft:uniform"
               }
-            },
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{Potion: \"minecraft:leaping\"}"
             }
           ],
-          "name": "minecraft:tipped_arrow"
+          "name": "minecraft:pumpkin_seeds"
         },
         {
           "type": "minecraft:item",
-          "weight": 1,
+          "weight": 3,
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
                 "min": 2.0,
-                "max": 6.0,
-                "type": "minecraft:uniform"
-              }
-            },
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{Potion: \"minecraft:fire_resistance\"}"
-            }
-          ],
-          "name": "minecraft:tipped_arrow"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 2.0,
-                "max": 6.0,
-                "type": "minecraft:uniform"
-              }
-            },
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{Potion: \"minecraft:swiftness\"}"
-            }
-          ],
-          "name": "minecraft:tipped_arrow"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 2.0,
-                "max": 6.0,
-                "type": "minecraft:uniform"
-              }
-            },
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{Potion: \"minecraft:long_swiftness\"}"
-            }
-          ],
-          "name": "minecraft:tipped_arrow"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 2.0,
-                "max": 6.0,
-                "type": "minecraft:uniform"
-              }
-            },
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{Potion: \"minecraft:harming\"}"
-            }
-          ],
-          "name": "minecraft:tipped_arrow"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 2.0,
-                "max": 6.0,
-                "type": "minecraft:uniform"
-              }
-            },
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{Potion: \"minecraft:poison\"}"
-            }
-          ],
-          "name": "minecraft:tipped_arrow"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 2.0,
-                "max": 6.0,
-                "type": "minecraft:uniform"
-              }
-            },
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{Potion: \"minecraft:weakness\"}"
-            }
-          ],
-          "name": "minecraft:tipped_arrow"
-        }
-      ]
-    },
-    {
-      "rolls": {
-        "min": 1.0,
-        "max": 3.0,
-        "type": "minecraft:uniform"
-      },
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "weight": 10,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 2.0,
-                "max": 6.0,
+                "max": 5.0,
                 "type": "minecraft:uniform"
               }
             }
           ],
-          "name": "minecraft:iron_ingot"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 5,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 2.0,
-                "max": 4.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ],
-          "name": "minecraft:gold_ingot"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 10,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 2.0,
-                "max": 4.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ],
-          "name": "minecraft:redstone"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 1,
-          "name": "minecraft:name_tag"
+          "name": "minecraft:melon_seeds"
         },
         {
           "type": "minecraft:item",
           "weight": 1,
           "name": "minecraft:lead"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "minecraft:name_tag"
         }
       ]
     },
     {
-      "rolls": 2,
+      "rolls": 3,
       "entries": [
         {
           "type": "minecraft:item",
@@ -279,13 +271,13 @@
             {
               "function": "minecraft:set_count",
               "count": {
-                "min": 2.0,
-                "max": 8.0,
+                "min": 3.0,
+                "max": 6.0,
                 "type": "minecraft:uniform"
               }
             }
           ],
-          "name": "minecraft:bone"
+          "name": "minecraft:cobweb"
         },
         {
           "type": "minecraft:item",
@@ -294,13 +286,13 @@
             {
               "function": "minecraft:set_count",
               "count": {
-                "min": 2.0,
-                "max": 8.0,
+                "min": 3.0,
+                "max": 6.0,
                 "type": "minecraft:uniform"
               }
             }
           ],
-          "name": "minecraft:bone_meal"
+          "name": "minecraft:string"
         }
       ]
     }

@@ -8,10 +8,10 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.loot.LootTables;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.MobSpawnerTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -209,7 +209,7 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
 
         // Place chest or spawner
         if (random.nextFloat() < .6f) {
-            this.generateChest(world, box, random, chestPos.getX(), chestPos.getY(), chestPos.getZ(), LootTables.CHESTS_SIMPLE_DUNGEON); // TODO - custom loot
+            this.generateChest(world, box, random, chestPos.getX(), chestPos.getY(), chestPos.getZ(), new ResourceLocation(BetterDungeons.MOD_ID, "spider_dungeon/chests/egg_room"));
         } else {
             if (box.isVecInside(chestPos)) {
                 this.setBlockState(world, Blocks.SPAWNER.getDefaultState(), chestPos.getX(), chestPos.getY(), chestPos.getZ(), box);
