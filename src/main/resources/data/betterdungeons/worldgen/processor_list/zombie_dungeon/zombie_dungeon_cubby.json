@@ -16,6 +16,9 @@
       "processor_type": "betterdungeons:zombie_mob_spawner_processor"
     },
     {
+      "processor_type": "betterdungeons:zombie_tombstone_spawner_processor"
+    },
+    {
       "processor_type": "betterdungeons:waterlogged_processor"
     },
     {

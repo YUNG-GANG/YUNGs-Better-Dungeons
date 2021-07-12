@@ -84,18 +84,18 @@
       }
     },
     {
-      "weight": 10,
+      "weight": 100,
       "element": {
         "name": "tombstone_chest_closed",
         "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_chest_closed",
         "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
         "projection": "rigid",
-        "max_count": 2,
+        "max_count": 1,
         "element_type": "yungsapi:max_count_single_element"
       }
     },
     {
-      "weight": 10,
+      "weight": 100,
       "element": {
         "name": "tombstone_chest_open_0",
         "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_chest_open_0",
@@ -106,13 +106,13 @@
       }
     },
     {
-      "weight": 10,
+      "weight": 100,
       "element": {
         "name": "tombstone_chest_open_1",
         "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_chest_open_1",
         "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
         "projection": "rigid",
-        "max_count": 2,
+        "max_count": 1,
         "element_type": "yungsapi:max_count_single_element"
       }
     },
@@ -144,30 +144,36 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 100,
       "element": {
+        "name": "tombstone_spawner_closed",
         "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_spawner_closed",
         "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "max_count": 2,
+        "element_type": "yungsapi:max_count_single_element"
       }
     },
     {
-      "weight": 1,
+      "weight": 100,
       "element": {
+        "name": "tombstone_spawner_open_0",
         "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_spawner_open_0",
         "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "max_count": 1,
+        "element_type": "yungsapi:max_count_single_element"
       }
     },
     {
-      "weight": 1,
+      "weight": 100,
       "element": {
+        "name": "tombstone_spawner_open_1",
         "location": "betterdungeons:zombie_dungeon/tombstone/tombstone_spawner_open_1",
         "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "max_count": 1,
+        "element_type": "yungsapi:max_count_single_element"
       }
     }
   ]
