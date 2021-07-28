@@ -5,10 +5,10 @@
       "item": "minecraft:spawner"
     },
     "title": {
-      "translate": "Quite the Renovation"
+      "translate": "betterdungeons.advancements.small_dungeon.title"
     },
     "description": {
-      "translate": "Find an upgraded Monster Room"
+      "translate": "betterdungeons.advancements.small_dungeon.description"
     },
     "show_toast": true,
     "announce_to_chat": true,

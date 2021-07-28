@@ -5,10 +5,10 @@
       "item": "minecraft:skeleton_skull"
     },
     "title": {
-      "translate": "Fortress of the Undead"
+      "translate": "betterdungeons.advancements.skeleton_dungeon.title"
     },
     "description": {
-      "translate": "Enter a Skeleton Fortress"
+      "translate": "betterdungeons.advancements.skeleton_dungeon.description"
     },
     "show_toast": true,
     "announce_to_chat": true,

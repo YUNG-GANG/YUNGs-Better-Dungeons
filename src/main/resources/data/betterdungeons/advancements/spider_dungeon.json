@@ -5,10 +5,10 @@
       "item": "minecraft:string"
     },
     "title": {
-      "translate": "Queen's Nest"
+      "translate": "betterdungeons.advancements.spider_dungeon.title"
     },
     "description": {
-      "translate": "Discover a Spider Cave"
+      "translate": "betterdungeons.advancements.spider_dungeon.description"
     },
     "show_toast": true,
     "announce_to_chat": true,

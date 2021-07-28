@@ -5,10 +5,10 @@
       "item": "minecraft:rotten_flesh"
     },
     "title": {
-      "translate": "Rotten to the Core"
+      "translate": "betterdungeons.advancements.zombie_dungeon.title"
     },
     "description": {
-      "translate": "Set foot in a Zombie Catacomb"
+      "translate": "betterdungeons.advancements.zombie_dungeon.description"
     },
     "show_toast": true,
     "announce_to_chat": true,
