@@ -10,6 +10,7 @@ public class ConfigSmallDungeons {
     public final ForgeConfigSpec.ConfigValue<Integer> chestMaxCount;
     public final ForgeConfigSpec.ConfigValue<Boolean> enableSmallDungeons;
     public final ForgeConfigSpec.ConfigValue<Integer> smallDungeonSeparationDistance;
+    public final ForgeConfigSpec.ConfigValue<Integer> smallDungeonDistanceVariation;
 
     public ConfigSmallDungeons(final ForgeConfigSpec.Builder BUILDER) {
         BUILDER
@@ -65,9 +66,21 @@ public class ConfigSmallDungeons {
             .comment(
                 " The average number of chunks between adjacent small dungeons.\n" +
                 " This controls how often small dungeons spawn. Higher value = more rare.\n" +
-                " Default: 32")
+                " Default: 10")
             .worldRestart()
-            .define("Small Dungeon Average Separation Distance", 32);
+            .define("Small Dungeon Average Separation Distance", 10);
+
+        smallDungeonDistanceVariation = BUILDER
+            .comment(
+                " The variation in distance between small dungeons, in chunks.\n" +
+                " This, combined with the Small Dungeon Average Separation Distance, controls the distribution\n" +
+                " of spawn chances for small dungeons.\n" +
+                " For example, if Small Dungeon Average Separation Distance is set to 10, and this value is set to 6, then\n" +
+                " small dungeons will have anywhere from 10 - 6 = 4 chunks to 10 + 6 = 16 chunks between them.\n" +
+                " In other words, spawn distribution = average distance +/- variation\n" +
+                " Default: 6")
+            .worldRestart()
+            .define("Small Dungeon Separation Distance Variation", 6);
 
         BUILDER.pop();
     }
