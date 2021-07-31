@@ -22,7 +22,7 @@ side="SERVER"
 
 [[dependencies.betterdungeons]]
 modId="yungsapi"
-versionRange="[1.16.4-Forge-9,)"
+versionRange="[1.16.4-Forge-11,)"
 mandatory=true
 ordering="NONE"
 side="BOTH"
