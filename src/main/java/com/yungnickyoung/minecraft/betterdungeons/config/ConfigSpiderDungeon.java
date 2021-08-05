@@ -59,7 +59,7 @@ public class ConfigSpiderDungeon {
                 " For example: \"[minecraft:overworld, minecraft:the_nether, undergarden:undergarden]\"\n" +
                 " Default: \"[minecraft:overworld]\"")
             .worldRestart()
-            .define("Whitelisted Dimensions", "[minecraft:overworld]");
+            .define("Spider Dungeon Whitelisted Dimensions", "[minecraft:overworld]");
 
         blacklistedBiomes = BUILDER
             .comment(
@@ -69,7 +69,7 @@ public class ConfigSpiderDungeon {
                 " For example: \"[minecraft:plains, byg:alps]\"\n" +
                 " Default: \"[minecraft:ocean, minecraft:frozen_ocean, minecraft:deep_ocean, minecraft:warm_ocean, minecraft:lukewarm_ocean, minecraft:cold_ocean, minecraft:deep_lukewarm_ocean, minecraft:deep_cold_ocean, minecraft:deep_frozen_ocean, minecraft:beach, minecraft:snowy_beach, minecraft:river, minecraft:frozen_river]\"")
             .worldRestart()
-            .define("Blacklisted Biomes", "[minecraft:ocean, minecraft:frozen_ocean, minecraft:deep_ocean, minecraft:warm_ocean, minecraft:lukewarm_ocean, minecraft:cold_ocean, minecraft:deep_lukewarm_ocean, minecraft:deep_cold_ocean, minecraft:deep_frozen_ocean, minecraft:beach, minecraft:snowy_beach, minecraft:river, minecraft:frozen_river]");
+            .define("Spider Dungeon Blacklisted Biomes", "[minecraft:ocean, minecraft:frozen_ocean, minecraft:deep_ocean, minecraft:warm_ocean, minecraft:lukewarm_ocean, minecraft:cold_ocean, minecraft:deep_lukewarm_ocean, minecraft:deep_cold_ocean, minecraft:deep_frozen_ocean, minecraft:beach, minecraft:snowy_beach, minecraft:river, minecraft:frozen_river]");
 
         BUILDER.pop();
     }
