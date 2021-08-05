@@ -39,6 +39,17 @@ public class BDModConfig {
             SpiderDungeonStructure.blacklistedBiomes = createBiomeBlacklist(BDConfig.spiderDungeons.blacklistedBiomes, SpiderDungeonStructure.blacklistedBiomes);
             SkeletonDungeonStructure.blacklistedBiomes = createBiomeBlacklist(BDConfig.skeletonDungeons.blacklistedBiomes, SkeletonDungeonStructure.blacklistedBiomes);
             ZombieDungeonStructure.blacklistedBiomes = createBiomeBlacklist(BDConfig.zombieDungeons.blacklistedBiomes, ZombieDungeonStructure.blacklistedBiomes);
+
+            // Validate small dungeon spacing
+            int spacing = BDConfig.smallDungeons.smallDungeonSeparationDistance.get();
+            int separation = BDConfig.smallDungeons.smallDungeonDistanceVariation.get();
+            if (spacing < separation) {
+                BetterDungeons.LOGGER.error("Small Dungeon Average Separation Distance cannot be less than Small Dungeon Separation Distance Variation!");
+                BetterDungeons.LOGGER.error("Found: {} and {}", spacing, separation);
+                BetterDungeons.LOGGER.error("Using default values instead...");
+                BDConfig.smallDungeons.smallDungeonSeparationDistance.set(10);
+                BDConfig.smallDungeons.smallDungeonDistanceVariation.set(6);
+            }
         }
     }
 
