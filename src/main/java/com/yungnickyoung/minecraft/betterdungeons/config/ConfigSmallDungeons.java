@@ -11,6 +11,8 @@ public class ConfigSmallDungeons {
     public final ForgeConfigSpec.ConfigValue<Boolean> enableSmallDungeons;
     public final ForgeConfigSpec.ConfigValue<Integer> smallDungeonSeparationDistance;
     public final ForgeConfigSpec.ConfigValue<Integer> smallDungeonDistanceVariation;
+    public final ForgeConfigSpec.ConfigValue<String> whitelistedDimensions;
+    public final ForgeConfigSpec.ConfigValue<String> blacklistedBiomes;
 
     public ConfigSmallDungeons(final ForgeConfigSpec.Builder BUILDER) {
         BUILDER
@@ -81,6 +83,26 @@ public class ConfigSmallDungeons {
                 " Default: 6")
             .worldRestart()
             .define("Small Dungeon Separation Distance Variation", 6);
+
+        whitelistedDimensions = BUILDER
+            .comment(
+                " List of dimensions that will have Small Dungeons.\n" +
+                " List must be comma-separated values enclosed in square brackets.\n" +
+                " Entries must have the mod namespace included.\n" +
+                " For example: \"[minecraft:overworld, minecraft:the_nether, undergarden:undergarden]\"\n" +
+                " Default: \"[minecraft:overworld]\"")
+            .worldRestart()
+            .define("Whitelisted Dimensions", "[minecraft:overworld]");
+
+        blacklistedBiomes = BUILDER
+            .comment(
+                " List of biomes that will NOT have Small Dungeons.\n" +
+                " List must be comma-separated values enclosed in square brackets.\n" +
+                " Entries must have the mod namespace included.\n" +
+                " For example: \"[minecraft:plains, byg:alps]\"\n" +
+                " Default: \"[minecraft:ocean, minecraft:frozen_ocean, minecraft:deep_ocean, minecraft:warm_ocean, minecraft:lukewarm_ocean, minecraft:cold_ocean, minecraft:deep_lukewarm_ocean, minecraft:deep_cold_ocean, minecraft:deep_frozen_ocean, minecraft:beach, minecraft:snowy_beach, minecraft:river, minecraft:frozen_river]\"")
+            .worldRestart()
+            .define("Blacklisted Biomes", "[minecraft:ocean, minecraft:frozen_ocean, minecraft:deep_ocean, minecraft:warm_ocean, minecraft:lukewarm_ocean, minecraft:cold_ocean, minecraft:deep_lukewarm_ocean, minecraft:deep_cold_ocean, minecraft:deep_frozen_ocean, minecraft:beach, minecraft:snowy_beach, minecraft:river, minecraft:frozen_river]");
 
         BUILDER.pop();
     }

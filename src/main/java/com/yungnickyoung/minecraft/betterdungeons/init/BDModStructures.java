@@ -1,9 +1,9 @@
 package com.yungnickyoung.minecraft.betterdungeons.init;
 
 import com.google.common.collect.ImmutableMap;
-import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
 import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
+import com.yungnickyoung.minecraft.betterdungeons.mixin.ChunkGeneratorAccessor;
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.skeleton_dungeon.SkeletonDungeonStructure;
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.small_dungeon.SmallDungeonStructure;
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.SpiderDungeonStructure;
@@ -12,13 +12,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.FlatChunkGenerator;
 import net.minecraft.world.gen.FlatGenerationSettings;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Features;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.gen.feature.StructureFeature;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.settings.DimensionStructuresSettings;
 import net.minecraft.world.gen.settings.StructureSeparationSettings;
@@ -28,16 +27,17 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.logging.log4j.util.TriConsumer;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 public class BDModStructures {
     public static final DeferredRegister<Structure<?>> DEFERRED_REGISTRY = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, BetterDungeons.MOD_ID);
@@ -121,40 +121,37 @@ public class BDModStructures {
      * Adds the appropriate structure feature to each biome as it loads in.
      */
     private static void onBiomeLoad(BiomeLoadingEvent event) {
-        // Only generate in biomes w/ vanilla dungeons
-        if (event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_STRUCTURES)
-            .stream()
-            .anyMatch(supplier -> supplier.get().feature.equals(Features.MONSTER_ROOM.feature))
-        ) {
-            // Remove vanilla dungeon
-            if (BDConfig.general.removeVanillaDungeons.get())
-                event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_STRUCTURES).removeIf(s -> s.get().feature.equals(Features.MONSTER_ROOM.feature));
-
-            // Don't spawn in water biomes
-            if (event.getCategory() == Biome.Category.OCEAN || event.getCategory() == Biome.Category.RIVER || event.getCategory() == Biome.Category.BEACH)
-                return;
-
-            // Add dungeons to biome generation settings
-            if (BDConfig.smallDungeons.enableSmallDungeons.get())
-                event.getGeneration().getStructures().add(() -> BDModConfiguredStructures.CONFIGURED_SMALL_DUNGEON);
-
-            if (BDConfig.spiderDungeons.enableSpiderDungeons.get())
-                event.getGeneration().getStructures().add(() -> BDModConfiguredStructures.CONFIGURED_SPIDER_DUNGEON);
-
-            if (BDConfig.skeletonDungeons.enableSkeletonDungeons.get())
-                event.getGeneration().getStructures().add(() -> BDModConfiguredStructures.CONFIGURED_SKELETON_DUNGEON);
-
-            if (BDConfig.zombieDungeons.enableZombieDungeons.get())
-                event.getGeneration().getStructures().add(() -> BDModConfiguredStructures.CONFIGURED_ZOMBIE_DUNGEON);
+        // Ensure non-null biome name.
+        // This should never happen, but we check to prevent a NPE just in case.
+        if (event.getName() == null) {
+            BetterDungeons.LOGGER.error("Missing biome name! This is a critical error and should not occur.");
+            BetterDungeons.LOGGER.error("Try running the game with the Blame mod for a more detailed breakdown.");
+            BetterDungeons.LOGGER.error("Please report this issue!");
+            return;
         }
+
+        // Remove vanilla dungeons, if enabled
+        if (BDConfig.general.removeVanillaDungeons.get())
+            event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_STRUCTURES).removeIf(s -> s.get().feature.equals(Features.MONSTER_ROOM.feature));
+
+        // Handler that adds the given structure if it is not blacklisted
+        TriConsumer<List<String>, Boolean, StructureFeature<?, ?>> blacklistHandler = (
+            List<String> blacklist,
+            Boolean isDungeonEnabled,
+            StructureFeature<?, ?> configuredStructure
+        ) -> {
+            if (isDungeonEnabled && !blacklist.contains(event.getName().toString())) {
+                event.getGeneration().getStructures().add(() -> configuredStructure);
+            }
+        };
+
+        // Add dungeons to biome generation settings
+        blacklistHandler.accept(SmallDungeonStructure.blacklistedBiomes, BDConfig.smallDungeons.enableSmallDungeons.get(), BDModConfiguredStructures.CONFIGURED_SMALL_DUNGEON);
+        blacklistHandler.accept(SpiderDungeonStructure.blacklistedBiomes, BDConfig.spiderDungeons.enableSpiderDungeons.get(), BDModConfiguredStructures.CONFIGURED_SPIDER_DUNGEON);
+        blacklistHandler.accept(SkeletonDungeonStructure.blacklistedBiomes, BDConfig.skeletonDungeons.enableSkeletonDungeons.get(), BDModConfiguredStructures.CONFIGURED_SKELETON_DUNGEON);
+        blacklistHandler.accept(ZombieDungeonStructure.blacklistedBiomes, BDConfig.zombieDungeons.enableZombieDungeons.get(), BDModConfiguredStructures.CONFIGURED_ZOMBIE_DUNGEON);
     }
 
-    /**
-     * We must manually add the separation settings for our structure to spawn.
-     */
-    private static Method GETCODEC_METHOD; // Cached instance since this will never change once initialized
-
-    @SuppressWarnings("unchecked")
     private static void addDimensionalSpacing(final WorldEvent.Load event) {
         if (event.getWorld() instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld) event.getWorld();
@@ -162,29 +159,34 @@ public class BDModStructures {
             // Skip Terraforged's chunk generator as they are a special case of a mod locking down their chunkgenerator.
             // Credits to TelepathicGrunt for this.
             try {
-                if (GETCODEC_METHOD == null) {
-                    GETCODEC_METHOD = ObfuscationReflectionHelper.findMethod(ChunkGenerator.class, "func_230347_a_");
-                }
-
-                ResourceLocation chunkGenResourceLocation  = Registry.CHUNK_GENERATOR_CODEC.getKey((Codec<? extends ChunkGenerator>) GETCODEC_METHOD.invoke(serverWorld.getChunkProvider().generator));
-                if (chunkGenResourceLocation  != null && chunkGenResourceLocation .getNamespace().equals("terraforged")) {
+                ResourceLocation chunkGenResourceLocation = Registry.CHUNK_GENERATOR_CODEC.getKey(((ChunkGeneratorAccessor) serverWorld.getChunkProvider().generator).betterdungeons_getCodec());
+                if (chunkGenResourceLocation != null && chunkGenResourceLocation.getNamespace().equals("terraforged")) {
                     return;
                 }
             } catch (Exception e) {
                 BetterDungeons.LOGGER.error("Was unable to check if " + serverWorld.getDimensionKey().getLocation() + " is using Terraforged's ChunkGenerator.");
             }
 
-            // Prevent spawning in superflat world
-            if (serverWorld.getChunkProvider().getChunkGenerator() instanceof FlatChunkGenerator && serverWorld.getDimensionKey().equals(World.OVERWORLD)) {
-                return;
-            }
-
-            // We use a temp map because some mods handle immutable maps.
+            // We use a temp map because some mods handle immutable maps
             Map<Structure<?>, StructureSeparationSettings> tempMap = new HashMap<>(serverWorld.getChunkProvider().generator.func_235957_b_().func_236195_a_());
-            tempMap.put(BDModStructures.SMALL_DUNGEON.get(), DimensionStructuresSettings.field_236191_b_.get(BDModStructures.SMALL_DUNGEON.get()));
-            tempMap.put(BDModStructures.SPIDER_DUNGEON.get(), DimensionStructuresSettings.field_236191_b_.get(BDModStructures.SPIDER_DUNGEON.get()));
-            tempMap.put(BDModStructures.SKELETON_DUNGEON.get(), DimensionStructuresSettings.field_236191_b_.get(BDModStructures.SKELETON_DUNGEON.get()));
-            tempMap.put(BDModStructures.ZOMBIE_DUNGEON.get(), DimensionStructuresSettings.field_236191_b_.get(BDModStructures.ZOMBIE_DUNGEON.get()));
+            String dimensionName = serverWorld.getDimensionKey().getLocation().toString();
+
+            // Handler that adds the given structure if it is whitelisted; removes it if it is not
+            BiConsumer<List<String>, Structure<?>> whitelistHandler = (List<String> whitelist, Structure<?> structure) -> {
+                if (!whitelist.contains(dimensionName) || (serverWorld.getChunkProvider().getChunkGenerator() instanceof FlatChunkGenerator && serverWorld.getDimensionKey().equals(World.OVERWORLD))) {
+                    tempMap.keySet().remove(structure);
+                } else {
+                    tempMap.put(structure, DimensionStructuresSettings.field_236191_b_.get(structure));
+                }
+            };
+
+            // Add structures if whitelisted in dimension
+            whitelistHandler.accept(SmallDungeonStructure.whitelistedDimensions, BDModStructures.SMALL_DUNGEON.get());
+            whitelistHandler.accept(SpiderDungeonStructure.whitelistedDimensions, BDModStructures.SPIDER_DUNGEON.get());
+            whitelistHandler.accept(SkeletonDungeonStructure.whitelistedDimensions, BDModStructures.SKELETON_DUNGEON.get());
+            whitelistHandler.accept(ZombieDungeonStructure.whitelistedDimensions, BDModStructures.ZOMBIE_DUNGEON.get());
+
+            // Store updated map
             serverWorld.getChunkProvider().generator.func_235957_b_().field_236193_d_ = tempMap;
         }
     }

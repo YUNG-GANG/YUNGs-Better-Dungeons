@@ -4,7 +4,8 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "betterdungeons.refmap.json",
   "mixins": [
-    "DungeonContextMixin"
+    "DungeonContextMixin",
+    "ChunkGeneratorAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

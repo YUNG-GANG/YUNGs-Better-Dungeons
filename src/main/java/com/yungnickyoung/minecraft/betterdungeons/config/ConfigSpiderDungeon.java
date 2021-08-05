@@ -7,6 +7,8 @@ public class ConfigSpiderDungeon {
     public final ForgeConfigSpec.ConfigValue<Integer> spiderDungeonStartMaxY;
     public final ForgeConfigSpec.ConfigValue<Boolean> enableSpiderDungeons;
     public final ForgeConfigSpec.ConfigValue<Integer> spiderDungeonSeparationDistance;
+    public final ForgeConfigSpec.ConfigValue<String> whitelistedDimensions;
+    public final ForgeConfigSpec.ConfigValue<String> blacklistedBiomes;
 
     public ConfigSpiderDungeon(final ForgeConfigSpec.Builder BUILDER) {
         BUILDER
@@ -48,6 +50,26 @@ public class ConfigSpiderDungeon {
                 " Default: 44")
             .worldRestart()
             .define("Spider Dungeon Average Separation Distance", 44);
+
+        whitelistedDimensions = BUILDER
+            .comment(
+                " List of dimensions that will have Spider Dungeons.\n" +
+                " List must be comma-separated values enclosed in square brackets.\n" +
+                " Entries must have the mod namespace included.\n" +
+                " For example: \"[minecraft:overworld, minecraft:the_nether, undergarden:undergarden]\"\n" +
+                " Default: \"[minecraft:overworld]\"")
+            .worldRestart()
+            .define("Whitelisted Dimensions", "[minecraft:overworld]");
+
+        blacklistedBiomes = BUILDER
+            .comment(
+                " List of biomes that will NOT have Spider Dungeons.\n" +
+                " List must be comma-separated values enclosed in square brackets.\n" +
+                " Entries must have the mod namespace included.\n" +
+                " For example: \"[minecraft:plains, byg:alps]\"\n" +
+                " Default: \"[minecraft:ocean, minecraft:frozen_ocean, minecraft:deep_ocean, minecraft:warm_ocean, minecraft:lukewarm_ocean, minecraft:cold_ocean, minecraft:deep_lukewarm_ocean, minecraft:deep_cold_ocean, minecraft:deep_frozen_ocean, minecraft:beach, minecraft:snowy_beach, minecraft:river, minecraft:frozen_river]\"")
+            .worldRestart()
+            .define("Blacklisted Biomes", "[minecraft:ocean, minecraft:frozen_ocean, minecraft:deep_ocean, minecraft:warm_ocean, minecraft:lukewarm_ocean, minecraft:cold_ocean, minecraft:deep_lukewarm_ocean, minecraft:deep_cold_ocean, minecraft:deep_frozen_ocean, minecraft:beach, minecraft:snowy_beach, minecraft:river, minecraft:frozen_river]");
 
         BUILDER.pop();
     }
