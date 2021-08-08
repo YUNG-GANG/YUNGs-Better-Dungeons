@@ -1,5 +1,6 @@
 package com.yungnickyoung.minecraft.betterdungeons;
 
+import com.yungnickyoung.minecraft.betterdungeons.init.BDModCompat;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModConfig;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModStructures;
@@ -23,5 +24,6 @@ public class BetterDungeons {
         BDModConfig.init();
         BDModProcessors.init();
         BDModStructures.init();
+        BDModCompat.init();
     }
 }

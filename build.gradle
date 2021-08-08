@@ -65,11 +65,19 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:" + modMinecraftVersion + "-" + modForgeVersion
-    compile fg.deobf("com.yungnickyoung.minecraft.yungsapi:YungsApi:${yungsApiVersion}")
+    implementation fg.deobf("com.yungnickyoung.minecraft.yungsapi:YungsApi:${yungsApiVersion}")
+    compileOnly fg.deobf("curse.maven:quark-243121:${quarkFileId}")
+    compileOnly fg.deobf("curse.maven:arl-250363:${arlFileId}")
     if (System.getProperty("idea.sync.active") != "true") {
         annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
     }

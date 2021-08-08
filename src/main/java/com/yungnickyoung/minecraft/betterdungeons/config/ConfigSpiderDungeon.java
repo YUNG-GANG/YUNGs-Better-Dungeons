@@ -9,6 +9,7 @@ public class ConfigSpiderDungeon {
     public final ForgeConfigSpec.ConfigValue<Integer> spiderDungeonSeparationDistance;
     public final ForgeConfigSpec.ConfigValue<String> whitelistedDimensions;
     public final ForgeConfigSpec.ConfigValue<String> blacklistedBiomes;
+    public final ForgeConfigSpec.ConfigValue<Boolean> useQuarkCobbedstone;
 
     public ConfigSpiderDungeon(final ForgeConfigSpec.Builder BUILDER) {
         BUILDER
@@ -70,6 +71,14 @@ public class ConfigSpiderDungeon {
                 " Default: \"[minecraft:ocean, minecraft:frozen_ocean, minecraft:deep_ocean, minecraft:warm_ocean, minecraft:lukewarm_ocean, minecraft:cold_ocean, minecraft:deep_lukewarm_ocean, minecraft:deep_cold_ocean, minecraft:deep_frozen_ocean, minecraft:beach, minecraft:snowy_beach, minecraft:river, minecraft:frozen_river, minecraft:deep_warm_ocean]\"")
             .worldRestart()
             .define("Spider Dungeon Blacklisted Biomes", "[minecraft:ocean, minecraft:frozen_ocean, minecraft:deep_ocean, minecraft:warm_ocean, minecraft:lukewarm_ocean, minecraft:cold_ocean, minecraft:deep_lukewarm_ocean, minecraft:deep_cold_ocean, minecraft:deep_frozen_ocean, minecraft:beach, minecraft:snowy_beach, minecraft:river, minecraft:frozen_river, minecraft:deep_warm_ocean]");
+
+        useQuarkCobbedstone = BUILDER
+            .comment(
+                " Whether or not Cobbedstone from Quark should be used when generating Spider Caves, if Quark is installed.\n" +
+                " If Quark is not installed, this setting has no effect.\n" +
+                " Default: true")
+            .worldRestart()
+            .define("Use Quark Cobbedstone", true);
 
         BUILDER.pop();
     }

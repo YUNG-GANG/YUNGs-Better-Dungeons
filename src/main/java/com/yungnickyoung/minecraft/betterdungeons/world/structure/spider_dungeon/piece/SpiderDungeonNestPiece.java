@@ -1,6 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece;
 
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
+import com.yungnickyoung.minecraft.betterdungeons.compat.QuarkCompat;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModStructurePieces;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;
 import net.minecraft.block.BlockState;
@@ -39,10 +40,6 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
                                Y_MINRADIUS = 4, Y_MAXRADIUS = 6,
                                Z_MINRADIUS = 6, Z_MAXRADIUS = 10;
 
-    private static final BlockSetSelector SHELL_SELECTOR = new BlockSetSelector()
-        .addBlock(Blocks.COBBLESTONE.getDefaultState(), .7f)
-        .addBlock(Blocks.COBWEB.getDefaultState(), .15f)
-        .addBlock(Blocks.CAVE_AIR.getDefaultState(), .15f);
     private static final BlockSetSelector COBWEB_SELECTOR = BlockSetSelector.from(Blocks.COBWEB.getDefaultState());
     private static final BlockSetSelector WOOL_SELECTOR = BlockSetSelector.from(Blocks.WHITE_WOOL.getDefaultState());
 
@@ -98,6 +95,12 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
 
         // Temporary chunk-local carving mask to prevent overwriting carved blocks and add decorations
         BitSet carvingMask = new BitSet(65536);
+
+        // Create shell selector ahead of time to avoid redundant initialization
+        BlockSetSelector shellSelector = new BlockSetSelector(Blocks.COBBLESTONE.getDefaultState());
+        if (QuarkCompat.enabled) {
+            shellSelector.addBlock(QuarkCompat.getCobbedstone(), .3f);
+        }
 
         // Surface
         int[] surface = new int[256];
@@ -196,7 +199,7 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
 //                                }
                                 if (!BLOCK_BLACKLIST.contains(state.getBlock()) && state.getMaterial() != Material.AIR) { // Ignore blacklisted blocks and air
                                     if (state.getFluidState().getFluid() != Fluids.EMPTY || decoRand.nextFloat() < .8f) {
-                                        this.setBlockState(world, Blocks.COBBLESTONE.getDefaultState(), globalX, globalY, globalZ, box);
+                                        this.setBlockState(world, shellSelector.get(decoRand), globalX, globalY, globalZ, box);
                                     }
                                 }
                             }
