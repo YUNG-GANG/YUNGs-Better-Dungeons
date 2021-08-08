@@ -28,6 +28,7 @@ public class BDModProcessors {
     public static IStructureProcessorType<SmallDungeonCobblestoneProcessor> SMALL_DUNGEON_COBBLE_PROCESSOR = () -> SmallDungeonCobblestoneProcessor.CODEC;
     public static IStructureProcessorType<SmallDungeonLegProcessor> SMALL_DUNGEON_LEG_PROCESSOR = () -> SmallDungeonLegProcessor.CODEC;
     public static IStructureProcessorType<SmallDungeonCeilingProcessor> SMALL_DUNGEON_CEILING_PROCESSOR = () -> SmallDungeonCeilingProcessor.CODEC;
+    public static IStructureProcessorType<SmallDungeonOreProcessor> SMALL_DUNGEON_ORE_PROCESSOR = () -> SmallDungeonOreProcessor.CODEC;
 
     // Skeleton dungeons
     public static IStructureProcessorType<RuinedStoneBrickProcessor> SKELETON_DUNGEON_RUINED_STONE_BRICKS_PROCESSOR = () -> RuinedStoneBrickProcessor.CODEC;
@@ -64,6 +65,7 @@ public class BDModProcessors {
             Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "small_dungeon_cobblestone_processor"), SMALL_DUNGEON_COBBLE_PROCESSOR);
             Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "small_dungeon_leg_processor"), SMALL_DUNGEON_LEG_PROCESSOR);
             Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "small_dungeon_ceiling_processor"), SMALL_DUNGEON_CEILING_PROCESSOR);
+            Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "small_dungeon_ore_processor"), SMALL_DUNGEON_ORE_PROCESSOR);
 
             // Skeleton dungeons
             Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon_ruined_stone_bricks_processor"), SKELETON_DUNGEON_RUINED_STONE_BRICKS_PROCESSOR);

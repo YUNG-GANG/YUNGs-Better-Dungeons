@@ -13,6 +13,7 @@ public class ConfigSmallDungeons {
     public final ForgeConfigSpec.ConfigValue<Integer> smallDungeonDistanceVariation;
     public final ForgeConfigSpec.ConfigValue<String> whitelistedDimensions;
     public final ForgeConfigSpec.ConfigValue<String> blacklistedBiomes;
+    public final ForgeConfigSpec.ConfigValue<Boolean> enableOreProps;
 
     public ConfigSmallDungeons(final ForgeConfigSpec.Builder BUILDER) {
         BUILDER
@@ -103,6 +104,14 @@ public class ConfigSmallDungeons {
                 " Default: \"[minecraft:ocean, minecraft:frozen_ocean, minecraft:deep_ocean, minecraft:warm_ocean, minecraft:lukewarm_ocean, minecraft:cold_ocean, minecraft:deep_lukewarm_ocean, minecraft:deep_cold_ocean, minecraft:deep_frozen_ocean, minecraft:beach, minecraft:snowy_beach, minecraft:river, minecraft:frozen_river, minecraft:deep_warm_ocean]\"")
             .worldRestart()
             .define("Small Dungeon Blacklisted Biomes", "[minecraft:ocean, minecraft:frozen_ocean, minecraft:deep_ocean, minecraft:warm_ocean, minecraft:lukewarm_ocean, minecraft:cold_ocean, minecraft:deep_lukewarm_ocean, minecraft:deep_cold_ocean, minecraft:deep_frozen_ocean, minecraft:beach, minecraft:snowy_beach, minecraft:river, minecraft:frozen_river, minecraft:deep_warm_ocean]");
+
+        enableOreProps = BUILDER
+            .comment(
+                " Whether or not Small Dungeons can rarely place ore blocks in the corners of the dungeon.\n" +
+                " If this is set to false, any ore blocks that spawn as part of a corner prop will instead be replaced with air.\n" +
+                " Default: true")
+            .worldRestart()
+            .define("Allow Ore Blocks in Corners", true);
 
         BUILDER.pop();
     }
