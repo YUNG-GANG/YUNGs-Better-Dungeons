@@ -5,22 +5,21 @@ import com.yungnickyoung.minecraft.betterdungeons.init.BDModStructurePieces;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.FloatNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.SharedSeedRandom;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.FloatTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.structure.StructureManager;
+import net.minecraft.structure.StructurePiece;
+import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.structure.StructureManager;
-import net.minecraft.world.gen.feature.structure.StructurePiece;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.Heightmap;
+import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.gen.ChunkRandom;
+import net.minecraft.world.gen.StructureAccessor;
+import net.minecraft.world.gen.chunk.ChunkGenerator;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.BitSet;
 import java.util.List;
 import java.util.Random;
@@ -38,43 +37,41 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
 
     public SpiderDungeonSmallTunnelPiece(BlockPos startPos, float initialYaw, int pieceChainLength) {
         super(BDModStructurePieces.SPIDER_DUNGEON_SMALL_TUNNEL_PIECE, pieceChainLength);
-        this.boundingBox = new MutableBoundingBox(startPos.getX() - 64, 1, startPos.getZ() - 64, startPos.getX() + 64, 256, startPos.getZ() + 64);
+        this.boundingBox = new BlockBox(startPos.getX() - 64, 1, startPos.getZ() - 64, startPos.getX() + 64, 256, startPos.getZ() + 64);
         this.startPos = new BlockPos(startPos);
         this.endPos = new BlockPos(startPos);
         this.yaws[0] = initialYaw;
     }
 
-    public SpiderDungeonSmallTunnelPiece(TemplateManager templateManager, CompoundNBT compoundNBT) {
+    public SpiderDungeonSmallTunnelPiece(StructureManager structureManager, CompoundTag compoundNBT) {
         super(BDModStructurePieces.SPIDER_DUNGEON_SMALL_TUNNEL_PIECE, compoundNBT);
         int[] start = compoundNBT.getIntArray("startPos");
         int[] end = compoundNBT.getIntArray("endPos");
         this.startPos = new BlockPos(start[0], start[1], start[2]);
         this.endPos = new BlockPos(end[0], end[1], end[2]);
         this.pitch = compoundNBT.getFloat("pitch");
-        ListNBT yawListNBT = compoundNBT.getList("yawList", 5);
+        ListTag yawListTag = compoundNBT.getList("yawList", 5);
         for (int i = 0; i < LENGTH; i++) {
-            this.yaws[i] = yawListNBT.getFloat(i);
+            this.yaws[i] = yawListTag.getFloat(i);
         }
     }
 
     @Override
-    @ParametersAreNonnullByDefault
-    protected void readAdditional(CompoundNBT tagCompound) {
+    protected void toNbt(CompoundTag tagCompound) {
         tagCompound.putIntArray("startPos", new int[]{startPos.getX(), startPos.getY(), startPos.getZ()});
         tagCompound.putIntArray("endPos", new int[]{endPos.getX(), endPos.getY(), endPos.getZ()});
         tagCompound.putFloat("pitch", pitch);
-        ListNBT yawListNBT = new ListNBT();
+        ListTag yawListTag = new ListTag();
         for (int i = 0; i < LENGTH; i++) {
-            yawListNBT.add(FloatNBT.valueOf(yaws[i]));
+            yawListTag.add(FloatTag.of(yaws[i]));
         }
-        tagCompound.put("yawList", yawListNBT);
+        tagCompound.put("yawList", yawListTag);
     }
 
     @Override
-    @ParametersAreNonnullByDefault
-    public void buildComponent(StructurePiece piece, List<StructurePiece> pieceList, Random rand) {
+    public void fillOpenings(StructurePiece structurePiece, List<StructurePiece> pieceList, Random random) {
         // Determine pitch
-        this.pitch = rand.nextFloat() * (float) Math.PI / 4f - ((float) Math.PI / 6f);
+        this.pitch = random.nextFloat() * (float) Math.PI / 4f - ((float) Math.PI / 6f);
         float pitchY = MathHelper.sin(this.pitch);
         float pitchXZ = MathHelper.cos(this.pitch); // Allows for steep drops
 
@@ -108,7 +105,7 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
         for (int i = 1; i < LENGTH; i++) {
             // Tweak yaw for next iteration
             yawModifier = yawModifier * 0.75F;
-            yawModifier += rand.nextFloat() * rand.nextFloat();
+            yawModifier += random.nextFloat() * random.nextFloat();
             this.yaws[i] = this.yaws[i - 1] + yawModifier * 0.02f;
 
             // Center of this sphere
@@ -135,10 +132,10 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
 
         this.endPos = new BlockPos(caveStartX, caveStartY, caveStartZ);
 
-        if (rand.nextFloat() < 0.8f) {
-            StructurePiece eggRoom = new SpiderDungeonEggRoomPiece(endPos, this.componentType + 1);
+        if (random.nextFloat() < 0.8f) {
+            StructurePiece eggRoom = new SpiderDungeonEggRoomPiece(endPos, this.chainLength + 1);
             pieceList.add(eggRoom);
-            eggRoom.buildComponent(eggRoom, pieceList, rand);
+            eggRoom.fillOpenings(eggRoom, pieceList, random);
         }
     }
 
@@ -146,11 +143,10 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
      * Generate.
      */
     @Override
-    @ParametersAreNonnullByDefault
-    public boolean func_230383_a_(ISeedReader world, StructureManager structureManager, ChunkGenerator chunkGenerator, Random random, MutableBoundingBox box, ChunkPos chunkPos, BlockPos blockPos) {
+    public boolean generate(StructureWorldAccess world, StructureAccessor structureAccessor, ChunkGenerator generator, Random random, BlockBox box, ChunkPos chunkPos, BlockPos blockPos) {
         BlockPos.Mutable mutable = new BlockPos.Mutable();
-        SharedSeedRandom decoRand = new SharedSeedRandom(); // Rand for decoration. It's not as important for this to be deterministic.
-        decoRand.setDecorationSeed(world.getSeed(), startPos.getX(), startPos.getZ());
+        ChunkRandom decoRand = new ChunkRandom(); // Rand for decoration. It's not as important for this to be deterministic.
+        decoRand.setDecoratorSeed(world.getSeed(), startPos.getX(), startPos.getZ());
 
         // Temporary chunk-local carving mask to prevent overwriting carved blocks and add decorations
         BitSet carvingMask = new BitSet(65536);
@@ -159,8 +155,8 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
         int[] surface = new int[256];
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
-                mutable.setPos(chunkPos.getXStart() + x, 1, chunkPos.getZStart() + z);
-                surface[x * 16 + z] = world.getHeight(Heightmap.Type.WORLD_SURFACE_WG, mutable).getY();
+                mutable.set(chunkPos.getStartX() + x, 1, chunkPos.getStartZ() + z);
+                surface[x * 16 + z] = world.getTopY(Heightmap.Type.WORLD_SURFACE_WG, mutable.getX(), mutable.getZ());
             }
         }
 
@@ -200,7 +196,7 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
 
             // DEBUG
             if (BetterDungeons.DEBUG_MODE)
-                this.setBlockState(world, Blocks.DIAMOND_BLOCK.getDefaultState(), (int) caveStartX, (int) caveStartY, (int) caveStartZ, box);
+                this.addBlock(world, Blocks.DIAMOND_BLOCK.getDefaultState(), (int) caveStartX, (int) caveStartY, (int) caveStartZ, box);
 
             // -- Carve sphere -- //
             for (float x = minX; x <= maxX; x++) {
@@ -208,7 +204,7 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
                 int globalX = (int)x + chunkPos.x * 16;
 
                 // No need to consider blocks outside this chunk
-                if (globalX < chunkPos.getXStart() || globalX > chunkPos.getXEnd()) continue;
+                if (globalX < chunkPos.getStartX() || globalX > chunkPos.getEndX()) continue;
 
                 // Distance along the rotated x-axis from the center of this ellipsoid.
                 // You can think of this value as (x/a), where a is the length of the ellipsoid's radius in the rotated x-direction.
@@ -219,7 +215,7 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
                     int globalZ = (int)z + chunkPos.z * 16;
 
                     // No need to consider blocks outside this chunk
-                    if (globalZ < chunkPos.getZStart() || globalZ > chunkPos.getZEnd()) continue;
+                    if (globalZ < chunkPos.getStartZ() || globalZ > chunkPos.getEndZ()) continue;
 
                     // Distance along the rotated z-axis from the center of this ellipsoid.
                     // You can think of this value as (z/b), where b is the length of the ellipsoid's radius in the rotated z-direction.
@@ -241,8 +237,8 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
                         // Carve out blocks within the ellipsoid. Blocks immediately outside the ellipsoid will be turned into a cobblestone shell.
                         float radialDist = radialXDist * radialXDist + radialYDist * radialYDist + radialZDist * radialZDist;
                         if (!carvingMask.get(mask) && radialDist < 1.0) {
-                            if (!BLOCK_BLACKLIST.contains(this.getBlockStateFromPos(world, globalX, globalY, globalZ, box).getBlock())) {
-                                this.setBlockState(world, Blocks.CAVE_AIR.getDefaultState(), globalX, globalY, globalZ, box);
+                            if (!BLOCK_BLACKLIST.contains(this.getBlockAt(world, globalX, globalY, globalZ, box).getBlock())) {
+                                this.addBlock(world, Blocks.CAVE_AIR.getDefaultState(), globalX, globalY, globalZ, box);
                                 carvingMask.set(mask);
                             }
                         } else {
@@ -253,10 +249,10 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
                             float radialZDistShell = (globalZ - caveStartZ + .5f) / (zRadius + 1.2f);
                             float radialDistShell = radialXDistShell * radialXDistShell + radialYDistShell * radialYDistShell + radialZDistShell * radialZDistShell;
                             if (!carvingMask.get(mask) && radialDistShell < 1.0) {
-                                BlockState state = this.getBlockStateFromPos(world, globalX, globalY, globalZ, box);
+                                BlockState state = this.getBlockAt(world, globalX, globalY, globalZ, box);
                                 if (!BLOCK_BLACKLIST.contains(state.getBlock())) {
                                     if (state.isAir() || state.getFluidState().getFluid() != Fluids.EMPTY || decoRand.nextFloat() < .2f) {
-                                        this.setBlockState(world, Blocks.COBBLESTONE.getDefaultState(), globalX, globalY, globalZ, box);
+                                        this.addBlock(world, Blocks.COBBLESTONE.getDefaultState(), globalX, globalY, globalZ, box);
                                     }
                                 }
                             }

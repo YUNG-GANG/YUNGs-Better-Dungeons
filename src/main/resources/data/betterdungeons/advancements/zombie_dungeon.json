@@ -16,9 +16,9 @@
   },
   "criteria": {
     "in_better_zombie_dungeon": {
-      "trigger": "minecraft:location",
+      "trigger": "yungsapi:structure_location",
       "conditions": {
-        "feature": "zombie dungeon"
+        "feature": "betterdungeons:zombie_dungeon"
       }
     }
   },

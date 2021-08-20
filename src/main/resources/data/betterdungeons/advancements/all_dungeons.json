@@ -16,27 +16,27 @@
   },
   "criteria": {
     "in_better_monster_room": {
-      "trigger": "minecraft:location",
+      "trigger": "yungsapi:structure_location",
       "conditions": {
-        "feature": "small dungeon"
+        "feature": "betterdungeons:small_dungeon"
       }
     },
     "in_better_zombie_dungeon": {
-      "trigger": "minecraft:location",
+      "trigger": "yungsapi:structure_location",
       "conditions": {
-        "feature": "zombie dungeon"
+        "feature": "betterdungeons:zombie_dungeon"
       }
     },
     "in_better_skeleton_dungeon": {
-      "trigger": "minecraft:location",
+      "trigger": "yungsapi:structure_location",
       "conditions": {
-        "feature": "skeleton dungeon"
+        "feature": "betterdungeons:skeleton_dungeon"
       }
     },
     "in_better_spider_dungeon": {
-      "trigger": "minecraft:location",
+      "trigger": "yungsapi:structure_location",
       "conditions": {
-        "feature": "spider dungeon"
+        "feature": "betterdungeons:spider_dungeon"
       }
     }
   },

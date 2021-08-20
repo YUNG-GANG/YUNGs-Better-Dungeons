@@ -16,9 +16,9 @@
   },
   "criteria": {
     "in_better_skeleton_dungeon": {
-      "trigger": "minecraft:location",
+      "trigger": "yungsapi:structure_location",
       "conditions": {
-        "feature": "skeleton dungeon"
+        "feature": "betterdungeons:skeleton_dungeon"
       }
     }
   },

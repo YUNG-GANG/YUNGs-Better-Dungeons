@@ -16,9 +16,9 @@
   },
   "criteria": {
     "in_better_spider_dungeon": {
-      "trigger": "minecraft:location",
+      "trigger": "yungsapi:structure_location",
       "conditions": {
-        "feature": "spider dungeon"
+        "feature": "betterdungeons:spider_dungeon"
       }
     }
   },

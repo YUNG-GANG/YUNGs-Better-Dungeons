@@ -16,9 +16,9 @@
   },
   "criteria": {
     "in_better_monster_room": {
-      "trigger": "minecraft:location",
+      "trigger": "yungsapi:structure_location",
       "conditions": {
-        "feature": "small dungeon"
+        "feature": "betterdungeons:small_dungeon"
       }
     }
   },

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "betterdungeons",
+  "version": "${version}",
+  "name": "YUNG's Better Dungeons",
+  "description": "A complete redesign of Minecraft's dungeons",
+  "authors": [
+    "YUNGNICKYOUNG",
+    "Acarii"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/yungs-better-dungeons-fabric",
+    "sources": "https://github.com/yungnickyoung/YUNGs-Better-Dungeons",
+    "issues": "https://github.com/yungnickyoung/YUNGs-Better-Dungeons/issues",
+    "discord": "discord.gg/rns3beq"
+  },
+  "license": "GPLv3",
+  "icon": "assets/betterdungeons/logo.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.yungnickyoung.minecraft.betterdungeons.BetterDungeons"
+    ],
+    "client": [
+      "com.yungnickyoung.minecraft.betterdungeons.BetterDungeons"
+    ],
+    "server": [
+      "com.yungnickyoung.minecraft.betterdungeons.BetterDungeons"
+    ],
+    "modmenu": [
+      "com.yungnickyoung.minecraft.betterdungeons.config.gui.BDModMenu"
+    ]
+  },
+  "mixins": [
+    "betterdungeons.mixins.json"
+  ],
+  "accessWidener": "betterdungeons.aw",
+  "depends": {
+    "fabricloader": ">=0.10.6",
+    "fabric": ">=0.33.0+1.16",
+    "minecraft": ">=1.16.4",
+    "yungsapi": ">=1.16.5-Fabric-9"
+  }
+}

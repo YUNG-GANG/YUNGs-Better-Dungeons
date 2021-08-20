@@ -3,27 +3,23 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
-import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import com.yungnickyoung.minecraft.betterdungeons.util.Banner;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonContext;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonType;
-import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.AbstractBannerBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.state.property.Properties;
+import net.minecraft.structure.Structure;
+import net.minecraft.structure.StructurePlacementData;
+import net.minecraft.structure.processor.StructureProcessor;
+import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.gen.feature.template.IStructureProcessorType;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.StructureProcessor;
-import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.util.math.Direction;
+import net.minecraft.world.WorldView;
 
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
 /**
@@ -31,7 +27,6 @@ import java.util.Random;
  * Also removes existing banners to ensure the number of banners per structure
  * falls within the desired range.
  */
-@MethodsReturnNonnullByDefault
 public class SmallDungeonBannerProcessor extends StructureProcessor {
     public static final Codec<SmallDungeonBannerProcessor> CODEC = RecordCodecBuilder.create(codecBuilder -> codecBuilder
         .group(
@@ -86,38 +81,37 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
         .customColor("dark_red")
         .build();
 
-    @ParametersAreNonnullByDefault
     @Override
-    public Template.BlockInfo process(IWorldReader worldReader, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Template.BlockInfo blockInfoLocal, Template.BlockInfo blockInfoGlobal, PlacementSettings structurePlacementData, @Nullable Template template) {
+    public Structure.StructureBlockInfo process(WorldView worldReader, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Structure.StructureBlockInfo blockInfoLocal, Structure.StructureBlockInfo blockInfoGlobal, StructurePlacementData structurePlacementData) {
         if (blockInfoGlobal.state.getBlock() instanceof AbstractBannerBlock) {
             // Make sure we only operate on the placeholder banners
-            if (blockInfoGlobal.state.getBlock() == Blocks.RED_WALL_BANNER && (blockInfoGlobal.nbt.get("Patterns") == null || blockInfoGlobal.nbt.getList("Patterns", 10).size() == 0)) {
+            if (blockInfoGlobal.state.getBlock() == Blocks.RED_WALL_BANNER && (blockInfoGlobal.tag.get("Patterns") == null || blockInfoGlobal.tag.getList("Patterns", 10).size() == 0)) {
                 // Fetch thread-local dungeon context
                 DungeonContext context = DungeonContext.peek();
 
                 // Check dungeon context to see if we have reached the max banner count for this structure piece
-                if (context.getBannerCount() >= BDConfig.smallDungeons.bannerMaxCount.get())
-                    return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
+                if (context.getBannerCount() >= BetterDungeons.CONFIG.betterDungeons.smallDungeon.bannerMaxCount)
+                    return new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.tag);
 
                 // Chance of a banner spawning
                 Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
                 if (random.nextFloat() > .1f) {
-                    return new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
+                    return new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.tag);
                 }
 
                 Banner banner = getBannerForType();
-                Direction facing = blockInfoGlobal.state.get(BlockStateProperties.HORIZONTAL_FACING);
-                BlockState newState = banner.getState().with(BlockStateProperties.HORIZONTAL_FACING, facing);
-                CompoundNBT newNBT = copyNBT(banner.getNbt());
+                Direction facing = blockInfoGlobal.state.get(Properties.HORIZONTAL_FACING);
+                BlockState newState = banner.getState().with(Properties.HORIZONTAL_FACING, facing);
+                CompoundTag newNBT = copyNBT(banner.getNbt());
 
-                blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, newState, newNBT);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, newState, newNBT);
                 context.incrementBannerCount();
             }
         }
         return blockInfoGlobal;
     }
 
-    protected IStructureProcessorType<?> getType() {
+    protected StructureProcessorType<?> getType() {
         return BDModProcessors.SMALL_DUNGEON_BANNER_PROCESSOR;
     }
 
@@ -135,9 +129,9 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
         }
     }
 
-    private CompoundNBT copyNBT(CompoundNBT other) {
-        CompoundNBT nbt = new CompoundNBT();
-        nbt.merge(other);
+    private CompoundTag copyNBT(CompoundTag other) {
+        CompoundTag nbt = new CompoundTag();
+        nbt.copyFrom(other);
         return nbt;
     }
 }

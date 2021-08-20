@@ -3,26 +3,21 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dung
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;
-import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SlabBlock;
-import net.minecraft.state.properties.SlabType;
+import net.minecraft.block.enums.SlabType;
+import net.minecraft.structure.Structure;
+import net.minecraft.structure.StructurePlacementData;
+import net.minecraft.structure.processor.StructureProcessor;
+import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.gen.feature.template.IStructureProcessorType;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.StructureProcessor;
-import net.minecraft.world.gen.feature.template.Template;
-
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import net.minecraft.world.WorldView;
 
 /**
  * Replaces yellow glass w/ air in skeleton dungeons when air is already there,
  * giving them a more natural, ruined look that opens up to caves.
  * Replaces them w/ stone bricks otherwise.
  */
-@MethodsReturnNonnullByDefault
 public class RuinedStoneBrickProcessor extends StructureProcessor {
     public static final RuinedStoneBrickProcessor INSTANCE = new RuinedStoneBrickProcessor();
     public static final Codec<RuinedStoneBrickProcessor> CODEC = Codec.unit(() -> INSTANCE);
@@ -34,26 +29,25 @@ public class RuinedStoneBrickProcessor extends StructureProcessor {
     private static final BlockSetSelector STONE_BRICK_SLAB_SELECTOR = new BlockSetSelector(Blocks.STONE_BRICK_SLAB.getDefaultState().with(SlabBlock.TYPE, SlabType.TOP))
         .addBlock(Blocks.MOSSY_STONE_BRICK_SLAB.getDefaultState().with(SlabBlock.TYPE, SlabType.TOP), 0.3f);
 
-    @ParametersAreNonnullByDefault
     @Override
-    public Template.BlockInfo process(IWorldReader world, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Template.BlockInfo blockInfoLocal, Template.BlockInfo blockInfoGlobal, PlacementSettings structurePlacementData, @Nullable Template template) {
+    public Structure.StructureBlockInfo process(WorldView world, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Structure.StructureBlockInfo blockInfoLocal, Structure.StructureBlockInfo blockInfoGlobal, StructurePlacementData structurePlacementData) {
         if (blockInfoGlobal.state.getBlock() == Blocks.YELLOW_STAINED_GLASS) {
             if (world.getBlockState(blockInfoGlobal.pos).isAir()) {
-                blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.tag);
             } else {
-                blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, STONE_BRICK_SELECTOR.get(structurePlacementData.getRandom(blockInfoGlobal.pos)), blockInfoGlobal.nbt);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, STONE_BRICK_SELECTOR.get(structurePlacementData.getRandom(blockInfoGlobal.pos)), blockInfoGlobal.tag);
             }
         } else if (blockInfoGlobal.state.getBlock() == Blocks.PRISMARINE_BRICK_SLAB) {
             if (world.getBlockState(blockInfoGlobal.pos).isAir()) {
-                blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.tag);
             } else {
-                blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, STONE_BRICK_SLAB_SELECTOR.get(structurePlacementData.getRandom(blockInfoGlobal.pos)), blockInfoGlobal.nbt);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, STONE_BRICK_SLAB_SELECTOR.get(structurePlacementData.getRandom(blockInfoGlobal.pos)), blockInfoGlobal.tag);
             }
         }
         return blockInfoGlobal;
     }
 
-    protected IStructureProcessorType<?> getType() {
+    protected StructureProcessorType<?> getType() {
         return BDModProcessors.SKELETON_DUNGEON_RUINED_STONE_BRICKS_PROCESSOR;
     }
 }

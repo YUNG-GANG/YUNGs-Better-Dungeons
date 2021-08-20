@@ -4,25 +4,21 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece.SpiderDungeonBigTunnelPiece;
-import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.EntityType;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.util.registry.DynamicRegistries;
+import net.minecraft.structure.StructureManager;
+import net.minecraft.structure.StructurePiece;
+import net.minecraft.structure.StructureStart;
+import net.minecraft.util.math.BlockBox;
+import net.minecraft.util.registry.DynamicRegistryManager;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.MobSpawnInfo;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.feature.structure.StructurePiece;
-import net.minecraft.world.gen.feature.structure.StructureStart;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.biome.SpawnSettings;
+import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.StructureFeature;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
-@MethodsReturnNonnullByDefault
-public class SpiderDungeonStructure extends Structure<NoFeatureConfig> {
+public class SpiderDungeonStructure extends StructureFeature<DefaultFeatureConfig> {
     /**
      * Lists of whitelisted dimensions and blacklisted biomes.
      * Will be reinitialized later w/ values from config.
@@ -37,59 +33,48 @@ public class SpiderDungeonStructure extends Structure<NoFeatureConfig> {
     );
 
     public SpiderDungeonStructure() {
-        super(NoFeatureConfig.field_236558_a_);
+        super(DefaultFeatureConfig.CODEC);
     }
 
     @Override
-    public IStartFactory<NoFeatureConfig> getStartFactory() {
+    public StructureStartFactory<DefaultFeatureConfig> getStructureStartFactory() {
         return Start::new;
     }
 
-    @Override
-    public GenerationStage.Decoration getDecorationStage() {
-        return GenerationStage.Decoration.UNDERGROUND_STRUCTURES;
-    }
-
     // Spider dungeons can only spawn spiders & cave spiders
-    private static final List<MobSpawnInfo.Spawners> STRUCTURE_MONSTERS = ImmutableList.of(
-        new MobSpawnInfo.Spawners(EntityType.SPIDER, 100, 4, 15),
-        new MobSpawnInfo.Spawners(EntityType.CAVE_SPIDER, 50, 4, 8)
+    private static final List<SpawnSettings.SpawnEntry> STRUCTURE_MONSTERS = ImmutableList.of(
+        new SpawnSettings.SpawnEntry(EntityType.SPIDER, 100, 4, 15),
+        new SpawnSettings.SpawnEntry(EntityType.CAVE_SPIDER, 50, 4, 8)
     );
 
     @Override
-    public List<MobSpawnInfo.Spawners> getDefaultSpawnList() {
+    public List<SpawnSettings.SpawnEntry> getMonsterSpawns() {
         return STRUCTURE_MONSTERS;
     }
 
-    @Override
-    public boolean getDefaultRestrictsSpawnsToInside() {
-        return true;
-    }
-
-    public static class Start extends StructureStart<NoFeatureConfig> {
-        public Start(Structure<NoFeatureConfig> structureIn, int chunkX, int chunkZ, MutableBoundingBox mutableBoundingBox, int referenceIn, long seedIn) {
-            super(structureIn, chunkX, chunkZ, mutableBoundingBox, referenceIn, seedIn);
+    public static class Start extends StructureStart<DefaultFeatureConfig> {
+        public Start(StructureFeature<DefaultFeatureConfig> structure, int chunkX, int chunkZ, BlockBox blockBox, int references, long seedInseed) {
+            super(structure, chunkX, chunkZ, blockBox, references, seedInseed);
         }
 
         @Override
-        @ParametersAreNonnullByDefault
-        public void func_230364_a_(DynamicRegistries registryManager, ChunkGenerator chunkGenerator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoFeatureConfig config) {
+        public void init(DynamicRegistryManager dynamicRegistryManager, ChunkGenerator chunkGenerator, StructureManager structureManager, int chunkX, int chunkZ, Biome biomeIn, DefaultFeatureConfig config) {
             int startX = chunkX << 4;
             int startZ = chunkZ << 4;
 
             // Spider dungeons use traditional code-based structure gen instead of Jigsaw
-            StructurePiece startPiece = new SpiderDungeonBigTunnelPiece(startX, startZ, this.rand);
-            this.components.add(startPiece);
-            startPiece.buildComponent(startPiece, this.components, this.rand);
+            StructurePiece startPiece = new SpiderDungeonBigTunnelPiece(startX, startZ, this.random);
+            this.children.add(startPiece);
+            startPiece.fillOpenings(startPiece, this.children, this.random);
 
             // Set the bounds of the structure once it's assembled
-            this.recalculateStructureSize();
+            this.setBoundingBoxFromChildren();
 
             // Debug log the coordinates of the center starting piece.
             BetterDungeons.LOGGER.debug("Spider Dungeon at {} {} {}",
-                this.components.get(0).getBoundingBox().minX,
-                this.components.get(0).getBoundingBox().minY,
-                this.components.get(0).getBoundingBox().minZ
+                this.children.get(0).getBoundingBox().minX,
+                this.children.get(0).getBoundingBox().minY,
+                this.children.get(0).getBoundingBox().minZ
             );
         }
     }

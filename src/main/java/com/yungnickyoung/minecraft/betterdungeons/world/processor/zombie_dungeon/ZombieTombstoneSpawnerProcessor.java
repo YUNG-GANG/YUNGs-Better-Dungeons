@@ -1,94 +1,87 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon;
 
-
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
-import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.FloatNBT;
-import net.minecraft.nbt.IntNBT;
-import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.FloatTag;
+import net.minecraft.nbt.IntTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.structure.Structure;
+import net.minecraft.structure.StructurePlacementData;
+import net.minecraft.structure.processor.StructureProcessor;
+import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.gen.feature.template.IStructureProcessorType;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.StructureProcessor;
-import net.minecraft.world.gen.feature.template.Template;
-
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import net.minecraft.world.WorldView;
 
 /**
  * Sets mob spawners to spawn skeletons w/ swords.
  */
-@MethodsReturnNonnullByDefault
 public class ZombieTombstoneSpawnerProcessor extends StructureProcessor {
     public static final ZombieTombstoneSpawnerProcessor INSTANCE = new ZombieTombstoneSpawnerProcessor();
     public static final Codec<ZombieTombstoneSpawnerProcessor> CODEC = Codec.unit(() -> INSTANCE);
 
-    @ParametersAreNonnullByDefault
     @Override
-    public Template.BlockInfo process(IWorldReader worldReader, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Template.BlockInfo blockInfoLocal, Template.BlockInfo blockInfoGlobal, PlacementSettings structurePlacementData, @Nullable Template template) {
+    public Structure.StructureBlockInfo process(WorldView world, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Structure.StructureBlockInfo blockInfoLocal, Structure.StructureBlockInfo blockInfoGlobal, StructurePlacementData structurePlacementData) {
         if (blockInfoGlobal.state.getBlock() == Blocks.BLACK_STAINED_GLASS) {
             // First initialize NBT if it's null for some reason
-            if (blockInfoGlobal.nbt == null) {
-                CompoundNBT newNBT = new CompoundNBT();
+            if (blockInfoGlobal.tag == null) {
+                CompoundTag newNBT = new CompoundTag();
                 newNBT.putShort("SpawnCount", (short) 4);
                 newNBT.putString("id", "minecraft:mob_spawner");
                 newNBT.putShort("MinSpawnDelay", (short) 200);
-                blockInfoGlobal.nbt = newNBT;
+                blockInfoGlobal.tag = newNBT;
             }
 
-            blockInfoGlobal = new Template.BlockInfo(blockInfoGlobal.pos, Blocks.SPAWNER.getDefaultState(), blockInfoGlobal.nbt);
+            blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SPAWNER.getDefaultState(), blockInfoGlobal.tag);
 
             // Update the spawner block's NBT
             // SpawnData
-            CompoundNBT spawnData = new CompoundNBT();
+            CompoundTag spawnData = new CompoundTag();
             spawnData.putString("id", "minecraft:skeleton");
             // HandDropChances
-            ListNBT handDropChances = new ListNBT();
-            handDropChances.add(FloatNBT.valueOf(.2f));
-            handDropChances.add(FloatNBT.valueOf(0f));
+            ListTag handDropChances = new ListTag();
+            handDropChances.add(FloatTag.of(.2f));
+            handDropChances.add(FloatTag.of(0f));
             spawnData.put("HandDropChances", handDropChances);
             // HandItems
-            ListNBT handItems = new ListNBT();
+            ListTag handItems = new ListTag();
             ItemStack itemStack = new ItemStack(Items.IRON_SWORD);
-            CompoundNBT ironSwordNBT = new CompoundNBT();
-            itemStack.write(ironSwordNBT);
+            CompoundTag ironSwordNBT = new CompoundTag();
+            itemStack.setTag(ironSwordNBT);
             handItems.add(ironSwordNBT);
-            handItems.add(new CompoundNBT());
+            handItems.add(new CompoundTag());
             spawnData.put("HandItems", handItems);
 
-            blockInfoGlobal.nbt.put("SpawnData", spawnData);
+            blockInfoGlobal.tag.put("SpawnData", spawnData);
 
             // SpawnPotentials
-            CompoundNBT spawnPotentials = new CompoundNBT();
-            CompoundNBT spawnPotentialsEntity = new CompoundNBT();
+            CompoundTag spawnPotentials = new CompoundTag();
+            CompoundTag spawnPotentialsEntity = new CompoundTag();
             spawnPotentialsEntity.putString("id", "minecraft:skeleton");
             spawnPotentials.put("Entity", spawnPotentialsEntity);
-            spawnPotentials.put("Weight", IntNBT.valueOf(1));
-            blockInfoGlobal.nbt.getList("SpawnPotentials", spawnPotentials.getId()).clear();
-            blockInfoGlobal.nbt.getList("SpawnPotentials", spawnPotentials.getId()).add(0, spawnPotentials);
+            spawnPotentials.put("Weight", IntTag.of(1));
+            blockInfoGlobal.tag.getList("SpawnPotentials", spawnPotentials.getType()).clear();
+            blockInfoGlobal.tag.getList("SpawnPotentials", spawnPotentials.getType()).add(0, spawnPotentials);
 
             // Player range (default 16)
-            blockInfoGlobal.nbt.putShort("RequiredPlayerRange", (short)16);
+            blockInfoGlobal.tag.putShort("RequiredPlayerRange", (short)16);
 
             // Range at which skeletons can spawn from spawner (default 4?)
-            blockInfoGlobal.nbt.putShort("SpawnRange", (short)4);
+            blockInfoGlobal.tag.putShort("SpawnRange", (short)4);
 
             // Max nearby entities allowed (default 6)
-            blockInfoGlobal.nbt.putShort("MaxNearbyEntities", (short)6);
+            blockInfoGlobal.tag.putShort("MaxNearbyEntities", (short)6);
 
             // Time between spawn attempts (default 800)
-            blockInfoGlobal.nbt.putShort("MaxSpawnDelay", (short)800);
+            blockInfoGlobal.tag.putShort("MaxSpawnDelay", (short)800);
         }
         return blockInfoGlobal;
     }
 
-    protected IStructureProcessorType<?> getType() {
+    protected StructureProcessorType<?> getType() {
         return BDModProcessors.ZOMBIE_TOMBSTONE_SPAWNER_PROCESSOR;
     }
 }

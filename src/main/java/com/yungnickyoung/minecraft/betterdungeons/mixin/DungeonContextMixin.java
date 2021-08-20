@@ -1,10 +1,10 @@
 package com.yungnickyoung.minecraft.betterdungeons.mixin;
 
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonContext;
+import net.minecraft.structure.Structure;
+import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.world.ServerWorldAccess;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,10 +16,10 @@ import java.util.Random;
  * Dynamically saves the Dungeon Context for structures,
  * allowing processors to have behavior dependent on the type of dungeon.
  */
-@Mixin(Template.class)
+@Mixin(Structure.class)
 public class DungeonContextMixin {
-    @Inject(method = "func_237146_a_", at = @At(value = "HEAD"))
-    private void saveDungeonContext(IServerWorld serverWorld, BlockPos structurePiecePos, BlockPos structurePieceBottomCenterPos, PlacementSettings placementSettings, Random random, int p_237146_6_, CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "Lnet/minecraft/structure/Structure;place(Lnet/minecraft/world/ServerWorldAccess;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/structure/StructurePlacementData;Ljava/util/Random;I)Z", at = @At(value = "HEAD"))
+    private void saveDungeonContext(ServerWorldAccess serverWorld, BlockPos structurePiecePos, BlockPos structurePieceBottomCenterPos, StructurePlacementData placementSettings, Random random, int i, CallbackInfoReturnable<Boolean> cir) {
         DungeonContext.initialize();
     }
 }

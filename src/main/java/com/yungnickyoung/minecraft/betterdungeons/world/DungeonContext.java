@@ -1,6 +1,5 @@
 package com.yungnickyoung.minecraft.betterdungeons.world;
 
-import javax.annotation.Nullable;
 import java.lang.ref.WeakReference;
 
 /**
@@ -45,7 +44,6 @@ public class DungeonContext {
      * Consume the currently held DungeonContext.
      * A null value means the context has already been consumed.
      */
-    @Nullable
     public static DungeonContext pop() {
         DungeonContext context = CONTEXT.get();
         CONTEXT.set(null);
@@ -56,7 +54,6 @@ public class DungeonContext {
      * Peek the currently held DungeonContext without consuming it.
      * A null value means the context has already been consumed.
      */
-    @Nullable
     public static DungeonContext peek() {
         return CONTEXT.get();
     }
