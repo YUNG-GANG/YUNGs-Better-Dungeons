@@ -10,9 +10,10 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.MobSpawnerBlockEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.structure.StructureManager;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.structure.StructurePiece;
+import net.minecraft.structure.StructurePiecesHolder;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
@@ -25,7 +26,6 @@ import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 
 import java.util.BitSet;
-import java.util.List;
 import java.util.Random;
 
 public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
@@ -42,12 +42,14 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
     private static final BlockSetSelector COBWEB_SELECTOR = BlockSetSelector.from(Blocks.COBWEB.getDefaultState());
 
     public SpiderDungeonEggRoomPiece(BlockPos startPos, int pieceChainLength) {
-        super(BDModStructurePieces.SPIDER_DUNGEON_EGG_ROOM_PIECE, pieceChainLength);
-        this.boundingBox = new BlockBox(startPos.getX() - 64, 1, startPos.getZ() - 64, startPos.getX() + 64, 256, startPos.getZ() + 64);
+        super(BDModStructurePieces.SPIDER_DUNGEON_EGG_ROOM_PIECE, pieceChainLength, getInitialBlockBox(startPos));
         this.startPos = new BlockPos(startPos);
     }
 
-    public SpiderDungeonEggRoomPiece(StructureManager structureManager, CompoundTag compoundNBT) {
+    /**
+     * Constructor for loading from NBT.
+     */
+    public SpiderDungeonEggRoomPiece(ServerWorld world, NbtCompound compoundNBT) {
         super(BDModStructurePieces.SPIDER_DUNGEON_EGG_ROOM_PIECE, compoundNBT);
         int[] start = compoundNBT.getIntArray("startPos");
         this.startPos = new BlockPos(start[0], start[1], start[2]);
@@ -57,15 +59,15 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
     }
 
     @Override
-    protected void toNbt(CompoundTag tagCompound) {
-        tagCompound.putIntArray("startPos", new int[]{startPos.getX(), startPos.getY(), startPos.getZ()});
-        tagCompound.putFloat("xRadius", xRadius);
-        tagCompound.putFloat("yRadius", yRadius);
-        tagCompound.putFloat("zRadius", zRadius);
+    protected void writeNbt(ServerWorld world, NbtCompound nbt) {
+        nbt.putIntArray("startPos", new int[]{startPos.getX(), startPos.getY(), startPos.getZ()});
+        nbt.putFloat("xRadius", xRadius);
+        nbt.putFloat("yRadius", yRadius);
+        nbt.putFloat("zRadius", zRadius);
     }
 
     @Override
-    public void fillOpenings(StructurePiece structurePiece, List<StructurePiece> pieceList, Random random) {
+    public void fillOpenings(StructurePiece structurePiece, StructurePiecesHolder structurePiecesHolder, Random random) {
         this.xRadius = random.nextFloat() * (X_MAXRADIUS - X_MINRADIUS) + X_MINRADIUS;
         this.yRadius = random.nextFloat() * (Y_MAXRADIUS - Y_MINRADIUS) + Y_MINRADIUS;
         this.zRadius = random.nextFloat() * (Z_MAXRADIUS - Z_MINRADIUS) + Z_MINRADIUS;

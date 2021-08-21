@@ -8,10 +8,11 @@ import net.minecraft.structure.PoolStructurePiece;
 import net.minecraft.structure.StructureManager;
 import net.minecraft.structure.StructureStart;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.registry.DynamicRegistryManager;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.HeightLimitView;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
@@ -43,15 +44,15 @@ public class SmallDungeonStructure extends StructureFeature<DefaultFeatureConfig
     }
 
     public static class Start extends StructureStart<DefaultFeatureConfig> {
-        public Start(StructureFeature<DefaultFeatureConfig> structure, int chunkX, int chunkZ, BlockBox blockBox, int references, long seedInseed) {
-            super(structure, chunkX, chunkZ, blockBox, references, seedInseed);
+        public Start(StructureFeature<DefaultFeatureConfig> structure, ChunkPos pos, int references, long seed) {
+            super(structure, pos, references, seed);
         }
 
         @Override
-        public void init(DynamicRegistryManager dynamicRegistryManager, ChunkGenerator chunkGenerator, StructureManager structureManager, int chunkX, int chunkZ, Biome biomeIn, DefaultFeatureConfig config) {
+        public void init(DynamicRegistryManager dynamicRegistryManager, ChunkGenerator chunkGenerator, StructureManager structureManager, ChunkPos pos, Biome biome, DefaultFeatureConfig config, HeightLimitView heightLimitView) {
             // Generate from the center of the chunk
-            int x = (chunkX << 4) + 7;
-            int z = (chunkZ << 4) + 7;
+            int x = (pos.x << 4) + 7;
+            int z = (pos.z << 4) + 7;
 
             int minY = BetterDungeons.CONFIG.betterDungeons.smallDungeon.smallDungeonMinY;
             int maxY = BetterDungeons.CONFIG.betterDungeons.smallDungeon.smallDungeonMaxY;
@@ -59,7 +60,7 @@ public class SmallDungeonStructure extends StructureFeature<DefaultFeatureConfig
 
             BlockPos blockpos = new BlockPos(x, y, z);
             YungJigsawConfig jigsawConfig = new YungJigsawConfig(
-                () -> dynamicRegistryManager.get(Registry.TEMPLATE_POOL_WORLDGEN)
+                () -> dynamicRegistryManager.get(Registry.STRUCTURE_POOL_KEY)
                     .get(new Identifier(BetterDungeons.MOD_ID, "small_dungeon")),
                 10
             );
@@ -72,10 +73,11 @@ public class SmallDungeonStructure extends StructureFeature<DefaultFeatureConfig
                 chunkGenerator,
                 structureManager,
                 blockpos,
-                this.children,
+                this,
                 this.random,
                 false,
-                false
+                false,
+                heightLimitView
             );
 
             // Set the bounds of the structure once it's assembled
@@ -83,9 +85,9 @@ public class SmallDungeonStructure extends StructureFeature<DefaultFeatureConfig
 
             // Debug log the coordinates of the center starting piece.
             BetterDungeons.LOGGER.debug("Small Dungeon at {} {} {}",
-                this.children.get(0).getBoundingBox().minX,
-                this.children.get(0).getBoundingBox().minY,
-                this.children.get(0).getBoundingBox().minZ
+                this.children.get(0).getBoundingBox().getMinX(),
+                this.children.get(0).getBoundingBox().getMinY(),
+                this.children.get(0).getBoundingBox().getMinZ()
             );
         }
     }

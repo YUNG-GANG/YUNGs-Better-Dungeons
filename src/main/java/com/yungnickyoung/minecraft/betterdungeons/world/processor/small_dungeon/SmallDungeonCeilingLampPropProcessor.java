@@ -25,11 +25,11 @@ public class SmallDungeonCeilingLampPropProcessor extends StructureProcessor {
             // Choose lamp prop
             float f = random.nextFloat();
             if (f < 0.1f) // Soul lantern
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SOUL_LANTERN.getDefaultState().with(Properties.HANGING, true), blockInfoGlobal.tag);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SOUL_LANTERN.getDefaultState().with(Properties.HANGING, true), blockInfoGlobal.nbt);
             else if (f < 0.625f) // Chain
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CHAIN.getDefaultState(), blockInfoGlobal.tag);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CHAIN.getDefaultState(), blockInfoGlobal.nbt);
             else // None
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.tag);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
         }
 
         return blockInfoGlobal;

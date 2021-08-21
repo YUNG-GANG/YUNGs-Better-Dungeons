@@ -20,11 +20,11 @@ public class NetherBlockProcessor extends StructureProcessor {
     public Structure.StructureBlockInfo process(WorldView world, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Structure.StructureBlockInfo blockInfoLocal, Structure.StructureBlockInfo blockInfoGlobal, StructurePlacementData structurePlacementData) {
         if (!BetterDungeons.CONFIG.betterDungeons.general.enableNetherBlocks) {
             if (blockInfoGlobal.state.isOf(Blocks.SOUL_SAND) || blockInfoGlobal.state.isOf(Blocks.SOUL_SOIL)) {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.COARSE_DIRT.getDefaultState(), blockInfoGlobal.tag);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.COARSE_DIRT.getDefaultState(), blockInfoGlobal.nbt);
             } else if (blockInfoGlobal.state.isOf(Blocks.SOUL_CAMPFIRE)) {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAMPFIRE.getDefaultState(), blockInfoGlobal.tag);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAMPFIRE.getDefaultState(), blockInfoGlobal.nbt);
             } else if (blockInfoGlobal.state.isOf(Blocks.SOUL_LANTERN)) {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.LANTERN.getDefaultState().with(LanternBlock.HANGING, blockInfoGlobal.state.get(LanternBlock.HANGING)), blockInfoGlobal.tag);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.LANTERN.getDefaultState().with(LanternBlock.HANGING, blockInfoGlobal.state.get(LanternBlock.HANGING)), blockInfoGlobal.nbt);
             }
         }
         return blockInfoGlobal;

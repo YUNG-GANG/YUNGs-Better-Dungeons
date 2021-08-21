@@ -43,7 +43,7 @@ public class ZombieDungeonCubbyProcessor extends StructureProcessor {
                     newBlock = newBlock.with(SlabBlock.TYPE, SlabType.TOP);
                 }
             }
-            blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, newBlock, blockInfoGlobal.tag);
+            blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, newBlock, blockInfoGlobal.nbt);
         }
         return blockInfoGlobal;
     }

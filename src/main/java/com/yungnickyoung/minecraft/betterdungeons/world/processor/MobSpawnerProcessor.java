@@ -4,8 +4,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import net.minecraft.block.SpawnerBlock;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.IntTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtInt;
 import net.minecraft.structure.Structure;
 import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.structure.processor.StructureProcessor;
@@ -39,19 +39,19 @@ public class MobSpawnerProcessor extends StructureProcessor {
         if (blockInfoGlobal.state.getBlock() instanceof SpawnerBlock) {
             // Update the spawner block's NBT
             // SpawnData
-            CompoundTag spawnData = new CompoundTag();
+            NbtCompound spawnData = new NbtCompound();
             spawnData.putString("id", this.spawnerMob.toString());
-            blockInfoGlobal.tag.remove("SpawnData");
-            blockInfoGlobal.tag.put("SpawnData", spawnData);
+            blockInfoGlobal.nbt.remove("SpawnData");
+            blockInfoGlobal.nbt.put("SpawnData", spawnData);
 
             // SpawnPotentials
-            CompoundTag spawnPotentials = new CompoundTag();
-            CompoundTag spawnPotentialsEntity = new CompoundTag();
+            NbtCompound spawnPotentials = new NbtCompound();
+            NbtCompound spawnPotentialsEntity = new NbtCompound();
             spawnPotentialsEntity.putString("id", this.spawnerMob.toString());
             spawnPotentials.put("Entity", spawnPotentialsEntity);
-            spawnPotentials.put("Weight", IntTag.of(1));
-            blockInfoGlobal.tag.getList("SpawnPotentials", spawnPotentials.getType()).clear();
-            blockInfoGlobal.tag.getList("SpawnPotentials", spawnPotentials.getType()).add(0, spawnPotentials);
+            spawnPotentials.put("Weight", NbtInt.of(1));
+            blockInfoGlobal.nbt.getList("SpawnPotentials", spawnPotentials.getType()).clear();
+            blockInfoGlobal.nbt.getList("SpawnPotentials", spawnPotentials.getType()).add(0, spawnPotentials);
         }
         return blockInfoGlobal;
     }

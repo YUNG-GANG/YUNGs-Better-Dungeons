@@ -23,9 +23,9 @@ public class SmallDungeonCeilingProcessor extends StructureProcessor {
     public Structure.StructureBlockInfo process(WorldView world, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Structure.StructureBlockInfo blockInfoLocal, Structure.StructureBlockInfo blockInfoGlobal, StructurePlacementData structurePlacementData) {
         if (blockInfoGlobal.state.getBlock() == Blocks.ORANGE_STAINED_GLASS) {
             if (world.getFluidState(blockInfoGlobal.pos).isIn(FluidTags.WATER) || world.getFluidState(blockInfoGlobal.pos).isIn(FluidTags.LAVA)) {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.COBBLESTONE.getDefaultState(), blockInfoGlobal.tag);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.COBBLESTONE.getDefaultState(), blockInfoGlobal.nbt);
             } else {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, world.getBlockState(blockInfoGlobal.pos), blockInfoGlobal.tag);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, world.getBlockState(blockInfoGlobal.pos), blockInfoGlobal.nbt);
             }
         }
         return blockInfoGlobal;

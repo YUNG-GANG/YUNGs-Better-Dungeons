@@ -39,9 +39,9 @@ public class ZombieDungeonLegProcessor extends StructureProcessor {
 
             // Always replace the glass itself with smooth stone
             if (world.getBlockState(blockInfoGlobal.pos).isAir()) {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SMOOTH_STONE.getDefaultState(), blockInfoGlobal.tag);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SMOOTH_STONE.getDefaultState(), blockInfoGlobal.nbt);
             } else {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, world.getBlockState(blockInfoGlobal.pos), blockInfoGlobal.tag);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, world.getBlockState(blockInfoGlobal.pos), blockInfoGlobal.nbt);
             }
 
             // Generate vertical pillar down
@@ -54,7 +54,7 @@ public class ZombieDungeonLegProcessor extends StructureProcessor {
             }
         } else if (blockInfoGlobal.state.getBlock() == Blocks.PURPUR_SLAB) {
             if (world.getBlockState(blockInfoGlobal.pos).isAir()) {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SMOOTH_STONE_SLAB.getDefaultState(), blockInfoGlobal.tag);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SMOOTH_STONE_SLAB.getDefaultState(), blockInfoGlobal.nbt);
             } else {
                 blockInfoGlobal = null;
             }

@@ -38,7 +38,7 @@ public class SkeletonDungeonLegProcessor extends StructureProcessor {
 
             // Always replace the glass itself with cobble
             currentChunk.setBlockState(blockInfoGlobal.pos, Blocks.COBBLESTONE.getDefaultState(), false);
-            blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.COBBLESTONE.getDefaultState(), blockInfoGlobal.tag);
+            blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.COBBLESTONE.getDefaultState(), blockInfoGlobal.nbt);
 
             // Generate vertical pillar down
             BlockPos.Mutable mutable = blockInfoGlobal.pos.down().mutableCopy();

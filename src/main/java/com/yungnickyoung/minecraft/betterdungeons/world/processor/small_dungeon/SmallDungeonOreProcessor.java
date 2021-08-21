@@ -23,7 +23,7 @@ public class SmallDungeonOreProcessor extends StructureProcessor {
     public Structure.StructureBlockInfo process(WorldView world, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Structure.StructureBlockInfo blockInfoLocal, Structure.StructureBlockInfo blockInfoGlobal, StructurePlacementData structurePlacementData) {
         if (blockInfoGlobal.state.getBlock() instanceof OreBlock) {
             if (!BetterDungeons.CONFIG.betterDungeons.smallDungeon.enableOreProps) {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.tag);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
             }
         }
         return blockInfoGlobal;

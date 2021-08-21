@@ -5,7 +5,7 @@ import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.structure.StructurePiece;
 import net.minecraft.structure.StructurePieceType;
 import net.minecraft.util.math.BlockBox;
@@ -20,11 +20,11 @@ import java.util.Set;
 public abstract class SpiderDungeonPiece extends StructurePiece {
     protected static final Set<Block> BLOCK_BLACKLIST = Sets.newHashSet(Blocks.DIAMOND_BLOCK, Blocks.WHITE_WOOL, Blocks.SPAWNER, Blocks.CHEST, Blocks.ACACIA_LEAVES, Blocks.BIRCH_LEAVES, Blocks.OAK_LEAVES, Blocks.DARK_OAK_LEAVES, Blocks.JUNGLE_LEAVES, Blocks.SPRUCE_LEAVES, Blocks.GRASS, Blocks.TALL_GRASS);
 
-    protected SpiderDungeonPiece(StructurePieceType structurePieceTypeIn, int componentTypeIn) {
-        super(structurePieceTypeIn, componentTypeIn);
+    protected SpiderDungeonPiece(StructurePieceType structurePieceTypeIn, int chainLength, BlockBox box) {
+        super(structurePieceTypeIn, chainLength, box);
     }
 
-    public SpiderDungeonPiece(StructurePieceType structurePierceTypeIn, CompoundTag nbt) {
+    public SpiderDungeonPiece(StructurePieceType structurePierceTypeIn, NbtCompound nbt) {
         super(structurePierceTypeIn, nbt);
     }
 
@@ -77,5 +77,9 @@ public abstract class SpiderDungeonPiece extends StructurePiece {
     protected void setBlockState(StructureWorldAccess worldIn, Random random, BlockSetSelector selector, int x, int y, int z, BlockBox boundingboxIn) {
         BlockState blockState = selector.get(random);
         this.addBlock(worldIn, blockState, x, y, z, boundingboxIn);
+    }
+
+    protected static BlockBox getInitialBlockBox(BlockPos startPos) {
+        return new BlockBox(startPos).expand(64);
     }
 }

@@ -34,11 +34,11 @@ public class SmallDungeonChestProcessor extends StructureProcessor {
             } else if (chestCount < BetterDungeons.CONFIG.betterDungeons.smallDungeon.chestMaxCount) { // 20% chance of additional chest, per chest prop
                 Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
                 if (random.nextFloat() > .2f) {
-                    return new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.tag);
+                    return new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
                 }
                 context.incrementChestCount();
             } else { // Can't spawn more than max chests
-                return new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.tag);
+                return new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
             }
         }
         return blockInfoGlobal;

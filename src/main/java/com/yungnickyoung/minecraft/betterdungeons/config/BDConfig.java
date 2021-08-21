@@ -12,7 +12,7 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
 import java.util.List;
 
-@Config(name="betterdungeons-fabric-1_16")
+@Config(name="betterdungeons-fabric-1_17")
 public class BDConfig implements ConfigData {
     @ConfigEntry.Category("Better Dungeons")
     @ConfigEntry.Gui.TransitiveObject

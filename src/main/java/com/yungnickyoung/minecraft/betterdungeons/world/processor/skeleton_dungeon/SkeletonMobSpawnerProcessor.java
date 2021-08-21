@@ -3,8 +3,8 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dung
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import net.minecraft.block.SpawnerBlock;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.IntTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtInt;
 import net.minecraft.structure.Structure;
 import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.structure.processor.StructureProcessor;
@@ -25,31 +25,31 @@ public class SkeletonMobSpawnerProcessor extends StructureProcessor {
         if (blockInfoGlobal.state.getBlock() instanceof SpawnerBlock) {
             // Update the spawner block's NBT
             // SpawnData
-            CompoundTag spawnData = new CompoundTag();
+            NbtCompound spawnData = new NbtCompound();
             spawnData.putString("id", "minecraft:skeleton");
-            blockInfoGlobal.tag.remove("SpawnData");
-            blockInfoGlobal.tag.put("SpawnData", spawnData);
+            blockInfoGlobal.nbt.remove("SpawnData");
+            blockInfoGlobal.nbt.put("SpawnData", spawnData);
 
             // SpawnPotentials
-            CompoundTag spawnPotentials = new CompoundTag();
-            CompoundTag spawnPotentialsEntity = new CompoundTag();
+            NbtCompound spawnPotentials = new NbtCompound();
+            NbtCompound spawnPotentialsEntity = new NbtCompound();
             spawnPotentialsEntity.putString("id", "minecraft:skeleton");
             spawnPotentials.put("Entity", spawnPotentialsEntity);
-            spawnPotentials.put("Weight", IntTag.of(1));
-            blockInfoGlobal.tag.getList("SpawnPotentials", spawnPotentials.getType()).clear();
-            blockInfoGlobal.tag.getList("SpawnPotentials", spawnPotentials.getType()).add(0, spawnPotentials);
+            spawnPotentials.put("Weight", NbtInt.of(1));
+            blockInfoGlobal.nbt.getList("SpawnPotentials", spawnPotentials.getType()).clear();
+            blockInfoGlobal.nbt.getList("SpawnPotentials", spawnPotentials.getType()).add(0, spawnPotentials);
 
             // Player range (default 16)
-            blockInfoGlobal.tag.putShort("RequiredPlayerRange", (short)18);
+            blockInfoGlobal.nbt.putShort("RequiredPlayerRange", (short)18);
 
             // Range at which skeletons can spawn from spawner
-            blockInfoGlobal.tag.putShort("SpawnRange", (short)4);
+            blockInfoGlobal.nbt.putShort("SpawnRange", (short)4);
 
             // Max nearby entities allowed
-            blockInfoGlobal.tag.putShort("MaxNearbyEntities", (short)8);
+            blockInfoGlobal.nbt.putShort("MaxNearbyEntities", (short)8);
 
             // Time between spawn attempts (default 800)
-            blockInfoGlobal.tag.putShort("MaxSpawnDelay", (short)650);
+            blockInfoGlobal.nbt.putShort("MaxSpawnDelay", (short)650);
         }
         return blockInfoGlobal;
     }

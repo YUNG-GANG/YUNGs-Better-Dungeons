@@ -20,31 +20,31 @@ public class SmallDungeonCeilingPropProcessor extends StructureProcessor {
         if (blockInfoGlobal.state.isOf(Blocks.MAGENTA_STAINED_GLASS)) {
             // If ceiling isn't solid, place air since we don't want floating props
             if (!world.getBlockState(blockInfoGlobal.pos.up()).isSolidBlock(world, blockInfoGlobal.pos.up())) {
-                return new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.tag);
+                return new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
             }
 
             Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
             float f = random.nextFloat();
 
             // Choose ceiling prop
-            if (f < .2f) blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CHAIN.getDefaultState(), blockInfoGlobal.tag);
-            else blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.tag);
+            if (f < .2f) blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CHAIN.getDefaultState(), blockInfoGlobal.nbt);
+            else blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
         } else if (blockInfoGlobal.state.isOf(Blocks.BROWN_STAINED_GLASS)) {
             // If ceiling isn't solid, simply ignore processing since we don't want floating props
             if (!world.getBlockState(blockInfoGlobal.pos.up(2)).isSolidBlock(world, blockInfoGlobal.pos.up())) {
-                return new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.tag);
+                return new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
             }
 
             Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
             float f = random.nextFloat();
 
             // Choose ceiling prop
-            if (f < .5f) blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CHAIN.getDefaultState(), blockInfoGlobal.tag);
-            else blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.tag);
+            if (f < .5f) blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CHAIN.getDefaultState(), blockInfoGlobal.nbt);
+            else blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
         } else if (blockInfoGlobal.state.isOf(Blocks.CHAIN)) {
             // If ceiling isn't solid, don't place top chains for potential double chains if they would be floating
             if (!world.getBlockState(blockInfoGlobal.pos.up()).isSolidBlock(world, blockInfoGlobal.pos.up())) {
-                return new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.tag);
+                return new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
             }
         }
 

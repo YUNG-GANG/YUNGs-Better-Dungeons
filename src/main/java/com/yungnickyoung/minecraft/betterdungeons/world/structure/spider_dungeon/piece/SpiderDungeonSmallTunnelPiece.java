@@ -5,11 +5,12 @@ import com.yungnickyoung.minecraft.betterdungeons.init.BDModStructurePieces;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.FloatTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.structure.StructureManager;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtFloat;
+import net.minecraft.nbt.NbtList;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.structure.StructurePiece;
+import net.minecraft.structure.StructurePiecesHolder;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -21,7 +22,6 @@ import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 
 import java.util.BitSet;
-import java.util.List;
 import java.util.Random;
 
 public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
@@ -36,40 +36,42 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
                                Z_MINRADIUS = 1, Z_MAXRADIUS = 1.5f;
 
     public SpiderDungeonSmallTunnelPiece(BlockPos startPos, float initialYaw, int pieceChainLength) {
-        super(BDModStructurePieces.SPIDER_DUNGEON_SMALL_TUNNEL_PIECE, pieceChainLength);
-        this.boundingBox = new BlockBox(startPos.getX() - 64, 1, startPos.getZ() - 64, startPos.getX() + 64, 256, startPos.getZ() + 64);
+        super(BDModStructurePieces.SPIDER_DUNGEON_SMALL_TUNNEL_PIECE, pieceChainLength, getInitialBlockBox(startPos));
         this.startPos = new BlockPos(startPos);
         this.endPos = new BlockPos(startPos);
         this.yaws[0] = initialYaw;
     }
 
-    public SpiderDungeonSmallTunnelPiece(StructureManager structureManager, CompoundTag compoundNBT) {
+    /**
+     * Constructor for loading from NBT.
+     */
+    public SpiderDungeonSmallTunnelPiece(ServerWorld world, NbtCompound compoundNBT) {
         super(BDModStructurePieces.SPIDER_DUNGEON_SMALL_TUNNEL_PIECE, compoundNBT);
         int[] start = compoundNBT.getIntArray("startPos");
         int[] end = compoundNBT.getIntArray("endPos");
         this.startPos = new BlockPos(start[0], start[1], start[2]);
         this.endPos = new BlockPos(end[0], end[1], end[2]);
         this.pitch = compoundNBT.getFloat("pitch");
-        ListTag yawListTag = compoundNBT.getList("yawList", 5);
+        NbtList yawNbtList = compoundNBT.getList("yawList", 5);
         for (int i = 0; i < LENGTH; i++) {
-            this.yaws[i] = yawListTag.getFloat(i);
+            this.yaws[i] = yawNbtList.getFloat(i);
         }
     }
 
     @Override
-    protected void toNbt(CompoundTag tagCompound) {
-        tagCompound.putIntArray("startPos", new int[]{startPos.getX(), startPos.getY(), startPos.getZ()});
-        tagCompound.putIntArray("endPos", new int[]{endPos.getX(), endPos.getY(), endPos.getZ()});
-        tagCompound.putFloat("pitch", pitch);
-        ListTag yawListTag = new ListTag();
+    protected void writeNbt(ServerWorld world, NbtCompound nbt) {
+        nbt.putIntArray("startPos", new int[]{startPos.getX(), startPos.getY(), startPos.getZ()});
+        nbt.putIntArray("endPos", new int[]{endPos.getX(), endPos.getY(), endPos.getZ()});
+        nbt.putFloat("pitch", pitch);
+        NbtList yawNbtList = new NbtList();
         for (int i = 0; i < LENGTH; i++) {
-            yawListTag.add(FloatTag.of(yaws[i]));
+            yawNbtList.add(NbtFloat.of(yaws[i]));
         }
-        tagCompound.put("yawList", yawListTag);
+        nbt.put("yawList", yawNbtList);
     }
 
     @Override
-    public void fillOpenings(StructurePiece structurePiece, List<StructurePiece> pieceList, Random random) {
+    public void fillOpenings(StructurePiece structurePiece, StructurePiecesHolder structurePiecesHolder, Random random) {
         // Determine pitch
         this.pitch = random.nextFloat() * (float) Math.PI / 4f - ((float) Math.PI / 6f);
         float pitchY = MathHelper.sin(this.pitch);
@@ -134,8 +136,8 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
 
         if (random.nextFloat() < 0.8f) {
             StructurePiece eggRoom = new SpiderDungeonEggRoomPiece(endPos, this.chainLength + 1);
-            pieceList.add(eggRoom);
-            eggRoom.fillOpenings(eggRoom, pieceList, random);
+            structurePiecesHolder.addPiece(eggRoom);
+            eggRoom.fillOpenings(eggRoom, structurePiecesHolder, random);
         }
     }
 

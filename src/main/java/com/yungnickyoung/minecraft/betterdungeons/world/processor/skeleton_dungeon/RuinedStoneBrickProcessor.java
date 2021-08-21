@@ -33,15 +33,15 @@ public class RuinedStoneBrickProcessor extends StructureProcessor {
     public Structure.StructureBlockInfo process(WorldView world, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Structure.StructureBlockInfo blockInfoLocal, Structure.StructureBlockInfo blockInfoGlobal, StructurePlacementData structurePlacementData) {
         if (blockInfoGlobal.state.getBlock() == Blocks.YELLOW_STAINED_GLASS) {
             if (world.getBlockState(blockInfoGlobal.pos).isAir()) {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.tag);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
             } else {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, STONE_BRICK_SELECTOR.get(structurePlacementData.getRandom(blockInfoGlobal.pos)), blockInfoGlobal.tag);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, STONE_BRICK_SELECTOR.get(structurePlacementData.getRandom(blockInfoGlobal.pos)), blockInfoGlobal.nbt);
             }
         } else if (blockInfoGlobal.state.getBlock() == Blocks.PRISMARINE_BRICK_SLAB) {
             if (world.getBlockState(blockInfoGlobal.pos).isAir()) {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.tag);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
             } else {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, STONE_BRICK_SLAB_SELECTOR.get(structurePlacementData.getRandom(blockInfoGlobal.pos)), blockInfoGlobal.tag);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, STONE_BRICK_SLAB_SELECTOR.get(structurePlacementData.getRandom(blockInfoGlobal.pos)), blockInfoGlobal.nbt);
             }
         }
         return blockInfoGlobal;

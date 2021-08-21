@@ -1,7 +1,7 @@
 {
   "required": true,
   "package": "com.yungnickyoung.minecraft.betterdungeons.mixin",
-  "compatibilityLevel": "JAVA_8",
+  "compatibilityLevel": "JAVA_16",
   "refmap": "betterdungeons.refmap.json",
   "mixins": [
     "DungeonContextMixin"

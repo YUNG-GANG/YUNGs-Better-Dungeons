@@ -75,7 +75,7 @@ public class ZombieMainStairsProcessor extends StructureProcessor {
 
             // Don't spawn staircase if we won't penetrate the surface
             if (surfaceHeight >= maxSurfacePos.getY()) {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.tag);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
                 return blockInfoGlobal;
             }
 
@@ -316,7 +316,7 @@ public class ZombieMainStairsProcessor extends StructureProcessor {
             this.setBlockStateRandom(world, tombSelector.get(random), rightPos, structurePlacementData.getMirror(), structurePlacementData.getRotation(), random, .5f);
 
             // Always replace the warped stair marker with air
-            blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, STAIR_SELECTOR.get(random), blockInfoGlobal.tag);
+            blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, STAIR_SELECTOR.get(random), blockInfoGlobal.nbt);
         }
         return blockInfoGlobal;
     }

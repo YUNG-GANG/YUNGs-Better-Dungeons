@@ -10,7 +10,7 @@ import com.yungnickyoung.minecraft.betterdungeons.world.DungeonType;
 import net.minecraft.block.AbstractBannerBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.state.property.Properties;
 import net.minecraft.structure.Structure;
 import net.minecraft.structure.StructurePlacementData;
@@ -85,24 +85,24 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
     public Structure.StructureBlockInfo process(WorldView worldReader, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Structure.StructureBlockInfo blockInfoLocal, Structure.StructureBlockInfo blockInfoGlobal, StructurePlacementData structurePlacementData) {
         if (blockInfoGlobal.state.getBlock() instanceof AbstractBannerBlock) {
             // Make sure we only operate on the placeholder banners
-            if (blockInfoGlobal.state.getBlock() == Blocks.RED_WALL_BANNER && (blockInfoGlobal.tag.get("Patterns") == null || blockInfoGlobal.tag.getList("Patterns", 10).size() == 0)) {
+            if (blockInfoGlobal.state.getBlock() == Blocks.RED_WALL_BANNER && (blockInfoGlobal.nbt.get("Patterns") == null || blockInfoGlobal.nbt.getList("Patterns", 10).size() == 0)) {
                 // Fetch thread-local dungeon context
                 DungeonContext context = DungeonContext.peek();
 
                 // Check dungeon context to see if we have reached the max banner count for this structure piece
                 if (context.getBannerCount() >= BetterDungeons.CONFIG.betterDungeons.smallDungeon.bannerMaxCount)
-                    return new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.tag);
+                    return new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
 
                 // Chance of a banner spawning
                 Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
                 if (random.nextFloat() > .1f) {
-                    return new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.tag);
+                    return new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
                 }
 
                 Banner banner = getBannerForType();
                 Direction facing = blockInfoGlobal.state.get(Properties.HORIZONTAL_FACING);
                 BlockState newState = banner.getState().with(Properties.HORIZONTAL_FACING, facing);
-                CompoundTag newNBT = copyNBT(banner.getNbt());
+                NbtCompound newNBT = copyNBT(banner.getNbt());
 
                 blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, newState, newNBT);
                 context.incrementBannerCount();
@@ -129,8 +129,8 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
         }
     }
 
-    private CompoundTag copyNBT(CompoundTag other) {
-        CompoundTag nbt = new CompoundTag();
+    private NbtCompound copyNBT(NbtCompound other) {
+        NbtCompound nbt = new NbtCompound();
         nbt.copyFrom(other);
         return nbt;
     }
