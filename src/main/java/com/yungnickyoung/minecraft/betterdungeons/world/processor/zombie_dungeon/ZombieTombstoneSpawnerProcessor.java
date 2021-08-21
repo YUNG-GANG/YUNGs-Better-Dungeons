@@ -50,7 +50,7 @@ public class ZombieTombstoneSpawnerProcessor extends StructureProcessor {
             ListTag handItems = new ListTag();
             ItemStack itemStack = new ItemStack(Items.IRON_SWORD);
             CompoundTag ironSwordNBT = new CompoundTag();
-            itemStack.setTag(ironSwordNBT);
+            itemStack.toTag(ironSwordNBT);
             handItems.add(ironSwordNBT);
             handItems.add(new CompoundTag());
             spawnData.put("HandItems", handItems);
