@@ -12,9 +12,12 @@ import net.minecraft.structure.processor.StructureProcessor;
 import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.ChunkSectionPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.ChunkSection;
+import net.minecraft.world.chunk.WorldChunk;
 
 import java.util.Random;
 
@@ -44,13 +47,29 @@ public class ZombieDungeonLegProcessor extends StructureProcessor {
                 blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, world.getBlockState(blockInfoGlobal.pos), blockInfoGlobal.nbt);
             }
 
-            // Generate vertical pillar down
+            // Reusable mutable
             BlockPos.Mutable mutable = blockInfoGlobal.pos.down().mutableCopy();
-            BlockState currBlock = world.getBlockState(mutable);
+
+            // Chunk section information
+            int sectionYIndex = currentChunk.getSectionIndex(mutable.getY());
+            ChunkSection currChunkSection = currentChunk.getSection(sectionYIndex);
+
+            // Initialize currBlock
+            BlockState currBlock = getBlockStateSafe(currChunkSection, mutable);
+            if (currBlock == null) return blockInfoGlobal;
+
+            // Generate vertical pillar down
             while (mutable.getY() > 0 && (currBlock.getMaterial() == Material.AIR || currBlock.getMaterial() == Material.WATER || currBlock.getMaterial() == Material.LAVA)) {
-                currentChunk.setBlockState(mutable, LEG_SELECTOR.get(random), false);
+                setBlockStateSafe(currChunkSection, mutable, LEG_SELECTOR.get(random));
+
+                // Move down
                 mutable.move(Direction.DOWN);
-                currBlock = world.getBlockState(mutable);
+
+                // Update chunk section
+                sectionYIndex = currentChunk.getSectionIndex(mutable.getY());
+                currChunkSection = currentChunk.getSection(sectionYIndex);
+                currBlock = getBlockStateSafe(currChunkSection, mutable);
+                if (currBlock == null) break;
             }
         } else if (blockInfoGlobal.state.getBlock() == Blocks.PURPUR_SLAB) {
             if (world.getBlockState(blockInfoGlobal.pos).isAir()) {
@@ -65,5 +84,39 @@ public class ZombieDungeonLegProcessor extends StructureProcessor {
 
     protected StructureProcessorType<?> getType() {
         return BDModProcessors.ZOMBIE_DUNGEON_LEG_PROCESSOR;
+    }
+
+    /**
+     * Safe method for grabbing a BlockState. Copies what vanilla ores do.
+     * This bypasses the PaletteContainer's lock as it was causing a
+     * `Accessing PalettedContainer from multiple threads` crash, even though everything
+     * seemed to be safe.
+     *
+     * @author TelepathicGrunt
+     */
+    private BlockState getBlockStateSafe(ChunkSection chunkSection, BlockPos pos) {
+        if (chunkSection == WorldChunk.EMPTY_SECTION) return null;
+        return chunkSection.getBlockState(
+            ChunkSectionPos.getLocalCoord(pos.getX()),
+            ChunkSectionPos.getLocalCoord(pos.getY()),
+            ChunkSectionPos.getLocalCoord(pos.getZ()));
+    }
+
+    /**
+     * Safe method for setting a BlockState. Copies what vanilla ores do.
+     * This bypasses the PaletteContainer's lock as it was causing a
+     * `Accessing PalettedContainer from multiple threads` crash, even though everything
+     * seemed to be safe.
+     *
+     * @author TelepathicGrunt
+     */
+    private void setBlockStateSafe(ChunkSection chunkSection, BlockPos pos, BlockState state) {
+        if (chunkSection == WorldChunk.EMPTY_SECTION) return;
+        chunkSection.setBlockState(
+            ChunkSectionPos.getLocalCoord(pos.getX()),
+            ChunkSectionPos.getLocalCoord(pos.getY()),
+            ChunkSectionPos.getLocalCoord(pos.getZ()),
+            state,
+            false);
     }
 }
