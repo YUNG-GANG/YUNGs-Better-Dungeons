@@ -2,6 +2,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeo
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.ISafeWorldModifier;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -12,12 +13,10 @@ import net.minecraft.structure.processor.StructureProcessor;
 import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.ChunkSectionPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkSection;
-import net.minecraft.world.chunk.WorldChunk;
 
 import java.util.Random;
 
@@ -26,7 +25,7 @@ import java.util.Random;
  * Magenta stained glass is used to mark the positions where the legs will spawn for simplicity.
  * Purpur slabs are to be replaced with smooth stone slabs if air is present.
  */
-public class ZombieDungeonLegProcessor extends StructureProcessor {
+public class ZombieDungeonLegProcessor extends StructureProcessor implements ISafeWorldModifier {
     public static final ZombieDungeonLegProcessor INSTANCE = new ZombieDungeonLegProcessor();
     public static final Codec<ZombieDungeonLegProcessor> CODEC = Codec.unit(() -> INSTANCE);
 
@@ -84,39 +83,5 @@ public class ZombieDungeonLegProcessor extends StructureProcessor {
 
     protected StructureProcessorType<?> getType() {
         return BDModProcessors.ZOMBIE_DUNGEON_LEG_PROCESSOR;
-    }
-
-    /**
-     * Safe method for grabbing a BlockState. Copies what vanilla ores do.
-     * This bypasses the PaletteContainer's lock as it was causing a
-     * `Accessing PalettedContainer from multiple threads` crash, even though everything
-     * seemed to be safe.
-     *
-     * @author TelepathicGrunt
-     */
-    private BlockState getBlockStateSafe(ChunkSection chunkSection, BlockPos pos) {
-        if (chunkSection == WorldChunk.EMPTY_SECTION) return null;
-        return chunkSection.getBlockState(
-            ChunkSectionPos.getLocalCoord(pos.getX()),
-            ChunkSectionPos.getLocalCoord(pos.getY()),
-            ChunkSectionPos.getLocalCoord(pos.getZ()));
-    }
-
-    /**
-     * Safe method for setting a BlockState. Copies what vanilla ores do.
-     * This bypasses the PaletteContainer's lock as it was causing a
-     * `Accessing PalettedContainer from multiple threads` crash, even though everything
-     * seemed to be safe.
-     *
-     * @author TelepathicGrunt
-     */
-    private void setBlockStateSafe(ChunkSection chunkSection, BlockPos pos, BlockState state) {
-        if (chunkSection == WorldChunk.EMPTY_SECTION) return;
-        chunkSection.setBlockState(
-            ChunkSectionPos.getLocalCoord(pos.getX()),
-            ChunkSectionPos.getLocalCoord(pos.getY()),
-            ChunkSectionPos.getLocalCoord(pos.getZ()),
-            state,
-            false);
     }
 }

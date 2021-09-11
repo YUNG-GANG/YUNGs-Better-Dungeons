@@ -2,6 +2,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dung
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.ISafeWorldModifier;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -12,7 +13,6 @@ import net.minecraft.structure.processor.StructureProcessor;
 import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.ChunkSectionPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.chunk.Chunk;
@@ -25,7 +25,7 @@ import java.util.Random;
  * Dynamically generates support legs below skeleton dungeons.
  * Blue stained glass is used to mark the positions where the legs will spawn for simplicity.
  */
-public class SkeletonDungeonLegProcessor extends StructureProcessor {
+public class SkeletonDungeonLegProcessor extends StructureProcessor implements ISafeWorldModifier {
     public static final SkeletonDungeonLegProcessor INSTANCE = new SkeletonDungeonLegProcessor();
     public static final Codec<SkeletonDungeonLegProcessor> CODEC = Codec.unit(() -> INSTANCE);
 
@@ -43,7 +43,7 @@ public class SkeletonDungeonLegProcessor extends StructureProcessor {
             blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.COBBLESTONE.getDefaultState(), blockInfoGlobal.nbt);
 
             // Reusable mutable
-            BlockPos.Mutable mutable = blockInfoGlobal.pos.down().mutableCopy();
+            BlockPos.Mutable mutable = blockInfoGlobal.pos.down().mutableCopy(); // Move down since we already processed the first block
 
             // Chunk section information
             int sectionYIndex = currentChunk.getSectionIndex(mutable.getY());
@@ -77,39 +77,5 @@ public class SkeletonDungeonLegProcessor extends StructureProcessor {
 
     protected StructureProcessorType<?> getType() {
         return BDModProcessors.SKELETON_DUNGEON_LEG_PROCESSOR;
-    }
-
-    /**
-     * Safe method for grabbing a BlockState. Copies what vanilla ores do.
-     * This bypasses the PaletteContainer's lock as it was causing a
-     * `Accessing PalettedContainer from multiple threads` crash, even though everything
-     * seemed to be safe.
-     *
-     * @author TelepathicGrunt
-     */
-    private BlockState getBlockStateSafe(ChunkSection chunkSection, BlockPos pos) {
-        if (chunkSection == WorldChunk.EMPTY_SECTION) return null;
-        return chunkSection.getBlockState(
-            ChunkSectionPos.getLocalCoord(pos.getX()),
-            ChunkSectionPos.getLocalCoord(pos.getY()),
-            ChunkSectionPos.getLocalCoord(pos.getZ()));
-    }
-
-    /**
-     * Safe method for setting a BlockState. Copies what vanilla ores do.
-     * This bypasses the PaletteContainer's lock as it was causing a
-     * `Accessing PalettedContainer from multiple threads` crash, even though everything
-     * seemed to be safe.
-     *
-     * @author TelepathicGrunt
-     */
-    private void setBlockStateSafe(ChunkSection chunkSection, BlockPos pos, BlockState state) {
-        if (chunkSection == WorldChunk.EMPTY_SECTION) return;
-        chunkSection.setBlockState(
-            ChunkSectionPos.getLocalCoord(pos.getX()),
-            ChunkSectionPos.getLocalCoord(pos.getY()),
-            ChunkSectionPos.getLocalCoord(pos.getZ()),
-            state,
-            false);
     }
 }
