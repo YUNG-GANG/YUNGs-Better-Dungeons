@@ -151,7 +151,10 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
         decoRand.setDecoratorSeed(world.getSeed(), startPos.getX(), startPos.getZ());
 
         // Temporary chunk-local carving mask to prevent overwriting carved blocks and add decorations
-        BitSet carvingMask = new BitSet(65536);
+        int xBits = 4;
+        int zBits = 4;
+        int yBits = MathHelper.log2DeBruijn(world.getTopY() - world.getBottomY());
+        BitSet carvingMask = new BitSet((int) Math.pow(2, xBits + zBits + yBits));
 
         // Surface
         int[] surface = new int[256];
@@ -185,8 +188,8 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
             // Min and max values we need to consider for carving
             int minX = MathHelper.floor(caveStartX - xRadius) - chunkPos.x * 16 - 1;
             int maxX = MathHelper.floor(caveStartX + xRadius) - chunkPos.x * 16 + 1;
-            int minY = MathHelper.clamp(MathHelper.floor(caveStartY - yRadius) - 1, 0, 255);
-            int maxY = MathHelper.clamp(MathHelper.floor(caveStartY + yRadius) + 1, 0, 255);
+            int minY = MathHelper.clamp(MathHelper.floor(caveStartY - yRadius) - 1, world.getBottomY(), world.getTopY());
+            int maxY = MathHelper.clamp(MathHelper.floor(caveStartY + yRadius) + 1, world.getBottomY(), world.getTopY());
             int minZ = MathHelper.floor(caveStartZ - zRadius) - chunkPos.z * 16 - 1;
             int maxZ = MathHelper.floor(caveStartZ + zRadius) - chunkPos.z * 16 + 1;
 
@@ -234,7 +237,7 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
                         float radialYDist = (y - caveStartY - .5f) / yRadius;
 
                         // Calculate the carving mask for this block
-                        int mask = (int)x | (int)z << 4 | ((int)(y)) << 8;
+                        int mask = (int)x | (int)z << 4 | ((int)(y - world.getBottomY())) << 8;
 
                         // Carve out blocks within the ellipsoid. Blocks immediately outside the ellipsoid will be turned into a cobblestone shell.
                         float radialDist = radialXDist * radialXDist + radialYDist * radialYDist + radialZDist * radialZDist;

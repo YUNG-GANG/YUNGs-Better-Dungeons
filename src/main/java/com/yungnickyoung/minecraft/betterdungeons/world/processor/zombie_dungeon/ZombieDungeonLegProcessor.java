@@ -40,10 +40,11 @@ public class ZombieDungeonLegProcessor extends StructureProcessor implements ISa
             Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
 
             // Always replace the glass itself with smooth stone
-            if (world.getBlockState(blockInfoGlobal.pos).isAir()) {
+            BlockState blockState = getBlockStateSafe(world, blockInfoGlobal.pos);
+            if (blockState == null || blockState.getMaterial() == Material.AIR || blockState.getMaterial() == Material.WATER || blockState.getMaterial() == Material.LAVA) {
                 blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SMOOTH_STONE.getDefaultState(), blockInfoGlobal.nbt);
             } else {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, world.getBlockState(blockInfoGlobal.pos), blockInfoGlobal.nbt);
+                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, blockState, blockInfoGlobal.nbt);
             }
 
             // Reusable mutable
@@ -51,6 +52,13 @@ public class ZombieDungeonLegProcessor extends StructureProcessor implements ISa
 
             // Chunk section information
             int sectionYIndex = currentChunk.getSectionIndex(mutable.getY());
+
+            // Validate chunk section index. Sometimes the index is -1. Not sure why, but this will
+            // at least prevent the game from crashing.
+            if (sectionYIndex < 0) {
+                return blockInfoGlobal;
+            }
+
             ChunkSection currChunkSection = currentChunk.getSection(sectionYIndex);
 
             // Initialize currBlock
@@ -58,20 +66,29 @@ public class ZombieDungeonLegProcessor extends StructureProcessor implements ISa
             if (currBlock == null) return blockInfoGlobal;
 
             // Generate vertical pillar down
-            while (mutable.getY() > 0 && (currBlock.getMaterial() == Material.AIR || currBlock.getMaterial() == Material.WATER || currBlock.getMaterial() == Material.LAVA)) {
+            while (mutable.getY() > world.getBottomY() && (currBlock.getMaterial() == Material.AIR || currBlock.getMaterial() == Material.WATER || currBlock.getMaterial() == Material.LAVA)) {
                 setBlockStateSafe(currChunkSection, mutable, LEG_SELECTOR.get(random));
 
                 // Move down
                 mutable.move(Direction.DOWN);
 
-                // Update chunk section
+                // Update index for new position
                 sectionYIndex = currentChunk.getSectionIndex(mutable.getY());
+
+                // Validate chunk section index. Sometimes the index is -1. Not sure why, but this will
+                // at least prevent the game from crashing.
+                if (sectionYIndex < 0) {
+                    return blockInfoGlobal;
+                }
+
+                // Update chunk section for new position
                 currChunkSection = currentChunk.getSection(sectionYIndex);
                 currBlock = getBlockStateSafe(currChunkSection, mutable);
                 if (currBlock == null) break;
             }
         } else if (blockInfoGlobal.state.getBlock() == Blocks.PURPUR_SLAB) {
-            if (world.getBlockState(blockInfoGlobal.pos).isAir()) {
+            BlockState blockState = getBlockStateSafe(world, blockInfoGlobal.pos);
+            if (blockState == null || blockState.getMaterial() == Material.AIR || blockState.getMaterial() == Material.WATER || blockState.getMaterial() == Material.LAVA) {
                 blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SMOOTH_STONE_SLAB.getDefaultState(), blockInfoGlobal.nbt);
             } else {
                 blockInfoGlobal = null;

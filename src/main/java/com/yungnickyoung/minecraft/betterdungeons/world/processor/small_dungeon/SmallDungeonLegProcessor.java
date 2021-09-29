@@ -47,6 +47,13 @@ public class SmallDungeonLegProcessor extends StructureProcessor implements ISaf
 
             // Chunk section information
             int sectionYIndex = currentChunk.getSectionIndex(mutable.getY());
+
+            // Validate chunk section index. Sometimes the index is -1. Not sure why, but this will
+            // at least prevent the game from crashing.
+            if (sectionYIndex < 0) {
+                return blockInfoGlobal;
+            }
+
             ChunkSection currChunkSection = currentChunk.getSection(sectionYIndex);
 
             // Initialize currBlock
@@ -54,7 +61,7 @@ public class SmallDungeonLegProcessor extends StructureProcessor implements ISaf
             if (currBlock == null) return blockInfoGlobal;
 
             // Generate vertical pillar down
-            while (mutable.getY() > 0 && (currBlock.getMaterial() == Material.AIR || currBlock.getMaterial() == Material.WATER || currBlock.getMaterial() == Material.LAVA)) {
+            while (mutable.getY() > world.getBottomY() && (currBlock.getMaterial() == Material.AIR || currBlock.getMaterial() == Material.WATER || currBlock.getMaterial() == Material.LAVA)) {
                 setBlockStateSafe(currChunkSection, mutable, STONE_BRICK_SELECTOR.get(random));
 
                 // Move down
@@ -62,6 +69,13 @@ public class SmallDungeonLegProcessor extends StructureProcessor implements ISaf
 
                 // Update chunk section
                 sectionYIndex = currentChunk.getSectionIndex(mutable.getY());
+
+                // Validate chunk section index. Sometimes the index is -1. Not sure why, but this will
+                // at least prevent the game from crashing.
+                if (sectionYIndex < 0) {
+                    return blockInfoGlobal;
+                }
+
                 currChunkSection = currentChunk.getSection(sectionYIndex);
                 currBlock = getBlockStateSafe(currChunkSection, mutable);
                 if (currBlock == null) break;

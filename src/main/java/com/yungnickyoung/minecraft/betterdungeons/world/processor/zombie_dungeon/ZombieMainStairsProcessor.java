@@ -87,8 +87,8 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
 
                 // Set left stair
                 tempBlock = STAIR_SELECTOR.get(random);
-                if (!getBlockStateSafe(world, leftPos).isAir()) {
-                    if (getBlockStateSafe(world, leftPos.offset(facing)).getMaterial().isLiquid()) {
+                if (!isBlockStateAirSafe(world, leftPos)) {
+                    if (isMaterialLiquidSafe(world, leftPos.offset(facing))) {
                         this.setBlockStateSafeWithPlacement(world, Blocks.COBBLESTONE.getDefaultState(), leftPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
                     } else {
                         this.setBlockStateSafeWithPlacement(world, tempBlock, leftPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
@@ -97,8 +97,8 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
 
                 // Set middle stair
                 tempBlock = STAIR_SELECTOR.get(random);
-                if (!getBlockStateSafe(world, middlePos).isAir()) {
-                    if (getBlockStateSafe(world, middlePos.offset(facing)).getMaterial().isLiquid()) {
+                if (!isBlockStateAirSafe(world, middlePos)) {
+                    if (isMaterialLiquidSafe(world, middlePos.offset(facing))) {
                         this.setBlockStateSafeWithPlacement(world, Blocks.COBBLESTONE.getDefaultState(), middlePos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
                     } else {
                         this.setBlockStateSafeWithPlacement(world, tempBlock, middlePos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
@@ -107,8 +107,8 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
 
                 // Set right stair
                 tempBlock = STAIR_SELECTOR.get(random);
-                if (!getBlockStateSafe(world, rightPos).isAir()) {
-                    if (getBlockStateSafe(world, rightPos.offset(facing)).getMaterial().isLiquid()) {
+                if (!isBlockStateAirSafe(world, rightPos)) {
+                    if (isMaterialLiquidSafe(world, rightPos.offset(facing))) {
                         this.setBlockStateSafeWithPlacement(world, Blocks.COBBLESTONE.getDefaultState(), rightPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
                     } else {
                         this.setBlockStateSafeWithPlacement(world, tempBlock, rightPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
@@ -156,24 +156,24 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
                 // Place cobble above air
                 temp.set(leftPos.getX(), leftPos.getY() + 4, leftPos.getZ());
                 tempBlock = getBlockStateSafe(world, temp);
-                if (tempBlock.getMaterial().isLiquid() || (random.nextFloat() < cobbleChance && (replaceableMaterials.contains(tempBlock.getMaterial()) || replaceableBlocks.contains(tempBlock))))
+                if (tempBlock == null || tempBlock.getMaterial().isLiquid() || (random.nextFloat() < cobbleChance && (replaceableMaterials.contains(tempBlock.getMaterial()) || replaceableBlocks.contains(tempBlock))))
                     this.setBlockStateSafeWithPlacement(world, COBBLE_SELECTOR.get(random), temp, structurePlacementData.getMirror(), structurePlacementData.getRotation());
 
                 temp.set(middlePos.getX(), middlePos.getY() + 4, middlePos.getZ());
                 tempBlock = getBlockStateSafe(world, temp);
-                if (tempBlock.getMaterial().isLiquid() || (random.nextFloat() < cobbleChance && (replaceableMaterials.contains(tempBlock.getMaterial()) || replaceableBlocks.contains(tempBlock))))
+                if (tempBlock == null || tempBlock.getMaterial().isLiquid() || (random.nextFloat() < cobbleChance && (replaceableMaterials.contains(tempBlock.getMaterial()) || replaceableBlocks.contains(tempBlock))))
                     this.setBlockStateSafeWithPlacement(world, COBBLE_SELECTOR.get(random), temp, structurePlacementData.getMirror(), structurePlacementData.getRotation());
 
                 temp.set(rightPos.getX(), rightPos.getY() + 4, rightPos.getZ());
                 tempBlock = getBlockStateSafe(world, temp);
-                if (tempBlock.getMaterial().isLiquid() || (random.nextFloat() < cobbleChance && (replaceableMaterials.contains(tempBlock.getMaterial()) || replaceableBlocks.contains(tempBlock))))
+                if (tempBlock == null || tempBlock.getMaterial().isLiquid() || (random.nextFloat() < cobbleChance && (replaceableMaterials.contains(tempBlock.getMaterial()) || replaceableBlocks.contains(tempBlock))))
                     this.setBlockStateSafeWithPlacement(world, COBBLE_SELECTOR.get(random), temp, structurePlacementData.getMirror(), structurePlacementData.getRotation());
 
                 // Place cobble in left wall
                 temp.set(leftPos.offset(facing.rotateYCounterclockwise()));
                 for (int y = 0; y <= 4; y++) {
                     tempBlock = getBlockStateSafe(world, temp);
-                    if (tempBlock.getMaterial().isLiquid() || (random.nextFloat() < cobbleChance && (replaceableMaterials.contains(tempBlock.getMaterial()) || replaceableBlocks.contains(tempBlock))))
+                    if (tempBlock == null || tempBlock.getMaterial().isLiquid() || (random.nextFloat() < cobbleChance && (replaceableMaterials.contains(tempBlock.getMaterial()) || replaceableBlocks.contains(tempBlock))))
                         this.setBlockStateSafeWithPlacement(world, COBBLE_SELECTOR.get(random), temp, structurePlacementData.getMirror(), structurePlacementData.getRotation());
 
                     temp.move(Direction.UP);
@@ -183,7 +183,7 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
                 temp.set(rightPos.offset(facing.rotateYClockwise()));
                 for (int y = 0; y <= 4; y++) {
                     tempBlock = getBlockStateSafe(world, temp);
-                    if (tempBlock.getMaterial().isLiquid() || (random.nextFloat() < cobbleChance && (replaceableMaterials.contains(tempBlock.getMaterial()) || replaceableBlocks.contains(tempBlock))))
+                    if (tempBlock == null || tempBlock.getMaterial().isLiquid() || (random.nextFloat() < cobbleChance && (replaceableMaterials.contains(tempBlock.getMaterial()) || replaceableBlocks.contains(tempBlock))))
                         this.setBlockStateSafeWithPlacement(world, COBBLE_SELECTOR.get(random), temp, structurePlacementData.getMirror(), structurePlacementData.getRotation());
 
                     temp.move(Direction.UP);
@@ -335,7 +335,7 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
         // Generate vertical pillar down
         BlockPos.Mutable mutable = pos.mutableCopy();
         BlockState currBlock = getBlockStateSafe(world, mutable);
-        while (mutable.getY() > 0 && (currBlock.getMaterial() == Material.AIR || currBlock.getMaterial() == Material.WATER || currBlock.getMaterial() == Material.LAVA)) {
+        while (mutable.getY() > world.getBottomY() && (currBlock == null || currBlock.getMaterial() == Material.AIR || currBlock.getMaterial() == Material.WATER || currBlock.getMaterial() == Material.LAVA)) {
             setBlockStateSafe(world, mutable, selector.get(random));
             mutable.move(Direction.DOWN);
             currBlock = getBlockStateSafe(world, mutable);

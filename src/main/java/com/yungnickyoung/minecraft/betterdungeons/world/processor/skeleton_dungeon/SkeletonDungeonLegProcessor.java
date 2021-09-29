@@ -17,7 +17,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkSection;
-import net.minecraft.world.chunk.WorldChunk;
 
 import java.util.Random;
 
@@ -47,6 +46,13 @@ public class SkeletonDungeonLegProcessor extends StructureProcessor implements I
 
             // Chunk section information
             int sectionYIndex = currentChunk.getSectionIndex(mutable.getY());
+
+            // Validate chunk section index. Sometimes the index is -1. Not sure why, but this will
+            // at least prevent the game from crashing.
+            if (sectionYIndex < 0) {
+                return blockInfoGlobal;
+            }
+
             ChunkSection currChunkSection = currentChunk.getSection(sectionYIndex);
 
             // Initialize currBlock
@@ -54,18 +60,23 @@ public class SkeletonDungeonLegProcessor extends StructureProcessor implements I
             if (currBlock == null) return blockInfoGlobal;
 
             // Generate vertical pillar down
-            while (mutable.getY() > 0 && (currBlock.getMaterial() == Material.AIR || currBlock.getMaterial() == Material.WATER || currBlock.getMaterial() == Material.LAVA)) {
+            while (mutable.getY() > world.getBottomY() && (currBlock.getMaterial() == Material.AIR || currBlock.getMaterial() == Material.WATER || currBlock.getMaterial() == Material.LAVA)) {
+                // Place block
                 setBlockStateSafe(currChunkSection, mutable, COBBLE_SELECTOR.get(random));
-
-                sectionYIndex = currentChunk.getSectionIndex(mutable.getY());
-                ChunkSection levelChunkSection = currentChunk.getSection(sectionYIndex);
-                if (levelChunkSection == WorldChunk.EMPTY_SECTION) continue;
 
                 // Move down
                 mutable.move(Direction.DOWN);
 
-                // Update chunk section
+                // Update index for new position
                 sectionYIndex = currentChunk.getSectionIndex(mutable.getY());
+
+                // Validate chunk section index. Sometimes the index is -1. Not sure why, but this will
+                // at least prevent the game from crashing.
+                if (sectionYIndex < 0) {
+                    return blockInfoGlobal;
+                }
+
+                // Update chunk section for new position
                 currChunkSection = currentChunk.getSection(sectionYIndex);
                 currBlock = getBlockStateSafe(currChunkSection, mutable);
                 if (currBlock == null) break;

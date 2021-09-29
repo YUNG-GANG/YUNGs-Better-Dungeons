@@ -2,8 +2,9 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
+import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.Waterloggable;
 import net.minecraft.state.property.Properties;
 import net.minecraft.structure.Structure;
 import net.minecraft.structure.StructurePlacementData;
@@ -24,6 +25,9 @@ public class WaterloggedProcessor extends StructureProcessor implements ISafeWor
     public static final WaterloggedProcessor INSTANCE = new WaterloggedProcessor();
     public static final Codec<WaterloggedProcessor> CODEC = Codec.unit(() -> INSTANCE);
 
+    private static final BlockSetSelector blockSelector = new BlockSetSelector(Blocks.COBBLESTONE.getDefaultState())
+        .addBlock(Blocks.MOSSY_COBBLESTONE.getDefaultState(), .5f);
+
     /**
      * Workaround for https://bugs.mojang.com/browse/MC-130584
      * Due to a hardcoded field in Templates, any waterloggable blocks in structures replacing water in the world will become waterlogged.
@@ -31,16 +35,22 @@ public class WaterloggedProcessor extends StructureProcessor implements ISafeWor
      */
     @Override
     public Structure.StructureBlockInfo process(WorldView world, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Structure.StructureBlockInfo blockInfoLocal, Structure.StructureBlockInfo blockInfoGlobal, StructurePlacementData structurePlacementData) {
-
         // Check if block is waterloggable and not intended to be waterlogged
         if (blockInfoGlobal.state.contains(Properties.WATERLOGGED) && !blockInfoGlobal.state.get(Properties.WATERLOGGED)) {
             ChunkPos currentChunkPos = new ChunkPos(blockInfoGlobal.pos);
             Chunk currentChunk = world.getChunk(currentChunkPos.x, currentChunkPos.z);
             int sectionYIndex = currentChunk.getSectionIndex(blockInfoGlobal.pos.getY());
+
+            // Validate chunk section index. Sometimes the index is -1. Not sure why, but this will
+            // at least prevent the game from crashing.
+            if (sectionYIndex < 0) {
+                return blockInfoGlobal;
+            }
+
             ChunkSection currChunkSection = currentChunk.getSection(sectionYIndex);
 
             if (getFluidStateSafe(currChunkSection, blockInfoGlobal.pos).isIn(FluidTags.WATER)) {
-                setBlockStateSafe(currChunkSection, blockInfoGlobal.pos, Blocks.STONE_BRICKS.getDefaultState());
+                setBlockStateSafe(currChunkSection, blockInfoGlobal.pos, blockInfoGlobal.state);
             }
 
             // Remove water in adjacent blocks
@@ -51,12 +61,16 @@ public class WaterloggedProcessor extends StructureProcessor implements ISafeWor
                     currentChunkPos = new ChunkPos(mutable);
                     currentChunk = world.getChunk(currentChunkPos.x, currentChunkPos.z);
                     sectionYIndex = currentChunk.getSectionIndex(mutable.getY());
+                    if (sectionYIndex < 0) {
+                        return blockInfoGlobal;
+                    }
                     currChunkSection = currentChunk.getSection(sectionYIndex);
                 }
 
                 if (getFluidStateSafe(currChunkSection, mutable).isIn(FluidTags.WATER)) {
-                    if (!(getBlockStateSafe(currChunkSection, mutable).getBlock() instanceof Waterloggable && getBlockStateSafe(currChunkSection, mutable).get(Properties.WATERLOGGED))) {
-                        setBlockStateSafe(currChunkSection, mutable, Blocks.STONE_BRICKS.getDefaultState());
+                    BlockState blockState = getBlockStateSafe(currChunkSection, mutable);
+                    if (blockState != null && !(blockState.contains(Properties.WATERLOGGED) && blockState.get(Properties.WATERLOGGED))) {
+                        setBlockStateSafe(currChunkSection, mutable, blockSelector.get(structurePlacementData.getRandom(blockInfoGlobal.pos)));
                     }
                 }
             }

@@ -1,7 +1,9 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.ChunkSectionPos;
@@ -25,7 +27,7 @@ public interface ISafeWorldModifier {
      * Safe method for grabbing a FluidState. Copies what vanilla ores do.
      */
     default FluidState getFluidStateSafe(ChunkSection chunkSection, BlockPos pos) {
-        if (chunkSection == WorldChunk.EMPTY_SECTION) return null;
+        if (ChunkSection.isEmpty(chunkSection)) return Fluids.EMPTY.getDefaultState();
         return chunkSection.getFluidState(
             ChunkSectionPos.getLocalCoord(pos.getX()),
             ChunkSectionPos.getLocalCoord(pos.getY()),
@@ -39,13 +41,15 @@ public interface ISafeWorldModifier {
         ChunkPos chunkPos = new ChunkPos(pos);
         Chunk chunk = world.getChunk(chunkPos.x, chunkPos.z);
         int sectionYIndex = chunk.getSectionIndex(pos.getY());
+        // Validate chunk section index. Sometimes the index is -1. Not sure why, but this will
+        // at least prevent the game from crashing.
+        if (sectionYIndex < 0) {
+            return Fluids.EMPTY.getDefaultState();
+        }
+
         ChunkSection chunkSection = chunk.getSection(sectionYIndex);
 
-        if (chunkSection == WorldChunk.EMPTY_SECTION) return null;
-        return chunkSection.getFluidState(
-            ChunkSectionPos.getLocalCoord(pos.getX()),
-            ChunkSectionPos.getLocalCoord(pos.getY()),
-            ChunkSectionPos.getLocalCoord(pos.getZ()));
+        return getFluidStateSafe(chunkSection, pos);
     }
 
     /**
@@ -57,7 +61,7 @@ public interface ISafeWorldModifier {
      * @author TelepathicGrunt
      */
     default BlockState getBlockStateSafe(ChunkSection chunkSection, BlockPos pos) {
-        if (chunkSection == WorldChunk.EMPTY_SECTION) return null;
+        if (ChunkSection.isEmpty(chunkSection)) return null;
         return chunkSection.getBlockState(
             ChunkSectionPos.getLocalCoord(pos.getX()),
             ChunkSectionPos.getLocalCoord(pos.getY()),
@@ -76,13 +80,25 @@ public interface ISafeWorldModifier {
         ChunkPos chunkPos = new ChunkPos(pos);
         Chunk chunk = world.getChunk(chunkPos.x, chunkPos.z);
         int sectionYIndex = chunk.getSectionIndex(pos.getY());
+        // Validate chunk section index. Sometimes the index is -1. Not sure why, but this will
+        // at least prevent the game from crashing.
+        if (sectionYIndex < 0) {
+            return Blocks.AIR.getDefaultState();
+        }
+
         ChunkSection chunkSection = chunk.getSection(sectionYIndex);
 
-        if (chunkSection == WorldChunk.EMPTY_SECTION) return null;
-        return chunkSection.getBlockState(
-            ChunkSectionPos.getLocalCoord(pos.getX()),
-            ChunkSectionPos.getLocalCoord(pos.getY()),
-            ChunkSectionPos.getLocalCoord(pos.getZ()));
+        return getBlockStateSafe(chunkSection, pos);
+    }
+
+    default boolean isBlockStateAirSafe(WorldView world, BlockPos pos) {
+        BlockState blockState = getBlockStateSafe(world, pos);
+        return blockState != null && blockState.isAir();
+    }
+
+    default boolean isMaterialLiquidSafe(WorldView world, BlockPos pos) {
+        BlockState blockState = getBlockStateSafe(world, pos);
+        return blockState != null && blockState.getMaterial().isLiquid();
     }
 
     /**
@@ -93,9 +109,9 @@ public interface ISafeWorldModifier {
      *
      * @author TelepathicGrunt
      */
-    default void setBlockStateSafe(ChunkSection chunkSection, BlockPos pos, BlockState state) {
-        if (chunkSection == WorldChunk.EMPTY_SECTION) return;
-        chunkSection.setBlockState(
+    default BlockState setBlockStateSafe(ChunkSection chunkSection, BlockPos pos, BlockState state) {
+        if (chunkSection == WorldChunk.EMPTY_SECTION) return null;
+        return chunkSection.setBlockState(
             ChunkSectionPos.getLocalCoord(pos.getX()),
             ChunkSectionPos.getLocalCoord(pos.getY()),
             ChunkSectionPos.getLocalCoord(pos.getZ()),
@@ -111,18 +127,18 @@ public interface ISafeWorldModifier {
      *
      * @author TelepathicGrunt
      */
-    default void setBlockStateSafe(WorldView world, BlockPos pos, BlockState state) {
+    default BlockState setBlockStateSafe(WorldView world, BlockPos pos, BlockState state) {
         ChunkPos chunkPos = new ChunkPos(pos);
         Chunk chunk = world.getChunk(chunkPos.x, chunkPos.z);
         int sectionYIndex = chunk.getSectionIndex(pos.getY());
+        // Validate chunk section index. Sometimes the index is -1. Not sure why, but this will
+        // at least prevent the game from crashing.
+        if (sectionYIndex < 0) {
+            return null;
+        }
+
         ChunkSection chunkSection = chunk.getSection(sectionYIndex);
 
-        if (chunkSection == WorldChunk.EMPTY_SECTION) return;
-        chunkSection.setBlockState(
-            ChunkSectionPos.getLocalCoord(pos.getX()),
-            ChunkSectionPos.getLocalCoord(pos.getY()),
-            ChunkSectionPos.getLocalCoord(pos.getZ()),
-            state,
-            false);
+        return setBlockStateSafe(chunkSection, pos, state);
     }
 }

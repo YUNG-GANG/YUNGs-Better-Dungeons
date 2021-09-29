@@ -34,7 +34,7 @@ public abstract class SpiderDungeonPiece extends StructurePiece {
                 // Grab positional info from mask
                 int x = mask & 0xF;
                 int z = mask >> 4 & 0xF;
-                int y = mask >> 8 & 0xFF;
+                int y = (mask >> 8) + world.getBottomY();
                 int globalX = x + chunkPos.x * 16;
                 int globalZ = z + chunkPos.z * 16;
 
