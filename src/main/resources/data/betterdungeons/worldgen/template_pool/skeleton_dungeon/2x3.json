@@ -32,7 +32,7 @@
     {
       "weight": 1,
       "element": {
-        "location": "2x3_3",
+        "location": "betterdungeons:skeleton_dungeon/2x3/2x3_3",
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
