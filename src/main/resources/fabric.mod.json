@@ -28,7 +28,6 @@
   "mixins": [
     "betterdungeons.mixins.json"
   ],
-  "accessWidener": "betterdungeons.aw",
   "depends": {
     "fabricloader": ">=0.12.0",
     "fabric": ">=0.43.1",
