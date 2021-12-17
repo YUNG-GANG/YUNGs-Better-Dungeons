@@ -4,14 +4,14 @@ import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonContext;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ChestBlock;
-import net.minecraft.structure.Structure;
-import net.minecraft.structure.StructurePlacementData;
-import net.minecraft.structure.processor.StructureProcessor;
-import net.minecraft.structure.processor.StructureProcessorType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.Random;
 
@@ -23,7 +23,12 @@ public class SmallDungeonChestProcessor extends StructureProcessor {
     public static final Codec<SmallDungeonChestProcessor> CODEC = Codec.unit(() -> INSTANCE);
 
     @Override
-    public Structure.StructureBlockInfo process(WorldView world, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Structure.StructureBlockInfo blockInfoLocal, Structure.StructureBlockInfo blockInfoGlobal, StructurePlacementData structurePlacementData) {
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
+                                                             BlockPos jigsawPiecePos,
+                                                             BlockPos jigsawPieceBottomCenterPos,
+                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             StructureTemplate.StructureBlockInfo blockInfoGlobal,
+                                                             StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state.getBlock() instanceof ChestBlock) {
             // Fetch thread-local dungeon context
             DungeonContext context = DungeonContext.peek();
@@ -34,11 +39,11 @@ public class SmallDungeonChestProcessor extends StructureProcessor {
             } else if (chestCount < BetterDungeons.CONFIG.betterDungeons.smallDungeon.chestMaxCount) { // 20% chance of additional chest, per chest prop
                 Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
                 if (random.nextFloat() > .2f) {
-                    return new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
+                    return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
                 }
                 context.incrementChestCount();
             } else { // Can't spawn more than max chests
-                return new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
+                return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
             }
         }
         return blockInfoGlobal;

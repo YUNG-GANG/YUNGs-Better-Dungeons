@@ -3,15 +3,15 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeo
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.StairsBlock;
-import net.minecraft.structure.Structure;
-import net.minecraft.structure.StructurePlacementData;
-import net.minecraft.structure.processor.StructureProcessor;
-import net.minecraft.structure.processor.StructureProcessorType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 /**
  * Processes stairs to give them a more varied and ruined look.
@@ -20,29 +20,34 @@ public class ZombieDungeonStairProcessor extends StructureProcessor {
     public static final ZombieDungeonStairProcessor INSTANCE = new ZombieDungeonStairProcessor();
     public static final Codec<ZombieDungeonStairProcessor> CODEC = Codec.unit(() -> INSTANCE);
 
-    private static final BlockSetSelector SELECTOR = new BlockSetSelector(Blocks.COBBLESTONE_STAIRS.getDefaultState())
-        .addBlock(Blocks.MOSSY_COBBLESTONE_STAIRS.getDefaultState(), 0.4f)
-        .addBlock(Blocks.COBBLESTONE_SLAB.getDefaultState(), 0.1f)
-        .addBlock(Blocks.MOSSY_COBBLESTONE_SLAB.getDefaultState(), 0.1f)
-        .addBlock(Blocks.CAVE_AIR.getDefaultState(), 0.1f)
-        .addBlock(Blocks.COBBLESTONE.getDefaultState(), 0.1f)
-        .addBlock(Blocks.MOSSY_COBBLESTONE.getDefaultState(), 0.1f);
+    private static final BlockSetSelector SELECTOR = new BlockSetSelector(Blocks.COBBLESTONE_STAIRS.defaultBlockState())
+        .addBlock(Blocks.MOSSY_COBBLESTONE_STAIRS.defaultBlockState(), 0.4f)
+        .addBlock(Blocks.COBBLESTONE_SLAB.defaultBlockState(), 0.1f)
+        .addBlock(Blocks.MOSSY_COBBLESTONE_SLAB.defaultBlockState(), 0.1f)
+        .addBlock(Blocks.CAVE_AIR.defaultBlockState(), 0.1f)
+        .addBlock(Blocks.COBBLESTONE.defaultBlockState(), 0.1f)
+        .addBlock(Blocks.MOSSY_COBBLESTONE.defaultBlockState(), 0.1f);
 
     @Override
-    public Structure.StructureBlockInfo process(WorldView world, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Structure.StructureBlockInfo blockInfoLocal, Structure.StructureBlockInfo blockInfoGlobal, StructurePlacementData structurePlacementData) {
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
+                                                             BlockPos jigsawPiecePos,
+                                                             BlockPos jigsawPieceBottomCenterPos,
+                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             StructureTemplate.StructureBlockInfo blockInfoGlobal,
+                                                             StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state.getBlock() == Blocks.COBBLESTONE_STAIRS) {
-            if (world.getBlockState(blockInfoGlobal.pos).isAir()) {
+            if (levelReader.getBlockState(blockInfoGlobal.pos).isAir()) {
                 // Don't replace air to maintain rotted look
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
             } else {
                 BlockState newBlock = SELECTOR.get(structurePlacementData.getRandom(blockInfoGlobal.pos));
-                if (newBlock.getBlock() instanceof StairsBlock) {
+                if (newBlock.getBlock() instanceof StairBlock) {
                     newBlock = newBlock
-                        .with(StairsBlock.FACING, blockInfoGlobal.state.get(StairsBlock.FACING))
-                        .with(StairsBlock.HALF, blockInfoGlobal.state.get(StairsBlock.HALF))
-                        .with(StairsBlock.SHAPE, blockInfoGlobal.state.get(StairsBlock.SHAPE));
+                        .setValue(StairBlock.FACING, blockInfoGlobal.state.getValue(StairBlock.FACING))
+                        .setValue(StairBlock.HALF, blockInfoGlobal.state.getValue(StairBlock.HALF))
+                        .setValue(StairBlock.SHAPE, blockInfoGlobal.state.getValue(StairBlock.SHAPE));
                 }
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, newBlock, blockInfoGlobal.nbt);
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, newBlock, blockInfoGlobal.nbt);
             }
         }
         return blockInfoGlobal;

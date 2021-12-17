@@ -2,22 +2,23 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeo
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
-import com.yungnickyoung.minecraft.betterdungeons.world.processor.ISafeWorldModifier;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.Material;
-import net.minecraft.structure.Structure;
-import net.minecraft.structure.StructurePlacementData;
-import net.minecraft.structure.processor.StructureProcessor;
-import net.minecraft.structure.processor.StructureProcessorType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.ChunkSection;
+import com.yungnickyoung.minecraft.yungsapi.world.processor.ISafeWorldModifier;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.LevelChunkSection;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.material.Material;
 
+import java.util.Optional;
 import java.util.Random;
 
 /**
@@ -29,26 +30,31 @@ public class ZombieDungeonLegProcessor extends StructureProcessor implements ISa
     public static final ZombieDungeonLegProcessor INSTANCE = new ZombieDungeonLegProcessor();
     public static final Codec<ZombieDungeonLegProcessor> CODEC = Codec.unit(() -> INSTANCE);
 
-    private static final BlockSetSelector LEG_SELECTOR = new BlockSetSelector(Blocks.COBBLESTONE.getDefaultState())
-        .addBlock(Blocks.POLISHED_ANDESITE.getDefaultState(), 0.8f);
+    private static final BlockSetSelector LEG_SELECTOR = new BlockSetSelector(Blocks.COBBLESTONE.defaultBlockState())
+        .addBlock(Blocks.POLISHED_ANDESITE.defaultBlockState(), 0.8f);
 
     @Override
-    public Structure.StructureBlockInfo process(WorldView world, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Structure.StructureBlockInfo blockInfoLocal, Structure.StructureBlockInfo blockInfoGlobal, StructurePlacementData structurePlacementData) {
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
+                                                             BlockPos jigsawPiecePos,
+                                                             BlockPos jigsawPieceBottomCenterPos,
+                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             StructureTemplate.StructureBlockInfo blockInfoGlobal,
+                                                             StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state.getBlock() == Blocks.MAGENTA_STAINED_GLASS) {
             ChunkPos currentChunkPos = new ChunkPos(blockInfoGlobal.pos);
-            Chunk currentChunk = world.getChunk(currentChunkPos.x, currentChunkPos.z);
+            ChunkAccess currentChunk = levelReader.getChunk(currentChunkPos.x, currentChunkPos.z);
             Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
 
             // Always replace the glass itself with smooth stone
-            BlockState blockState = getBlockStateSafe(world, blockInfoGlobal.pos);
-            if (blockState == null || blockState.getMaterial() == Material.AIR || blockState.getMaterial() == Material.WATER || blockState.getMaterial() == Material.LAVA) {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SMOOTH_STONE.getDefaultState(), blockInfoGlobal.nbt);
+            Optional<BlockState> blockState = getBlockStateSafe(levelReader, blockInfoGlobal.pos);
+            if (blockState.isEmpty() || blockState.get().getMaterial() == Material.AIR || blockState.get().getMaterial() == Material.WATER || blockState.get().getMaterial() == Material.LAVA) {
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SMOOTH_STONE.defaultBlockState(), blockInfoGlobal.nbt);
             } else {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, blockState, blockInfoGlobal.nbt);
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, blockState.get(), blockInfoGlobal.nbt);
             }
 
             // Reusable mutable
-            BlockPos.Mutable mutable = blockInfoGlobal.pos.down().mutableCopy();
+            BlockPos.MutableBlockPos mutable = blockInfoGlobal.pos.below().mutable();
 
             // Chunk section information
             int sectionYIndex = currentChunk.getSectionIndex(mutable.getY());
@@ -59,14 +65,14 @@ public class ZombieDungeonLegProcessor extends StructureProcessor implements ISa
                 return blockInfoGlobal;
             }
 
-            ChunkSection currChunkSection = currentChunk.getSection(sectionYIndex);
+            LevelChunkSection currChunkSection = currentChunk.getSection(sectionYIndex);
 
             // Initialize currBlock
-            BlockState currBlock = getBlockStateSafe(currChunkSection, mutable);
-            if (currBlock == null) return blockInfoGlobal;
+            Optional<BlockState> currBlock = getBlockStateSafe(currChunkSection, mutable);
+            if (currBlock.isEmpty()) return blockInfoGlobal;
 
             // Generate vertical pillar down
-            while (mutable.getY() > world.getBottomY() && (currBlock.getMaterial() == Material.AIR || currBlock.getMaterial() == Material.WATER || currBlock.getMaterial() == Material.LAVA)) {
+            while (mutable.getY() > levelReader.getMinBuildHeight() && (currBlock.get().getMaterial() == Material.AIR || currBlock.get().getMaterial() == Material.WATER || currBlock.get().getMaterial() == Material.LAVA)) {
                 setBlockStateSafe(currChunkSection, mutable, LEG_SELECTOR.get(random));
 
                 // Move down
@@ -84,12 +90,12 @@ public class ZombieDungeonLegProcessor extends StructureProcessor implements ISa
                 // Update chunk section for new position
                 currChunkSection = currentChunk.getSection(sectionYIndex);
                 currBlock = getBlockStateSafe(currChunkSection, mutable);
-                if (currBlock == null) break;
+                if (currBlock.isEmpty()) break;
             }
         } else if (blockInfoGlobal.state.getBlock() == Blocks.PURPUR_SLAB) {
-            BlockState blockState = getBlockStateSafe(world, blockInfoGlobal.pos);
-            if (blockState == null || blockState.getMaterial() == Material.AIR || blockState.getMaterial() == Material.WATER || blockState.getMaterial() == Material.LAVA) {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SMOOTH_STONE_SLAB.getDefaultState(), blockInfoGlobal.nbt);
+            Optional<BlockState> blockState = getBlockStateSafe(levelReader, blockInfoGlobal.pos);
+            if (blockState.isEmpty() || blockState.get().getMaterial() == Material.AIR || blockState.get().getMaterial() == Material.WATER || blockState.get().getMaterial() == Material.LAVA) {
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SMOOTH_STONE_SLAB.defaultBlockState(), blockInfoGlobal.nbt);
             } else {
                 blockInfoGlobal = null;
             }

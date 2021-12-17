@@ -3,28 +3,33 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LanternBlock;
-import net.minecraft.structure.Structure;
-import net.minecraft.structure.StructurePlacementData;
-import net.minecraft.structure.processor.StructureProcessor;
-import net.minecraft.structure.processor.StructureProcessorType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LanternBlock;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 public class NetherBlockProcessor extends StructureProcessor {
     public static final NetherBlockProcessor INSTANCE = new NetherBlockProcessor();
     public static final Codec<NetherBlockProcessor> CODEC = Codec.unit(() -> INSTANCE);
 
     @Override
-    public Structure.StructureBlockInfo process(WorldView world, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Structure.StructureBlockInfo blockInfoLocal, Structure.StructureBlockInfo blockInfoGlobal, StructurePlacementData structurePlacementData) {
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
+                                                             BlockPos jigsawPiecePos,
+                                                             BlockPos jigsawPieceBottomCenterPos,
+                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             StructureTemplate.StructureBlockInfo blockInfoGlobal,
+                                                             StructurePlaceSettings structurePlacementData) {
         if (!BetterDungeons.CONFIG.betterDungeons.general.enableNetherBlocks) {
-            if (blockInfoGlobal.state.isOf(Blocks.SOUL_SAND) || blockInfoGlobal.state.isOf(Blocks.SOUL_SOIL)) {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.COARSE_DIRT.getDefaultState(), blockInfoGlobal.nbt);
-            } else if (blockInfoGlobal.state.isOf(Blocks.SOUL_CAMPFIRE)) {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAMPFIRE.getDefaultState(), blockInfoGlobal.nbt);
-            } else if (blockInfoGlobal.state.isOf(Blocks.SOUL_LANTERN)) {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.LANTERN.getDefaultState().with(LanternBlock.HANGING, blockInfoGlobal.state.get(LanternBlock.HANGING)), blockInfoGlobal.nbt);
+            if (blockInfoGlobal.state.is(Blocks.SOUL_SAND) || blockInfoGlobal.state.is(Blocks.SOUL_SOIL)) {
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.COARSE_DIRT.defaultBlockState(), blockInfoGlobal.nbt);
+            } else if (blockInfoGlobal.state.is(Blocks.SOUL_CAMPFIRE)) {
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAMPFIRE.defaultBlockState(), blockInfoGlobal.nbt);
+            } else if (blockInfoGlobal.state.is(Blocks.SOUL_LANTERN)) {
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.LANTERN.defaultBlockState().setValue(LanternBlock.HANGING, blockInfoGlobal.state.getValue(LanternBlock.HANGING)), blockInfoGlobal.nbt);
             }
         }
         return blockInfoGlobal;

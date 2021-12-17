@@ -4,7 +4,7 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
 public class ConfigSmallDungeons {
     @ConfigEntry.Gui.Tooltip(count = 2)
-    public int smallDungeonMinY = 11;
+    public int smallDungeonMinY = -50;
 
     @ConfigEntry.Gui.Tooltip(count = 2)
     public int smallDungeonMaxY = 50;

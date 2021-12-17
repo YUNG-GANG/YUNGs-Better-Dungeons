@@ -2,14 +2,14 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
-import net.minecraft.block.Blocks;
-import net.minecraft.state.property.Properties;
-import net.minecraft.structure.Structure;
-import net.minecraft.structure.StructurePlacementData;
-import net.minecraft.structure.processor.StructureProcessor;
-import net.minecraft.structure.processor.StructureProcessorType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.Random;
 
@@ -18,18 +18,23 @@ public class SmallDungeonCeilingLampPropProcessor extends StructureProcessor {
     public static final Codec<SmallDungeonCeilingLampPropProcessor> CODEC = Codec.unit(() -> INSTANCE);
 
     @Override
-    public Structure.StructureBlockInfo process(WorldView world, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Structure.StructureBlockInfo blockInfoLocal, Structure.StructureBlockInfo blockInfoGlobal, StructurePlacementData structurePlacementData) {
-        if (blockInfoGlobal.state.isOf(Blocks.CYAN_STAINED_GLASS)) {
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
+                                                             BlockPos jigsawPiecePos,
+                                                             BlockPos jigsawPieceBottomCenterPos,
+                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             StructureTemplate.StructureBlockInfo blockInfoGlobal,
+                                                             StructurePlaceSettings structurePlacementData) {
+        if (blockInfoGlobal.state.is(Blocks.CYAN_STAINED_GLASS)) {
             Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
 
             // Choose lamp prop
             float f = random.nextFloat();
             if (f < 0.1f) // Soul lantern
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SOUL_LANTERN.getDefaultState().with(Properties.HANGING, true), blockInfoGlobal.nbt);
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SOUL_LANTERN.defaultBlockState().setValue(BlockStateProperties.HANGING, true), blockInfoGlobal.nbt);
             else if (f < 0.625f) // Chain
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CHAIN.getDefaultState(), blockInfoGlobal.nbt);
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CHAIN.defaultBlockState(), blockInfoGlobal.nbt);
             else // None
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
         }
 
         return blockInfoGlobal;

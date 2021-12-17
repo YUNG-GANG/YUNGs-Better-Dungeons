@@ -4,26 +4,21 @@ import com.google.common.collect.Lists;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
 import com.yungnickyoung.minecraft.yungsapi.api.YungJigsawConfig;
 import com.yungnickyoung.minecraft.yungsapi.api.YungJigsawManager;
-import net.minecraft.entity.EntityType;
-import net.minecraft.structure.PoolStructurePiece;
-import net.minecraft.structure.StructureManager;
-import net.minecraft.structure.StructureStart;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.Pool;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.registry.DynamicRegistryManager;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.HeightLimitView;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.SpawnSettings;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.StructureFeature;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.QuartPos;
+import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.levelgen.LegacyRandomSource;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
+import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 
 import java.util.List;
+import java.util.Optional;
 
-public class ZombieDungeonStructure extends StructureFeature<DefaultFeatureConfig> {
+public class ZombieDungeonStructure extends StructureFeature<YungJigsawConfig> {
     /**
      * Lists of whitelisted dimensions and blacklisted biomes.
      * Will be reinitialized later w/ values from config.
@@ -37,70 +32,39 @@ public class ZombieDungeonStructure extends StructureFeature<DefaultFeatureConfi
         "minecraft:river", "minecraft:frozen_river"
     );
 
+    public static final WeightedRandomList<MobSpawnSettings.SpawnerData> ENEMIES = WeightedRandomList.create(
+            new MobSpawnSettings.SpawnerData(EntityType.ZOMBIE, 100, 4, 15));
+
     public ZombieDungeonStructure() {
-        super(DefaultFeatureConfig.CODEC);
-    }
-
-    @Override
-    public StructureStartFactory<DefaultFeatureConfig> getStructureStartFactory() {
-        return Start::new;
-    }
-
-    private static final Pool<SpawnSettings.SpawnEntry> STRUCTURE_MONSTERS = Pool.of(
-        new SpawnSettings.SpawnEntry(EntityType.ZOMBIE, 100, 4, 15)
-    );
-
-    @Override
-    public Pool<SpawnSettings.SpawnEntry> getMonsterSpawns() {
-        return STRUCTURE_MONSTERS;
-    }
-
-    public static class Start extends StructureStart<DefaultFeatureConfig> {
-        public Start(StructureFeature<DefaultFeatureConfig> structure, ChunkPos pos, int references, long seed) {
-            super(structure, pos, references, seed);
-        }
-
-        @Override
-        public void init(DynamicRegistryManager dynamicRegistryManager, ChunkGenerator chunkGenerator, StructureManager structureManager, ChunkPos pos, Biome biome, DefaultFeatureConfig config, HeightLimitView heightLimitView) {
-            // Generate from the center of the chunk
-            int x = (pos.x << 4) + 7;
-            int z = (pos.z << 4) + 7;
-
+        super(YungJigsawConfig.CODEC, context -> {
+            // Get starting position with random y-value
             int minY = BetterDungeons.CONFIG.betterDungeons.zombieDungeon.zombieDungeonStartMinY;
             int maxY = BetterDungeons.CONFIG.betterDungeons.zombieDungeon.zombieDungeonStartMaxY;
-            int y = this.random.nextInt(maxY - minY) + minY;
+            WorldgenRandom worldgenRandom = new WorldgenRandom(new LegacyRandomSource(0L));
+            worldgenRandom.setLargeFeatureSeed(context.seed(), context.chunkPos().x, context.chunkPos().z);
+            int y = worldgenRandom.nextInt(maxY - minY) + minY;
+            BlockPos startPos = new BlockPos(context.chunkPos().getMiddleBlockX(), y, context.chunkPos().getMiddleBlockZ());
 
-            BlockPos blockpos = new BlockPos(x, y, z);
-            YungJigsawConfig jigsawConfig = new YungJigsawConfig(
-                () -> dynamicRegistryManager.get(Registry.STRUCTURE_POOL_KEY)
-                    .get(new Identifier(BetterDungeons.MOD_ID, "zombie_dungeon")),
-                20
-            );
+            // Only generate if location is valid
+            if (!checkLocation(context, startPos)) {
+                return Optional.empty();
+            }
 
-            // Generate the structure
-            YungJigsawManager.assembleJigsawStructure(
-                dynamicRegistryManager,
-                jigsawConfig,
-                PoolStructurePiece::new,
-                chunkGenerator,
-                structureManager,
-                blockpos,
-                this,
-                this.random,
-                false,
-                false,
-                heightLimitView
-            );
+            return YungJigsawManager.assembleJigsawStructure(
+                    context,
+                    PoolElementStructurePiece::new,
+                    startPos,
+                    false,
+                    false,
+                    80);
+        });
+    }
 
-            // Set the bounds of the structure once it's assembled
-            this.setBoundingBoxFromChildren();
-
-            // Debug log the coordinates of the center starting piece.
-            BetterDungeons.LOGGER.debug("Zombie Dungeon at {} {} {}",
-                this.children.get(0).getBoundingBox().getMinX(),
-                this.children.get(0).getBoundingBox().getMinY(),
-                this.children.get(0).getBoundingBox().getMinZ()
-            );
-        }
+    private static boolean checkLocation(PieceGeneratorSupplier.Context<YungJigsawConfig> context, BlockPos startPos) {
+        return context.validBiome().test(context.chunkGenerator().getNoiseBiome(
+                QuartPos.fromBlock(startPos.getX()),
+                QuartPos.fromBlock(startPos.getY()),
+                QuartPos.fromBlock(startPos.getZ()))
+        );
     }
 }

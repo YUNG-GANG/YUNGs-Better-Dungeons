@@ -2,24 +2,26 @@ package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeo
 
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModStructurePieces;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtFloat;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.structure.StructurePiece;
-import net.minecraft.structure.StructurePiecesHolder;
-import net.minecraft.util.math.BlockBox;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.Heightmap;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.ChunkRandom;
-import net.minecraft.world.gen.StructureAccessor;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
+import com.yungnickyoung.minecraft.betterdungeons.mixin.accessor.BoundingBoxAccessor;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.FloatTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.LegacyRandomSource;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.material.Fluids;
 
 import java.util.BitSet;
 import java.util.Random;
@@ -36,7 +38,7 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
                                Z_MINRADIUS = 1, Z_MAXRADIUS = 1.5f;
 
     public SpiderDungeonSmallTunnelPiece(BlockPos startPos, float initialYaw, int pieceChainLength) {
-        super(BDModStructurePieces.SPIDER_DUNGEON_SMALL_TUNNEL_PIECE, pieceChainLength, getInitialBlockBox(startPos));
+        super(BDModStructurePieces.SPIDER_DUNGEON_SMALL_TUNNEL_PIECE, pieceChainLength, getInitialBoundingBox(startPos));
         this.startPos = new BlockPos(startPos);
         this.endPos = new BlockPos(startPos);
         this.yaws[0] = initialYaw;
@@ -45,37 +47,37 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
     /**
      * Constructor for loading from NBT.
      */
-    public SpiderDungeonSmallTunnelPiece(ServerWorld world, NbtCompound compoundNBT) {
-        super(BDModStructurePieces.SPIDER_DUNGEON_SMALL_TUNNEL_PIECE, compoundNBT);
-        int[] start = compoundNBT.getIntArray("startPos");
-        int[] end = compoundNBT.getIntArray("endPos");
+    public SpiderDungeonSmallTunnelPiece(CompoundTag compoundTag) {
+        super(BDModStructurePieces.SPIDER_DUNGEON_SMALL_TUNNEL_PIECE, compoundTag);
+        int[] start = compoundTag.getIntArray("startPos");
+        int[] end = compoundTag.getIntArray("endPos");
         this.startPos = new BlockPos(start[0], start[1], start[2]);
         this.endPos = new BlockPos(end[0], end[1], end[2]);
-        this.pitch = compoundNBT.getFloat("pitch");
-        NbtList yawNbtList = compoundNBT.getList("yawList", 5);
+        this.pitch = compoundTag.getFloat("pitch");
+        ListTag yawNbtList = compoundTag.getList("yawList", 5);
         for (int i = 0; i < LENGTH; i++) {
             this.yaws[i] = yawNbtList.getFloat(i);
         }
     }
 
     @Override
-    protected void writeNbt(ServerWorld world, NbtCompound nbt) {
-        nbt.putIntArray("startPos", new int[]{startPos.getX(), startPos.getY(), startPos.getZ()});
-        nbt.putIntArray("endPos", new int[]{endPos.getX(), endPos.getY(), endPos.getZ()});
-        nbt.putFloat("pitch", pitch);
-        NbtList yawNbtList = new NbtList();
+    protected void addAdditionalSaveData(StructurePieceSerializationContext structurePieceSerializationContext, CompoundTag compoundTag) {
+        compoundTag.putIntArray("startPos", new int[]{startPos.getX(), startPos.getY(), startPos.getZ()});
+        compoundTag.putIntArray("endPos", new int[]{endPos.getX(), endPos.getY(), endPos.getZ()});
+        compoundTag.putFloat("pitch", pitch);
+        ListTag yawNbtList = new ListTag();
         for (int i = 0; i < LENGTH; i++) {
-            yawNbtList.add(NbtFloat.of(yaws[i]));
+            yawNbtList.add(FloatTag.valueOf(yaws[i]));
         }
-        nbt.put("yawList", yawNbtList);
+        compoundTag.put("yawList", yawNbtList);
     }
 
     @Override
-    public void fillOpenings(StructurePiece structurePiece, StructurePiecesHolder structurePiecesHolder, Random random) {
+    public void addChildren(StructurePiece structurePiece, StructurePieceAccessor structurePieceAccessor, Random random) {
         // Determine pitch
         this.pitch = random.nextFloat() * (float) Math.PI / 4f - ((float) Math.PI / 6f);
-        float pitchY = MathHelper.sin(this.pitch);
-        float pitchXZ = MathHelper.cos(this.pitch); // Allows for steep drops
+        float pitchY = Mth.sin(this.pitch);
+        float pitchXZ = Mth.cos(this.pitch); // Allows for steep drops
 
         // Track min/max values for adjusting bounding box
         int minX = Integer.MAX_VALUE;
@@ -90,9 +92,9 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
               caveStartY = startPos.getY(),
               caveStartZ = startPos.getZ();
 
-        caveStartX += MathHelper.cos(this.yaws[0]) * pitchXZ;
-        caveStartY += MathHelper.sin(pitchY);
-        caveStartZ += MathHelper.sin(this.yaws[0]) * pitchXZ;
+        caveStartX += Mth.cos(this.yaws[0]) * pitchXZ;
+        caveStartY += Mth.sin(pitchY);
+        caveStartZ += Mth.sin(this.yaws[0]) * pitchXZ;
 
         float yawModifier = 0f;
 
@@ -111,9 +113,9 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
             this.yaws[i] = this.yaws[i - 1] + yawModifier * 0.02f;
 
             // Center of this sphere
-            caveStartX += MathHelper.cos(this.yaws[i]) * pitchXZ;
-            caveStartY += MathHelper.sin(pitchY);
-            caveStartZ += MathHelper.sin(this.yaws[i]) * pitchXZ;
+            caveStartX += Mth.cos(this.yaws[i]) * pitchXZ;
+            caveStartY += Mth.sin(pitchY);
+            caveStartZ += Mth.sin(this.yaws[i]) * pitchXZ;
 
             // Check for min/max bounds
             if (caveStartX - X_MAXRADIUS - 4 < minX) minX = (int) caveStartX - (int) X_MAXRADIUS - 4;
@@ -125,19 +127,19 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
         }
 
         // Update bounding box
-        this.boundingBox.minX = minX;
-        this.boundingBox.maxX = maxX;
-        this.boundingBox.minY = minY;
-        this.boundingBox.maxY = maxY;
-        this.boundingBox.minZ = minZ;
-        this.boundingBox.maxZ = maxZ;
+        ((BoundingBoxAccessor)this.boundingBox).setMinX(minX);
+        ((BoundingBoxAccessor)this.boundingBox).setMaxX(maxX);
+        ((BoundingBoxAccessor)this.boundingBox).setMinY(minY);
+        ((BoundingBoxAccessor)this.boundingBox).setMaxY(maxY);
+        ((BoundingBoxAccessor)this.boundingBox).setMinZ(minZ);
+        ((BoundingBoxAccessor)this.boundingBox).setMaxZ(maxZ);
 
         this.endPos = new BlockPos(caveStartX, caveStartY, caveStartZ);
 
         if (random.nextFloat() < 0.8f) {
-            StructurePiece eggRoom = new SpiderDungeonEggRoomPiece(endPos, this.chainLength + 1);
-            structurePiecesHolder.addPiece(eggRoom);
-            eggRoom.fillOpenings(eggRoom, structurePiecesHolder, random);
+            StructurePiece eggRoom = new SpiderDungeonEggRoomPiece(endPos, this.genDepth + 1);
+            structurePieceAccessor.addPiece(eggRoom);
+            eggRoom.addChildren(eggRoom, structurePieceAccessor, random);
         }
     }
 
@@ -145,23 +147,23 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
      * Generate.
      */
     @Override
-    public boolean generate(StructureWorldAccess world, StructureAccessor structureAccessor, ChunkGenerator generator, Random random, BlockBox box, ChunkPos chunkPos, BlockPos blockPos) {
-        BlockPos.Mutable mutable = new BlockPos.Mutable();
-        ChunkRandom decoRand = new ChunkRandom(); // Rand for decoration. It's not as important for this to be deterministic.
-        decoRand.setDecoratorSeed(world.getSeed(), startPos.getX(), startPos.getZ());
+    public void postProcess(WorldGenLevel world, StructureFeatureManager structureFeatureManager, ChunkGenerator chunkGenerator, Random random, BoundingBox box, ChunkPos chunkPos, BlockPos blockPos) {
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+        WorldgenRandom decoRand = new WorldgenRandom(new LegacyRandomSource(0)); // Rand for decoration. It's not as important for this to be deterministic.
+        decoRand.setLargeFeatureSeed(world.getSeed(), startPos.getX(), startPos.getZ());
 
         // Temporary chunk-local carving mask to prevent overwriting carved blocks and add decorations
         int xBits = 4;
         int zBits = 4;
-        int yBits = MathHelper.log2DeBruijn(world.getTopY() - world.getBottomY());
+        int yBits = Mth.ceillog2(world.getMaxBuildHeight() - world.getMinBuildHeight());
         BitSet carvingMask = new BitSet((int) Math.pow(2, xBits + zBits + yBits));
 
         // Surface
         int[] surface = new int[256];
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
-                mutable.set(chunkPos.getStartX() + x, 1, chunkPos.getStartZ() + z);
-                surface[x * 16 + z] = world.getTopY(Heightmap.Type.WORLD_SURFACE_WG, mutable.getX(), mutable.getZ());
+                mutable.set(chunkPos.getMinBlockX() + x, 1, chunkPos.getMinBlockZ() + z);
+                surface[x * 16 + z] = world.getHeight(Heightmap.Types.WORLD_SURFACE_WG, mutable.getX(), mutable.getZ());
             }
         }
 
@@ -171,37 +173,37 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
               caveStartZ = startPos.getZ();
 
         for (int i = 0; i < LENGTH; i++) {
-            float pitchY = MathHelper.sin(this.pitch);
-            float pitchXZ = MathHelper.cos(this.pitch); // allows for steep drops
+            float pitchY = Mth.sin(this.pitch);
+            float pitchXZ = Mth.cos(this.pitch); // allows for steep drops
             float yaw = this.yaws[i];
 
             // Center of this sphere
-            caveStartX += MathHelper.cos(yaw) * pitchXZ;
-            caveStartY += MathHelper.sin(pitchY);
-            caveStartZ += MathHelper.sin(yaw) * pitchXZ;
+            caveStartX += Mth.cos(yaw) * pitchXZ;
+            caveStartY += Mth.sin(pitchY);
+            caveStartZ += Mth.sin(yaw) * pitchXZ;
 
             // Vary the size of the tunnel such that it is widest in the middle and smallest at the end
-            float xRadius = MathHelper.lerp(MathHelper.sin((float)(i) * (float) Math.PI / LENGTH), X_MINRADIUS, X_MAXRADIUS);
-            float yRadius = MathHelper.lerp(MathHelper.sin((float)(i) * (float) Math.PI / LENGTH), Y_MINRADIUS, Y_MAXRADIUS);
-            float zRadius = MathHelper.lerp(MathHelper.sin((float)(i) * (float) Math.PI / LENGTH), Z_MINRADIUS, Z_MAXRADIUS);
+            float xRadius = Mth.lerp(Mth.sin((float)(i) * (float) Math.PI / LENGTH), X_MINRADIUS, X_MAXRADIUS);
+            float yRadius = Mth.lerp(Mth.sin((float)(i) * (float) Math.PI / LENGTH), Y_MINRADIUS, Y_MAXRADIUS);
+            float zRadius = Mth.lerp(Mth.sin((float)(i) * (float) Math.PI / LENGTH), Z_MINRADIUS, Z_MAXRADIUS);
 
             // Min and max values we need to consider for carving
-            int minX = MathHelper.floor(caveStartX - xRadius) - chunkPos.x * 16 - 1;
-            int maxX = MathHelper.floor(caveStartX + xRadius) - chunkPos.x * 16 + 1;
-            int minY = MathHelper.clamp(MathHelper.floor(caveStartY - yRadius) - 1, world.getBottomY(), world.getTopY());
-            int maxY = MathHelper.clamp(MathHelper.floor(caveStartY + yRadius) + 1, world.getBottomY(), world.getTopY());
-            int minZ = MathHelper.floor(caveStartZ - zRadius) - chunkPos.z * 16 - 1;
-            int maxZ = MathHelper.floor(caveStartZ + zRadius) - chunkPos.z * 16 + 1;
+            int minX = Mth.floor(caveStartX - xRadius) - chunkPos.x * 16 - 1;
+            int maxX = Mth.floor(caveStartX + xRadius) - chunkPos.x * 16 + 1;
+            int minY = Mth.clamp(Mth.floor(caveStartY - yRadius) - 1, world.getMinBuildHeight(), world.getMaxBuildHeight());
+            int maxY = Mth.clamp(Mth.floor(caveStartY + yRadius) + 1, world.getMinBuildHeight(), world.getMaxBuildHeight());
+            int minZ = Mth.floor(caveStartZ - zRadius) - chunkPos.z * 16 - 1;
+            int maxZ = Mth.floor(caveStartZ + zRadius) - chunkPos.z * 16 + 1;
 
             // Clamp min/max values to ensure the coordinates are chunk-local
-            minX = MathHelper.clamp(minX, 0, 15);
-            maxX = MathHelper.clamp(maxX, 0, 15);
-            minZ = MathHelper.clamp(minZ, 0, 15);
-            maxZ = MathHelper.clamp(maxZ, 0, 15);
+            minX = Mth.clamp(minX, 0, 15);
+            maxX = Mth.clamp(maxX, 0, 15);
+            minZ = Mth.clamp(minZ, 0, 15);
+            maxZ = Mth.clamp(maxZ, 0, 15);
 
             // DEBUG
             if (BetterDungeons.DEBUG_MODE)
-                this.addBlock(world, Blocks.DIAMOND_BLOCK.getDefaultState(), (int) caveStartX, (int) caveStartY, (int) caveStartZ, box);
+                this.placeBlock(world, Blocks.DIAMOND_BLOCK.defaultBlockState(), (int) caveStartX, (int) caveStartY, (int) caveStartZ, box);
 
             // -- Carve sphere -- //
             for (float x = minX; x <= maxX; x++) {
@@ -209,7 +211,7 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
                 int globalX = (int)x + chunkPos.x * 16;
 
                 // No need to consider blocks outside this chunk
-                if (globalX < chunkPos.getStartX() || globalX > chunkPos.getEndX()) continue;
+                if (globalX < chunkPos.getMinBlockX() || globalX > chunkPos.getMaxBlockX()) continue;
 
                 // Distance along the rotated x-axis from the center of this ellipsoid.
                 // You can think of this value as (x/a), where a is the length of the ellipsoid's radius in the rotated x-direction.
@@ -220,7 +222,7 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
                     int globalZ = (int)z + chunkPos.z * 16;
 
                     // No need to consider blocks outside this chunk
-                    if (globalZ < chunkPos.getStartZ() || globalZ > chunkPos.getEndZ()) continue;
+                    if (globalZ < chunkPos.getMinBlockZ() || globalZ > chunkPos.getMaxBlockZ()) continue;
 
                     // Distance along the rotated z-axis from the center of this ellipsoid.
                     // You can think of this value as (z/b), where b is the length of the ellipsoid's radius in the rotated z-direction.
@@ -237,13 +239,13 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
                         float radialYDist = (y - caveStartY - .5f) / yRadius;
 
                         // Calculate the carving mask for this block
-                        int mask = (int)x | (int)z << 4 | ((int)(y - world.getBottomY())) << 8;
+                        int mask = (int)x | (int)z << 4 | ((int)(y - world.getMinBuildHeight())) << 8;
 
                         // Carve out blocks within the ellipsoid. Blocks immediately outside the ellipsoid will be turned into a cobblestone shell.
                         float radialDist = radialXDist * radialXDist + radialYDist * radialYDist + radialZDist * radialZDist;
                         if (!carvingMask.get(mask) && radialDist < 1.0) {
-                            if (!BLOCK_BLACKLIST.contains(this.getBlockAt(world, globalX, globalY, globalZ, box).getBlock())) {
-                                this.addBlock(world, Blocks.CAVE_AIR.getDefaultState(), globalX, globalY, globalZ, box);
+                            if (!BLOCK_BLACKLIST.contains(this.getBlock(world, globalX, globalY, globalZ, box).getBlock())) {
+                                this.placeBlock(world, Blocks.CAVE_AIR.defaultBlockState(), globalX, globalY, globalZ, box);
                                 carvingMask.set(mask);
                             }
                         } else {
@@ -254,10 +256,10 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
                             float radialZDistShell = (globalZ - caveStartZ + .5f) / (zRadius + 1.2f);
                             float radialDistShell = radialXDistShell * radialXDistShell + radialYDistShell * radialYDistShell + radialZDistShell * radialZDistShell;
                             if (!carvingMask.get(mask) && radialDistShell < 1.0) {
-                                BlockState state = this.getBlockAt(world, globalX, globalY, globalZ, box);
+                                BlockState state = this.getBlock(world, globalX, globalY, globalZ, box);
                                 if (!BLOCK_BLACKLIST.contains(state.getBlock())) {
-                                    if (state.isAir() || state.getFluidState().getFluid() != Fluids.EMPTY || decoRand.nextFloat() < .2f) {
-                                        this.addBlock(world, Blocks.COBBLESTONE.getDefaultState(), globalX, globalY, globalZ, box);
+                                    if (state.isAir() || state.getFluidState().getType() != Fluids.EMPTY || decoRand.nextFloat() < .2f) {
+                                        this.placeBlock(world, Blocks.COBBLESTONE.defaultBlockState(), globalX, globalY, globalZ, box);
                                     }
                                 }
                             }
@@ -268,7 +270,5 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
         }
 
         decorateCave(world, decoRand, chunkPos, box, carvingMask);
-
-        return true;
     }
 }

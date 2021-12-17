@@ -4,21 +4,21 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
-import com.yungnickyoung.minecraft.betterdungeons.util.Banner;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonContext;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonType;
-import net.minecraft.block.AbstractBannerBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.state.property.Properties;
-import net.minecraft.structure.Structure;
-import net.minecraft.structure.StructurePlacementData;
-import net.minecraft.structure.processor.StructureProcessor;
-import net.minecraft.structure.processor.StructureProcessorType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.WorldView;
+import com.yungnickyoung.minecraft.yungsapi.world.banner.Banner;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.AbstractBannerBlock;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.Random;
 
@@ -46,7 +46,7 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
 
     // All banners
     public static final Banner SMALL_DUNGEON_SKELETON_BANNER = new Banner.Builder()
-        .blockState(Blocks.BLACK_WALL_BANNER.getDefaultState())
+        .blockState(Blocks.BLACK_WALL_BANNER.defaultBlockState())
         .pattern("cbo", 0)
         .pattern("cs", 0)
         .pattern("bs", 15)
@@ -58,7 +58,7 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
         .build();
 
     public static final Banner SMALL_DUNGEON_ZOMBIE_BANNER = new Banner.Builder()
-        .blockState(Blocks.RED_WALL_BANNER.getDefaultState())
+        .blockState(Blocks.RED_WALL_BANNER.defaultBlockState())
         .pattern("bt", 6)
         .pattern("mc", 7)
         .pattern("gra", 15)
@@ -70,7 +70,7 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
         .build();
 
     public static final Banner SMALL_DUNGEON_SPIDER_BANNER = new Banner.Builder()
-        .blockState(Blocks.RED_WALL_BANNER.getDefaultState())
+        .blockState(Blocks.RED_WALL_BANNER.defaultBlockState())
         .pattern("flo", 7)
         .pattern("bo", 7)
         .pattern("sc", 7)
@@ -82,7 +82,12 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
         .build();
 
     @Override
-    public Structure.StructureBlockInfo process(WorldView worldReader, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Structure.StructureBlockInfo blockInfoLocal, Structure.StructureBlockInfo blockInfoGlobal, StructurePlacementData structurePlacementData) {
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
+                                                             BlockPos jigsawPiecePos,
+                                                             BlockPos jigsawPieceBottomCenterPos,
+                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             StructureTemplate.StructureBlockInfo blockInfoGlobal,
+                                                             StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state.getBlock() instanceof AbstractBannerBlock) {
             // Make sure we only operate on the placeholder banners
             if (blockInfoGlobal.state.getBlock() == Blocks.RED_WALL_BANNER && (blockInfoGlobal.nbt.get("Patterns") == null || blockInfoGlobal.nbt.getList("Patterns", 10).size() == 0)) {
@@ -91,20 +96,20 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
 
                 // Check dungeon context to see if we have reached the max banner count for this structure piece
                 if (context.getBannerCount() >= BetterDungeons.CONFIG.betterDungeons.smallDungeon.bannerMaxCount)
-                    return new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
+                    return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
 
                 // Chance of a banner spawning
                 Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
                 if (random.nextFloat() > .1f) {
-                    return new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.getDefaultState(), blockInfoGlobal.nbt);
+                    return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
                 }
 
                 Banner banner = getBannerForType();
-                Direction facing = blockInfoGlobal.state.get(Properties.HORIZONTAL_FACING);
-                BlockState newState = banner.getState().with(Properties.HORIZONTAL_FACING, facing);
-                NbtCompound newNBT = copyNBT(banner.getNbt());
+                Direction facing = blockInfoGlobal.state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+                BlockState newState = banner.getState().setValue(BlockStateProperties.HORIZONTAL_FACING, facing);
+                CompoundTag newNBT = copyNBT(banner.getNbt());
 
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, newState, newNBT);
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, newState, newNBT);
                 context.incrementBannerCount();
             }
         }
@@ -129,9 +134,9 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
         }
     }
 
-    private NbtCompound copyNBT(NbtCompound other) {
-        NbtCompound nbt = new NbtCompound();
-        nbt.copyFrom(other);
+    private CompoundTag copyNBT(CompoundTag other) {
+        CompoundTag nbt = new CompoundTag();
+        nbt.merge(other);
         return nbt;
     }
 }

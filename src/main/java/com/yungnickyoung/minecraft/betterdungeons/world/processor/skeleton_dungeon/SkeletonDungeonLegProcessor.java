@@ -2,22 +2,23 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dung
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
-import com.yungnickyoung.minecraft.betterdungeons.world.processor.ISafeWorldModifier;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.Material;
-import net.minecraft.structure.Structure;
-import net.minecraft.structure.StructurePlacementData;
-import net.minecraft.structure.processor.StructureProcessor;
-import net.minecraft.structure.processor.StructureProcessorType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.ChunkSection;
+import com.yungnickyoung.minecraft.yungsapi.world.processor.ISafeWorldModifier;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.LevelChunkSection;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.material.Material;
 
+import java.util.Optional;
 import java.util.Random;
 
 /**
@@ -28,21 +29,26 @@ public class SkeletonDungeonLegProcessor extends StructureProcessor implements I
     public static final SkeletonDungeonLegProcessor INSTANCE = new SkeletonDungeonLegProcessor();
     public static final Codec<SkeletonDungeonLegProcessor> CODEC = Codec.unit(() -> INSTANCE);
 
-    private static final BlockSetSelector COBBLE_SELECTOR = new BlockSetSelector(Blocks.COBBLESTONE.getDefaultState())
-        .addBlock(Blocks.MOSSY_COBBLESTONE.getDefaultState(), 0.5f);
+    private static final BlockSetSelector COBBLE_SELECTOR = new BlockSetSelector(Blocks.COBBLESTONE.defaultBlockState())
+        .addBlock(Blocks.MOSSY_COBBLESTONE.defaultBlockState(), 0.5f);
 
     @Override
-    public Structure.StructureBlockInfo process(WorldView world, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Structure.StructureBlockInfo blockInfoLocal, Structure.StructureBlockInfo blockInfoGlobal, StructurePlacementData structurePlacementData) {
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
+                                                             BlockPos jigsawPiecePos,
+                                                             BlockPos jigsawPieceBottomCenterPos,
+                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             StructureTemplate.StructureBlockInfo blockInfoGlobal,
+                                                             StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state.getBlock() == Blocks.BLUE_STAINED_GLASS) {
             ChunkPos currentChunkPos = new ChunkPos(blockInfoGlobal.pos);
-            Chunk currentChunk = world.getChunk(currentChunkPos.x, currentChunkPos.z);
+            ChunkAccess currentChunk = levelReader.getChunk(currentChunkPos.x, currentChunkPos.z);
             Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
 
             // Always replace the glass itself with cobble
-            blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.COBBLESTONE.getDefaultState(), blockInfoGlobal.nbt);
+            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.COBBLESTONE.defaultBlockState(), blockInfoGlobal.nbt);
 
             // Reusable mutable
-            BlockPos.Mutable mutable = blockInfoGlobal.pos.down().mutableCopy(); // Move down since we already processed the first block
+            BlockPos.MutableBlockPos mutable = blockInfoGlobal.pos.below().mutable(); // Move down since we already processed the first block
 
             // Chunk section information
             int sectionYIndex = currentChunk.getSectionIndex(mutable.getY());
@@ -53,14 +59,14 @@ public class SkeletonDungeonLegProcessor extends StructureProcessor implements I
                 return blockInfoGlobal;
             }
 
-            ChunkSection currChunkSection = currentChunk.getSection(sectionYIndex);
+            LevelChunkSection currChunkSection = currentChunk.getSection(sectionYIndex);
 
             // Initialize currBlock
-            BlockState currBlock = getBlockStateSafe(currChunkSection, mutable);
-            if (currBlock == null) return blockInfoGlobal;
+            Optional<BlockState> currBlock = getBlockStateSafe(currChunkSection, mutable);
+            if (currBlock.isEmpty()) return blockInfoGlobal;
 
             // Generate vertical pillar down
-            while (mutable.getY() > world.getBottomY() && (currBlock.getMaterial() == Material.AIR || currBlock.getMaterial() == Material.WATER || currBlock.getMaterial() == Material.LAVA)) {
+            while (mutable.getY() > levelReader.getMinBuildHeight() && (currBlock.get().getMaterial() == Material.AIR || currBlock.get().getMaterial() == Material.WATER || currBlock.get().getMaterial() == Material.LAVA)) {
                 // Place block
                 setBlockStateSafe(currChunkSection, mutable, COBBLE_SELECTOR.get(random));
 
@@ -79,7 +85,7 @@ public class SkeletonDungeonLegProcessor extends StructureProcessor implements I
                 // Update chunk section for new position
                 currChunkSection = currentChunk.getSection(sectionYIndex);
                 currBlock = getBlockStateSafe(currChunkSection, mutable);
-                if (currBlock == null) break;
+                if (currBlock.isEmpty()) break;
             }
         }
 

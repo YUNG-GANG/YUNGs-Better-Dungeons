@@ -1,29 +1,28 @@
 plugins {
-    id 'fabric-loom' version '0.8-SNAPSHOT'
+    id 'fabric-loom' version '0.10-SNAPSHOT'
     id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_16
-targetCompatibility = JavaVersion.VERSION_16
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = project.archives_base_name
 version = "${project.minecraft_version}-${project.mod_version}"
 group = project.maven_group
-
-minecraft {
-    accessWidener "src/main/resources/betterdungeons.aw"
-}
 
 repositories {
     mavenCentral()
     maven { url "https://maven.fabricmc.net" }
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/releases/" }
+     flatDir {
+         dir 'libs'
+     }
 }
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    mappings minecraft.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
@@ -33,8 +32,10 @@ dependencies {
     // ModMenu
     modImplementation ("com.terraformersmc:modmenu:${project.mod_menu_version}") { transitive = false }
 
-    // YUNG's API - required dependency
-    modImplementation "com.yungnickyoung.minecraft.yungsapi:YungsApi:${project.yungs_api_version}"
+    // YUNG's API
+//    modImplementation "com.yungnickyoung.minecraft.yungsapi:YungsApi:${project.yungs_api_version}"
+     modImplementation files('libs/YungsApi-1.18-Fabric-35.jar')
+//     implementation fg.deobf("blank:coolmod-${mc_version}:${coolmod_version}")
 }
 
 processResources {
@@ -45,11 +46,10 @@ processResources {
     }
 }
 
-// ensure that the encoding is set to UTF-8, no matter what the system default is
-// this fixes some edge cases with special characters not displaying correctly
-// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
 tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
+    // Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
+    it.options.release = 17
+    it.options.encoding = "UTF-8"
 }
 
 java {

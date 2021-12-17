@@ -4,10 +4,10 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
 public class ConfigSkeletonDungeon {
     @ConfigEntry.Gui.Tooltip(count = 3)
-    public int skeletonDungeonStartMinY = 11;
+    public int skeletonDungeonStartMinY = -50;
 
     @ConfigEntry.Gui.Tooltip(count = 3)
-    public int skeletonDungeonStartMaxY = 30;
+    public int skeletonDungeonStartMaxY = -30;
 
     @ConfigEntry.Gui.Tooltip(count = 2)
     public boolean enableSkeletonDungeons = true;

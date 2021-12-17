@@ -3,7 +3,7 @@ package com.yungnickyoung.minecraft.betterdungeons.config;
 import com.google.common.collect.Lists;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.skeleton_dungeon.SkeletonDungeonStructure;
-import com.yungnickyoung.minecraft.betterdungeons.world.structure.small_dungeon.SmallDungeonStructure;
+import com.yungnickyoung.minecraft.betterdungeons.world.structure.small_dungeon.SmallDungeonStructureFeature;
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.SpiderDungeonStructure;
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.zombie_dungeon.ZombieDungeonStructure;
 import me.shedaniel.autoconfig.ConfigData;
@@ -12,7 +12,7 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
 import java.util.List;
 
-@Config(name="betterdungeons-fabric-1_17")
+@Config(name="betterdungeons-fabric-1_18")
 public class BDConfig implements ConfigData {
     @ConfigEntry.Category("Better Dungeons")
     @ConfigEntry.Gui.TransitiveObject
@@ -24,13 +24,13 @@ public class BDConfig implements ConfigData {
     @Override
     public void validatePostLoad() {
         // Dimension whitelist
-        SmallDungeonStructure.whitelistedDimensions = createDimensionWhitelist(betterDungeons.smallDungeon.whitelistedDimensions, SmallDungeonStructure.whitelistedDimensions);
+        SmallDungeonStructureFeature.whitelistedDimensions = createDimensionWhitelist(betterDungeons.smallDungeon.whitelistedDimensions, SmallDungeonStructureFeature.whitelistedDimensions);
         SpiderDungeonStructure.whitelistedDimensions = createDimensionWhitelist(betterDungeons.spiderDungeon.whitelistedDimensions, SpiderDungeonStructure.whitelistedDimensions);
         SkeletonDungeonStructure.whitelistedDimensions = createDimensionWhitelist(betterDungeons.skeletonDungeon.whitelistedDimensions, SkeletonDungeonStructure.whitelistedDimensions);
         ZombieDungeonStructure.whitelistedDimensions = createDimensionWhitelist(betterDungeons.zombieDungeon.whitelistedDimensions, ZombieDungeonStructure.whitelistedDimensions);
 
         // Biome blacklist
-        SmallDungeonStructure.blacklistedBiomes = createBiomeBlacklist(betterDungeons.smallDungeon.blacklistedBiomes, SmallDungeonStructure.blacklistedBiomes);
+        SmallDungeonStructureFeature.blacklistedBiomes = createBiomeBlacklist(betterDungeons.smallDungeon.blacklistedBiomes, SmallDungeonStructureFeature.blacklistedBiomes);
         SpiderDungeonStructure.blacklistedBiomes = createBiomeBlacklist(betterDungeons.spiderDungeon.blacklistedBiomes, SpiderDungeonStructure.blacklistedBiomes);
         SkeletonDungeonStructure.blacklistedBiomes = createBiomeBlacklist(betterDungeons.skeletonDungeon.blacklistedBiomes, SkeletonDungeonStructure.blacklistedBiomes);
         ZombieDungeonStructure.blacklistedBiomes = createBiomeBlacklist(betterDungeons.zombieDungeon.blacklistedBiomes, ZombieDungeonStructure.blacklistedBiomes);

@@ -5,9 +5,9 @@ import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece.SpiderDungeonEggRoomPiece;
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece.SpiderDungeonNestPiece;
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece.SpiderDungeonSmallTunnelPiece;
-import net.minecraft.structure.StructurePieceType;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.levelgen.feature.StructurePieceType;
 
 import java.util.Locale;
 
@@ -18,13 +18,13 @@ public class BDModStructurePieces {
     public static StructurePieceType SPIDER_DUNGEON_EGG_ROOM_PIECE;
 
     public static void init() {
-        SPIDER_DUNGEON_BIG_TUNNEL_PIECE = registerPiece("spider_dungeon_big_tunnel_piece", SpiderDungeonBigTunnelPiece::new);
-        SPIDER_DUNGEON_NEST_PIECE = registerPiece("spider_dungeon_nest_piece", SpiderDungeonNestPiece::new);
-        SPIDER_DUNGEON_SMALL_TUNNEL_PIECE = registerPiece("spider_dungeon_small_tunnel_piece", SpiderDungeonSmallTunnelPiece::new);
-        SPIDER_DUNGEON_EGG_ROOM_PIECE = registerPiece("spider_dungeon_egg_room_piece", SpiderDungeonEggRoomPiece::new);
+        SPIDER_DUNGEON_BIG_TUNNEL_PIECE   = register("spider_dungeon_big_tunnel_piece", SpiderDungeonBigTunnelPiece::new);
+        SPIDER_DUNGEON_NEST_PIECE         = register("spider_dungeon_nest_piece", SpiderDungeonNestPiece::new);
+        SPIDER_DUNGEON_SMALL_TUNNEL_PIECE = register("spider_dungeon_small_tunnel_piece", SpiderDungeonSmallTunnelPiece::new);
+        SPIDER_DUNGEON_EGG_ROOM_PIECE     = register("spider_dungeon_egg_room_piece", SpiderDungeonEggRoomPiece::new);
     }
 
-    private static StructurePieceType registerPiece(String name, StructurePieceType piece) {
-        return Registry.register(Registry.STRUCTURE_PIECE, new Identifier(BetterDungeons.MOD_ID, name.toLowerCase(Locale.ROOT)), piece);
+    private static StructurePieceType register(String name, StructurePieceType.ContextlessType structurePieceType) {
+        return Registry.register(Registry.STRUCTURE_PIECE, new ResourceLocation(BetterDungeons.MOD_ID, name.toLowerCase(Locale.ROOT)), structurePieceType);
     }
 }

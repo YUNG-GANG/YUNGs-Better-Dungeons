@@ -2,14 +2,14 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
-import net.minecraft.block.Blocks;
-import net.minecraft.structure.Structure;
-import net.minecraft.structure.StructurePlacementData;
-import net.minecraft.structure.processor.StructureProcessor;
-import net.minecraft.structure.processor.StructureProcessorType;
-import net.minecraft.tag.FluidTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 /**
  * Replaces any liquid in the ceiling with cobblestone to attempt to minimize weird
@@ -20,12 +20,17 @@ public class SmallDungeonCeilingProcessor extends StructureProcessor {
     public static final Codec<SmallDungeonCeilingProcessor> CODEC = Codec.unit(() -> INSTANCE);
 
     @Override
-    public Structure.StructureBlockInfo process(WorldView world, BlockPos jigsawPiecePos, BlockPos jigsawPieceBottomCenterPos, Structure.StructureBlockInfo blockInfoLocal, Structure.StructureBlockInfo blockInfoGlobal, StructurePlacementData structurePlacementData) {
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
+                                                             BlockPos jigsawPiecePos,
+                                                             BlockPos jigsawPieceBottomCenterPos,
+                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             StructureTemplate.StructureBlockInfo blockInfoGlobal,
+                                                             StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state.getBlock() == Blocks.ORANGE_STAINED_GLASS) {
-            if (world.getFluidState(blockInfoGlobal.pos).isIn(FluidTags.WATER) || world.getFluidState(blockInfoGlobal.pos).isIn(FluidTags.LAVA)) {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, Blocks.COBBLESTONE.getDefaultState(), blockInfoGlobal.nbt);
+            if (levelReader.getFluidState(blockInfoGlobal.pos).is(FluidTags.WATER) || levelReader.getFluidState(blockInfoGlobal.pos).is(FluidTags.LAVA)) {
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.COBBLESTONE.defaultBlockState(), blockInfoGlobal.nbt);
             } else {
-                blockInfoGlobal = new Structure.StructureBlockInfo(blockInfoGlobal.pos, world.getBlockState(blockInfoGlobal.pos), blockInfoGlobal.nbt);
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, levelReader.getBlockState(blockInfoGlobal.pos), blockInfoGlobal.nbt);
             }
         }
         return blockInfoGlobal;
