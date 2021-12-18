@@ -9,6 +9,9 @@
       "spawner_mob": "minecraft:zombie"
     },
     {
+      "processor_type": "betterdungeons:candle_processor"
+    },
+    {
       "processor_type": "betterdungeons:head_processor"
     },
     {

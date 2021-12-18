@@ -10,6 +10,9 @@
       "processor_type": "betterdungeons:zombie_dungeon_flower_pot_processor"
     },
     {
+      "processor_type": "betterdungeons:candle_processor"
+    },
+    {
       "processor_type": "betterdungeons:zombie_dungeon_cubby_processor"
     },
     {

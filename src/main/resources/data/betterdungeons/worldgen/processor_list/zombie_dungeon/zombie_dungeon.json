@@ -10,10 +10,16 @@
       "processor_type": "betterdungeons:zombie_dungeon_flower_pot_processor"
     },
     {
+      "processor_type": "betterdungeons:candle_processor"
+    },
+    {
       "processor_type": "betterdungeons:zombie_dungeon_stair_processor"
     },
     {
       "processor_type": "betterdungeons:zombie_mob_spawner_processor"
+    },
+    {
+      "processor_type": "betterdungeons:zombie_tombstone_spawner_processor"
     },
     {
       "processor_type": "betterdungeons:zombie_rot_processor"

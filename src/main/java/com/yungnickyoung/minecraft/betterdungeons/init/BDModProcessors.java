@@ -1,10 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.init;
 
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
-import com.yungnickyoung.minecraft.betterdungeons.world.processor.HeadProcessor;
-import com.yungnickyoung.minecraft.betterdungeons.world.processor.MobSpawnerProcessor;
-import com.yungnickyoung.minecraft.betterdungeons.world.processor.NetherBlockProcessor;
-import com.yungnickyoung.minecraft.betterdungeons.world.processor.WaterloggedProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.*;
 import com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dungeon.RuinedStoneBrickProcessor;
 import com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dungeon.SkeletonDungeonLegProcessor;
 import com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dungeon.SkeletonMobSpawnerProcessor;
@@ -20,6 +17,7 @@ public class BDModProcessors {
     public static StructureProcessorType<MobSpawnerProcessor> MOB_SPAWNER_PROCESSOR = () -> MobSpawnerProcessor.CODEC;
     public static StructureProcessorType<HeadProcessor> HEAD_PROCESSOR = () -> HeadProcessor.CODEC;
     public static StructureProcessorType<NetherBlockProcessor> NETHER_BLOCK_PROCESSOR = () -> NetherBlockProcessor.CODEC;
+    public static StructureProcessorType<CandleProcessor> CANDLE_PROCSSOR = () -> CandleProcessor.CODEC;
 
     // Small dungeons
     public static StructureProcessorType<SmallDungeonCeilingPropProcessor> SMALL_DUNGEON_CEILING_PROP_PROCESSOR = () -> SmallDungeonCeilingPropProcessor.CODEC;
@@ -56,6 +54,7 @@ public class BDModProcessors {
         Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "mob_spawner_processor"), MOB_SPAWNER_PROCESSOR);
         Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "head_processor"), HEAD_PROCESSOR);
         Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "nether_block_processor"), NETHER_BLOCK_PROCESSOR);
+        Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "candle_processor"), CANDLE_PROCSSOR);
 
         // Small dungeons
         Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(BetterDungeons.MOD_ID, "small_dungeon_ceiling_prop_processor"), SMALL_DUNGEON_CEILING_PROP_PROCESSOR);

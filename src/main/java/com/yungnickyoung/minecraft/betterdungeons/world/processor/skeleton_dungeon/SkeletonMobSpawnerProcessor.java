@@ -2,15 +2,25 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dung
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
+import com.yungnickyoung.minecraft.betterdungeons.mixin.accessor.BaseSpawnerAccessor;
+import com.yungnickyoung.minecraft.betterdungeons.mixin.accessor.StructureBlockInfoAccessor;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.IntTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.world.level.BaseSpawner;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.SpawnData;
 import net.minecraft.world.level.block.SpawnerBlock;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+
+import java.util.Optional;
 
 /**
  * Sets mob spawners to spawn skeletons.
@@ -28,33 +38,29 @@ public class SkeletonMobSpawnerProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state.getBlock() instanceof SpawnerBlock) {
-            // Update the spawner block's NBT
-            // SpawnData
-            CompoundTag spawnData = new CompoundTag();
-            spawnData.putString("id", "minecraft:skeleton");
-            blockInfoGlobal.nbt.remove("SpawnData");
-            blockInfoGlobal.nbt.put("SpawnData", spawnData);
+            // Create spawner & populate with data
+            BaseSpawner spawner = new BaseSpawner() {
+                @Override
+                public void broadcastEvent(Level level, BlockPos blockPos, int i) {
+                    // no-op
+                }
+            };
 
-            // SpawnPotentials
-            CompoundTag spawnPotentials = new CompoundTag();
-            CompoundTag spawnPotentialsEntity = new CompoundTag();
-            spawnPotentialsEntity.putString("id", "minecraft:skeleton");
-            spawnPotentials.put("Entity", spawnPotentialsEntity);
-            spawnPotentials.put("Weight", IntTag.valueOf(1));
-            blockInfoGlobal.nbt.getList("SpawnPotentials", spawnPotentials.getId()).clear();
-            blockInfoGlobal.nbt.getList("SpawnPotentials", spawnPotentials.getId()).add(0, spawnPotentials);
+            SimpleWeightedRandomList<SpawnData> spawnData = SimpleWeightedRandomList.single(new SpawnData(
+                    Util.make(new CompoundTag(), (compoundTag) -> compoundTag.putString("id", "minecraft:skeleton")),
+                    Optional.empty()));
+            ((BaseSpawnerAccessor)spawner).setSpawnPotentials(spawnData);
+            ((BaseSpawnerAccessor)spawner).setRequiredPlayerRange(18); // Default is 16
+            ((BaseSpawnerAccessor)spawner).setMaxNearbyEntities(8); // Default is 6
+            ((BaseSpawnerAccessor)spawner).setMaxSpawnDelay(650); // Default is 800
+            spawner.setEntityId(Registry.ENTITY_TYPE.get(new ResourceLocation("minecraft:skeleton")));
 
-            // Player range (default 16)
-            blockInfoGlobal.nbt.putShort("RequiredPlayerRange", (short)18);
+            // Save spawner data to NBT
+            CompoundTag nbt = new CompoundTag();
+            spawner.save(nbt);
 
-            // Range at which skeletons can spawn from spawner
-            blockInfoGlobal.nbt.putShort("SpawnRange", (short)4);
-
-            // Max nearby entities allowed
-            blockInfoGlobal.nbt.putShort("MaxNearbyEntities", (short)8);
-
-            // Time between spawn attempts (default 800)
-            blockInfoGlobal.nbt.putShort("MaxSpawnDelay", (short)650);
+            // Update blockstate
+            ((StructureBlockInfoAccessor)blockInfoGlobal).setNbt(nbt);
         }
         return blockInfoGlobal;
     }
