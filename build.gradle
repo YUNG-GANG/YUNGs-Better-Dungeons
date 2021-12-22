@@ -15,9 +15,6 @@ repositories {
     maven { url "https://maven.fabricmc.net" }
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/releases/" }
-     flatDir {
-         dir 'libs'
-     }
 }
 
 dependencies {
@@ -33,9 +30,7 @@ dependencies {
     modImplementation ("com.terraformersmc:modmenu:${project.mod_menu_version}") { transitive = false }
 
     // YUNG's API
-//    modImplementation "com.yungnickyoung.minecraft.yungsapi:YungsApi:${project.yungs_api_version}"
-     modImplementation files('libs/YungsApi-1.18-Fabric-35.jar')
-//     implementation fg.deobf("blank:coolmod-${mc_version}:${coolmod_version}")
+    modImplementation "com.yungnickyoung.minecraft.yungsapi:YungsApi:${project.yungs_api_version}"
 }
 
 processResources {
