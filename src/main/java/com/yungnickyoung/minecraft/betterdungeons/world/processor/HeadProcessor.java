@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 
 import com.mojang.serialization.Codec;
-import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
+import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
@@ -24,7 +24,7 @@ public class HeadProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state.getBlock() instanceof AbstractSkullBlock) {
-            if (!BetterDungeons.CONFIG.betterDungeons.general.enableHeads) {
+            if (!BDConfig.general.enableHeads.get()) {
                 blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
             }
         }

@@ -1,12 +1,11 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon;
 
 import com.google.common.collect.Lists;
-import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
+import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece.SpiderDungeonBigTunnelPiece;
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece.SpiderDungeonPiece;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.QuartPos;
-import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
@@ -35,15 +34,15 @@ public class SpiderDungeonStructure extends StructureFeature<NoneFeatureConfigur
     );
 
     // Spider dungeons can only spawn spiders & cave spiders
-    public static final WeightedRandomList<MobSpawnSettings.SpawnerData> ENEMIES = WeightedRandomList.create(
+    public static final List<MobSpawnSettings.SpawnerData> ENEMIES = List.of(
             new MobSpawnSettings.SpawnerData(EntityType.SPIDER, 100, 4, 15),
             new MobSpawnSettings.SpawnerData(EntityType.CAVE_SPIDER, 50, 4, 8));
 
     public SpiderDungeonStructure() {
         super(NoneFeatureConfiguration.CODEC, context -> {
             // Get starting position with random y-value
-            int minY = BetterDungeons.CONFIG.betterDungeons.spiderDungeon.spiderDungeonStartMinY;
-            int maxY = BetterDungeons.CONFIG.betterDungeons.spiderDungeon.spiderDungeonStartMaxY;
+            int minY = BDConfig.spiderDungeons.spiderDungeonStartMinY.get();
+            int maxY = BDConfig.spiderDungeons.spiderDungeonStartMaxY.get();
             WorldgenRandom worldgenRandom = new WorldgenRandom(new LegacyRandomSource(0L));
             worldgenRandom.setLargeFeatureSeed(context.seed(), context.chunkPos().x, context.chunkPos().z);
             int y = worldgenRandom.nextInt(maxY - minY) + minY;
@@ -70,8 +69,8 @@ public class SpiderDungeonStructure extends StructureFeature<NoneFeatureConfigur
         int x = context.chunkPos().getMiddleBlockX();
         int z = context.chunkPos().getMiddleBlockZ();
         int y = context.random()
-                .nextInt(BetterDungeons.CONFIG.betterDungeons.spiderDungeon.spiderDungeonStartMaxY - BetterDungeons.CONFIG.betterDungeons.spiderDungeon.spiderDungeonStartMinY)
-                + BetterDungeons.CONFIG.betterDungeons.spiderDungeon.spiderDungeonStartMinY;
+                .nextInt(BDConfig.spiderDungeons.spiderDungeonStartMaxY.get() - BDConfig.spiderDungeons.spiderDungeonStartMinY.get())
+                + BDConfig.spiderDungeons.spiderDungeonStartMinY.get();
 
         // Spider dungeons use traditional code-based structure gen instead of Jigsaw
         SpiderDungeonPiece startPiece = new SpiderDungeonBigTunnelPiece(x, y, z);

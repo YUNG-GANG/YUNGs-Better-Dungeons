@@ -49,6 +49,6 @@ public class CandleProcessor extends StructureProcessor {
     }
 
     protected StructureProcessorType<?> getType() {
-        return BDModProcessors.CANDLE_PROCSSOR;
+        return BDModProcessors.CANDLE_PROCESSOR;
     }
 }

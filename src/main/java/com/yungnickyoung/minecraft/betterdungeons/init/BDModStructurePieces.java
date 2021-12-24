@@ -8,6 +8,8 @@ import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.feature.StructurePieceType;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import java.util.Locale;
 
@@ -18,6 +20,10 @@ public class BDModStructurePieces {
     public static StructurePieceType SPIDER_DUNGEON_EGG_ROOM_PIECE;
 
     public static void init() {
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(BDModStructurePieces::commonSetup);
+    }
+
+    public static void commonSetup(FMLCommonSetupEvent event) {
         SPIDER_DUNGEON_BIG_TUNNEL_PIECE   = register("spider_dungeon_big_tunnel_piece", SpiderDungeonBigTunnelPiece::new);
         SPIDER_DUNGEON_NEST_PIECE         = register("spider_dungeon_nest_piece", SpiderDungeonNestPiece::new);
         SPIDER_DUNGEON_SMALL_TUNNEL_PIECE = register("spider_dungeon_small_tunnel_piece", SpiderDungeonSmallTunnelPiece::new);

@@ -1,26 +1,90 @@
 package com.yungnickyoung.minecraft.betterdungeons.config;
 
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ConfigZombieDungeon {
-    @ConfigEntry.Gui.Tooltip(count = 3)
-    public int zombieDungeonStartMinY = 50;
+    public final ForgeConfigSpec.ConfigValue<Integer> zombieDungeonStartMinY;
+    public final ForgeConfigSpec.ConfigValue<Integer> zombieDungeonStartMaxY;
+    public final ForgeConfigSpec.ConfigValue<Boolean> enableZombieDungeons;
+    public final ForgeConfigSpec.ConfigValue<Integer> zombieDungeonSeparationDistance;
+    public final ForgeConfigSpec.ConfigValue<Integer> zombieDungeonMaxSurfaceStaircaseLength;
+    public final ForgeConfigSpec.ConfigValue<String> whitelistedDimensions;
+    public final ForgeConfigSpec.ConfigValue<String> blacklistedBiomes;
 
-    @ConfigEntry.Gui.Tooltip(count = 3)
-    public int zombieDungeonStartMaxY = 51;
+    public ConfigZombieDungeon(final ForgeConfigSpec.Builder BUILDER) {
+        BUILDER
+                .comment(
+                        """
+                                ##########################################################################################################
+                                # Zombie Dungeon settings.
+                                ##########################################################################################################""")
+                .push("Zombie Dungeons");
 
-    @ConfigEntry.Gui.Tooltip(count = 2)
-    public boolean enableZombieDungeons = true;
+        zombieDungeonStartMinY = BUILDER
+                .comment(
+                        """
+                                The minimum y-value at which the STARTING POINT of the zombie dungeon can spawn.
+                                Note that this point is the bottom of the zombie dungeon, so the various pieces of the dungeon can extend below it.
+                                Default: 50""".indent(1))
+                .worldRestart()
+                .define("Zombie Dungeon Min Start Y", 50);
 
-    @ConfigEntry.Gui.Tooltip(count = 3)
-    public int zombieDungeonSeparationDistance = 48;
+        zombieDungeonStartMaxY = BUILDER
+                .comment(
+                        """
+                                The maximum y-value at which the STARTING POINT of the zombie dungeon can spawn.
+                                Note that this point is the bottom of the zombie dungeon, so the various pieces of the dungeon can extend below it.
+                                Default: 51""".indent(1))
+                .worldRestart()
+                .define("Zombie Dungeon Max Start Y", 51);
 
-    @ConfigEntry.Gui.Tooltip(count = 3)
-    public int zombieDungeonMaxSurfaceStaircaseLength = 20;
+        enableZombieDungeons = BUILDER
+                .comment(
+                        " Whether or not Zombie Dungeons from Better Dungeons should spawn.\n" +
+                        " Default: true")
+                .worldRestart()
+                .define("Spawn Zombie Dungeons", true);
 
-    @ConfigEntry.Gui.Tooltip(count = 5)
-    public String whitelistedDimensions = "[minecraft:overworld]";
+        zombieDungeonSeparationDistance = BUILDER
+                .comment(
+                        """
+                                The average number of chunks between adjacent Zombie Dungeons.
+                                This controls how often Zombie Dungeons spawn. Higher value = more rare.
+                                Default: 48""".indent(1))
+                .worldRestart()
+                .define("Zombie Dungeon Average Separation Distance", 48);
 
-    @ConfigEntry.Gui.Tooltip(count = 5)
-    public String blacklistedBiomes = "[minecraft:ocean, minecraft:frozen_ocean, minecraft:deep_ocean, minecraft:warm_ocean, minecraft:lukewarm_ocean, minecraft:cold_ocean, minecraft:deep_lukewarm_ocean, minecraft:deep_cold_ocean, minecraft:deep_frozen_ocean, minecraft:beach, minecraft:snowy_beach, minecraft:river, minecraft:frozen_river, minecraft:deep_warm_ocean]";
+        zombieDungeonMaxSurfaceStaircaseLength = BUILDER
+                .comment(
+                        """
+                                The longest distance that can be checked when attempting to generate a surface entrance staircase.
+                                Making this too large may cause problems.
+                                Default: 20""".indent(1))
+                .worldRestart()
+                .define("Zombie Dungeon Surface Entrance Staircase Max Length", 20);
+
+        whitelistedDimensions = BUILDER
+                .comment(
+                        """
+                                List of dimensions that will have Zombie Dungeons.
+                                List must be comma-separated values enclosed in square brackets.
+                                Entries must have the mod namespace included.
+                                For example: "[minecraft:overworld, minecraft:the_nether, undergarden:undergarden]"
+                                Default: "[minecraft:overworld]\"""".indent(1))
+                .worldRestart()
+                .define("Zombie Dungeon Whitelisted Dimensions", "[minecraft:overworld]");
+
+        blacklistedBiomes = BUILDER
+                .comment(
+                        """
+                                List of biomes that will NOT have Zombie Dungeons.
+                                List must be comma-separated values enclosed in square brackets.
+                                Entries must have the mod namespace included.
+                                For example: "[minecraft:plains, byg:alps]"
+                                Default: "[minecraft:ocean, minecraft:frozen_ocean, minecraft:deep_ocean, minecraft:warm_ocean, minecraft:lukewarm_ocean, minecraft:cold_ocean, minecraft:deep_lukewarm_ocean, minecraft:deep_cold_ocean, minecraft:deep_frozen_ocean, minecraft:beach, minecraft:snowy_beach, minecraft:river, minecraft:frozen_river, minecraft:deep_warm_ocean]\"""".indent(1))
+                .worldRestart()
+                .define("Zombie Dungeon Blacklisted Biomes", "[minecraft:ocean, minecraft:frozen_ocean, minecraft:deep_ocean, minecraft:warm_ocean, minecraft:lukewarm_ocean, minecraft:cold_ocean, minecraft:deep_lukewarm_ocean, minecraft:deep_cold_ocean, minecraft:deep_frozen_ocean, minecraft:beach, minecraft:snowy_beach, minecraft:river, minecraft:frozen_river, minecraft:deep_warm_ocean]");
+
+        BUILDER.pop();
+    }
 }

@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.structure.small_dungeon;
 
 import com.google.common.collect.Lists;
-import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
+import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
 import com.yungnickyoung.minecraft.yungsapi.api.YungJigsawConfig;
 import com.yungnickyoung.minecraft.yungsapi.api.YungJigsawManager;
 import net.minecraft.core.BlockPos;
@@ -15,7 +15,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplie
 import java.util.List;
 import java.util.Optional;
 
-public class SmallDungeonStructureFeature extends StructureFeature<YungJigsawConfig> {
+public class SmallDungeonStructure extends StructureFeature<YungJigsawConfig> {
     /**
      * Lists of whitelisted dimensions and blacklisted biomes.
      * Will be reinitialized later w/ values from config.
@@ -29,11 +29,11 @@ public class SmallDungeonStructureFeature extends StructureFeature<YungJigsawCon
         "minecraft:river", "minecraft:frozen_river"
     );
 
-    public SmallDungeonStructureFeature() {
+    public SmallDungeonStructure() {
         super(YungJigsawConfig.CODEC, context -> {
             // Get starting position with random y-value
-            int minY = BetterDungeons.CONFIG.betterDungeons.smallDungeon.smallDungeonMinY;
-            int maxY = BetterDungeons.CONFIG.betterDungeons.smallDungeon.smallDungeonMaxY;
+            int minY = BDConfig.smallDungeons.smallDungeonMinY.get();
+            int maxY = BDConfig.smallDungeons.smallDungeonMaxY.get();
             WorldgenRandom worldgenRandom = new WorldgenRandom(new LegacyRandomSource(0L));
             worldgenRandom.setLargeFeatureSeed(context.seed(), context.chunkPos().x, context.chunkPos().z);
             int y = worldgenRandom.nextInt(maxY - minY) + minY;

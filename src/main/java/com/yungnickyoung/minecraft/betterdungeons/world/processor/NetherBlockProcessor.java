@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 
 import com.mojang.serialization.Codec;
-import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
+import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
@@ -23,7 +23,7 @@ public class NetherBlockProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (!BetterDungeons.CONFIG.betterDungeons.general.enableNetherBlocks) {
+        if (!BDConfig.general.enableNetherBlocks.get()) {
             if (blockInfoGlobal.state.is(Blocks.SOUL_SAND) || blockInfoGlobal.state.is(Blocks.SOUL_SOIL)) {
                 blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.COARSE_DIRT.defaultBlockState(), blockInfoGlobal.nbt);
             } else if (blockInfoGlobal.state.is(Blocks.SOUL_CAMPFIRE)) {

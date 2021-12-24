@@ -2,7 +2,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeo
 
 import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
-import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
+import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;
 import com.yungnickyoung.minecraft.yungsapi.world.processor.ISafeWorldModifier;
@@ -78,7 +78,7 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
             };
 
             // Check if the surface is close enough to warrant a staircase
-            int maxLength = BetterDungeons.CONFIG.betterDungeons.zombieDungeon.zombieDungeonMaxSurfaceStaircaseLength; // Max distance our staircase can go horizontally
+            int maxLength = BDConfig.zombieDungeons.zombieDungeonMaxSurfaceStaircaseLength.get(); // Max distance our staircase can go horizontally
 
             // The highest allowable position at the end of the staircase
             BlockPos maxSurfacePos = blockInfoGlobal.pos.relative(facing, maxLength).relative(Direction.UP, maxLength);
@@ -220,7 +220,7 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
             this.setBlockStateSafeWithPlacement(levelReader, Blocks.SMOOTH_STONE.defaultBlockState(), rightPos.relative(Direction.UP, 3), structurePlacementData.getMirror(), structurePlacementData.getRotation());
 
             // Chance of hanging soul lantern
-            BlockState lanternBlock = BetterDungeons.CONFIG.betterDungeons.general.enableNetherBlocks
+            BlockState lanternBlock = BDConfig.general.enableNetherBlocks.get()
                 ? Blocks.SOUL_LANTERN.defaultBlockState().setValue(LanternBlock.HANGING, true)
                 : Blocks.LANTERN.defaultBlockState().setValue(LanternBlock.HANGING, true);
             if (random.nextFloat() < .25f)
