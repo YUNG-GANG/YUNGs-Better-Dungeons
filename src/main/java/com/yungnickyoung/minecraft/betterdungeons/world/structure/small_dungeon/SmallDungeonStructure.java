@@ -6,11 +6,13 @@ import com.yungnickyoung.minecraft.yungsapi.api.YungJigsawConfig;
 import com.yungnickyoung.minecraft.yungsapi.api.YungJigsawManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.QuartPos;
+import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +30,11 @@ public class SmallDungeonStructure extends StructureFeature<YungJigsawConfig> {
         "minecraft:beach", "minecraft:snowy_beach",
         "minecraft:river", "minecraft:frozen_river"
     );
+
+    @Override
+    public GenerationStep.@NotNull Decoration step() {
+        return GenerationStep.Decoration.UNDERGROUND_STRUCTURES;
+    }
 
     public SmallDungeonStructure() {
         super(YungJigsawConfig.CODEC, context -> {

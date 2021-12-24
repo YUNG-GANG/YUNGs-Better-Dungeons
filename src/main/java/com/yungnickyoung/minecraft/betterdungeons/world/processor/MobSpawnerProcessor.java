@@ -3,21 +3,16 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
-import com.yungnickyoung.minecraft.betterdungeons.mixin.accessor.BaseSpawnerAccessor;
-import com.yungnickyoung.minecraft.betterdungeons.mixin.accessor.StructureBlockInfoAccessor;
+import com.yungnickyoung.minecraft.betterdungeons.util.Spawner;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.IntTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.commands.data.BlockDataAccessor;
 import net.minecraft.util.random.SimpleWeightedRandomList;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.level.BaseSpawner;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.SpawnData;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SpawnerBlock;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
@@ -55,16 +50,10 @@ public class MobSpawnerProcessor extends StructureProcessor {
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state.getBlock() instanceof SpawnerBlock) {
             // Create spawner & populate with data
-            BaseSpawner spawner = new BaseSpawner() {
-                @Override
-                public void broadcastEvent(Level level, BlockPos blockPos, int i) {
-                    // no-op
-                }
-            };
-            SimpleWeightedRandomList<SpawnData> spawnData = SimpleWeightedRandomList.single(new SpawnData(
+            Spawner spawner = new Spawner();
+            spawner.spawnPotentials = SimpleWeightedRandomList.single(new SpawnData(
                     Util.make(new CompoundTag(), (compoundTag) -> compoundTag.putString("id", spawnerMob.toString())),
                     Optional.empty()));
-            ((BaseSpawnerAccessor)spawner).setSpawnPotentials(spawnData);
             spawner.setEntityId(Registry.ENTITY_TYPE.get(spawnerMob));
 
             // Save spawner data to NBT
@@ -72,7 +61,7 @@ public class MobSpawnerProcessor extends StructureProcessor {
             spawner.save(nbt);
 
             // Update blockstate
-            ((StructureBlockInfoAccessor)blockInfoGlobal).setNbt(nbt);
+            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SPAWNER.defaultBlockState(), nbt);
         }
         return blockInfoGlobal;
     }

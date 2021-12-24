@@ -25,7 +25,7 @@ issueTrackerURL="https://github.com/yungnickyoung/YUNGs-Better-Dungeons/issues"
 
 [[dependencies.betterdungeons]]
     modId="yungsapi"
-    versionRange="[1.18.1-Forge-21,)"
+    versionRange="[1.18.1-Forge-22,)"
     mandatory=true
     ordering="NONE"
     side="BOTH"

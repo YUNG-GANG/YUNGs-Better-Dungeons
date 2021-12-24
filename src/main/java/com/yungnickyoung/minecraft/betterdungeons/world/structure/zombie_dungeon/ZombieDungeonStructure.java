@@ -8,11 +8,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.QuartPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +35,11 @@ public class ZombieDungeonStructure extends StructureFeature<YungJigsawConfig> {
 
     public static final List<MobSpawnSettings.SpawnerData> ENEMIES = List.of(
             new MobSpawnSettings.SpawnerData(EntityType.ZOMBIE, 100, 4, 15));
+
+    @Override
+    public GenerationStep.@NotNull Decoration step() {
+        return GenerationStep.Decoration.UNDERGROUND_STRUCTURES;
+    }
 
     public ZombieDungeonStructure() {
         super(YungJigsawConfig.CODEC, context -> {

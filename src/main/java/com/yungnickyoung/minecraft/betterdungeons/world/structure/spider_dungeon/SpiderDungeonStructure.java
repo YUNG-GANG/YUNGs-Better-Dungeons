@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.QuartPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +39,11 @@ public class SpiderDungeonStructure extends StructureFeature<NoneFeatureConfigur
     public static final List<MobSpawnSettings.SpawnerData> ENEMIES = List.of(
             new MobSpawnSettings.SpawnerData(EntityType.SPIDER, 100, 4, 15),
             new MobSpawnSettings.SpawnerData(EntityType.CAVE_SPIDER, 50, 4, 8));
+
+    @Override
+    public GenerationStep.@NotNull Decoration step() {
+        return GenerationStep.Decoration.UNDERGROUND_STRUCTURES;
+    }
 
     public SpiderDungeonStructure() {
         super(NoneFeatureConfiguration.CODEC, context -> {

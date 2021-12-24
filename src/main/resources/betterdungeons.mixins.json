@@ -5,11 +5,9 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "betterdungeons.refmap.json",
   "mixins": [
-    "accessor.ChunkGeneratorAccessor",
     "DungeonContextMixin",
-    "accessor.BaseSpawnerAccessor",
+    "accessor.ChunkGeneratorAccessor",
     "accessor.BoundingBoxAccessor",
-    "accessor.StructureBlockInfoAccessor",
     "accessor.StructureSettingsAccessor"
   ],
   "injectors": {

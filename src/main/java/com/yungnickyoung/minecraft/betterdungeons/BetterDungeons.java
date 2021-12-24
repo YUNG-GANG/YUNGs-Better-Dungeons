@@ -22,7 +22,6 @@ public class BetterDungeons {
         BDModProcessors.init();
         BDModWorld.init();
         BDModStructureFeatures.init();
-        BDModConfiguredStructures.init();
         BDModStructurePieces.init();
     }
 }
