@@ -52,7 +52,10 @@ public class BDModStructureFeatures {
     public static final RegistryObject<StructureFeature<YungJigsawConfig>> SKELETON_DUNGEON       = register("skeleton_dungeon", SkeletonDungeonStructure::new);
     public static final RegistryObject<StructureFeature<YungJigsawConfig>> ZOMBIE_DUNGEON         = register("zombie_dungeon", ZombieDungeonStructure::new);
 
-    public static final Map<StructureFeature<?>, StructureFeatureConfiguration> STRUCTURES = new HashMap<>();
+    public static StructureFeatureConfiguration SMALL_DUNGEON_CONFIG = new StructureFeatureConfiguration(BDConfig.smallDungeons.smallDungeonSeparationDistance.get(), BDConfig.smallDungeons.smallDungeonDistanceVariation.get(), 34239823);
+    public static StructureFeatureConfiguration SPIDER_DUNGEON_CONFIG = new StructureFeatureConfiguration(BDConfig.spiderDungeons.spiderDungeonSeparationDistance.get(), BDConfig.spiderDungeons.spiderDungeonSeparationDistance.get() / 2, 596523129);
+    public static StructureFeatureConfiguration SKELETON_DUNGEON_CONFIG = new StructureFeatureConfiguration(BDConfig.skeletonDungeons.skeletonDungeonSeparationDistance.get(), BDConfig.skeletonDungeons.skeletonDungeonSeparationDistance.get() / 2, 732581671);
+    public static StructureFeatureConfiguration ZOMBIE_DUNGEON_CONFIG = new StructureFeatureConfiguration(BDConfig.zombieDungeons.zombieDungeonSeparationDistance.get(), BDConfig.zombieDungeons.zombieDungeonSeparationDistance.get() / 2, 280667671);
 
     private static <T extends FeatureConfiguration> RegistryObject<StructureFeature<T>> register(String id, Supplier<StructureFeature<T>> structureFeatureSupplier) {
         return DEFERRED_REGISTRY.register(id, structureFeatureSupplier);
@@ -75,10 +78,10 @@ public class BDModStructureFeatures {
     private static void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             // Add structures
-            addStructure(SMALL_DUNGEON.get(), STRUCTURES.get(SMALL_DUNGEON.get()));
-            addStructure(SPIDER_DUNGEON.get(), STRUCTURES.get(SPIDER_DUNGEON.get()));
-            addStructure(SKELETON_DUNGEON.get(), STRUCTURES.get(SKELETON_DUNGEON.get()));
-            addStructure(ZOMBIE_DUNGEON.get(), STRUCTURES.get(ZOMBIE_DUNGEON.get()));
+            addStructure(SMALL_DUNGEON.get(), SMALL_DUNGEON_CONFIG);
+            addStructure(SPIDER_DUNGEON.get(), SPIDER_DUNGEON_CONFIG);
+            addStructure(SKELETON_DUNGEON.get(), SKELETON_DUNGEON_CONFIG);
+            addStructure(ZOMBIE_DUNGEON.get(), ZOMBIE_DUNGEON_CONFIG);
 
             // Register configured structure features
             Registry<ConfiguredStructureFeature<?, ?>> registry = BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE;
@@ -86,12 +89,6 @@ public class BDModStructureFeatures {
             Registry.register(registry, new ResourceLocation(BetterDungeons.MOD_ID, "spider_dungeon"), BDModConfiguredStructures.CONFIGURED_SPIDER_DUNGEON);
             Registry.register(registry, new ResourceLocation(BetterDungeons.MOD_ID, "skeleton_dungeon"), BDModConfiguredStructures.CONFIGURED_SKELETON_DUNGEON);
             Registry.register(registry, new ResourceLocation(BetterDungeons.MOD_ID, "zombie_dungeon"), BDModConfiguredStructures.CONFIGURED_ZOMBIE_DUNGEON);
-
-            // Populate structure configs
-            STRUCTURES.put(SMALL_DUNGEON.get(), new StructureFeatureConfiguration(BDConfig.smallDungeons.smallDungeonDistanceVariation.get(), BDConfig.smallDungeons.smallDungeonSeparationDistance.get(), 34239823));
-            STRUCTURES.put(SPIDER_DUNGEON.get(), new StructureFeatureConfiguration(BDConfig.spiderDungeons.spiderDungeonSeparationDistance.get(), BDConfig.spiderDungeons.spiderDungeonSeparationDistance.get() / 2, 596523129));
-            STRUCTURES.put(SMALL_DUNGEON.get(), new StructureFeatureConfiguration(BDConfig.skeletonDungeons.skeletonDungeonSeparationDistance.get(), BDConfig.skeletonDungeons.skeletonDungeonSeparationDistance.get() / 2, 732581671));
-            STRUCTURES.put(SMALL_DUNGEON.get(), new StructureFeatureConfiguration(BDConfig.zombieDungeons.zombieDungeonSeparationDistance.get(), BDConfig.zombieDungeons.zombieDungeonSeparationDistance.get() / 2, 280667671));
         });
     }
 
@@ -244,10 +241,10 @@ public class BDModStructureFeatures {
             }
         };
 
-        whitelistHandler.accept(SmallDungeonStructure.whitelistedDimensions, BDModStructureFeatures.SMALL_DUNGEON.get(), BDModStructureFeatures.STRUCTURES.get(BDModStructureFeatures.SMALL_DUNGEON.get()));
-        whitelistHandler.accept(SpiderDungeonStructure.whitelistedDimensions, BDModStructureFeatures.SPIDER_DUNGEON.get(), BDModStructureFeatures.STRUCTURES.get(BDModStructureFeatures.SPIDER_DUNGEON.get()));
-        whitelistHandler.accept(SkeletonDungeonStructure.whitelistedDimensions, BDModStructureFeatures.SKELETON_DUNGEON.get(), BDModStructureFeatures.STRUCTURES.get(BDModStructureFeatures.SKELETON_DUNGEON.get()));
-        whitelistHandler.accept(ZombieDungeonStructure.whitelistedDimensions, BDModStructureFeatures.ZOMBIE_DUNGEON.get(), BDModStructureFeatures.STRUCTURES.get(BDModStructureFeatures.ZOMBIE_DUNGEON.get()));
+        whitelistHandler.accept(SmallDungeonStructure.whitelistedDimensions, BDModStructureFeatures.SMALL_DUNGEON.get(), SMALL_DUNGEON_CONFIG);
+        whitelistHandler.accept(SpiderDungeonStructure.whitelistedDimensions, BDModStructureFeatures.SPIDER_DUNGEON.get(), SPIDER_DUNGEON_CONFIG);
+        whitelistHandler.accept(SkeletonDungeonStructure.whitelistedDimensions, BDModStructureFeatures.SKELETON_DUNGEON.get(), SKELETON_DUNGEON_CONFIG);
+        whitelistHandler.accept(ZombieDungeonStructure.whitelistedDimensions, BDModStructureFeatures.ZOMBIE_DUNGEON.get(), ZOMBIE_DUNGEON_CONFIG);
 
         ((StructureSettingsAccessor) structureSettings).setStructureConfig(tempMap);
     }

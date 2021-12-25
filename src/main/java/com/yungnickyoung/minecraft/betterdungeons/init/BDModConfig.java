@@ -3,6 +3,7 @@ package com.yungnickyoung.minecraft.betterdungeons.init;
 import com.google.common.collect.Lists;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
 import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
+import com.yungnickyoung.minecraft.betterdungeons.mixin.accessor.StructureFeatureConfigurationAccessor;
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.skeleton_dungeon.SkeletonDungeonStructure;
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.small_dungeon.SmallDungeonStructure;
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.SpiderDungeonStructure;
@@ -29,6 +30,16 @@ public class BDModConfig {
         ModConfig config = event.getConfig();
 
         if (config.getSpec() == BDConfig.SPEC) {
+            // Update structure configs
+            ((StructureFeatureConfigurationAccessor)BDModStructureFeatures.SMALL_DUNGEON_CONFIG).setSpacing(BDConfig.smallDungeons.smallDungeonSeparationDistance.get());
+            ((StructureFeatureConfigurationAccessor)BDModStructureFeatures.SMALL_DUNGEON_CONFIG).setSeparation(BDConfig.smallDungeons.smallDungeonDistanceVariation.get());
+            ((StructureFeatureConfigurationAccessor)BDModStructureFeatures.SPIDER_DUNGEON_CONFIG).setSpacing(BDConfig.spiderDungeons.spiderDungeonSeparationDistance.get());
+            ((StructureFeatureConfigurationAccessor)BDModStructureFeatures.SPIDER_DUNGEON_CONFIG).setSeparation(BDConfig.spiderDungeons.spiderDungeonSeparationDistance.get() / 2);
+            ((StructureFeatureConfigurationAccessor)BDModStructureFeatures.SKELETON_DUNGEON_CONFIG).setSpacing(BDConfig.skeletonDungeons.skeletonDungeonSeparationDistance.get());
+            ((StructureFeatureConfigurationAccessor)BDModStructureFeatures.SKELETON_DUNGEON_CONFIG).setSeparation(BDConfig.skeletonDungeons.skeletonDungeonSeparationDistance.get() / 2);
+            ((StructureFeatureConfigurationAccessor)BDModStructureFeatures.ZOMBIE_DUNGEON_CONFIG).setSpacing(BDConfig.zombieDungeons.zombieDungeonSeparationDistance.get());
+            ((StructureFeatureConfigurationAccessor)BDModStructureFeatures.ZOMBIE_DUNGEON_CONFIG).setSeparation(BDConfig.zombieDungeons.zombieDungeonSeparationDistance.get() / 2);
+
             // Dimension whitelist
             SmallDungeonStructure.whitelistedDimensions = createDimensionWhitelist(BDConfig.smallDungeons.whitelistedDimensions, SmallDungeonStructure.whitelistedDimensions);
             SpiderDungeonStructure.whitelistedDimensions = createDimensionWhitelist(BDConfig.spiderDungeons.whitelistedDimensions, SpiderDungeonStructure.whitelistedDimensions);
