@@ -32,8 +32,7 @@ minecraft {
             workingDirectory project.file('run')
             arg "-mixin.config=betterdungeons.mixins.json"
 //            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-//            property 'mixin.env.disableRefMap', 'true'
+//            property 'forge.logging.console.level', 'debug'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
@@ -48,8 +47,7 @@ minecraft {
             workingDirectory project.file('run')
             arg "-mixin.config=betterdungeons.mixins.json"
 //            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-//            property 'mixin.env.disableRefMap', 'true'
+//            property 'forge.logging.console.level', 'debug'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
@@ -62,10 +60,8 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
-//            arg "-mixin.config=" + mod_id + ".mixins.json"
 //            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-//            property 'mixin.env.disableRefMap', 'true'
+//            property 'forge.logging.console.level', 'debug'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 

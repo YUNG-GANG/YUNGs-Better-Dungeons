@@ -13,7 +13,6 @@ import com.yungnickyoung.minecraft.betterdungeons.world.structure.zombie_dungeon
 import com.yungnickyoung.minecraft.yungsapi.api.YungJigsawConfig;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.data.worldgen.placement.CavePlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -107,7 +106,7 @@ public class BDModStructureFeatures {
 
         // Remove vanilla dungeons, if enabled
         if (BDConfig.general.removeVanillaDungeons.get())
-            event.getGeneration().getFeatures(GenerationStep.Decoration.UNDERGROUND_STRUCTURES).removeIf(s -> s.get().equals(CavePlacements.MONSTER_ROOM) || s.get().equals(CavePlacements.MONSTER_ROOM_DEEP));
+            event.getGeneration().getFeatures(GenerationStep.Decoration.UNDERGROUND_STRUCTURES).removeIf(s -> s.get().toString().equals("Placed minecraft:monster_room"));
     }
 
     /**
