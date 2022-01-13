@@ -14,7 +14,7 @@
     "issues": "https://github.com/yungnickyoung/YUNGs-Better-Dungeons/issues",
     "discord": "discord.gg/rns3beq"
   },
-  "license": "GPLv3",
+  "license": "LGPLv3",
   "icon": "assets/betterdungeons/logo.png",
   "environment": "*",
   "entrypoints": {
