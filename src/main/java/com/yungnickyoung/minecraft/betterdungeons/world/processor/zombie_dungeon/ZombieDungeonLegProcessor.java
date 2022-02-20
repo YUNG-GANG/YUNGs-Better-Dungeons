@@ -72,7 +72,7 @@ public class ZombieDungeonLegProcessor extends StructureProcessor implements ISa
             if (currBlock.isEmpty()) return blockInfoGlobal;
 
             // Generate vertical pillar down
-            while (mutable.getY() > levelReader.getMinBuildHeight() && (currBlock.get().getMaterial() == Material.AIR || currBlock.get().getMaterial() == Material.WATER || currBlock.get().getMaterial() == Material.LAVA)) {
+            while (mutable.getY() > levelReader.getMinBuildHeight() && (currBlock.get().getMaterial() == Material.AIR || !currBlock.get().getFluidState().isEmpty())) {
                 setBlockStateSafe(currChunkSection, mutable, LEG_SELECTOR.get(random));
 
                 // Move down
@@ -81,8 +81,7 @@ public class ZombieDungeonLegProcessor extends StructureProcessor implements ISa
                 // Update index for new position
                 sectionYIndex = currentChunk.getSectionIndex(mutable.getY());
 
-                // Validate chunk section index. Sometimes the index is -1. Not sure why, but this will
-                // at least prevent the game from crashing.
+                // Validate chunk section index
                 if (sectionYIndex < 0) {
                     return blockInfoGlobal;
                 }

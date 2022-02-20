@@ -53,8 +53,7 @@ public class SkeletonDungeonLegProcessor extends StructureProcessor implements I
             // Chunk section information
             int sectionYIndex = currentChunk.getSectionIndex(mutable.getY());
 
-            // Validate chunk section index. Sometimes the index is -1. Not sure why, but this will
-            // at least prevent the game from crashing.
+            // Validate chunk section index.
             if (sectionYIndex < 0) {
                 return blockInfoGlobal;
             }
@@ -66,7 +65,7 @@ public class SkeletonDungeonLegProcessor extends StructureProcessor implements I
             if (currBlock.isEmpty()) return blockInfoGlobal;
 
             // Generate vertical pillar down
-            while (mutable.getY() > levelReader.getMinBuildHeight() && (currBlock.get().getMaterial() == Material.AIR || currBlock.get().getMaterial() == Material.WATER || currBlock.get().getMaterial() == Material.LAVA)) {
+            while (mutable.getY() > levelReader.getMinBuildHeight() && (currBlock.get().getMaterial() == Material.AIR || !currBlock.get().getFluidState().isEmpty())) {
                 // Place block
                 setBlockStateSafe(currChunkSection, mutable, COBBLE_SELECTOR.get(random));
 
@@ -76,8 +75,7 @@ public class SkeletonDungeonLegProcessor extends StructureProcessor implements I
                 // Update index for new position
                 sectionYIndex = currentChunk.getSectionIndex(mutable.getY());
 
-                // Validate chunk section index. Sometimes the index is -1. Not sure why, but this will
-                // at least prevent the game from crashing.
+                // Validate chunk section index
                 if (sectionYIndex < 0) {
                     return blockInfoGlobal;
                 }
