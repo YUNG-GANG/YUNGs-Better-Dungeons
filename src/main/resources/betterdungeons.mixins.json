@@ -6,10 +6,7 @@
   "refmap": "betterdungeons.refmap.json",
   "mixins": [
     "DungeonContextMixin",
-    "accessor.StructureFeatureConfigurationAccessor",
-    "accessor.BoundingBoxAccessor",
-    "accessor.ChunkGeneratorAccessor",
-    "accessor.StructureSettingsAccessor"
+    "accessor.BoundingBoxAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

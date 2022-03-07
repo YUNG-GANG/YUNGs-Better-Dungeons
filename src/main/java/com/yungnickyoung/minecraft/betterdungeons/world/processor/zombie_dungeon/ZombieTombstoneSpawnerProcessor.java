@@ -2,15 +2,14 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeo
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
-import com.yungnickyoung.minecraft.betterdungeons.util.Spawner;
+import com.yungnickyoung.minecraft.yungsapi.world.spawner.MobSpawnerData;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.LevelReader;
@@ -39,34 +38,27 @@ public class ZombieTombstoneSpawnerProcessor extends StructureProcessor {
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state.getBlock() == Blocks.BLACK_STAINED_GLASS) {
             // Create spawner & populate with data
-            Spawner spawner = new Spawner();
-            spawner.spawnPotentials = SimpleWeightedRandomList.single(new SpawnData(
-                    Util.make(new CompoundTag(), (compoundTag) -> {
-                        compoundTag.putString("id", "minecraft:skeleton");
-                        ListTag handDropChances = new ListTag();
-                        handDropChances.add(FloatTag.valueOf(.2f));
-                        handDropChances.add(FloatTag.valueOf(0f));
-                        compoundTag.put("HandDropChances", handDropChances);
-                        ListTag handItems = new ListTag();
-                        ItemStack itemStack = new ItemStack(Items.IRON_SWORD);
-                        CompoundTag ironSwordNBT = new CompoundTag();
-                        itemStack.save(ironSwordNBT);
-                        handItems.add(ironSwordNBT);
-                        handItems.add(new CompoundTag());
-                        compoundTag.put("HandItems", handItems);
-                    }),
-                    Optional.empty()));
-            spawner.setEntityId(Registry.ENTITY_TYPE.get(new ResourceLocation("minecraft:skeleton")));
-
-            // Save spawner data to NBT
-            CompoundTag nbt = new CompoundTag();
-            spawner.save(nbt);
-
-            // Update blockstate
-            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(
-                    blockInfoGlobal.pos,
-                    Blocks.SPAWNER.defaultBlockState(),
-                    nbt);
+            MobSpawnerData spawner = MobSpawnerData.builder()
+                    .spawnPotentials(SimpleWeightedRandomList.single(new SpawnData(
+                            Util.make(new CompoundTag(), (compoundTag) -> {
+                                compoundTag.putString("id", "minecraft:skeleton");
+                                ListTag handDropChances = new ListTag();
+                                handDropChances.add(FloatTag.valueOf(.2f));
+                                handDropChances.add(FloatTag.valueOf(0f));
+                                compoundTag.put("HandDropChances", handDropChances);
+                                ListTag handItems = new ListTag();
+                                ItemStack itemStack = new ItemStack(Items.IRON_SWORD);
+                                CompoundTag ironSwordNBT = new CompoundTag();
+                                itemStack.save(ironSwordNBT);
+                                handItems.add(ironSwordNBT);
+                                handItems.add(new CompoundTag());
+                                compoundTag.put("HandItems", handItems);
+                            }),
+                            Optional.empty())))
+                    .setEntityType(EntityType.SKELETON)
+                    .build();
+            CompoundTag nbt = spawner.save();
+            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SPAWNER.defaultBlockState(), nbt);
         }
         return blockInfoGlobal;
     }

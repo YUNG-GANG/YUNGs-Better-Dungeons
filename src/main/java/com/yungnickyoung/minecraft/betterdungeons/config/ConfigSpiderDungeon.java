@@ -5,10 +5,6 @@ import net.minecraftforge.common.ForgeConfigSpec;
 public class ConfigSpiderDungeon {
     public final ForgeConfigSpec.ConfigValue<Integer> spiderDungeonStartMinY;
     public final ForgeConfigSpec.ConfigValue<Integer> spiderDungeonStartMaxY;
-    public final ForgeConfigSpec.ConfigValue<Boolean> enableSpiderDungeons;
-    public final ForgeConfigSpec.ConfigValue<Integer> spiderDungeonSeparationDistance;
-    public final ForgeConfigSpec.ConfigValue<String> whitelistedDimensions;
-    public final ForgeConfigSpec.ConfigValue<String> blacklistedBiomes;
     public final ForgeConfigSpec.ConfigValue<Boolean> useQuarkCobbedstone;
 
     public ConfigSpiderDungeon(final ForgeConfigSpec.Builder BUILDER) {
@@ -39,44 +35,6 @@ public class ConfigSpiderDungeon {
                                 Default: 71""".indent(1))
                 .worldRestart()
                 .define("Spider Dungeon Max Start Y", 71);
-
-        enableSpiderDungeons = BUILDER
-                .comment(
-                        " Whether or not Spider Dungeons from Better Dungeons should spawn.\n" +
-                        " Default: true")
-                .worldRestart()
-                .define("Spawn Spider Dungeons", true);
-
-        spiderDungeonSeparationDistance = BUILDER
-                .comment(
-                        """
-                                The average number of chunks between adjacent Spider Dungeons.
-                                This controls how often Spider Dungeons spawn. Higher value = more rare.
-                                Default: 44""".indent(1))
-                .worldRestart()
-                .define("Spider Dungeon Average Separation Distance", 44);
-
-        whitelistedDimensions = BUILDER
-                .comment(
-                        """
-                                List of dimensions that will have Spider Dungeons.
-                                List must be comma-separated values enclosed in square brackets.
-                                Entries must have the mod namespace included.
-                                For example: "[minecraft:overworld, minecraft:the_nether, undergarden:undergarden]"
-                                Default: "[minecraft:overworld]\"""".indent(1))
-                .worldRestart()
-                .define("Spider Dungeon Whitelisted Dimensions", "[minecraft:overworld]");
-
-        blacklistedBiomes = BUILDER
-                .comment(
-                        """
-                                List of biomes that will NOT have Spider Dungeons.
-                                List must be comma-separated values enclosed in square brackets.
-                                Entries must have the mod namespace included.
-                                For example: "[minecraft:plains, byg:alps]"
-                                Default: "[minecraft:ocean, minecraft:frozen_ocean, minecraft:deep_ocean, minecraft:warm_ocean, minecraft:lukewarm_ocean, minecraft:cold_ocean, minecraft:deep_lukewarm_ocean, minecraft:deep_cold_ocean, minecraft:deep_frozen_ocean, minecraft:beach, minecraft:snowy_beach, minecraft:river, minecraft:frozen_river, minecraft:deep_warm_ocean]\"""".indent(1))
-                .worldRestart()
-                .define("Spider Dungeon Blacklisted Biomes", "[minecraft:ocean, minecraft:frozen_ocean, minecraft:deep_ocean, minecraft:warm_ocean, minecraft:lukewarm_ocean, minecraft:cold_ocean, minecraft:deep_lukewarm_ocean, minecraft:deep_cold_ocean, minecraft:deep_frozen_ocean, minecraft:beach, minecraft:snowy_beach, minecraft:river, minecraft:frozen_river, minecraft:deep_warm_ocean]");
 
         useQuarkCobbedstone = BUILDER
                 .comment(

@@ -1,0 +1,25 @@
+{
+  "type": "betterdungeons:spider_dungeon",
+  "config": {},
+  "biomes": "#betterdungeons:has_structure/has_spider_dungeon",
+  "adapt_noise": false,
+  "spawn_overrides": {
+    "monster": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "minecraft:spider",
+          "weight": 100,
+          "minCount": 4,
+          "maxCount": 15
+        },
+        {
+          "type": "minecraft:cave_spider",
+          "weight": 50,
+          "minCount": 4,
+          "maxCount": 8
+        }
+      ]
+    }
+  }
+}

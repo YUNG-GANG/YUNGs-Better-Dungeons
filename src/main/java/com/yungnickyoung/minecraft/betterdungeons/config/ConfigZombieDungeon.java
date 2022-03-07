@@ -5,11 +5,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 public class ConfigZombieDungeon {
     public final ForgeConfigSpec.ConfigValue<Integer> zombieDungeonStartMinY;
     public final ForgeConfigSpec.ConfigValue<Integer> zombieDungeonStartMaxY;
-    public final ForgeConfigSpec.ConfigValue<Boolean> enableZombieDungeons;
-    public final ForgeConfigSpec.ConfigValue<Integer> zombieDungeonSeparationDistance;
     public final ForgeConfigSpec.ConfigValue<Integer> zombieDungeonMaxSurfaceStaircaseLength;
-    public final ForgeConfigSpec.ConfigValue<String> whitelistedDimensions;
-    public final ForgeConfigSpec.ConfigValue<String> blacklistedBiomes;
 
     public ConfigZombieDungeon(final ForgeConfigSpec.Builder BUILDER) {
         BUILDER
@@ -38,22 +34,6 @@ public class ConfigZombieDungeon {
                 .worldRestart()
                 .define("Zombie Dungeon Max Start Y", 51);
 
-        enableZombieDungeons = BUILDER
-                .comment(
-                        " Whether or not Zombie Dungeons from Better Dungeons should spawn.\n" +
-                        " Default: true")
-                .worldRestart()
-                .define("Spawn Zombie Dungeons", true);
-
-        zombieDungeonSeparationDistance = BUILDER
-                .comment(
-                        """
-                                The average number of chunks between adjacent Zombie Dungeons.
-                                This controls how often Zombie Dungeons spawn. Higher value = more rare.
-                                Default: 48""".indent(1))
-                .worldRestart()
-                .define("Zombie Dungeon Average Separation Distance", 48);
-
         zombieDungeonMaxSurfaceStaircaseLength = BUILDER
                 .comment(
                         """
@@ -62,28 +42,6 @@ public class ConfigZombieDungeon {
                                 Default: 20""".indent(1))
                 .worldRestart()
                 .define("Zombie Dungeon Surface Entrance Staircase Max Length", 20);
-
-        whitelistedDimensions = BUILDER
-                .comment(
-                        """
-                                List of dimensions that will have Zombie Dungeons.
-                                List must be comma-separated values enclosed in square brackets.
-                                Entries must have the mod namespace included.
-                                For example: "[minecraft:overworld, minecraft:the_nether, undergarden:undergarden]"
-                                Default: "[minecraft:overworld]\"""".indent(1))
-                .worldRestart()
-                .define("Zombie Dungeon Whitelisted Dimensions", "[minecraft:overworld]");
-
-        blacklistedBiomes = BUILDER
-                .comment(
-                        """
-                                List of biomes that will NOT have Zombie Dungeons.
-                                List must be comma-separated values enclosed in square brackets.
-                                Entries must have the mod namespace included.
-                                For example: "[minecraft:plains, byg:alps]"
-                                Default: "[minecraft:ocean, minecraft:frozen_ocean, minecraft:deep_ocean, minecraft:warm_ocean, minecraft:lukewarm_ocean, minecraft:cold_ocean, minecraft:deep_lukewarm_ocean, minecraft:deep_cold_ocean, minecraft:deep_frozen_ocean, minecraft:beach, minecraft:snowy_beach, minecraft:river, minecraft:frozen_river, minecraft:deep_warm_ocean]\"""".indent(1))
-                .worldRestart()
-                .define("Zombie Dungeon Blacklisted Biomes", "[minecraft:ocean, minecraft:frozen_ocean, minecraft:deep_ocean, minecraft:warm_ocean, minecraft:lukewarm_ocean, minecraft:cold_ocean, minecraft:deep_lukewarm_ocean, minecraft:deep_cold_ocean, minecraft:deep_frozen_ocean, minecraft:beach, minecraft:snowy_beach, minecraft:river, minecraft:frozen_river, minecraft:deep_warm_ocean]");
 
         BUILDER.pop();
     }

@@ -19,6 +19,7 @@ public class BetterDungeons {
 
     private void init() {
         BDModConfig.init();
+        BDModTags.init();
         BDModProcessors.init();
         BDModStructureFeatures.init();
         BDModStructurePieces.init();
