@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dungeon;
 
 import com.mojang.serialization.Codec;
-import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
+import com.yungnickyoung.minecraft.betterdungeons.module.BDModProcessors;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;

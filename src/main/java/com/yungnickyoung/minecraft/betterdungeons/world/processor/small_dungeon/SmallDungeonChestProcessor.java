@@ -2,7 +2,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
-import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
+import com.yungnickyoung.minecraft.betterdungeons.module.BDModProcessors;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;

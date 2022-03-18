@@ -1,0 +1,30 @@
+{
+  "parent": "betterdungeons:root",
+  "display": {
+    "icon": {
+      "item": "minecraft:rotten_flesh"
+    },
+    "title": {
+      "translate": "betterdungeons.advancements.zombie_dungeon.title"
+    },
+    "description": {
+      "translate": "betterdungeons.advancements.zombie_dungeon.description"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "in_better_zombie_dungeon": {
+      "trigger": "yungsapi:structure_location",
+      "conditions": {
+        "feature": "betterdungeons:zombie_dungeon"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "in_better_zombie_dungeon"
+    ]
+  ]
+}

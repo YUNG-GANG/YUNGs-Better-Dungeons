@@ -1,0 +1,30 @@
+{
+  "parent": "betterdungeons:root",
+  "display": {
+    "icon": {
+      "item": "minecraft:skeleton_skull"
+    },
+    "title": {
+      "translate": "betterdungeons.advancements.skeleton_dungeon.title"
+    },
+    "description": {
+      "translate": "betterdungeons.advancements.skeleton_dungeon.description"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "in_better_skeleton_dungeon": {
+      "trigger": "yungsapi:structure_location",
+      "conditions": {
+        "feature": "betterdungeons:skeleton_dungeon"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "in_better_skeleton_dungeon"
+    ]
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "name": "betterdungeons:cubby_sm_prop",
+  "fallback": "betterdungeons:zombie_dungeon/cubby_sm_prop",
+  "elements": [
+    {
+      "weight": 30,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_0",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_1",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_2",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_3",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_4",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_5",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_6",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_7",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_8",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_9",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_spawner_0",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_spawner_1",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/cubby_prop/cubby_prop_spawner_2",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon_cubby",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

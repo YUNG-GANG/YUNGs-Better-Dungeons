@@ -2,7 +2,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
+import com.yungnickyoung.minecraft.betterdungeons.module.BDModProcessors;
 import com.yungnickyoung.minecraft.yungsapi.world.spawner.MobSpawnerData;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;

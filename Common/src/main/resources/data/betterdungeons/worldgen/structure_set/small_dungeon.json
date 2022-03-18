@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "betterdungeons:small_dungeon",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 34239823,
+    "spacing": 10,
+    "separation": 6,
+    "type": "minecraft:random_spread"
+  }
+}

@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece;
 
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
-import com.yungnickyoung.minecraft.betterdungeons.init.BDModStructurePieces;
+import com.yungnickyoung.minecraft.betterdungeons.module.BDModStructurePieces;
 import com.yungnickyoung.minecraft.betterdungeons.mixin.accessor.BoundingBoxAccessor;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockSetSelector;
 import net.minecraft.core.BlockPos;

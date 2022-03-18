@@ -2,7 +2,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
-import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
+import com.yungnickyoung.minecraft.betterdungeons.module.BDModProcessors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.AbstractSkullBlock;

@@ -1,0 +1,94 @@
+{
+  "processors": [
+    {
+      "processor_type": "betterdungeons:head_processor"
+    },
+    {
+      "processor_type": "betterdungeons:nether_block_processor"
+    },
+    {
+      "processor_type": "betterdungeons:skeleton_mob_spawner_processor"
+    },
+    {
+      "processor_type": "betterdungeons:skeleton_dungeon_ruined_stone_bricks_processor"
+    },
+    {
+      "processor_type": "betterdungeons:candle_processor"
+    },
+    {
+      "processor_type": "betterdungeons:skeleton_dungeon_leg_processor"
+    },
+    {
+      "processor_type": "betterdungeons:waterlogged_processor"
+    },
+    {
+      "rules": [
+        {
+          "output_state": {
+            "Name": "minecraft:mossy_stone_bricks"
+          },
+          "input_predicate": {
+            "block": "minecraft:stone_bricks",
+            "probability": 0.20,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:cracked_stone_bricks"
+          },
+          "input_predicate": {
+            "block": "minecraft:stone_bricks",
+            "probability": 0.30,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:cave_air"
+          },
+          "input_predicate": {
+            "block": "minecraft:air",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:mossy_cobblestone"
+          },
+          "input_predicate": {
+            "block": "minecraft:cobblestone",
+            "probability": 0.5,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:chiseled_stone_bricks"
+          },
+          "input_predicate": {
+            "block": "minecraft:infested_chiseled_stone_bricks",
+            "probability": 0.9,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    }
+  ]
+}

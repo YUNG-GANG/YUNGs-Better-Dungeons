@@ -1,0 +1,48 @@
+{
+  "name": "betterdungeons:big_stairs",
+  "fallback": "betterdungeons:zombie_dungeon/terminators/big_stairs_terminators",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:zombie_dungeon/big_stairs/big_stairs_0",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "name": "big_stairs_crumbled_0",
+        "location": "betterdungeons:zombie_dungeon/big_stairs/big_stairs_crumbled_0",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
+        "projection": "rigid",
+        "max_count": 2,
+        "element_type": "yungsapi:max_count_single_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "name": "big_stairs_crumbled_1",
+        "location": "betterdungeons:zombie_dungeon/big_stairs/big_stairs_crumbled_1",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
+        "projection": "rigid",
+        "max_count": 1,
+        "element_type": "yungsapi:max_count_single_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "name": "big_stairs_crumbled_2",
+        "location": "betterdungeons:zombie_dungeon/big_stairs/big_stairs_crumbled_2",
+        "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
+        "projection": "rigid",
+        "max_count": 1,
+        "element_type": "yungsapi:max_count_single_element"
+      }
+    }
+  ]
+}

@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
 import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
-import com.yungnickyoung.minecraft.betterdungeons.init.BDModProcessors;
+import com.yungnickyoung.minecraft.betterdungeons.module.BDModProcessors;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonContext;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonType;
 import com.yungnickyoung.minecraft.yungsapi.world.banner.Banner;

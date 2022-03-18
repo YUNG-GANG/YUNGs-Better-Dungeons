@@ -1,0 +1,31 @@
+modLoader="javafml"
+loaderVersion="[40,)"
+license="LGPLv3"
+issueTrackerURL="https://github.com/yungnickyoung/YUNGs-Better-Dungeons/issues"
+
+[[mods]]
+	modId="betterdungeons"
+	version="${file.jarVersion}"
+	displayName="YUNG's Better Dungeons"
+	credits="Thanks so much to all my patrons!"
+	authors="YUNGNICKYOUNG, Acarii"
+	description="A complete redesign of Minecraft's dungeons"
+	logoFile="logo.png"
+    displayURL="https://www.curseforge.com/minecraft/mc-mods/yungs-better-dungeons"
+
+[[dependencies.betterdungeons]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.18.2,1.19)"
+
+[[dependencies.betterdungeons]]
+    modId="forge"
+    mandatory=true
+    versionRange="[40.0.8,)"
+
+[[dependencies.betterdungeons]]
+    modId="yungsapi"
+    versionRange="[1.18.2-Forge-2.0.5,)"
+    mandatory=true
+    ordering="NONE"
+    side="BOTH"

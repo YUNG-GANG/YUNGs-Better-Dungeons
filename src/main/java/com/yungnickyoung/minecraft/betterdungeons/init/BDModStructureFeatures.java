@@ -1,4 +1,4 @@
-package com.yungnickyoung.minecraft.betterdungeons.init;
+package com.yungnickyoung.minecraft.betterdungeons.module;
 
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeons;
 import com.yungnickyoung.minecraft.betterdungeons.config.BDConfig;
