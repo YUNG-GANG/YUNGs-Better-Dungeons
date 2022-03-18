@@ -11,13 +11,12 @@ import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
 public class SmallDungeonStructure extends StructureFeature<YungJigsawConfig> {
     @Override
-    public GenerationStep.@NotNull Decoration step() {
+    public GenerationStep.Decoration step() {
         return GenerationStep.Decoration.UNDERGROUND_STRUCTURES;
     }
 
