@@ -12,6 +12,7 @@ public class ConfigModuleFabric {
         AutoConfig.register(BDConfigFabric.class, Toml4jConfigSerializer::new);
         AutoConfig.getConfigHolder(BDConfigFabric.class).registerSaveListener(ConfigModuleFabric::bakeConfig);
         AutoConfig.getConfigHolder(BDConfigFabric.class).registerLoadListener(ConfigModuleFabric::bakeConfig);
+        bakeConfig(AutoConfig.getConfigHolder(BDConfigFabric.class).get());
     }
 
     private static InteractionResult bakeConfig(ConfigHolder<BDConfigFabric> configHolder, BDConfigFabric configFabric) {
