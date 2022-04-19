@@ -6,6 +6,7 @@ import com.yungnickyoung.minecraft.yungsapi.world.BlockStateRandomizer;
 import com.yungnickyoung.minecraft.yungsapi.world.processor.ISafeWorldModifier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
@@ -25,7 +26,7 @@ import java.util.Random;
  * Dynamically generates support legs below skeleton dungeons.
  * Blue stained glass is used to mark the positions where the legs will spawn for simplicity.
  */
-public class SkeletonDungeonLegProcessor extends StructureProcessor implements ISafeWorldModifier {
+public class SkeletonDungeonLegProcessor extends StructureProcessor {
     public static final SkeletonDungeonLegProcessor INSTANCE = new SkeletonDungeonLegProcessor();
     public static final Codec<SkeletonDungeonLegProcessor> CODEC = Codec.unit(() -> INSTANCE);
 
@@ -40,50 +41,22 @@ public class SkeletonDungeonLegProcessor extends StructureProcessor implements I
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state.getBlock() == Blocks.BLUE_STAINED_GLASS) {
-            ChunkPos currentChunkPos = new ChunkPos(blockInfoGlobal.pos);
-            ChunkAccess currentChunk = levelReader.getChunk(currentChunkPos.x, currentChunkPos.z);
-            Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
-
-            // Always replace the glass itself with cobble
-            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.COBBLESTONE.defaultBlockState(), blockInfoGlobal.nbt);
-
-            // Reusable mutable
-            BlockPos.MutableBlockPos mutable = blockInfoGlobal.pos.below().mutable(); // Move down since we already processed the first block
-
-            // Chunk section information
-            int sectionYIndex = currentChunk.getSectionIndex(mutable.getY());
-
-            // Validate chunk section index.
-            if (sectionYIndex < 0) {
+            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(new ChunkPos(blockInfoGlobal.pos))) {
                 return blockInfoGlobal;
             }
 
-            LevelChunkSection currChunkSection = currentChunk.getSection(sectionYIndex);
+            Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
 
-            // Initialize currBlock
-            Optional<BlockState> currBlock = getBlockStateSafe(currChunkSection, mutable);
-            if (currBlock.isEmpty()) return blockInfoGlobal;
+            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.COBBLESTONE.defaultBlockState(), blockInfoGlobal.nbt);
+            BlockPos.MutableBlockPos mutable = blockInfoGlobal.pos.mutable().move(Direction.DOWN);
+            BlockState currBlockState = levelReader.getBlockState(mutable);
 
-            // Generate vertical pillar down
-            while (mutable.getY() > levelReader.getMinBuildHeight() && (currBlock.get().getMaterial() == Material.AIR || !currBlock.get().getFluidState().isEmpty())) {
-                // Place block
-                setBlockStateSafe(currChunkSection, mutable, COBBLE_SELECTOR.get(random));
-
-                // Move down
+            while (mutable.getY() > levelReader.getMinBuildHeight()
+                    && mutable.getY() < levelReader.getMaxBuildHeight()
+                    && (currBlockState.isAir() || !levelReader.getFluidState(mutable).isEmpty())) {
+                levelReader.getChunk(mutable).setBlockState(mutable, COBBLE_SELECTOR.get(random), false);
                 mutable.move(Direction.DOWN);
-
-                // Update index for new position
-                sectionYIndex = currentChunk.getSectionIndex(mutable.getY());
-
-                // Validate chunk section index
-                if (sectionYIndex < 0) {
-                    return blockInfoGlobal;
-                }
-
-                // Update chunk section for new position
-                currChunkSection = currentChunk.getSection(sectionYIndex);
-                currBlock = getBlockStateSafe(currChunkSection, mutable);
-                if (currBlock.isEmpty()) break;
+                currBlockState = levelReader.getBlockState(mutable);
             }
         }
 
