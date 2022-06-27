@@ -1,17 +1,16 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon;
 
 import com.mojang.serialization.Codec;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorModule;
+import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockStateRandomizer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-
-import java.util.Random;
 
 public class ZombieDungeonFlowerPotProcessor extends StructureProcessor {
     public static final ZombieDungeonFlowerPotProcessor INSTANCE = new ZombieDungeonFlowerPotProcessor();
@@ -33,7 +32,7 @@ public class ZombieDungeonFlowerPotProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state.is(Blocks.POTTED_CORNFLOWER)) {
-            Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
+            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos);
             blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, FLOWER_SELECTOR.get(random), blockInfoGlobal.nbt);
         }
 
@@ -41,6 +40,6 @@ public class ZombieDungeonFlowerPotProcessor extends StructureProcessor {
     }
 
     protected StructureProcessorType<?> getType() {
-        return StructureProcessorModule.ZOMBIE_DUNGEON_FLOWER_POT_PROCESSOR;
+        return StructureProcessorTypeModule.ZOMBIE_DUNGEON_FLOWER_POT_PROCESSOR;
     }
 }

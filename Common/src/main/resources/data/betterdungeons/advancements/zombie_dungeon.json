@@ -5,10 +5,10 @@
       "item": "minecraft:rotten_flesh"
     },
     "title": {
-      "translate": "betterdungeons.advancements.zombie_dungeon.title"
+      "translate": "When in Rome"
     },
     "description": {
-      "translate": "betterdungeons.advancements.zombie_dungeon.description"
+      "translate": "Set foot in a Catacomb"
     },
     "show_toast": true,
     "announce_to_chat": true,

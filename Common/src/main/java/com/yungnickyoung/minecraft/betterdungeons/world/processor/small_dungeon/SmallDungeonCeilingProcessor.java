@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon;
 
 import com.mojang.serialization.Codec;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorModule;
+import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.LevelReader;
@@ -37,6 +37,6 @@ public class SmallDungeonCeilingProcessor extends StructureProcessor {
     }
 
     protected StructureProcessorType<?> getType() {
-        return StructureProcessorModule.SMALL_DUNGEON_CEILING_PROCESSOR;
+        return StructureProcessorTypeModule.SMALL_DUNGEON_CEILING_PROCESSOR;
     }
 }

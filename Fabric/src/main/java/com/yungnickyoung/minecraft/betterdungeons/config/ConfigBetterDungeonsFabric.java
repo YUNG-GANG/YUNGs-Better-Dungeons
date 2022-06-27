@@ -8,16 +8,6 @@ public class ConfigBetterDungeonsFabric {
     @ConfigEntry.Gui.Tooltip
     public ConfigGeneralFabric general = new ConfigGeneralFabric();
 
-    @ConfigEntry.Category("Spider Dungeons")
-    @ConfigEntry.Gui.CollapsibleObject
-    @ConfigEntry.Gui.Tooltip
-    public ConfigSpiderDungeonFabric spiderDungeon = new ConfigSpiderDungeonFabric();
-
-    @ConfigEntry.Category("Skeleton Dungeons")
-    @ConfigEntry.Gui.CollapsibleObject
-    @ConfigEntry.Gui.Tooltip
-    public ConfigSkeletonDungeonFabric skeletonDungeon = new ConfigSkeletonDungeonFabric();
-
     @ConfigEntry.Category("Zombie Dungeons")
     @ConfigEntry.Gui.CollapsibleObject
     @ConfigEntry.Gui.Tooltip

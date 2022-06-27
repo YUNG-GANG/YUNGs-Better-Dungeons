@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dungeon;
 
 import com.mojang.serialization.Codec;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorModule;
+import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.world.spawner.MobSpawnerData;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -52,6 +52,6 @@ public class SkeletonMobSpawnerProcessor extends StructureProcessor {
     }
 
     protected StructureProcessorType<?> getType() {
-        return StructureProcessorModule.SKELETON_MOB_SPAWNER_PROCESSOR;
+        return StructureProcessorTypeModule.SKELETON_MOB_SPAWNER_PROCESSOR;
     }
 }

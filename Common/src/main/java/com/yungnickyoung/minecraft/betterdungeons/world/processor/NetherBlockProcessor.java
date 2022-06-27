@@ -2,7 +2,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorModule;
+import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
@@ -36,6 +36,6 @@ public class NetherBlockProcessor extends StructureProcessor {
     }
 
     protected StructureProcessorType<?> getType() {
-        return StructureProcessorModule.NETHER_BLOCK_PROCESSOR;
+        return StructureProcessorTypeModule.NETHER_BLOCK_PROCESSOR;
     }
 }

@@ -5,10 +5,10 @@
       "item": "minecraft:diamond_sword"
     },
     "title": {
-      "translate": "betterdungeons.advancements.all_dungeons.title"
+      "translate": "Professional Dungeoneer"
     },
     "description": {
-      "translate": "betterdungeons.advancements.all_dungeons.description"
+      "translate": "Explore all of the Better Dungeons!"
     },
     "show_toast": true,
     "announce_to_chat": true,

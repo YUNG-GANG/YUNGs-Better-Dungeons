@@ -2,7 +2,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorModule;
+import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.AbstractSkullBlock;
@@ -32,6 +32,6 @@ public class HeadProcessor extends StructureProcessor {
     }
 
     protected StructureProcessorType<?> getType() {
-        return StructureProcessorModule.HEAD_PROCESSOR;
+        return StructureProcessorTypeModule.HEAD_PROCESSOR;
     }
 }

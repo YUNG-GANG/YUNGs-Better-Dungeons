@@ -2,14 +2,15 @@ package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeo
 
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import com.yungnickyoung.minecraft.betterdungeons.mixin.accessor.BoundingBoxAccessor;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureFeaturePieceModule;
+import com.yungnickyoung.minecraft.betterdungeons.module.StructurePieceTypeModule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,7 +25,6 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.material.Fluids;
 
 import java.util.BitSet;
-import java.util.Random;
 
 public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
     private final BlockPos startPos;
@@ -38,7 +38,7 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
                                Z_MINRADIUS = 1, Z_MAXRADIUS = 1.5f;
 
     public SpiderDungeonSmallTunnelPiece(BlockPos startPos, float initialYaw, int pieceChainLength) {
-        super(StructureFeaturePieceModule.SPIDER_DUNGEON_SMALL_TUNNEL_PIECE, pieceChainLength, getInitialBoundingBox(startPos));
+        super(StructurePieceTypeModule.SMALL_TUNNEL, pieceChainLength, getInitialBoundingBox(startPos));
         this.startPos = new BlockPos(startPos);
         this.endPos = new BlockPos(startPos);
         this.yaws[0] = initialYaw;
@@ -48,7 +48,7 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
      * Constructor for loading from NBT.
      */
     public SpiderDungeonSmallTunnelPiece(CompoundTag compoundTag) {
-        super(StructureFeaturePieceModule.SPIDER_DUNGEON_SMALL_TUNNEL_PIECE, compoundTag);
+        super(StructurePieceTypeModule.SMALL_TUNNEL, compoundTag);
         int[] start = compoundTag.getIntArray("startPos");
         int[] end = compoundTag.getIntArray("endPos");
         this.startPos = new BlockPos(start[0], start[1], start[2]);
@@ -73,9 +73,9 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
     }
 
     @Override
-    public void addChildren(StructurePiece structurePiece, StructurePieceAccessor structurePieceAccessor, Random random) {
+    public void addChildren(StructurePiece structurePiece, StructurePieceAccessor structurePieceAccessor, RandomSource randomSource) {
         // Determine pitch
-        this.pitch = random.nextFloat() * (float) Math.PI / 4f - ((float) Math.PI / 6f);
+        this.pitch = randomSource.nextFloat() * (float) Math.PI / 4f - ((float) Math.PI / 6f);
         float pitchY = Mth.sin(this.pitch);
         float pitchXZ = Mth.cos(this.pitch); // Allows for steep drops
 
@@ -109,7 +109,7 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
         for (int i = 1; i < LENGTH; i++) {
             // Tweak yaw for next iteration
             yawModifier = yawModifier * 0.75F;
-            yawModifier += random.nextFloat() * random.nextFloat();
+            yawModifier += randomSource.nextFloat() * randomSource.nextFloat();
             this.yaws[i] = this.yaws[i - 1] + yawModifier * 0.02f;
 
             // Center of this sphere
@@ -136,10 +136,10 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
 
         this.endPos = new BlockPos(caveStartX, caveStartY, caveStartZ);
 
-        if (random.nextFloat() < 0.8f) {
+        if (randomSource.nextFloat() < 0.8f) {
             StructurePiece eggRoom = new SpiderDungeonEggRoomPiece(endPos, this.genDepth + 1);
             structurePieceAccessor.addPiece(eggRoom);
-            eggRoom.addChildren(eggRoom, structurePieceAccessor, random);
+            eggRoom.addChildren(eggRoom, structurePieceAccessor, randomSource);
         }
     }
 
@@ -147,7 +147,7 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
      * Generate.
      */
     @Override
-    public void postProcess(WorldGenLevel world, StructureFeatureManager structureFeatureManager, ChunkGenerator chunkGenerator, Random random, BoundingBox box, ChunkPos chunkPos, BlockPos blockPos) {
+    public void postProcess(WorldGenLevel world, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomSource randomSource, BoundingBox box, ChunkPos chunkPos, BlockPos blockPos) {
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         WorldgenRandom decoRand = new WorldgenRandom(new LegacyRandomSource(0)); // Rand for decoration. It's not as important for this to be deterministic.
         decoRand.setLargeFeatureSeed(world.getSeed(), startPos.getX(), startPos.getZ());

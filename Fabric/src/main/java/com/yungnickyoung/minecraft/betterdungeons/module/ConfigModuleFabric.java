@@ -21,18 +21,10 @@ public class ConfigModuleFabric {
     }
 
     private static void bakeConfig(BDConfigFabric configFabric) {
-        BetterDungeonsCommon.CONFIG.general.enableHeads = configFabric.betterDungeons.general.enableHeads;
         BetterDungeonsCommon.CONFIG.general.removeVanillaDungeons = configFabric.betterDungeons.general.removeVanillaDungeons;
+        BetterDungeonsCommon.CONFIG.general.enableHeads = configFabric.betterDungeons.general.enableHeads;
         BetterDungeonsCommon.CONFIG.general.enableNetherBlocks = configFabric.betterDungeons.general.enableNetherBlocks;
-        BetterDungeonsCommon.CONFIG.spiderDungeons.spiderDungeonStartMinY = configFabric.betterDungeons.spiderDungeon.spiderDungeonStartMinY;
-        BetterDungeonsCommon.CONFIG.spiderDungeons.spiderDungeonStartMaxY = configFabric.betterDungeons.spiderDungeon.spiderDungeonStartMaxY;
-        BetterDungeonsCommon.CONFIG.skeletonDungeons.skeletonDungeonStartMinY = configFabric.betterDungeons.skeletonDungeon.skeletonDungeonStartMinY;
-        BetterDungeonsCommon.CONFIG.skeletonDungeons.skeletonDungeonStartMaxY = configFabric.betterDungeons.skeletonDungeon.skeletonDungeonStartMaxY;
-        BetterDungeonsCommon.CONFIG.zombieDungeons.zombieDungeonStartMinY = configFabric.betterDungeons.zombieDungeon.zombieDungeonStartMinY;
-        BetterDungeonsCommon.CONFIG.zombieDungeons.zombieDungeonStartMaxY = configFabric.betterDungeons.zombieDungeon.zombieDungeonStartMaxY;
         BetterDungeonsCommon.CONFIG.zombieDungeons.zombieDungeonMaxSurfaceStaircaseLength = configFabric.betterDungeons.zombieDungeon.zombieDungeonMaxSurfaceStaircaseLength;
-        BetterDungeonsCommon.CONFIG.smallDungeons.smallDungeonMinY = configFabric.betterDungeons.smallDungeon.smallDungeonMinY;
-        BetterDungeonsCommon.CONFIG.smallDungeons.smallDungeonMaxY = configFabric.betterDungeons.smallDungeon.smallDungeonMaxY;
         BetterDungeonsCommon.CONFIG.smallDungeons.bannerMaxCount = configFabric.betterDungeons.smallDungeon.bannerMaxCount;
         BetterDungeonsCommon.CONFIG.smallDungeons.chestMinCount = configFabric.betterDungeons.smallDungeon.chestMinCount;
         BetterDungeonsCommon.CONFIG.smallDungeons.chestMaxCount = configFabric.betterDungeons.smallDungeon.chestMaxCount;

@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dungeon;
 
 import com.mojang.serialization.Codec;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorModule;
+import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockStateRandomizer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
@@ -53,6 +53,6 @@ public class RuinedStoneBrickProcessor extends StructureProcessor {
     }
 
     protected StructureProcessorType<?> getType() {
-        return StructureProcessorModule.SKELETON_DUNGEON_RUINED_STONE_BRICKS_PROCESSOR;
+        return StructureProcessorTypeModule.SKELETON_DUNGEON_RUINED_STONE_BRICKS_PROCESSOR;
     }
 }

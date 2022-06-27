@@ -1,8 +1,9 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon;
 
 import com.mojang.serialization.Codec;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorModule;
+import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -10,8 +11,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-
-import java.util.Random;
 
 public class SmallDungeonCeilingLampPropProcessor extends StructureProcessor {
     public static final SmallDungeonCeilingLampPropProcessor INSTANCE = new SmallDungeonCeilingLampPropProcessor();
@@ -25,7 +24,7 @@ public class SmallDungeonCeilingLampPropProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state.is(Blocks.CYAN_STAINED_GLASS)) {
-            Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
+            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos);
 
             // Choose lamp prop
             float f = random.nextFloat();
@@ -41,6 +40,6 @@ public class SmallDungeonCeilingLampPropProcessor extends StructureProcessor {
     }
 
     protected StructureProcessorType<?> getType() {
-        return StructureProcessorModule.SMALL_DUNGEON_CEILING_LAMP_PROCESSOR;
+        return StructureProcessorTypeModule.SMALL_DUNGEON_CEILING_LAMP_PROCESSOR;
     }
 }

@@ -3,11 +3,12 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeo
 import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorModule;
+import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockStateRandomizer;
 import com.yungnickyoung.minecraft.yungsapi.world.processor.ISafeWorldModifier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LanternBlock;
@@ -22,7 +23,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraft.world.level.material.Material;
 
 import java.util.Optional;
-import java.util.Random;
 import java.util.Set;
 
 /**
@@ -94,7 +94,7 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
             }
 
             // Begin spawning staircase
-            Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
+            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos);
 
             BlockPos.MutableBlockPos leftPos = new BlockPos(blockInfoGlobal.pos.relative(facing.getCounterClockWise())).mutable();
             BlockPos.MutableBlockPos middlePos = new BlockPos(blockInfoGlobal.pos).mutable();
@@ -318,7 +318,7 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
     }
 
     protected StructureProcessorType<?> getType() {
-        return StructureProcessorModule.ZOMBIE_MAIN_STAIRS_PROCESSOR;
+        return StructureProcessorTypeModule.ZOMBIE_MAIN_STAIRS_PROCESSOR;
     }
 
     private void setBlockStateSafeWithPlacement(LevelReader levelReader, BlockState blockState, BlockPos pos, Mirror mirror, Rotation rotation) {
@@ -333,11 +333,11 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
         setBlockStateSafe(levelReader, pos, blockState);
     }
 
-    private void setBlockStateRandom(LevelReader levelReader, BlockState blockState, BlockPos pos, Mirror mirror, Rotation rotation, Random random, float chance) {
+    private void setBlockStateRandom(LevelReader levelReader, BlockState blockState, BlockPos pos, Mirror mirror, Rotation rotation, RandomSource random, float chance) {
         if (random.nextFloat() < chance) setBlockStateSafeWithPlacement(levelReader, blockState, pos, mirror, rotation);
     }
 
-    private void setColumn(LevelReader levelReader, BlockStateRandomizer selector, BlockPos pos, Random random) {
+    private void setColumn(LevelReader levelReader, BlockStateRandomizer selector, BlockPos pos, RandomSource random) {
         // Generate vertical pillar down
         BlockPos.MutableBlockPos mutable = pos.mutable();
         Optional<BlockState> currBlock = getBlockStateSafe(levelReader, mutable);

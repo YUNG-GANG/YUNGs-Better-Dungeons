@@ -4,7 +4,6 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ConfigGeneralForge {
     public final ForgeConfigSpec.ConfigValue<Boolean> enableHeads;
-    public final ForgeConfigSpec.ConfigValue<Boolean> removeVanillaDungeons;
     public final ForgeConfigSpec.ConfigValue<Boolean> enableNetherBlocks;
 
     public ConfigGeneralForge(final ForgeConfigSpec.Builder BUILDER) {
@@ -24,15 +23,6 @@ public class ConfigGeneralForge {
                                 Default: true""".indent(1))
                 .worldRestart()
                 .define("Enable Skulls & Heads", true);
-
-        removeVanillaDungeons = BUILDER
-                .comment(
-                        """
-                                Whether or not vanilla dungeons should be prevented from spawning in the world.
-                                It is recommended to disable these, since the Small Dungeons are very similar in design.
-                                Default: true""".indent(1))
-                .worldRestart()
-                .define("Remove Vanilla Dungeons", true);
 
         enableNetherBlocks = BUILDER
                 .comment(

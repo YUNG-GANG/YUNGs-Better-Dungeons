@@ -1,8 +1,9 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 
 import com.mojang.serialization.Codec;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorModule;
+import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -15,7 +16,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.List;
-import java.util.Random;
 
 public class CandleProcessor extends StructureProcessor {
     public static final CandleProcessor INSTANCE = new CandleProcessor();
@@ -32,7 +32,7 @@ public class CandleProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state.getBlock() instanceof SeaPickleBlock) {
-            Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
+            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos);
             int numCandles = random.nextInt(4) + 1;
             boolean lit = random.nextFloat() < .1f;
             BlockState newBlockState = getRandomCandle(random).defaultBlockState()
@@ -43,12 +43,12 @@ public class CandleProcessor extends StructureProcessor {
         return blockInfoGlobal;
     }
 
-    private static Block getRandomCandle(Random random) {
+    private static Block getRandomCandle(RandomSource random) {
         int i = random.nextInt(CANDLES.size());
         return CANDLES.get(i);
     }
 
     protected StructureProcessorType<?> getType() {
-        return StructureProcessorModule.CANDLE_PROCESSOR;
+        return StructureProcessorTypeModule.CANDLE_PROCESSOR;
     }
 }

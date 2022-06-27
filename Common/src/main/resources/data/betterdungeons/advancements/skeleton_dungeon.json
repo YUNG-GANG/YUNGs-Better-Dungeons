@@ -5,10 +5,10 @@
       "item": "minecraft:skeleton_skull"
     },
     "title": {
-      "translate": "betterdungeons.advancements.skeleton_dungeon.title"
+      "translate": "A Bone to Pick"
     },
     "description": {
-      "translate": "betterdungeons.advancements.skeleton_dungeon.description"
+      "translate": "Enter a Fortress of the Undead"
     },
     "show_toast": true,
     "announce_to_chat": true,

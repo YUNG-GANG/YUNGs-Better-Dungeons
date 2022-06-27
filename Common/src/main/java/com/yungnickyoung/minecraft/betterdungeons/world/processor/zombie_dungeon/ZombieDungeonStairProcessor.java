@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon;
 
 import com.mojang.serialization.Codec;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorModule;
+import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockStateRandomizer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
@@ -54,6 +54,6 @@ public class ZombieDungeonStairProcessor extends StructureProcessor {
     }
 
     protected StructureProcessorType<?> getType() {
-        return StructureProcessorModule.ZOMBIE_DUNGEON_STAIR_PROCESSOR;
+        return StructureProcessorTypeModule.ZOMBIE_DUNGEON_STAIR_PROCESSOR;
     }
 }

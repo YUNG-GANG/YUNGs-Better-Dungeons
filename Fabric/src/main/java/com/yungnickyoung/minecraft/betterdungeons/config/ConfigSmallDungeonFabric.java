@@ -4,12 +4,6 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
 public class ConfigSmallDungeonFabric {
     @ConfigEntry.Gui.Tooltip(count = 2)
-    public int smallDungeonMinY = -50;
-
-    @ConfigEntry.Gui.Tooltip(count = 2)
-    public int smallDungeonMaxY = 50;
-
-    @ConfigEntry.Gui.Tooltip(count = 2)
     @ConfigEntry.BoundedDiscrete(min = 0, max = 8)
     public int bannerMaxCount = 2;
 

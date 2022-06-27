@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "betterdungeons:small_dungeon",
+    "betterdungeons:spider_dungeon",
+    "betterdungeons:skeleton_dungeon",
+    "betterdungeons:zombie_dungeon"
+  ]
+}

@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon;
 
 import com.mojang.serialization.Codec;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorModule;
+import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.world.spawner.MobSpawnerData;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -50,6 +50,6 @@ public class ZombieMobSpawnerProcessor extends StructureProcessor {
     }
 
     protected StructureProcessorType<?> getType() {
-        return StructureProcessorModule.ZOMBIE_MOB_SPAWNER_PROCESSOR;
+        return StructureProcessorTypeModule.ZOMBIE_MOB_SPAWNER_PROCESSOR;
     }
 }

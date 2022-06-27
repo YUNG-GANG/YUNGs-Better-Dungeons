@@ -3,13 +3,14 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorModule;
+import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonContext;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonType;
 import com.yungnickyoung.minecraft.yungsapi.world.banner.Banner;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.AbstractBannerBlock;
 import net.minecraft.world.level.block.Blocks;
@@ -19,8 +20,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-
-import java.util.Random;
 
 /**
  * Replaces wall banners with a banner corresponding to the dungeon type.
@@ -53,7 +52,7 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
         .pattern("ts", 0)
         .pattern("cre", 0)
         .pattern("gra", 15)
-        .customName("betterdungeons.small_dungeon.banner.skeleton")
+        .customName("Vengeful Banner")
         .customColor("dark_gray")
         .build();
 
@@ -65,7 +64,7 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
         .pattern("tts", 0)
         .pattern("bts", 0)
         .pattern("bo", 13)
-        .customName("betterdungeons.small_dungeon.banner.zombie")
+        .customName("Foul Banner")
         .customColor("dark_green")
         .build();
 
@@ -77,7 +76,7 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
         .pattern("hh", 7)
         .pattern("bs", 7)
         .pattern("gra", 15)
-        .customName("betterdungeons.small_dungeon.banner.spider")
+        .customName("Haunted Banner")
         .customColor("dark_red")
         .build();
 
@@ -99,7 +98,7 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
                     return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
 
                 // Chance of a banner spawning
-                Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
+                RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos);
                 if (random.nextFloat() > .1f) {
                     return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
                 }
@@ -117,7 +116,7 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
     }
 
     protected StructureProcessorType<?> getType() {
-        return StructureProcessorModule.SMALL_DUNGEON_BANNER_PROCESSOR;
+        return StructureProcessorTypeModule.SMALL_DUNGEON_BANNER_PROCESSOR;
     }
 
     private Banner getBannerForType() {

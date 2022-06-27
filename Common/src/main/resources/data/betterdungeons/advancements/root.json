@@ -4,10 +4,10 @@
       "item": "minecraft:mossy_stone_bricks"
     },
     "title": {
-      "translate": "betterdungeons.advancements.root.title"
+      "translate": "YUNG's Better Dungeons"
     },
     "description": {
-      "translate": "betterdungeons.advancements.root.description"
+      "translate": "Adventure awaits..."
     },
     "show_toast": false,
     "announce_to_chat": false,

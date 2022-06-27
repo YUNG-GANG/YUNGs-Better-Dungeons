@@ -1,17 +1,38 @@
 {
   "betterdungeons.small_dungeon.banner.zombie": "Stendardo disgustoso",
+  "Foul Banner": "Stendardo disgustoso",
   "betterdungeons.small_dungeon.banner.skeleton": "Stendardo vendicativo",
+  "Vengeful Banner": "Stendardo vendicativo",
   "betterdungeons.small_dungeon.banner.spider": "Stendardo infestato",
+  "Haunted Banner": "Stendardo infestato",
+
   "betterdungeons.advancements.root.title": "YUNG's Better Dungeons",
+  "YUNG's Better Dungeons": "YUNG's Better Dungeons",
   "betterdungeons.advancements.root.description": "Un'avventura ti aspetta...",
+  "Adventure awaits...": "Un'avventura ti aspetta...",
+
   "betterdungeons.advancements.all_dungeons.title": "Dungeoneer professionista",
+  "Professional Dungeoneer": "Dungeoneer professionista",
   "betterdungeons.advancements.all_dungeons.description": "Esplora tutto il Better Dungeons!",
+  "Explore all of the Better Dungeons!": "Esplora tutto il Better Dungeons!",
+
   "betterdungeons.advancements.small_dungeon.title": "Che bella ristrutturazione",
+  "Quite the Renovation": "Che bella ristrutturazione",
   "betterdungeons.advancements.small_dungeon.description": "Trova una stanza dei mostri migliorata",
+  "Find an upgraded Monster Room": "Trova una stanza dei mostri migliorata",
+
   "betterdungeons.advancements.skeleton_dungeon.title": "Una questione in sospeso",
+  "A Bone to Pick": "Una questione in sospeso",
   "betterdungeons.advancements.skeleton_dungeon.description": "Entra in una fortezza dei non-morti",
+  "Enter a Fortress of the Undead": "Entra in una fortezza dei non-morti",
+
   "betterdungeons.advancements.spider_dungeon.title": "Groviglio di ragnatele",
+  "Cobweb Entanglement": "Groviglio di ragnatele",
   "betterdungeons.advancements.spider_dungeon.description": "Scopri una caverna di ragni",
+  "Discover a Spider Cave": "Scopri una caverna di ragni",
+
   "betterdungeons.advancements.zombie_dungeon.title": "Quando a roma",
-  "betterdungeons.advancements.zombie_dungeon.description": "Entra in una catacomba"
+  "When in Rome": "Quando a roma",
+  "betterdungeons.advancements.zombie_dungeon.description": "Entra in una catacomba",
+  "Set foot in a Catacomb": "Entra in una catacomba"
 }

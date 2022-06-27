@@ -2,9 +2,10 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorModule;
+import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonContext;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChestBlock;
@@ -12,8 +13,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-
-import java.util.Random;
 
 /**
  * Replaces some chests with air, ensuring at least 1 per dungeon but no more than 2.
@@ -37,7 +36,7 @@ public class SmallDungeonChestProcessor extends StructureProcessor {
             if (chestCount < BetterDungeonsCommon.CONFIG.smallDungeons.chestMinCount) { // Ensure there is at least minimum amount of chests
                 context.incrementChestCount();
             } else if (chestCount < BetterDungeonsCommon.CONFIG.smallDungeons.chestMaxCount) { // 20% chance of additional chest, per chest prop
-                Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
+                RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos);
                 if (random.nextFloat() > .2f) {
                     return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
                 }
@@ -50,6 +49,6 @@ public class SmallDungeonChestProcessor extends StructureProcessor {
     }
 
     protected StructureProcessorType<?> getType() {
-        return StructureProcessorModule.SMALL_DUNGEON_CHEST_PROCESSOR;
+        return StructureProcessorTypeModule.SMALL_DUNGEON_CHEST_PROCESSOR;
     }
 }

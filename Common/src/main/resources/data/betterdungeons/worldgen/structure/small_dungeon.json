@@ -1,0 +1,21 @@
+{
+  "type": "betterdungeons:yung_jigsaw",
+  "biomes": "#betterdungeons:has_structure/small_dungeon",
+  "step": "underground_structures",
+  "start_pool": "betterdungeons:small_dungeon",
+  "size": 10,
+  "start_height": {
+    "type": "minecraft:uniform",
+    "min_inclusive": {
+      "absolute": -50
+    },
+    "max_inclusive": {
+      "absolute": 50
+    }
+  },
+  "x_offset_in_chunk": 8,
+  "z_offset_in_chunk": 8,
+  "use_expansion_hack": false,
+  "max_distance_from_center": 80,
+  "spawn_overrides": {}
+}

@@ -5,10 +5,10 @@ import com.yungnickyoung.minecraft.betterdungeons.module.*;
 public class ForgeModulesLoader implements IModulesLoader {
     @Override
     public void loadModules() {
+        IModulesLoader.super.loadModules(); // Load common modules
         ConfigModuleForge.init();
-        TagModuleForge.init();
-        StructureProcessorModuleForge.init();
-        StructureFeatureModuleForge.init();
-        StructureFeaturePieceModuleForge.init();
+        StructureProcessorTypeModuleForge.init();
+        StructureTypeModuleForge.init();
+        StructurePieceTypeModuleForge.init();
     }
 }

@@ -7,8 +7,6 @@ public class BDConfigForge {
     public static final ForgeConfigSpec SPEC;
 
     public static final ConfigGeneralForge general;
-    public static final ConfigSpiderDungeonForge spiderDungeons;
-    public static final ConfigSkeletonDungeonForge skeletonDungeons;
     public static final ConfigZombieDungeonForge zombieDungeons;
     public static final ConfigSmallDungeonsForge smallDungeons;
 
@@ -16,8 +14,6 @@ public class BDConfigForge {
         BUILDER.push("YUNG's Better Dungeons");
 
         general = new ConfigGeneralForge(BUILDER);
-        spiderDungeons = new ConfigSpiderDungeonForge(BUILDER);
-        skeletonDungeons = new ConfigSkeletonDungeonForge(BUILDER);
         zombieDungeons = new ConfigZombieDungeonForge(BUILDER);
         smallDungeons = new ConfigSmallDungeonsForge(BUILDER);
 

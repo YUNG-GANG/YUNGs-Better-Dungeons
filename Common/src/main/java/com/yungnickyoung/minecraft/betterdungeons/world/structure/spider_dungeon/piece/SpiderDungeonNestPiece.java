@@ -2,15 +2,16 @@ package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeo
 
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import com.yungnickyoung.minecraft.betterdungeons.mixin.accessor.BoundingBoxAccessor;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureFeaturePieceModule;
+import com.yungnickyoung.minecraft.betterdungeons.module.StructurePieceTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockStateRandomizer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -28,7 +29,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 
 import java.util.BitSet;
-import java.util.Random;
 
 public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
     private final BlockPos startPos;
@@ -44,7 +44,7 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
     private static final BlockStateRandomizer WOOL_SELECTOR = BlockStateRandomizer.from(Blocks.WHITE_WOOL.defaultBlockState());
 
     public SpiderDungeonNestPiece(BlockPos startPos, int pieceChainLength) {
-        super(StructureFeaturePieceModule.SPIDER_DUNGEON_NEST_PIECE, pieceChainLength, getInitialBoundingBox(startPos));
+        super(StructurePieceTypeModule.NEST, pieceChainLength, getInitialBoundingBox(startPos));
         this.startPos = new BlockPos(startPos.getX(), startPos.getY(), startPos.getZ());
     }
 
@@ -52,7 +52,7 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
      * Constructor for loading from NBT.
      */
     public SpiderDungeonNestPiece(CompoundTag compoundTag) {
-        super(StructureFeaturePieceModule.SPIDER_DUNGEON_NEST_PIECE, compoundTag);
+        super(StructurePieceTypeModule.NEST, compoundTag);
         int[] start = compoundTag.getIntArray("startPos");
         this.startPos = new BlockPos(start[0], start[1], start[2]);
         this.xRadius = compoundTag.getFloat("xRadius");
@@ -69,10 +69,10 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
     }
 
     @Override
-    public void addChildren(StructurePiece structurePiece, StructurePieceAccessor structurePieceAccessor, Random random) {
-        this.xRadius = random.nextFloat() * (X_MAXRADIUS - X_MINRADIUS) + X_MINRADIUS;
-        this.yRadius = random.nextFloat() * (Y_MAXRADIUS - Y_MINRADIUS) + Y_MINRADIUS;
-        this.zRadius = random.nextFloat() * (Z_MAXRADIUS - Z_MINRADIUS) + Z_MINRADIUS;
+    public void addChildren(StructurePiece structurePiece, StructurePieceAccessor structurePieceAccessor, RandomSource randomSource) {
+        this.xRadius = randomSource.nextFloat() * (X_MAXRADIUS - X_MINRADIUS) + X_MINRADIUS;
+        this.yRadius = randomSource.nextFloat() * (Y_MAXRADIUS - Y_MINRADIUS) + Y_MINRADIUS;
+        this.zRadius = randomSource.nextFloat() * (Z_MAXRADIUS - Z_MINRADIUS) + Z_MINRADIUS;
 
         // Update bounding box
         ((BoundingBoxAccessor)this.boundingBox).setMinX(this.startPos.getX() - (int) this.xRadius - 4);
@@ -87,7 +87,7 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
      * Generate.
      */
     @Override
-    public void postProcess(WorldGenLevel world, StructureFeatureManager structureFeatureManager, ChunkGenerator chunkGenerator, Random random, BoundingBox box, ChunkPos chunkPos, BlockPos blockPos) {
+    public void postProcess(WorldGenLevel world, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomSource randomSource, BoundingBox box, ChunkPos chunkPos, BlockPos blockPos) {
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         WorldgenRandom decoRand = new WorldgenRandom(new LegacyRandomSource(0)); // Rand for decoration. It's not as important for this to be deterministic.
         decoRand.setLargeFeatureSeed(world.getSeed(), startPos.getX(), startPos.getZ());

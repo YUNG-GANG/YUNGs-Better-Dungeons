@@ -3,8 +3,6 @@ package com.yungnickyoung.minecraft.betterdungeons.config;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ConfigSmallDungeonsForge {
-    public final ForgeConfigSpec.ConfigValue<Integer> smallDungeonMinY;
-    public final ForgeConfigSpec.ConfigValue<Integer> smallDungeonMaxY;
     public final ForgeConfigSpec.ConfigValue<Integer> bannerMaxCount;
     public final ForgeConfigSpec.ConfigValue<Integer> chestMinCount;
     public final ForgeConfigSpec.ConfigValue<Integer> chestMaxCount;
@@ -18,20 +16,6 @@ public class ConfigSmallDungeonsForge {
                                 # Small Dungeon settings.
                                 ##########################################################################################################""")
                 .push("Small Dungeons");
-
-        smallDungeonMinY = BUILDER
-                .comment(
-                        " The minimum y-value at which small dungeons can spawn.\n" +
-                        " Default: -50")
-                .worldRestart()
-                .define("Small Dungeon Min Y", -50);
-
-        smallDungeonMaxY = BUILDER
-                .comment(
-                        " The maximum y-value at which small dungeons can spawn.\n" +
-                        " Default: 50")
-                .worldRestart()
-                .define("Small Dungeon Max Start Y", 50);
 
         bannerMaxCount = BUILDER
                 .comment(

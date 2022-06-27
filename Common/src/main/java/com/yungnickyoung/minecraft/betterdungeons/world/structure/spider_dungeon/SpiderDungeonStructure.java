@@ -1,68 +1,53 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon;
 
-import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
+import com.mojang.datafixers.util.Either;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.yungnickyoung.minecraft.betterdungeons.module.StructureTypeModule;
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece.SpiderDungeonBigTunnelPiece;
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece.SpiderDungeonPiece;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.QuartPos;
-import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.LegacyRandomSource;
-import net.minecraft.world.level.levelgen.WorldgenRandom;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
-import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
+import net.minecraft.world.level.levelgen.WorldGenerationContext;
+import net.minecraft.world.level.levelgen.heightproviders.HeightProvider;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 
 import java.util.Optional;
 
-public class SpiderDungeonStructure extends StructureFeature<NoneFeatureConfiguration> {
+public class SpiderDungeonStructure extends Structure {
+    public static final Codec<SpiderDungeonStructure> CODEC = RecordCodecBuilder.create((builder) -> builder
+                    .group(
+                            settingsCodec(builder),
+                            HeightProvider.CODEC.fieldOf("start_height").forGetter(structure -> structure.startHeight))
+                    .apply(builder, SpiderDungeonStructure::new));
+    private final HeightProvider startHeight;
+
+    public SpiderDungeonStructure(StructureSettings structureSettings, HeightProvider startHeight) {
+        super(structureSettings);
+        this.startHeight = startHeight;
+    }
+
     @Override
-    public GenerationStep.Decoration step() {
-        return GenerationStep.Decoration.UNDERGROUND_STRUCTURES;
-    }
-
-    public SpiderDungeonStructure() {
-        super(NoneFeatureConfiguration.CODEC, context -> {
-            // Get starting position with random y-value
-            int minY = BetterDungeonsCommon.CONFIG.spiderDungeons.spiderDungeonStartMinY;
-            int maxY = BetterDungeonsCommon.CONFIG.spiderDungeons.spiderDungeonStartMaxY;
-            WorldgenRandom worldgenRandom = new WorldgenRandom(new LegacyRandomSource(0L));
-            worldgenRandom.setLargeFeatureSeed(context.seed(), context.chunkPos().x, context.chunkPos().z);
-            int y = worldgenRandom.nextInt(maxY - minY) + minY;
-            BlockPos startPos = new BlockPos(context.chunkPos().getMiddleBlockX(), y, context.chunkPos().getMiddleBlockZ());
-
-            // Only generate if location is valid
-            if (!checkLocation(context, startPos)) {
-                return Optional.empty();
-            }
-
-            return Optional.of(SpiderDungeonStructure::generatePieces);
-        });
-    }
-
-    private static boolean checkLocation(PieceGeneratorSupplier.Context<NoneFeatureConfiguration> context, BlockPos startPos) {
-        return context.validBiome().test(context.chunkGenerator().getNoiseBiome(
-                QuartPos.fromBlock(startPos.getX()),
-                QuartPos.fromBlock(startPos.getY()),
-                QuartPos.fromBlock(startPos.getZ()))
-        );
-    }
-
-    private static void generatePieces(StructurePiecesBuilder structurePiecesBuilder, PieceGenerator.Context<NoneFeatureConfiguration> context) {
-        int x = context.chunkPos().getMiddleBlockX();
-        int z = context.chunkPos().getMiddleBlockZ();
-        int y = context.random()
-                .nextInt(BetterDungeonsCommon.CONFIG.spiderDungeons.spiderDungeonStartMaxY - BetterDungeonsCommon.CONFIG.spiderDungeons.spiderDungeonStartMinY)
-                + BetterDungeonsCommon.CONFIG.spiderDungeons.spiderDungeonStartMinY;
+    public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
+        int startX = context.chunkPos().getMiddleBlockX();
+        int startZ = context.chunkPos().getMiddleBlockZ();
+        int startY = this.startHeight.sample(context.random(), new WorldGenerationContext(context.chunkGenerator(), context.heightAccessor()));
+        BlockPos startPos = new BlockPos(startX, startY, startZ);
 
         // Spider dungeons use traditional code-based structure gen instead of Jigsaw
-        SpiderDungeonPiece startPiece = new SpiderDungeonBigTunnelPiece(x, y, z);
+        SpiderDungeonPiece startPiece = new SpiderDungeonBigTunnelPiece(startPos);
+        StructurePiecesBuilder structurePiecesBuilder = new StructurePiecesBuilder();
         structurePiecesBuilder.addPiece(startPiece);
 
         // Build room component. This also populates the children list, effectively building the entire mineshaft.
         // Note that no blocks are actually placed yet.
         startPiece.addChildren(startPiece, structurePiecesBuilder, context.random());
+        return Optional.of(new GenerationStub(startPos, Either.right(structurePiecesBuilder)));
+    }
 
+    @Override
+    public StructureType<?> type() {
+        return StructureTypeModule.SPIDER_DUNGEON;
     }
 }

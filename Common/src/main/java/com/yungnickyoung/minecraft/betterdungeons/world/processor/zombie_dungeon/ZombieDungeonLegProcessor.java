@@ -1,17 +1,17 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon;
 
 import com.mojang.serialization.Codec;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorModule;
+import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockStateRandomizer;
 import com.yungnickyoung.minecraft.yungsapi.world.processor.ISafeWorldModifier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.WorldGenRegion;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
@@ -19,7 +19,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraft.world.level.material.Material;
 
 import java.util.Optional;
-import java.util.Random;
 
 /**
  * Dynamically generates support legs below zombie dungeons.
@@ -45,9 +44,7 @@ public class ZombieDungeonLegProcessor extends StructureProcessor implements ISa
                 return blockInfoGlobal;
             }
 
-            ChunkPos currentChunkPos = new ChunkPos(blockInfoGlobal.pos);
-            ChunkAccess currentChunk = levelReader.getChunk(currentChunkPos.x, currentChunkPos.z);
-            Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
+            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos);
 
             // Always replace the glass itself with smooth stone
             Optional<BlockState> blockState = getBlockStateSafe(levelReader, blockInfoGlobal.pos);
@@ -81,6 +78,6 @@ public class ZombieDungeonLegProcessor extends StructureProcessor implements ISa
     }
 
     protected StructureProcessorType<?> getType() {
-        return StructureProcessorModule.ZOMBIE_DUNGEON_LEG_PROCESSOR;
+        return StructureProcessorTypeModule.ZOMBIE_DUNGEON_LEG_PROCESSOR;
     }
 }

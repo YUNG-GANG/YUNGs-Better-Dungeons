@@ -1,17 +1,16 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon;
 
 import com.mojang.serialization.Codec;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorModule;
+import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-
-import java.util.Random;
 
 public class SmallDungeonCeilingPropProcessor extends StructureProcessor {
     public static final SmallDungeonCeilingPropProcessor INSTANCE = new SmallDungeonCeilingPropProcessor();
@@ -30,7 +29,7 @@ public class SmallDungeonCeilingPropProcessor extends StructureProcessor {
                 return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
             }
 
-            Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
+            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos);
             float f = random.nextFloat();
 
             // Choose ceiling prop
@@ -42,7 +41,7 @@ public class SmallDungeonCeilingPropProcessor extends StructureProcessor {
                 return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
             }
 
-            Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
+            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos);
             float f = random.nextFloat();
 
             // Choose ceiling prop
@@ -59,6 +58,6 @@ public class SmallDungeonCeilingPropProcessor extends StructureProcessor {
     }
 
     protected StructureProcessorType<?> getType() {
-        return StructureProcessorModule.SMALL_DUNGEON_CEILING_PROP_PROCESSOR;
+        return StructureProcessorTypeModule.SMALL_DUNGEON_CEILING_PROP_PROCESSOR;
     }
 }

@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import com.yungnickyoung.minecraft.yungsapi.world.BlockStateRandomizer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
@@ -14,7 +15,6 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 
 import java.util.BitSet;
-import java.util.Random;
 import java.util.Set;
 
 public abstract class SpiderDungeonPiece extends StructurePiece {
@@ -28,7 +28,7 @@ public abstract class SpiderDungeonPiece extends StructurePiece {
         super(structurePierceTypeIn, compoundTag);
     }
 
-    protected void decorateCave(WorldGenLevel world, Random decoRand, ChunkPos chunkPos, BoundingBox box, BitSet carvingMask) {
+    protected void decorateCave(WorldGenLevel world, RandomSource decoRand, ChunkPos chunkPos, BoundingBox box, BitSet carvingMask) {
         carvingMask.stream().forEach(mask -> {
             if (decoRand.nextFloat() < .15f) { // Random chance of cobwebs along cave rim
                 // Grab positional info from mask
@@ -55,7 +55,7 @@ public abstract class SpiderDungeonPiece extends StructurePiece {
         });
     }
 
-    protected void placeSphereRandomized(WorldGenLevel world, BoundingBox box, BlockPos center, float radius, Random rand, float chance, BlockStateRandomizer blockSelector, boolean replaceOnlyAir) {
+    protected void placeSphereRandomized(WorldGenLevel world, BoundingBox box, BlockPos center, float radius, RandomSource rand, float chance, BlockStateRandomizer blockSelector, boolean replaceOnlyAir) {
         for (float x = -radius; x <= radius; x++) {
             for (float z = -radius; z <= radius; z++) {
                 for (float y = -radius; y <= radius; y++) {
@@ -71,11 +71,11 @@ public abstract class SpiderDungeonPiece extends StructurePiece {
         }
     }
 
-    protected void placeSphereRandomized(WorldGenLevel world, BoundingBox box, int centerX, int centerY, int centerZ, float radius, Random rand, float chance, BlockStateRandomizer blockSelector, boolean replaceOnlyAir) {
+    protected void placeSphereRandomized(WorldGenLevel world, BoundingBox box, int centerX, int centerY, int centerZ, float radius, RandomSource rand, float chance, BlockStateRandomizer blockSelector, boolean replaceOnlyAir) {
         placeSphereRandomized(world, box, new BlockPos(centerX, centerY, centerZ), radius, rand, chance, blockSelector, replaceOnlyAir);
     }
 
-    protected void setBlockState(WorldGenLevel worldIn, Random random, BlockStateRandomizer selector, int x, int y, int z, BoundingBox boundingboxIn) {
+    protected void setBlockState(WorldGenLevel worldIn, RandomSource random, BlockStateRandomizer selector, int x, int y, int z, BoundingBox boundingboxIn) {
         BlockState blockState = selector.get(random);
         this.placeBlock(worldIn, blockState, x, y, z, boundingboxIn);
     }
