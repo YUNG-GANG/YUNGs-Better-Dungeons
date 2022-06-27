@@ -1,5 +1,5 @@
 {
-  "type": "betterdungeons:yung_jigsaw",
+  "type": "yungsapi:yung_jigsaw",
   "biomes": "#betterdungeons:has_structure/zombie_dungeon",
   "step": "underground_structures",
   "start_pool": "betterdungeons:zombie_dungeon",
