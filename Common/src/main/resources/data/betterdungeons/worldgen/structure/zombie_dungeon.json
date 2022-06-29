@@ -3,6 +3,7 @@
   "biomes": "#betterdungeons:has_structure/zombie_dungeon",
   "step": "underground_structures",
   "start_pool": "betterdungeons:zombie_dungeon",
+  "start_jigsaw_name": "betterdungeons:zombie_dungeon_anchor",
   "size": 20,
   "start_height": {
     "type": "minecraft:uniform",
@@ -13,8 +14,6 @@
       "absolute": 51
     }
   },
-  "x_offset_in_chunk": 8,
-  "z_offset_in_chunk": 8,
   "use_expansion_hack": false,
   "max_distance_from_center": 120,
   "adapt_noise": false,
