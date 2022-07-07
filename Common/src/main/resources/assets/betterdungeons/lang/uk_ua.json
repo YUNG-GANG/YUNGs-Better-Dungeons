@@ -1,0 +1,17 @@
+{
+  "betterdungeons.small_dungeon.banner.zombie": "Нечистий стяг",
+  "betterdungeons.small_dungeon.banner.skeleton": "Мстивий стяг",
+  "betterdungeons.small_dungeon.banner.spider": "Примарний стяг",
+  "betterdungeons.advancements.root.title": "YUNG's Better Dungeons",
+  "betterdungeons.advancements.root.description": "Пригоди чекають...",
+  "betterdungeons.advancements.all_dungeons.title": "Професіональний підземельник",
+  "betterdungeons.advancements.all_dungeons.description": "Дослідіть усі покращені підземелля!",
+  "betterdungeons.advancements.small_dungeon.title": "Непоганий ремонт",
+  "betterdungeons.advancements.small_dungeon.description": "Знайдіть покращену кімнату монстрів",
+  "betterdungeons.advancements.skeleton_dungeon.title": "Кістки на вибір",
+  "betterdungeons.advancements.skeleton_dungeon.description": "Увійдіть у фортецю нежиті",
+  "betterdungeons.advancements.spider_dungeon.title": "Усе так заплутано",
+  "betterdungeons.advancements.spider_dungeon.description": "Дослідіть печеру павука",
+  "betterdungeons.advancements.zombie_dungeon.title": "Неначе в Римі",
+  "betterdungeons.advancements.zombie_dungeon.description": "Ступіть у катакомби"
+}
