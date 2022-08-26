@@ -3,7 +3,10 @@ package com.yungnickyoung.minecraft.betterdungeons.world;
 public enum DungeonType {
     SPIDER("spider"),
     SKELETON("skeleton"),
-    ZOMBIE("zombie");
+    ZOMBIE("zombie"),
+    ZOMBIFIED_PIGLIN("zombified_piglin"),
+    WITHER_SKELETON("wither_skeleton"),
+    BLAZE("blaze");
 
     private final String name;
 

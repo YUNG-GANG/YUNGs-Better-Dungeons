@@ -1,0 +1,330 @@
+{
+  "name": "betterdungeons:small_nether_dungeon",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_9x9",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_skeleton",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_9x9",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_wither_skeleton",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_9x9",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_zombified_piglin",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_9x9",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_blaze",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_9x11",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_skeleton",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_9x11",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_wither_skeleton",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_9x11",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_zombified_piglin",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_9x11",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_blaze",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_9x13",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_skeleton",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_9x13",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_wither_skeleton",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_9x13",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_zombified_piglin",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_9x13",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_blaze",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_11x9",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_skeleton",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_11x9",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_wither_skeleton",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_11x9",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_zombified_piglin",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_11x9",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_blaze",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_11x11",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_skeleton",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_11x11",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_wither_skeleton",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_11x11",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_zombified_piglin",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_11x11",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_blaze",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_11x13",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_skeleton",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_11x13",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_wither_skeleton",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_11x13",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_zombified_piglin",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_11x13",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_blaze",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_13x9",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_skeleton",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_13x9",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_wither_skeleton",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_13x9",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_zombified_piglin",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_13x9",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_blaze",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_13x11",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_skeleton",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_13x11",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_wither_skeleton",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_13x11",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_zombified_piglin",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_13x11",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_blaze",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_13x13",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_skeleton",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_13x13",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_wither_skeleton",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_13x13",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_zombified_piglin",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/shells/nether_shell_13x13",
+        "processors": "betterdungeons:small_nether_dungeon/small_nether_dungeon_blaze",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

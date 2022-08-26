@@ -1,0 +1,18 @@
+{
+  "structures": [
+    {
+      "structure": "betterdungeons:small_nether_dungeon",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 998767517,
+    "spacing": 16,
+    "separation": 10,
+    "exclusion_zone": {
+      "chunk_count": 6,
+      "other_set": "#betterdungeons:small_nether_dungeon_avoid"
+    },
+    "type": "minecraft:random_spread"
+  }
+}

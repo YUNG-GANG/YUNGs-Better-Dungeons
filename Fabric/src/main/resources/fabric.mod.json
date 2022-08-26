@@ -35,6 +35,6 @@
     "minecraft": ">=1.19.2",
     "cloth-config2": ">=8.0.75",
     "java": ">=17",
-    "yungsapi": ">=1.19.2-Fabric-3.5.0"
+    "yungsapi": ">=1.19.2-Fabric-3.6.0"
   }
 }

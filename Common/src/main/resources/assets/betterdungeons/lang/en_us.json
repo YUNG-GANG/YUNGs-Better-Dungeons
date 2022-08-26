@@ -6,6 +6,10 @@
   "betterdungeons.small_dungeon.banner.spider": "Haunted Banner",
   "Haunted Banner": "Haunted Banner",
 
+  "Banner of Decay": "Banner of Decay",
+  "Banner of Pork": "Banner of Pork",
+  "Banner of Rage": "Banner of Rage",
+
   "betterdungeons.advancements.root.title": "YUNG's Better Dungeons",
   "YUNG's Better Dungeons": "YUNG's Better Dungeons",
   "betterdungeons.advancements.root.description": "Adventure awaits...",
@@ -46,6 +50,8 @@
   "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.zombieDungeon.@Tooltip": "Zombie Dungeons",
   "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallDungeon": "Small Dungeons",
   "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallDungeon.@Tooltip": "Small Dungeons",
+  "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallNetherDungeon": "Small Nether Dungeons",
+  "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallNetherDungeon.@Tooltip": "Small Nether Dungeons",
 
   "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.general.enableHeads": "Enable Skulls & Heads",
   "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.general.enableHeads.@Tooltip[0]": "Whether or not dungeons should be allowed to place skeleton skulls and other mob heads.",
@@ -84,5 +90,12 @@
   "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallDungeon.enableOreProps": "Allow Ore Blocks in Corners",
   "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallDungeon.enableOreProps.@Tooltip[0]": "Whether or not Small Dungeons can rarely place ore blocks in the corners of the dungeon.",
   "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallDungeon.enableOreProps.@Tooltip[1]": "If this is set to false, any ore blocks that spawn as part of a corner prop will instead be replaced with air.",
-  "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallDungeon.enableOreProps.@Tooltip[2]": "Default: true"
+  "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallDungeon.enableOreProps.@Tooltip[2]": "Default: true",
+
+  "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallNetherDungeon.bannerMaxCount": "Small Nether Dungeon Max Banner Count",
+  "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallNetherDungeon.bannerMaxCount.@Tooltip[0]": "The maximum number of banners that can spawn in a single small Nether dungeon.",
+  "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallNetherDungeon.bannerMaxCount.@Tooltip[1]": "Default: 2",
+
+  "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallNetherDungeon.enabled": "Enable Small Nether Dungeons",
+  "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallNetherDungeon.enabled.@Tooltip": "Whether or not small Nether dungeons should spawn."
 }

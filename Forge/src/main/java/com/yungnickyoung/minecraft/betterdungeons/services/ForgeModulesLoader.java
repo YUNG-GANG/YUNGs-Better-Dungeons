@@ -7,8 +7,6 @@ public class ForgeModulesLoader implements IModulesLoader {
     public void loadModules() {
         IModulesLoader.super.loadModules(); // Load common modules
         ConfigModuleForge.init();
-        StructureProcessorTypeModuleForge.init();
-        StructureTypeModuleForge.init();
         StructurePieceTypeModuleForge.init();
     }
 }

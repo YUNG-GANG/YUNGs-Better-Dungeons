@@ -17,4 +17,9 @@ public class ConfigBetterDungeonsFabric {
     @ConfigEntry.Gui.CollapsibleObject
     @ConfigEntry.Gui.Tooltip
     public ConfigSmallDungeonFabric smallDungeon = new ConfigSmallDungeonFabric();
+
+    @ConfigEntry.Category("Small Nether Dungeons")
+    @ConfigEntry.Gui.CollapsibleObject
+    @ConfigEntry.Gui.Tooltip
+    public ConfigSmallNetherDungeonFabric smallNetherDungeon = new ConfigSmallNetherDungeonFabric();
 }

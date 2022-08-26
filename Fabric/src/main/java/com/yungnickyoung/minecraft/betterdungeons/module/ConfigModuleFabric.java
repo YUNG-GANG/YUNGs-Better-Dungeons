@@ -29,5 +29,7 @@ public class ConfigModuleFabric {
         BetterDungeonsCommon.CONFIG.smallDungeons.chestMinCount = configFabric.betterDungeons.smallDungeon.chestMinCount;
         BetterDungeonsCommon.CONFIG.smallDungeons.chestMaxCount = configFabric.betterDungeons.smallDungeon.chestMaxCount;
         BetterDungeonsCommon.CONFIG.smallDungeons.enableOreProps = configFabric.betterDungeons.smallDungeon.enableOreProps;
+        BetterDungeonsCommon.CONFIG.smallNetherDungeons.enabled = configFabric.betterDungeons.smallNetherDungeon.enabled;
+        BetterDungeonsCommon.CONFIG.smallNetherDungeons.bannerMaxCount = configFabric.betterDungeons.smallNetherDungeon.bannerMaxCount;
     }
 }

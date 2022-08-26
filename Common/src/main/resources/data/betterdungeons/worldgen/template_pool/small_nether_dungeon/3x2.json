@@ -1,0 +1,405 @@
+{
+  "name": "betterdungeons:small_nether_dungeon/3x2",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_0",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_1",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_2",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_3",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_4",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_5",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_6",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_7",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_8",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_9",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_10",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_11",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_12",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_13",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_14",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_15",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_16",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_17",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "name": "chest_prop",
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_18",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "max_count": 2,
+        "element_type": "yungsapi:yung_single_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "name": "chest_prop",
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_19",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "max_count": 2,
+        "element_type": "yungsapi:yung_single_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "name": "chest_prop",
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_20",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "max_count": 2,
+        "element_type": "yungsapi:yung_single_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "name": "chest_prop",
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_21",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "max_count": 2,
+        "element_type": "yungsapi:yung_single_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_22",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_23",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_24",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_25",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_26",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_27",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_28",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "name": "chest_prop",
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_29",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "max_count": 2,
+        "element_type": "yungsapi:yung_single_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "name": "chest_prop",
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_30",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "max_count": 2,
+        "element_type": "yungsapi:yung_single_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_31",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_32",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_33",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_34",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_35",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_36",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_37",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_38",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_39",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_40",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_41",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "betterdungeons:small_nether_dungeon/props/3x2/3x2_42",
+        "processors": "betterdungeons:small_nether_dungeon/props",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

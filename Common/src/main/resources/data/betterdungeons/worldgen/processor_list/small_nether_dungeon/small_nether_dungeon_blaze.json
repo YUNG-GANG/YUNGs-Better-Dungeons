@@ -1,0 +1,92 @@
+{
+  "processors": [
+    {
+      "processor_type": "betterdungeons:small_nether_dungeon_banner_processor",
+      "dungeon_type": "blaze"
+    },
+    {
+      "processor_type": "betterdungeons:small_nether_dungeon_head_processor"
+    },
+    {
+      "processor_type": "betterdungeons:small_nether_dungeon_lava_block_processor"
+    },
+    {
+      "processor_type": "betterdungeons:small_nether_dungeon_entrance_stairs_processor"
+    },
+    {
+      "processor_type": "betterdungeons:small_nether_dungeon_leg_processor"
+    },
+    {
+      "processor_type": "betterdungeons:mob_spawner_processor",
+      "spawner_mob": "minecraft:blaze"
+    },
+    {
+      "rules": [
+        {
+          "output_state": {
+            "Name": "minecraft:nether_quartz_ore"
+          },
+          "input_predicate": {
+            "block": "minecraft:nether_gold_ore",
+            "probability": 0.50,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:chain"
+          },
+          "input_predicate": {
+            "block": "minecraft:gray_stained_glass",
+            "probability": 0.50,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:air"
+          },
+          "input_predicate": {
+            "block": "minecraft:gray_stained_glass",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:crying_obsidian"
+          },
+          "input_predicate": {
+            "block": "minecraft:purple_terracotta",
+            "probability": 0.25,
+            "predicate_type": "minecraft:random_block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:obsidian"
+          },
+          "input_predicate": {
+            "block": "minecraft:purple_terracotta",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    }
+  ]
+}
