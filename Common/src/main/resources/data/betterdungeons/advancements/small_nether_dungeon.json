@@ -1,0 +1,30 @@
+{
+  "parent": "betterdungeons:root",
+  "display": {
+    "icon": {
+      "item": "minecraft:red_nether_bricks"
+    },
+    "title": {
+      "translate": "A Special Addition"
+    },
+    "description": {
+      "translate": "Find a Small Nether Dungeon"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "in_small_nether_dungeon": {
+      "trigger": "yungsapi:structure_location",
+      "conditions": {
+        "feature": "betterdungeons:small_nether_dungeon"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "in_small_nether_dungeon"
+    ]
+  ]
+}
