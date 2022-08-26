@@ -1,4 +1,4 @@
-package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon;
+package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_dungeon;
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;

@@ -6,10 +6,7 @@ import com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dunge
 import com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dungeon.SkeletonDungeonLegProcessor;
 import com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dungeon.SkeletonMobSpawnerProcessor;
 import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon.*;
-import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_dungeon.SmallNetherDungeonBannerProcessor;
-import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_dungeon.SmallNetherDungeonEntranceStairsProcessor;
-import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_dungeon.SmallNetherDungeonHeadProcessor;
-import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_dungeon.SmallNetherDungeonLavaBlockProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_dungeon.*;
 import com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon.*;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
@@ -71,6 +68,9 @@ public class StructureProcessorTypeModule {
 
     @AutoRegister("small_nether_dungeon_leg_processor")
     public static StructureProcessorType<SmallNetherDungeonLegProcessor> SMALL_NETHER_DUNGEON_LEG_PROCESSOR = () -> SmallNetherDungeonLegProcessor.CODEC;
+
+    @AutoRegister("small_nether_dungeon_mob_spawner_processor")
+    public static StructureProcessorType<SmallNetherDungeonMobSpawner> SMALL_NETHER_DUNGEON_MOB_SPAWNER_PROCESSOR = () -> SmallNetherDungeonMobSpawner.CODEC;
 
     /* Skeleton dungeons */
     @AutoRegister("skeleton_dungeon_ruined_stone_bricks_processor")

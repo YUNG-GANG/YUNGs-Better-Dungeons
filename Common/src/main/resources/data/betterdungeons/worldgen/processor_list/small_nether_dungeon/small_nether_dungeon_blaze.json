@@ -17,7 +17,7 @@
       "processor_type": "betterdungeons:small_nether_dungeon_leg_processor"
     },
     {
-      "processor_type": "betterdungeons:mob_spawner_processor",
+      "processor_type": "betterdungeons:small_nether_dungeon_mob_spawner_processor",
       "spawner_mob": "minecraft:blaze"
     },
     {
