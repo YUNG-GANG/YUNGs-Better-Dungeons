@@ -30,6 +30,8 @@ public class ConfigModuleFabric {
         BetterDungeonsCommon.CONFIG.smallDungeons.chestMaxCount = configFabric.betterDungeons.smallDungeon.chestMaxCount;
         BetterDungeonsCommon.CONFIG.smallDungeons.enableOreProps = configFabric.betterDungeons.smallDungeon.enableOreProps;
         BetterDungeonsCommon.CONFIG.smallNetherDungeons.enabled = configFabric.betterDungeons.smallNetherDungeon.enabled;
+        BetterDungeonsCommon.CONFIG.smallNetherDungeons.witherSkeletonsDropWitherSkulls = configFabric.betterDungeons.smallNetherDungeon.witherSkeletonsDropWitherSkulls;
+        BetterDungeonsCommon.CONFIG.smallNetherDungeons.blazesDropBlazeRods = configFabric.betterDungeons.smallNetherDungeon.blazesDropBlazeRods;
         BetterDungeonsCommon.CONFIG.smallNetherDungeons.bannerMaxCount = configFabric.betterDungeons.smallNetherDungeon.bannerMaxCount;
     }
 }

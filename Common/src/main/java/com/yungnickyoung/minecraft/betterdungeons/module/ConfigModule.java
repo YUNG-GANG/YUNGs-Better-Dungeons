@@ -27,6 +27,8 @@ public class ConfigModule {
 
     public static class SmallNetherDungeon {
         public boolean enabled = false;
+        public boolean witherSkeletonsDropWitherSkulls = true;
+        public boolean blazesDropBlazeRods = true;
         public int bannerMaxCount = 2;
     }
 }

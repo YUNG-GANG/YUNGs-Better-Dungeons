@@ -100,5 +100,11 @@
   "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallNetherDungeon.bannerMaxCount.@Tooltip[1]": "Default: 2",
 
   "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallNetherDungeon.enabled": "Enable Small Nether Dungeons",
-  "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallNetherDungeon.enabled.@Tooltip": "Whether or not small Nether dungeons should spawn."
+  "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallNetherDungeon.enabled.@Tooltip": "Whether or not small Nether dungeons should spawn.",
+
+  "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallNetherDungeon.witherSkeletonsDropWitherSkulls": "Wither Skeletons From Spawners Drop Skulls",
+  "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallNetherDungeon.witherSkeletonsDropWitherSkulls.@Tooltip": "Whether wither skeletons spawned from small Nether dungeons can drop wither skeleton skulls.",
+
+  "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallNetherDungeon.blazesDropBlazeRods": "Blazes From Spawners Drop Blaze Rods",
+  "text.autoconfig.betterdungeons-fabric-1_19.option.betterDungeons.smallNetherDungeon.blazesDropBlazeRods.@Tooltip": "Whether blazes spawned from small Nether dungeons have a chance to drop blaze rods."
 }

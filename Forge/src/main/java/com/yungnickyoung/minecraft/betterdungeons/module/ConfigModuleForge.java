@@ -35,6 +35,8 @@ public class ConfigModuleForge {
         BetterDungeonsCommon.CONFIG.smallDungeons.chestMaxCount = BDConfigForge.smallDungeons.chestMaxCount.get();
         BetterDungeonsCommon.CONFIG.smallDungeons.enableOreProps = BDConfigForge.smallDungeons.enableOreProps.get();
         BetterDungeonsCommon.CONFIG.smallNetherDungeons.enabled = BDConfigForge.smallNetherDungeons.enabled.get();
+        BetterDungeonsCommon.CONFIG.smallNetherDungeons.witherSkeletonsDropWitherSkulls = BDConfigForge.smallNetherDungeons.witherSkeletonsDropWitherSkulls.get();
+        BetterDungeonsCommon.CONFIG.smallNetherDungeons.blazesDropBlazeRods = BDConfigForge.smallNetherDungeons.blazesDropBlazeRods.get();
         BetterDungeonsCommon.CONFIG.smallNetherDungeons.bannerMaxCount = BDConfigForge.smallNetherDungeons.bannerMaxCount.get();
     }
 }

@@ -2,6 +2,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.world.spawner.MobSpawnerData;
 import net.minecraft.Util;
@@ -95,6 +96,13 @@ public class SmallNetherDungeonMobSpawner extends StructureProcessor {
                                         itemStack.save(stoneSwordNbt);
                                         handItemsNbt.add(stoneSwordNbt);
                                     }));
+                                    if (!BetterDungeonsCommon.CONFIG.smallNetherDungeons.witherSkeletonsDropWitherSkulls) {
+                                        compoundTag.putString("DeathLootTable", "minecraft:empty");
+                                    }
+                                } else if (spawnerMob.toString().equals("minecraft:blaze")) {
+                                    if (!BetterDungeonsCommon.CONFIG.smallNetherDungeons.blazesDropBlazeRods) {
+                                        compoundTag.putString("DeathLootTable", "minecraft:empty");
+                                    }
                                 }
                             }),
                             Optional.empty())))
@@ -139,6 +147,13 @@ public class SmallNetherDungeonMobSpawner extends StructureProcessor {
                     itemStack.save(stoneSwordNbt);
                     handItemsNbt.add(stoneSwordNbt);
                 }));
+                if (!BetterDungeonsCommon.CONFIG.smallNetherDungeons.witherSkeletonsDropWitherSkulls) {
+                    spawner.nextSpawnData.getEntityToSpawn().putString("DeathLootTable", "minecraft:empty");
+                }
+            } else if (spawnerMob.toString().equals("minecraft:blaze")) {
+                if (!BetterDungeonsCommon.CONFIG.smallNetherDungeons.blazesDropBlazeRods) {
+                    spawner.nextSpawnData.getEntityToSpawn().putString("DeathLootTable", "minecraft:empty");
+                }
             }
             CompoundTag nbt = spawner.save();
             blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SPAWNER.defaultBlockState(), nbt);
