@@ -11,7 +11,7 @@
     "separation": 10,
     "exclusion_zone": {
       "chunk_count": 6,
-      "other_set": "#betterdungeons:small_nether_dungeon_avoid"
+      "other_set": "minecraft:nether_complexes"
     },
     "type": "minecraft:random_spread"
   }
