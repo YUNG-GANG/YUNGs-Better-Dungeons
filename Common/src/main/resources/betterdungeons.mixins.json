@@ -6,6 +6,7 @@
   "refmap": "betterdungeons.refmap.json",
   "mixins": [
     "DungeonContextMixin",
+    "LocateSmallNetherDungeonCommandMixin",
     "NoBasaltColumnsInStructuresMixin",
     "NoDeltasInStructuresMixin",
     "accessor.BoundingBoxAccessor",
