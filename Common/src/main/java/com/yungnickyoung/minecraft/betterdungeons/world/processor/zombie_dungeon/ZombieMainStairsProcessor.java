@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
@@ -70,12 +71,8 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state.getBlock() == Blocks.WARPED_STAIRS) { // Warped stairs are the marker for the main staircase
             BlockPos.MutableBlockPos temp = blockInfoGlobal.pos.mutable();
-            Direction facing = switch (structurePlacementData.getRotation()) {
-                case CLOCKWISE_90 -> Direction.EAST;
-                case COUNTERCLOCKWISE_90 -> Direction.WEST;
-                case CLOCKWISE_180 -> Direction.SOUTH;
-                default -> Direction.NORTH;
-            };
+            Direction facing = structurePlacementData.getRotation().rotate(blockInfoGlobal.state.getValue(StairBlock.FACING));
+            Rotation rotation = structurePlacementData.getRotation().getRotated(Rotation.CLOCKWISE_180);
 
             // Check if the surface is close enough to warrant a staircase
             int maxLength = BetterDungeonsCommon.CONFIG.zombieDungeons.zombieDungeonMaxSurfaceStaircaseLength; // Max distance our staircase can go horizontally
@@ -88,7 +85,7 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
             int surfaceHeight = levelReader.getHeight(Heightmap.Types.WORLD_SURFACE_WG, temp.getX(), temp.getZ());
 
             // Don't spawn staircase if we won't penetrate the surface
-            if (surfaceHeight >= maxSurfacePos.getY()) {
+            if (surfaceHeight >= maxSurfacePos.getY() || surfaceHeight <= blockInfoGlobal.pos.getY()) {
                 blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
                 return blockInfoGlobal;
             }
@@ -114,9 +111,9 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
                 tempBlock = STAIR_SELECTOR.get(random);
                 if (!isBlockStateAirSafe(levelReader, leftPos)) {
                     if (isMaterialLiquidSafe(levelReader, leftPos.relative(facing))) {
-                        this.setBlockStateSafeWithPlacement(levelReader, Blocks.COBBLESTONE.defaultBlockState(), leftPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+                        this.setBlockStateSafeWithPlacement(levelReader, Blocks.COBBLESTONE.defaultBlockState(), leftPos, structurePlacementData.getMirror(), rotation);
                     } else {
-                        this.setBlockStateSafeWithPlacement(levelReader, tempBlock, leftPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+                        this.setBlockStateSafeWithPlacement(levelReader, tempBlock, leftPos, structurePlacementData.getMirror(), rotation);
                     }
                 }
 
@@ -124,9 +121,9 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
                 tempBlock = STAIR_SELECTOR.get(random);
                 if (!isBlockStateAirSafe(levelReader, middlePos)) {
                     if (isMaterialLiquidSafe(levelReader, middlePos.relative(facing))) {
-                        this.setBlockStateSafeWithPlacement(levelReader, Blocks.COBBLESTONE.defaultBlockState(), middlePos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+                        this.setBlockStateSafeWithPlacement(levelReader, Blocks.COBBLESTONE.defaultBlockState(), middlePos, structurePlacementData.getMirror(), rotation);
                     } else {
-                        this.setBlockStateSafeWithPlacement(levelReader, tempBlock, middlePos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+                        this.setBlockStateSafeWithPlacement(levelReader, tempBlock, middlePos, structurePlacementData.getMirror(), rotation);
                     }
                 }
 
@@ -134,9 +131,9 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
                 tempBlock = STAIR_SELECTOR.get(random);
                 if (!isBlockStateAirSafe(levelReader, rightPos)) {
                     if (isMaterialLiquidSafe(levelReader, rightPos.relative(facing))) {
-                        this.setBlockStateSafeWithPlacement(levelReader, Blocks.COBBLESTONE.defaultBlockState(), rightPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+                        this.setBlockStateSafeWithPlacement(levelReader, Blocks.COBBLESTONE.defaultBlockState(), rightPos, structurePlacementData.getMirror(), rotation);
                     } else {
-                        this.setBlockStateSafeWithPlacement(levelReader, tempBlock, rightPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+                        this.setBlockStateSafeWithPlacement(levelReader, tempBlock, rightPos, structurePlacementData.getMirror(), rotation);
                     }
                 }
 
@@ -144,15 +141,15 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
                 for (int y = middlePos.getY() + 1; y <= middlePos.getY() + 3; y++) {
                     // Left stairs
                     temp.set(leftPos.getX(), y, leftPos.getZ());
-                    this.setBlockStateSafeWithPlacement(levelReader, Blocks.CAVE_AIR.defaultBlockState(), temp, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+                    this.setBlockStateSafeWithPlacement(levelReader, Blocks.CAVE_AIR.defaultBlockState(), temp, structurePlacementData.getMirror(), rotation);
 
                     // Middle stairs
                     temp.set(middlePos.getX(), y, middlePos.getZ());
-                    this.setBlockStateSafeWithPlacement(levelReader, Blocks.CAVE_AIR.defaultBlockState(), temp, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+                    this.setBlockStateSafeWithPlacement(levelReader, Blocks.CAVE_AIR.defaultBlockState(), temp, structurePlacementData.getMirror(), rotation);
 
                     // Left stairs
                     temp.set(rightPos.getX(), y, rightPos.getZ());
-                    this.setBlockStateSafeWithPlacement(levelReader, Blocks.CAVE_AIR.defaultBlockState(), temp, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+                    this.setBlockStateSafeWithPlacement(levelReader, Blocks.CAVE_AIR.defaultBlockState(), temp, structurePlacementData.getMirror(), rotation);
                 }
 
                 // Chance of replacing a given block with cobblestone. Increases the further down we are.
@@ -163,24 +160,24 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
                 temp.set(leftPos.getX(), leftPos.getY() + 4, leftPos.getZ());
                 tempOptional = getBlockStateSafe(levelReader, temp);
                 if (tempOptional.isEmpty() || tempOptional.get().getMaterial().isLiquid() || (random.nextFloat() < cobbleChance && (REPLACEABLE_MATERIALS.contains(tempOptional.get().getMaterial()))))
-                    this.setBlockStateSafeWithPlacement(levelReader, COBBLE_SELECTOR.get(random), temp, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+                    this.setBlockStateSafeWithPlacement(levelReader, COBBLE_SELECTOR.get(random), temp, structurePlacementData.getMirror(), rotation);
 
                 temp.set(middlePos.getX(), middlePos.getY() + 4, middlePos.getZ());
                 tempOptional = getBlockStateSafe(levelReader, temp);
                 if (tempOptional.isEmpty() || tempOptional.get().getMaterial().isLiquid() || (random.nextFloat() < cobbleChance && (REPLACEABLE_MATERIALS.contains(tempOptional.get().getMaterial()))))
-                    this.setBlockStateSafeWithPlacement(levelReader, COBBLE_SELECTOR.get(random), temp, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+                    this.setBlockStateSafeWithPlacement(levelReader, COBBLE_SELECTOR.get(random), temp, structurePlacementData.getMirror(), rotation);
 
                 temp.set(rightPos.getX(), rightPos.getY() + 4, rightPos.getZ());
                 tempOptional = getBlockStateSafe(levelReader, temp);
                 if (tempOptional.isEmpty() || tempOptional.get().getMaterial().isLiquid() || (random.nextFloat() < cobbleChance && (REPLACEABLE_MATERIALS.contains(tempOptional.get().getMaterial()))))
-                    this.setBlockStateSafeWithPlacement(levelReader, COBBLE_SELECTOR.get(random), temp, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+                    this.setBlockStateSafeWithPlacement(levelReader, COBBLE_SELECTOR.get(random), temp, structurePlacementData.getMirror(), rotation);
 
                 // Place cobble in left wall
                 temp.set(leftPos.relative(facing.getCounterClockWise()));
                 for (int y = 0; y <= 4; y++) {
                     tempOptional = getBlockStateSafe(levelReader, temp);
                     if (tempOptional.isEmpty() || tempOptional.get().getMaterial().isLiquid() || (random.nextFloat() < cobbleChance && (REPLACEABLE_MATERIALS.contains(tempOptional.get().getMaterial()))))
-                        this.setBlockStateSafeWithPlacement(levelReader, COBBLE_SELECTOR.get(random), temp, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+                        this.setBlockStateSafeWithPlacement(levelReader, COBBLE_SELECTOR.get(random), temp, structurePlacementData.getMirror(), rotation);
 
                     temp.move(Direction.UP);
                 }
@@ -190,7 +187,7 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
                 for (int y = 0; y <= 4; y++) {
                     tempOptional = getBlockStateSafe(levelReader, temp);
                     if (tempOptional.isEmpty() || tempOptional.get().getMaterial().isLiquid() || (random.nextFloat() < cobbleChance && (REPLACEABLE_MATERIALS.contains(tempOptional.get().getMaterial()))))
-                        this.setBlockStateSafeWithPlacement(levelReader, COBBLE_SELECTOR.get(random), temp, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+                        this.setBlockStateSafeWithPlacement(levelReader, COBBLE_SELECTOR.get(random), temp, structurePlacementData.getMirror(), rotation);
 
                     temp.move(Direction.UP);
                 }
@@ -210,23 +207,23 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
                 .addBlock(Blocks.MOSSY_COBBLESTONE.defaultBlockState(), .4f);
 
             // Slabs in doorway
-            this.setBlockStateSafeWithPlacement(levelReader, Blocks.SMOOTH_STONE_SLAB.defaultBlockState(), leftPos.relative(Direction.UP, 2), structurePlacementData.getMirror(), structurePlacementData.getRotation());
-            this.setBlockStateSafeWithPlacement(levelReader, Blocks.SMOOTH_STONE_SLAB.defaultBlockState(), middlePos.relative(Direction.UP, 2), structurePlacementData.getMirror(), structurePlacementData.getRotation());
-            this.setBlockStateSafeWithPlacement(levelReader, Blocks.SMOOTH_STONE_SLAB.defaultBlockState(), rightPos.relative(Direction.UP, 2), structurePlacementData.getMirror(), structurePlacementData.getRotation());
+            this.setBlockStateSafeWithPlacement(levelReader, Blocks.SMOOTH_STONE_SLAB.defaultBlockState(), leftPos.relative(Direction.UP, 2), structurePlacementData.getMirror(), rotation);
+            this.setBlockStateSafeWithPlacement(levelReader, Blocks.SMOOTH_STONE_SLAB.defaultBlockState(), middlePos.relative(Direction.UP, 2), structurePlacementData.getMirror(), rotation);
+            this.setBlockStateSafeWithPlacement(levelReader, Blocks.SMOOTH_STONE_SLAB.defaultBlockState(), rightPos.relative(Direction.UP, 2), structurePlacementData.getMirror(), rotation);
 
             // Smooth stone atop doorway
-            this.setBlockStateSafeWithPlacement(levelReader, Blocks.SMOOTH_STONE.defaultBlockState(), leftPos.relative(Direction.UP, 3), structurePlacementData.getMirror(), structurePlacementData.getRotation());
-            this.setBlockStateSafeWithPlacement(levelReader, Blocks.SMOOTH_STONE.defaultBlockState(), middlePos.relative(Direction.UP, 3), structurePlacementData.getMirror(), structurePlacementData.getRotation());
-            this.setBlockStateSafeWithPlacement(levelReader, Blocks.SMOOTH_STONE.defaultBlockState(), rightPos.relative(Direction.UP, 3), structurePlacementData.getMirror(), structurePlacementData.getRotation());
+            this.setBlockStateSafeWithPlacement(levelReader, Blocks.SMOOTH_STONE.defaultBlockState(), leftPos.relative(Direction.UP, 3), structurePlacementData.getMirror(), rotation);
+            this.setBlockStateSafeWithPlacement(levelReader, Blocks.SMOOTH_STONE.defaultBlockState(), middlePos.relative(Direction.UP, 3), structurePlacementData.getMirror(), rotation);
+            this.setBlockStateSafeWithPlacement(levelReader, Blocks.SMOOTH_STONE.defaultBlockState(), rightPos.relative(Direction.UP, 3), structurePlacementData.getMirror(), rotation);
 
             // Chance of hanging soul lantern
             BlockState lanternBlock = BetterDungeonsCommon.CONFIG.general.enableNetherBlocks
                 ? Blocks.SOUL_LANTERN.defaultBlockState().setValue(LanternBlock.HANGING, true)
                 : Blocks.LANTERN.defaultBlockState().setValue(LanternBlock.HANGING, true);
             if (random.nextFloat() < .25f)
-                this.setBlockStateSafeWithPlacement(levelReader, lanternBlock, leftPos.relative(Direction.UP, 1), structurePlacementData.getMirror(), structurePlacementData.getRotation());
+                this.setBlockStateSafeWithPlacement(levelReader, lanternBlock, leftPos.relative(Direction.UP, 1), structurePlacementData.getMirror(), rotation);
             else if (random.nextFloat() < .25f)
-                this.setBlockStateSafeWithPlacement(levelReader, lanternBlock, rightPos.relative(Direction.UP, 1), structurePlacementData.getMirror(), structurePlacementData.getRotation());
+                this.setBlockStateSafeWithPlacement(levelReader, lanternBlock, rightPos.relative(Direction.UP, 1), structurePlacementData.getMirror(), rotation);
 
             // Andesite corners
             leftPos.move(facing.getCounterClockWise()); // corner
@@ -236,23 +233,23 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
             this.setColumn(levelReader, tombSelector, leftPos.relative(Direction.DOWN), random);
             this.setColumn(levelReader, tombSelector, rightPos.relative(Direction.DOWN), random);
 
-            this.setBlockStateSafeWithPlacement(levelReader, Blocks.POLISHED_ANDESITE.defaultBlockState(), leftPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
-            this.setBlockStateSafeWithPlacement(levelReader, Blocks.POLISHED_ANDESITE.defaultBlockState(), rightPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+            this.setBlockStateSafeWithPlacement(levelReader, Blocks.POLISHED_ANDESITE.defaultBlockState(), leftPos, structurePlacementData.getMirror(), rotation);
+            this.setBlockStateSafeWithPlacement(levelReader, Blocks.POLISHED_ANDESITE.defaultBlockState(), rightPos, structurePlacementData.getMirror(), rotation);
 
             leftPos.move(Direction.UP);
             rightPos.move(Direction.UP);
-            this.setBlockStateSafeWithPlacement(levelReader, Blocks.POLISHED_ANDESITE.defaultBlockState(), leftPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
-            this.setBlockStateSafeWithPlacement(levelReader, Blocks.POLISHED_ANDESITE.defaultBlockState(), rightPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+            this.setBlockStateSafeWithPlacement(levelReader, Blocks.POLISHED_ANDESITE.defaultBlockState(), leftPos, structurePlacementData.getMirror(), rotation);
+            this.setBlockStateSafeWithPlacement(levelReader, Blocks.POLISHED_ANDESITE.defaultBlockState(), rightPos, structurePlacementData.getMirror(), rotation);
 
             leftPos.move(Direction.UP);
             rightPos.move(Direction.UP);
-            this.setBlockStateSafeWithPlacement(levelReader, Blocks.SMOOTH_STONE.defaultBlockState(), leftPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
-            this.setBlockStateSafeWithPlacement(levelReader, Blocks.SMOOTH_STONE.defaultBlockState(), rightPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+            this.setBlockStateSafeWithPlacement(levelReader, Blocks.SMOOTH_STONE.defaultBlockState(), leftPos, structurePlacementData.getMirror(), rotation);
+            this.setBlockStateSafeWithPlacement(levelReader, Blocks.SMOOTH_STONE.defaultBlockState(), rightPos, structurePlacementData.getMirror(), rotation);
 
             leftPos.move(Direction.UP);
             rightPos.move(Direction.UP);
-            this.setBlockStateRandom(levelReader, Blocks.SMOOTH_STONE.defaultBlockState(), leftPos, structurePlacementData.getMirror(), structurePlacementData.getRotation(), random, .5f);
-            this.setBlockStateRandom(levelReader, Blocks.SMOOTH_STONE.defaultBlockState(), rightPos, structurePlacementData.getMirror(), structurePlacementData.getRotation(), random, .5f);
+            this.setBlockStateRandom(levelReader, Blocks.SMOOTH_STONE.defaultBlockState(), leftPos, structurePlacementData.getMirror(), rotation, random, .5f);
+            this.setBlockStateRandom(levelReader, Blocks.SMOOTH_STONE.defaultBlockState(), rightPos, structurePlacementData.getMirror(), rotation, random, .5f);
 
             // Cobble walls
             // Layer 1
@@ -263,18 +260,18 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
             this.setColumn(levelReader, tombSelector, leftPos.relative(Direction.DOWN), random);
             this.setColumn(levelReader, tombSelector, rightPos.relative(Direction.DOWN), random);
 
-            this.setBlockStateSafeWithPlacement(levelReader, tombSelector.get(random), leftPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
-            this.setBlockStateSafeWithPlacement(levelReader, tombSelector.get(random), rightPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+            this.setBlockStateSafeWithPlacement(levelReader, tombSelector.get(random), leftPos, structurePlacementData.getMirror(), rotation);
+            this.setBlockStateSafeWithPlacement(levelReader, tombSelector.get(random), rightPos, structurePlacementData.getMirror(), rotation);
 
             leftPos.move(Direction.UP);
             rightPos.move(Direction.UP);
-            this.setBlockStateSafeWithPlacement(levelReader, tombSelector.get(random), leftPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
-            this.setBlockStateSafeWithPlacement(levelReader, tombSelector.get(random), rightPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+            this.setBlockStateSafeWithPlacement(levelReader, tombSelector.get(random), leftPos, structurePlacementData.getMirror(), rotation);
+            this.setBlockStateSafeWithPlacement(levelReader, tombSelector.get(random), rightPos, structurePlacementData.getMirror(), rotation);
 
             leftPos.move(Direction.UP);
             rightPos.move(Direction.UP);
-            this.setBlockStateRandom(levelReader, tombSelector.get(random), leftPos, structurePlacementData.getMirror(), structurePlacementData.getRotation(), random, .5f);
-            this.setBlockStateRandom(levelReader, tombSelector.get(random), rightPos, structurePlacementData.getMirror(), structurePlacementData.getRotation(), random, .5f);
+            this.setBlockStateRandom(levelReader, tombSelector.get(random), leftPos, structurePlacementData.getMirror(), rotation, random, .5f);
+            this.setBlockStateRandom(levelReader, tombSelector.get(random), rightPos, structurePlacementData.getMirror(), rotation, random, .5f);
 
             // Layer 2
             leftPos.move(Direction.DOWN).move(Direction.DOWN).move(facing.getOpposite());
@@ -284,17 +281,17 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
             this.setColumn(levelReader, tombSelector, leftPos.relative(Direction.DOWN), random);
             this.setColumn(levelReader, tombSelector, rightPos.relative(Direction.DOWN), random);
 
-            this.setBlockStateSafeWithPlacement(levelReader, tombSelector.get(random), leftPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
-            this.setBlockStateSafeWithPlacement(levelReader, tombSelector.get(random), rightPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+            this.setBlockStateSafeWithPlacement(levelReader, tombSelector.get(random), leftPos, structurePlacementData.getMirror(), rotation);
+            this.setBlockStateSafeWithPlacement(levelReader, tombSelector.get(random), rightPos, structurePlacementData.getMirror(), rotation);
 
             leftPos.move(Direction.UP);
             rightPos.move(Direction.UP);
-            this.setBlockStateRandom(levelReader, tombSelector.get(random), leftPos, structurePlacementData.getMirror(), structurePlacementData.getRotation(), random, .5f);
-            this.setBlockStateSafeWithPlacement(levelReader, tombSelector.get(random), rightPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+            this.setBlockStateRandom(levelReader, tombSelector.get(random), leftPos, structurePlacementData.getMirror(), rotation, random, .5f);
+            this.setBlockStateSafeWithPlacement(levelReader, tombSelector.get(random), rightPos, structurePlacementData.getMirror(), rotation);
 
             leftPos.move(Direction.UP);
             rightPos.move(Direction.UP);
-            this.setBlockStateRandom(levelReader, tombSelector.get(random), rightPos, structurePlacementData.getMirror(), structurePlacementData.getRotation(), random, .5f);
+            this.setBlockStateRandom(levelReader, tombSelector.get(random), rightPos, structurePlacementData.getMirror(), rotation, random, .5f);
 
             // Layer 3
             leftPos.move(Direction.DOWN).move(Direction.DOWN).move(facing.getOpposite());
@@ -304,12 +301,12 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
             this.setColumn(levelReader, tombSelector, leftPos.relative(Direction.DOWN), random);
             this.setColumn(levelReader, tombSelector, rightPos.relative(Direction.DOWN), random);
 
-            this.setBlockStateRandom(levelReader, tombSelector.get(random), leftPos, structurePlacementData.getMirror(), structurePlacementData.getRotation(), random, .5f);
-            this.setBlockStateSafeWithPlacement(levelReader, tombSelector.get(random), rightPos, structurePlacementData.getMirror(), structurePlacementData.getRotation());
+            this.setBlockStateRandom(levelReader, tombSelector.get(random), leftPos, structurePlacementData.getMirror(), rotation, random, .5f);
+            this.setBlockStateSafeWithPlacement(levelReader, tombSelector.get(random), rightPos, structurePlacementData.getMirror(), rotation);
 
             leftPos.move(Direction.UP);
             rightPos.move(Direction.UP);
-            this.setBlockStateRandom(levelReader, tombSelector.get(random), rightPos, structurePlacementData.getMirror(), structurePlacementData.getRotation(), random, .5f);
+            this.setBlockStateRandom(levelReader, tombSelector.get(random), rightPos, structurePlacementData.getMirror(), rotation, random, .5f);
 
             // Always replace the warped stair marker with air
             blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, STAIR_SELECTOR.get(random), blockInfoGlobal.nbt);
@@ -342,9 +339,7 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
         BlockPos.MutableBlockPos mutable = pos.mutable();
         Optional<BlockState> currBlock = getBlockStateSafe(levelReader, mutable);
         while (mutable.getY() > levelReader.getMinBuildHeight() && (currBlock.isEmpty() || currBlock.get().getMaterial() == Material.AIR || currBlock.get().getMaterial() == Material.WATER || currBlock.get().getMaterial() == Material.LAVA)) {
-            if (random.nextFloat() > 0.3) {
-                setBlockStateSafe(levelReader, mutable, selector.get(random));
-            }
+            setBlockStateSafe(levelReader, mutable, selector.get(random));
             mutable.move(Direction.DOWN);
             currBlock = getBlockStateSafe(levelReader, mutable);
         }
