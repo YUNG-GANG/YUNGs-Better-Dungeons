@@ -3,6 +3,7 @@ package com.yungnickyoung.minecraft.betterdungeons.mixin;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import com.yungnickyoung.minecraft.betterdungeons.mixin.accessor.WorldGenRegionAccessor;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.StructureManager;
@@ -32,7 +33,7 @@ public class NoDeltasInStructuresMixin {
             return;
         }
 
-        Registry<Structure> configuredStructureFeatureRegistry = context.level().registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY);
+        Registry<Structure> configuredStructureFeatureRegistry = context.level().registryAccess().registryOrThrow(Registries.STRUCTURE);
         StructureManager structureManager = ((WorldGenRegionAccessor) context.level()).getStructureManager();
         Structure netherDungeonStructure = configuredStructureFeatureRegistry.get(new ResourceLocation(BetterDungeonsCommon.MOD_ID, "small_nether_dungeon"));
         if (netherDungeonStructure == null) {

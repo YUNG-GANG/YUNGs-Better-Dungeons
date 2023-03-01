@@ -16,11 +16,11 @@ public class VanillaRemovalModuleFabric {
         if (BetterDungeonsCommon.CONFIG.general.removeVanillaDungeons) {
             BiomeModifications.create(new ResourceLocation(BetterDungeonsCommon.MOD_ID, "vanilla_dungeon_removal"))
                     .add(ModificationPhase.REMOVALS,
-                            biomeSelectionContext -> biomeSelectionContext.hasBuiltInPlacedFeature(CavePlacements.MONSTER_ROOM.value()),
-                            modificationContext -> modificationContext.getGenerationSettings().removeBuiltInFeature(CavePlacements.MONSTER_ROOM.value()))
+                            biomeSelectionContext -> biomeSelectionContext.hasPlacedFeature(CavePlacements.MONSTER_ROOM),
+                            modificationContext -> modificationContext.getGenerationSettings().removeFeature(CavePlacements.MONSTER_ROOM))
                     .add(ModificationPhase.REMOVALS,
-                            biomeSelectionContext -> biomeSelectionContext.hasBuiltInPlacedFeature(CavePlacements.MONSTER_ROOM_DEEP.value()),
-                            modificationContext -> modificationContext.getGenerationSettings().removeBuiltInFeature(CavePlacements.MONSTER_ROOM_DEEP.value()));
+                            biomeSelectionContext -> biomeSelectionContext.hasPlacedFeature(CavePlacements.MONSTER_ROOM_DEEP),
+                            modificationContext -> modificationContext.getGenerationSettings().removeFeature(CavePlacements.MONSTER_ROOM_DEEP));
         }
     }
 }

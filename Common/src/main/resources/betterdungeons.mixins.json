@@ -9,7 +9,9 @@
     "LocateSmallNetherDungeonCommandMixin",
     "NoBasaltColumnsInStructuresMixin",
     "NoDeltasInStructuresMixin",
+    "StructureTemplateMixin",
     "accessor.BoundingBoxAccessor",
+    "accessor.StructureProcessorAccessor",
     "accessor.WorldGenRegionAccessor"
   ],
   "injectors": {

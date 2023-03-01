@@ -8,6 +8,7 @@ import com.yungnickyoung.minecraft.yungsapi.world.spawner.MobSpawnerData;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
@@ -106,7 +107,7 @@ public class SmallNetherDungeonMobSpawner extends StructureProcessor {
                                 }
                             }),
                             Optional.empty())))
-                    .setEntityType(Registry.ENTITY_TYPE.get(spawnerMob))
+                    .setEntityType(BuiltInRegistries.ENTITY_TYPE.get(spawnerMob))
                     .build();
             if (spawnerMob.toString().equals("minecraft:wither_skeleton")) {
                 spawner.nextSpawnData.getEntityToSpawn().put("ArmorItems", Util.make(new ListTag(), (armorItemsNbt) -> {

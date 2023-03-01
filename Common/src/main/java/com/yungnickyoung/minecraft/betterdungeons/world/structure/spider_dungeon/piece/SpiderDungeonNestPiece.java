@@ -3,7 +3,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeo
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import com.yungnickyoung.minecraft.betterdungeons.mixin.accessor.BoundingBoxAccessor;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructurePieceTypeModule;
-import com.yungnickyoung.minecraft.yungsapi.world.BlockStateRandomizer;
+import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -226,7 +226,7 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
         if (box.isInside(startPos)) {
             BlockEntity spawnerTileEntity = world.getBlockEntity(startPos.relative(Direction.UP));
             if (spawnerTileEntity instanceof SpawnerBlockEntity) {
-                ((SpawnerBlockEntity) spawnerTileEntity).getSpawner().setEntityId(EntityType.CAVE_SPIDER);
+                ((SpawnerBlockEntity) spawnerTileEntity).setEntityId(EntityType.CAVE_SPIDER, randomSource);
             } else {
                 BetterDungeonsCommon.LOGGER.warn("Expected cave spider spawner entity at {}, but found none!", startPos.relative(Direction.UP));
             }

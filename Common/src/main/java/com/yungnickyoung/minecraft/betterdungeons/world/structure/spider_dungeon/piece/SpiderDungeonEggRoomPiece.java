@@ -3,7 +3,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeo
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import com.yungnickyoung.minecraft.betterdungeons.mixin.accessor.BoundingBoxAccessor;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructurePieceTypeModule;
-import com.yungnickyoung.minecraft.yungsapi.world.BlockStateRandomizer;
+import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -215,7 +215,7 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
                 this.placeBlock(world, Blocks.SPAWNER.defaultBlockState(), chestPos.getX(), chestPos.getY(), chestPos.getZ(), box);
                 BlockEntity spawnerBlockEntity = world.getBlockEntity(chestPos);
                 if (spawnerBlockEntity instanceof SpawnerBlockEntity) {
-                    ((SpawnerBlockEntity) spawnerBlockEntity).getSpawner().setEntityId(EntityType.SPIDER);
+                    ((SpawnerBlockEntity) spawnerBlockEntity).setEntityId(EntityType.SPIDER, randomSource);
                 } else {
                     BetterDungeonsCommon.LOGGER.warn("Expected spider spawner entity at {}, but found none!", chestPos);
                 }

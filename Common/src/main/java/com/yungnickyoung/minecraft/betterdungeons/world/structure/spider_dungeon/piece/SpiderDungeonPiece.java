@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece;
 
 import com.google.common.collect.Sets;
-import com.yungnickyoung.minecraft.yungsapi.world.BlockStateRandomizer;
+import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;

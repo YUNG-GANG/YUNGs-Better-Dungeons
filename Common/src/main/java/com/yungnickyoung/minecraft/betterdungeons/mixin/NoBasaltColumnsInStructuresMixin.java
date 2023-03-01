@@ -5,6 +5,7 @@ import com.yungnickyoung.minecraft.betterdungeons.mixin.accessor.WorldGenRegionA
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.SectionPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.LevelAccessor;
@@ -39,7 +40,7 @@ public class NoBasaltColumnsInStructuresMixin {
             return;
         }
 
-        Registry<Structure> configuredStructureFeatureRegistry = levelAccessor.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY);
+        Registry<Structure> configuredStructureFeatureRegistry = levelAccessor.registryAccess().registryOrThrow(Registries.STRUCTURE);
         StructureManager structureManager = ((WorldGenRegionAccessor) levelAccessor).getStructureManager();
         Structure netherDungeonStructure = configuredStructureFeatureRegistry.get(new ResourceLocation(BetterDungeonsCommon.MOD_ID, "small_nether_dungeon"));
         if (netherDungeonStructure == null) {

@@ -2,7 +2,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeo
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
-import com.yungnickyoung.minecraft.yungsapi.world.BlockStateRandomizer;
+import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;

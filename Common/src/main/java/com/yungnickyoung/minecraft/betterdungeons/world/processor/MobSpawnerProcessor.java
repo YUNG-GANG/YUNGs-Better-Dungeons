@@ -6,7 +6,7 @@ import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeM
 import com.yungnickyoung.minecraft.yungsapi.world.spawner.MobSpawnerData;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.SimpleWeightedRandomList;
@@ -55,7 +55,7 @@ public class MobSpawnerProcessor extends StructureProcessor {
                     .spawnPotentials(SimpleWeightedRandomList.single(new SpawnData(
                             Util.make(new CompoundTag(), (compoundTag) -> compoundTag.putString("id", spawnerMob.toString())),
                             Optional.empty())))
-                    .setEntityType(Registry.ENTITY_TYPE.get(spawnerMob))
+                    .setEntityType(BuiltInRegistries.ENTITY_TYPE.get(spawnerMob))
                     .build();
             CompoundTag nbt = spawner.save();
             blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SPAWNER.defaultBlockState(), nbt);

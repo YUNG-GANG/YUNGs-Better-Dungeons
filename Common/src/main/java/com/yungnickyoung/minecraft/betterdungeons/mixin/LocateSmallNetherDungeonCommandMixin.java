@@ -4,7 +4,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.arguments.ResourceOrTagLocationArgument;
+import net.minecraft.commands.arguments.ResourceOrTagKeyArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -24,7 +24,7 @@ public class LocateSmallNetherDungeonCommandMixin {
 
     @Inject(method = "locateStructure", at = @At(value = "HEAD"))
     private static void betterdungeons_overrideLocateSmallNetherDungeon (CommandSourceStack cmdSource,
-                                                       ResourceOrTagLocationArgument.Result<Structure> result,
+                                                       ResourceOrTagKeyArgument.Result<Structure> result,
                                                        CallbackInfoReturnable<Integer> ci) throws CommandSyntaxException {
         Optional<ResourceKey<Structure>> optional = result.unwrap().left();
         if (!BetterDungeonsCommon.CONFIG.smallNetherDungeons.enabled && optional.isPresent() && optional.get().location().equals(new ResourceLocation(BetterDungeonsCommon.MOD_ID, "small_nether_dungeon"))) {

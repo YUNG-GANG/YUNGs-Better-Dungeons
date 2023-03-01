@@ -11,7 +11,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class ConfigModuleForge {
     public static void init() {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BDConfigForge.SPEC, "betterdungeons-forge-1_19.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BDConfigForge.SPEC, "betterdungeons-forge-1_19_3.toml");
         MinecraftForge.EVENT_BUS.addListener(ConfigModuleForge::onWorldLoad);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ConfigModuleForge::onConfigChange);
     }
