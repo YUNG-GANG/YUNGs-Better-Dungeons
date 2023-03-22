@@ -7,6 +7,7 @@ import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeM
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonContext;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonType;
 import com.yungnickyoung.minecraft.yungsapi.world.banner.Banner;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -21,11 +22,15 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 /**
  * Replaces wall banners with a banner corresponding to the dungeon type.
  * Also removes existing banners to ensure the number of banners per structure
  * falls within the desired range.
  */
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class SmallDungeonBannerProcessor extends StructureProcessor {
     public static final Codec<SmallDungeonBannerProcessor> CODEC = RecordCodecBuilder.create(codecBuilder -> codecBuilder
         .group(

@@ -24,8 +24,10 @@ import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.material.Fluids;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.BitSet;
 
+@ParametersAreNonnullByDefault
 public class SpiderDungeonBigTunnelPiece extends SpiderDungeonPiece {
     private final BlockPos startPos;
     private BlockPos endPos;
@@ -158,7 +160,7 @@ public class SpiderDungeonBigTunnelPiece extends SpiderDungeonPiece {
         ((BoundingBoxAccessor)this.boundingBox).setMinZ(minZ);
         ((BoundingBoxAccessor)this.boundingBox).setMaxZ(maxZ);
 
-        this.endPos = new BlockPos(caveStartX, caveStartY, caveStartZ);
+        this.endPos = new BlockPos((int) caveStartX, (int) caveStartY, (int) caveStartZ);
 
         // Generate additional big tunnel if there's only one so far
         if (this.genDepth == 0) {

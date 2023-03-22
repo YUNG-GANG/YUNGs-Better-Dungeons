@@ -3,6 +3,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeo
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
@@ -13,9 +14,13 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 /**
  * Processes stairs to give them a more varied and ruined look.
  */
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class ZombieDungeonStairProcessor extends StructureProcessor {
     public static final ZombieDungeonStairProcessor INSTANCE = new ZombieDungeonStairProcessor();
     public static final Codec<ZombieDungeonStairProcessor> CODEC = Codec.unit(() -> INSTANCE);

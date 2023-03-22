@@ -3,6 +3,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dung
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.WorldGenRegion;
@@ -16,10 +17,14 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 /**
  * Dynamically generates support legs below skeleton dungeons.
  * Blue stained glass is used to mark the positions where the legs will spawn for simplicity.
  */
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class SkeletonDungeonLegProcessor extends StructureProcessor {
     public static final SkeletonDungeonLegProcessor INSTANCE = new SkeletonDungeonLegProcessor();
     public static final Codec<SkeletonDungeonLegProcessor> CODEC = Codec.unit(() -> INSTANCE);

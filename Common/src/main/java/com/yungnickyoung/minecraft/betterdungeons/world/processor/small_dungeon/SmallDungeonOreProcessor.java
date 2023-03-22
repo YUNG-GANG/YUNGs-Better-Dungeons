@@ -3,6 +3,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.LevelReader;
@@ -13,11 +14,14 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Predicate;
 
 /**
  * Replaces ore in props with cobblestone if ores are disabled in the config.
  */
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class SmallDungeonOreProcessor extends StructureProcessor {
     public static final SmallDungeonOreProcessor INSTANCE = new SmallDungeonOreProcessor();
     public static final Codec<SmallDungeonOreProcessor> CODEC = Codec.unit(() -> INSTANCE);

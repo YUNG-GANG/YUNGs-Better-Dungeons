@@ -2,6 +2,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.WorldGenRegion;
@@ -14,6 +15,10 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class SmallNetherDungeonEntranceStairsProcessor extends StructureProcessor {
     public static final SmallNetherDungeonEntranceStairsProcessor INSTANCE = new SmallNetherDungeonEntranceStairsProcessor();
     public static final Codec<SmallNetherDungeonEntranceStairsProcessor> CODEC = Codec.unit(() -> INSTANCE);

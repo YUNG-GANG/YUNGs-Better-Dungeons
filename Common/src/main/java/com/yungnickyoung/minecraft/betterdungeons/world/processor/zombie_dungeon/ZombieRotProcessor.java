@@ -2,6 +2,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeo
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
@@ -10,10 +11,14 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 /**
  * Replaces certain blocks w/ air in zombie dungeons when air is already there,
  * giving them a more natural, ruined look that opens up to caves.
  */
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class ZombieRotProcessor extends StructureProcessor {
     public static final ZombieRotProcessor INSTANCE = new ZombieRotProcessor();
     public static final Codec<ZombieRotProcessor> CODEC = Codec.unit(() -> INSTANCE);

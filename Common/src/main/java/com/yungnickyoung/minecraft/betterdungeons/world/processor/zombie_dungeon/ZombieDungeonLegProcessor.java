@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
 import com.yungnickyoung.minecraft.yungsapi.world.structure.processor.ISafeWorldModifier;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.WorldGenRegion;
@@ -18,6 +19,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.material.Material;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 
 /**
@@ -25,6 +27,8 @@ import java.util.Optional;
  * Magenta stained glass is used to mark the positions where the legs will spawn for simplicity.
  * Purpur slabs are to be replaced with smooth stone slabs if air is present.
  */
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class ZombieDungeonLegProcessor extends StructureProcessor implements ISafeWorldModifier {
     public static final ZombieDungeonLegProcessor INSTANCE = new ZombieDungeonLegProcessor();
     public static final Codec<ZombieDungeonLegProcessor> CODEC = Codec.unit(() -> INSTANCE);

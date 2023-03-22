@@ -2,6 +2,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.LevelReader;
@@ -11,10 +12,14 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 /**
  * Replaces any liquid in the ceiling with cobblestone to attempt to minimize weird
  * floating fluid interactions.
  */
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class SmallDungeonCeilingProcessor extends StructureProcessor {
     public static final SmallDungeonCeilingProcessor INSTANCE = new SmallDungeonCeilingProcessor();
     public static final Codec<SmallDungeonCeilingProcessor> CODEC = Codec.unit(() -> INSTANCE);

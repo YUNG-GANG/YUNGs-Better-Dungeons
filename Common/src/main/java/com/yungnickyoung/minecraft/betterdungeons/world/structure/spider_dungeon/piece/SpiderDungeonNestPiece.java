@@ -28,8 +28,10 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.BitSet;
 
+@ParametersAreNonnullByDefault
 public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
     private final BlockPos startPos;
     private float xRadius = 0f;

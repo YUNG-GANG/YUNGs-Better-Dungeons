@@ -2,6 +2,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_
 
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.WorldGenRegion;
@@ -14,10 +15,14 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 /**
  * Dynamically generates support legs below small Nether dungeons.
  * Orange terracotta glass is used to mark the positions where the legs will spawn.
  */
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class SmallNetherDungeonLegProcessor extends StructureProcessor {
     public static final SmallNetherDungeonLegProcessor INSTANCE = new SmallNetherDungeonLegProcessor();
     public static final Codec<SmallNetherDungeonLegProcessor> CODEC = Codec.unit(() -> INSTANCE);
