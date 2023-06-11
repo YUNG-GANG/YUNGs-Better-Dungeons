@@ -36,9 +36,9 @@ public class ZombieDungeonFlowerPotProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state.is(Blocks.POTTED_CORNFLOWER)) {
-            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos);
-            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, FLOWER_SELECTOR.get(random), blockInfoGlobal.nbt);
+        if (blockInfoGlobal.state().is(Blocks.POTTED_CORNFLOWER)) {
+            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos());
+            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), FLOWER_SELECTOR.get(random), blockInfoGlobal.nbt());
         }
 
         return blockInfoGlobal;

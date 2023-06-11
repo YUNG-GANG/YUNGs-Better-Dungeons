@@ -28,12 +28,12 @@ public class SmallNetherDungeonLavaBlockProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state.is(Blocks.ORANGE_WOOL)) {
-            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.LAVA.defaultBlockState(), blockInfoGlobal.nbt);
-            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(new ChunkPos(blockInfoGlobal.pos))) {
+        if (blockInfoGlobal.state().is(Blocks.ORANGE_WOOL)) {
+            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.LAVA.defaultBlockState(), blockInfoGlobal.nbt());
+            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(new ChunkPos(blockInfoGlobal.pos()))) {
                 return blockInfoGlobal;
             }
-            levelReader.getChunk(blockInfoGlobal.pos).markPosForPostprocessing(blockInfoGlobal.pos); // Schedule fluid tick
+            levelReader.getChunk(blockInfoGlobal.pos()).markPosForPostprocessing(blockInfoGlobal.pos()); // Schedule fluid tick
         }
         return blockInfoGlobal;
     }

@@ -36,7 +36,7 @@ public class ZombieTombstoneSpawnerProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state.getBlock() == Blocks.BLACK_STAINED_GLASS) {
+        if (blockInfoGlobal.state().getBlock() == Blocks.BLACK_STAINED_GLASS) {
             // Create spawner & populate with data
             MobSpawnerData spawner = MobSpawnerData.builder()
                     .setEntityType(EntityType.SKELETON)
@@ -48,7 +48,7 @@ public class ZombieTombstoneSpawnerProcessor extends StructureProcessor {
                 handItemsTag.add(ironSwordNBT);
             }));
             CompoundTag nbt = spawner.save();
-            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SPAWNER.defaultBlockState(), nbt);
+            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.SPAWNER.defaultBlockState(), nbt);
         }
         return blockInfoGlobal;
     }

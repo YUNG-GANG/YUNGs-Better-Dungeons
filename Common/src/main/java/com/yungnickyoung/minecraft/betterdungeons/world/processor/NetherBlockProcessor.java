@@ -29,12 +29,12 @@ public class NetherBlockProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (!BetterDungeonsCommon.CONFIG.general.enableNetherBlocks) {
-            if (blockInfoGlobal.state.is(Blocks.SOUL_SAND) || blockInfoGlobal.state.is(Blocks.SOUL_SOIL)) {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.COARSE_DIRT.defaultBlockState(), blockInfoGlobal.nbt);
-            } else if (blockInfoGlobal.state.is(Blocks.SOUL_CAMPFIRE)) {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAMPFIRE.defaultBlockState(), blockInfoGlobal.nbt);
-            } else if (blockInfoGlobal.state.is(Blocks.SOUL_LANTERN)) {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.LANTERN.defaultBlockState().setValue(LanternBlock.HANGING, blockInfoGlobal.state.getValue(LanternBlock.HANGING)), blockInfoGlobal.nbt);
+            if (blockInfoGlobal.state().is(Blocks.SOUL_SAND) || blockInfoGlobal.state().is(Blocks.SOUL_SOIL)) {
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.COARSE_DIRT.defaultBlockState(), blockInfoGlobal.nbt());
+            } else if (blockInfoGlobal.state().is(Blocks.SOUL_CAMPFIRE)) {
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAMPFIRE.defaultBlockState(), blockInfoGlobal.nbt());
+            } else if (blockInfoGlobal.state().is(Blocks.SOUL_LANTERN)) {
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.LANTERN.defaultBlockState().setValue(LanternBlock.HANGING, blockInfoGlobal.state().getValue(LanternBlock.HANGING)), blockInfoGlobal.nbt());
             }
         }
         return blockInfoGlobal;

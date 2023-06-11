@@ -26,7 +26,6 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
 
 import java.util.BitSet;
 
@@ -180,7 +179,7 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
                             // Make sure block is not blacklisted AND not air.
                             // The check for air ensures the shells will not block off the connecting tunnels,
                             // but as a result they could get destroyed by cave gen
-                            if (!BLOCK_BLACKLIST.contains(state.getBlock()) && state.getMaterial() != Material.AIR) {
+                            if (!BLOCK_BLACKLIST.contains(state.getBlock()) && state.isAir()) {
                                 if (state.isAir() || state.getFluidState().getType() != Fluids.EMPTY || decoRand.nextFloat() < .8f) {
                                     this.placeBlock(world, Blocks.COBBLESTONE.defaultBlockState(), globalX, globalY, globalZ, box);
                                 }

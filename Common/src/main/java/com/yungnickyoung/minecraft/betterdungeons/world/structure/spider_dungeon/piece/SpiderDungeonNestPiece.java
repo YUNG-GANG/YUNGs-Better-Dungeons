@@ -26,7 +26,6 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.BitSet;
@@ -198,7 +197,7 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
 //                                        this.setBlockState(world, Blocks.COBBLESTONE.defaultBlockState()(), globalX, globalY, globalZ, box);
 //                                    }
 //                                }
-                                if (!BLOCK_BLACKLIST.contains(state.getBlock()) && state.getMaterial() != Material.AIR) { // Ignore blacklisted blocks and air
+                                if (!BLOCK_BLACKLIST.contains(state.getBlock()) && state.isAir()) { // Ignore blacklisted blocks and air
                                     if (state.getFluidState().getType() != Fluids.EMPTY || decoRand.nextFloat() < .8f) {
                                         this.placeBlock(world, shellSelector.get(decoRand), globalX, globalY, globalZ, box);
                                     }

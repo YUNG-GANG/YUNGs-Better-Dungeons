@@ -33,7 +33,7 @@ public class SmallDungeonChestProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state.getBlock() instanceof ChestBlock) {
+        if (blockInfoGlobal.state().getBlock() instanceof ChestBlock) {
             // Fetch thread-local dungeon context
             DungeonContext context = DungeonContext.peek();
             int chestCount = DungeonContext.peek().getChestCount();
@@ -41,13 +41,13 @@ public class SmallDungeonChestProcessor extends StructureProcessor {
             if (chestCount < BetterDungeonsCommon.CONFIG.smallDungeons.chestMinCount) { // Ensure there is at least minimum amount of chests
                 context.incrementChestCount();
             } else if (chestCount < BetterDungeonsCommon.CONFIG.smallDungeons.chestMaxCount) { // 20% chance of additional chest, per chest prop
-                RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos);
+                RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos());
                 if (random.nextFloat() > .2f) {
-                    return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
+                    return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt());
                 }
                 context.incrementChestCount();
             } else { // Can't spawn more than max chests
-                return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
+                return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt());
             }
         }
         return blockInfoGlobal;

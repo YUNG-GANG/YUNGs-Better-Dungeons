@@ -40,19 +40,19 @@ public class ZombieDungeonStairProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state.getBlock() == Blocks.COBBLESTONE_STAIRS) {
-            if (levelReader.getBlockState(blockInfoGlobal.pos).isAir()) {
+        if (blockInfoGlobal.state().getBlock() == Blocks.COBBLESTONE_STAIRS) {
+            if (levelReader.getBlockState(blockInfoGlobal.pos()).isAir()) {
                 // Don't replace air to maintain rotted look
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt());
             } else {
-                BlockState newBlock = SELECTOR.get(structurePlacementData.getRandom(blockInfoGlobal.pos));
+                BlockState newBlock = SELECTOR.get(structurePlacementData.getRandom(blockInfoGlobal.pos()));
                 if (newBlock.getBlock() instanceof StairBlock) {
                     newBlock = newBlock
-                        .setValue(StairBlock.FACING, blockInfoGlobal.state.getValue(StairBlock.FACING))
-                        .setValue(StairBlock.HALF, blockInfoGlobal.state.getValue(StairBlock.HALF))
-                        .setValue(StairBlock.SHAPE, blockInfoGlobal.state.getValue(StairBlock.SHAPE));
+                        .setValue(StairBlock.FACING, blockInfoGlobal.state().getValue(StairBlock.FACING))
+                        .setValue(StairBlock.HALF, blockInfoGlobal.state().getValue(StairBlock.HALF))
+                        .setValue(StairBlock.SHAPE, blockInfoGlobal.state().getValue(StairBlock.SHAPE));
                 }
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, newBlock, blockInfoGlobal.nbt);
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), newBlock, blockInfoGlobal.nbt());
             }
         }
         return blockInfoGlobal;

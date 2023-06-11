@@ -1,6 +1,5 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon;
 
-import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
@@ -22,11 +21,9 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraft.world.level.material.Material;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Dynamically generates the main staircase when applicable.
@@ -48,24 +45,6 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
     private static final BlockStateRandomizer COBBLE_SELECTOR = new BlockStateRandomizer(Blocks.COBBLESTONE.defaultBlockState())
         .addBlock(Blocks.MOSSY_COBBLESTONE.defaultBlockState(), 0.3f);
 
-    private static final Set<Material> REPLACEABLE_MATERIALS = Sets.newHashSet(
-            Material.STONE,
-            Material.PLANT,
-            Material.WATER_PLANT,
-            Material.CLAY,
-            Material.TOP_SNOW,
-            Material.CLAY,
-            Material.DIRT,
-            Material.GRASS,
-            Material.ICE,
-            Material.ICE_SOLID,
-            Material.SAND,
-            Material.LEAVES,
-            Material.STONE,
-            Material.SNOW,
-            Material.POWDER_SNOW
-    );
-
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
@@ -73,33 +52,33 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
                                                              StructureTemplate.StructureBlockInfo blockInfoLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state.getBlock() == Blocks.WARPED_STAIRS) { // Warped stairs are the marker for the main staircase
-            BlockPos.MutableBlockPos temp = blockInfoGlobal.pos.mutable();
-            Direction facing = structurePlacementData.getRotation().rotate(blockInfoGlobal.state.getValue(StairBlock.FACING));
+        if (blockInfoGlobal.state().getBlock() == Blocks.WARPED_STAIRS) { // Warped stairs are the marker for the main staircase
+            BlockPos.MutableBlockPos temp = blockInfoGlobal.pos().mutable();
+            Direction facing = structurePlacementData.getRotation().rotate(blockInfoGlobal.state().getValue(StairBlock.FACING));
             Rotation rotation = structurePlacementData.getRotation().getRotated(Rotation.CLOCKWISE_180);
 
             // Check if the surface is close enough to warrant a staircase
             int maxLength = BetterDungeonsCommon.CONFIG.zombieDungeons.zombieDungeonMaxSurfaceStaircaseLength; // Max distance our staircase can go horizontally
 
             // The highest allowable position at the end of the staircase
-            BlockPos maxSurfacePos = blockInfoGlobal.pos.relative(facing, maxLength).relative(Direction.UP, maxLength);
+            BlockPos maxSurfacePos = blockInfoGlobal.pos().relative(facing, maxLength).relative(Direction.UP, maxLength);
 
             // Get the surface height at the end of the staircase
             temp.move(facing, maxLength);
             int surfaceHeight = levelReader.getHeight(Heightmap.Types.WORLD_SURFACE_WG, temp.getX(), temp.getZ());
 
             // Don't spawn staircase if we won't penetrate the surface
-            if (surfaceHeight >= maxSurfacePos.getY() || surfaceHeight <= blockInfoGlobal.pos.getY()) {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
+            if (surfaceHeight >= maxSurfacePos.getY() || surfaceHeight <= blockInfoGlobal.pos().getY()) {
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt());
                 return blockInfoGlobal;
             }
 
             // Begin spawning staircase
-            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos);
+            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos());
 
-            BlockPos.MutableBlockPos leftPos = new BlockPos(blockInfoGlobal.pos.relative(facing.getCounterClockWise())).mutable();
-            BlockPos.MutableBlockPos middlePos = new BlockPos(blockInfoGlobal.pos).mutable();
-            BlockPos.MutableBlockPos rightPos = new BlockPos(blockInfoGlobal.pos.relative(facing.getClockWise())).mutable();
+            BlockPos.MutableBlockPos leftPos = new BlockPos(blockInfoGlobal.pos().relative(facing.getCounterClockWise())).mutable();
+            BlockPos.MutableBlockPos middlePos = new BlockPos(blockInfoGlobal.pos()).mutable();
+            BlockPos.MutableBlockPos rightPos = new BlockPos(blockInfoGlobal.pos().relative(facing.getClockWise())).mutable();
             BlockState tempBlock;
             Optional<BlockState> tempOptional;
 
@@ -163,24 +142,24 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
                 // Place cobble above air
                 temp.set(leftPos.getX(), leftPos.getY() + 4, leftPos.getZ());
                 tempOptional = getBlockStateSafe(levelReader, temp);
-                if (tempOptional.isEmpty() || tempOptional.get().getMaterial().isLiquid() || (random.nextFloat() < cobbleChance && (REPLACEABLE_MATERIALS.contains(tempOptional.get().getMaterial()))))
+                if (tempOptional.isEmpty() || tempOptional.get().liquid() || (random.nextFloat() < cobbleChance && tempOptional.get().isSolid()))
                     this.setBlockStateSafeWithPlacement(levelReader, COBBLE_SELECTOR.get(random), temp, structurePlacementData.getMirror(), rotation);
 
                 temp.set(middlePos.getX(), middlePos.getY() + 4, middlePos.getZ());
                 tempOptional = getBlockStateSafe(levelReader, temp);
-                if (tempOptional.isEmpty() || tempOptional.get().getMaterial().isLiquid() || (random.nextFloat() < cobbleChance && (REPLACEABLE_MATERIALS.contains(tempOptional.get().getMaterial()))))
+                if (tempOptional.isEmpty() || tempOptional.get().liquid() || (random.nextFloat() < cobbleChance && tempOptional.get().isSolid()))
                     this.setBlockStateSafeWithPlacement(levelReader, COBBLE_SELECTOR.get(random), temp, structurePlacementData.getMirror(), rotation);
 
                 temp.set(rightPos.getX(), rightPos.getY() + 4, rightPos.getZ());
                 tempOptional = getBlockStateSafe(levelReader, temp);
-                if (tempOptional.isEmpty() || tempOptional.get().getMaterial().isLiquid() || (random.nextFloat() < cobbleChance && (REPLACEABLE_MATERIALS.contains(tempOptional.get().getMaterial()))))
+                if (tempOptional.isEmpty() || tempOptional.get().liquid() || (random.nextFloat() < cobbleChance && tempOptional.get().isSolid()))
                     this.setBlockStateSafeWithPlacement(levelReader, COBBLE_SELECTOR.get(random), temp, structurePlacementData.getMirror(), rotation);
 
                 // Place cobble in left wall
                 temp.set(leftPos.relative(facing.getCounterClockWise()));
                 for (int y = 0; y <= 4; y++) {
                     tempOptional = getBlockStateSafe(levelReader, temp);
-                    if (tempOptional.isEmpty() || tempOptional.get().getMaterial().isLiquid() || (random.nextFloat() < cobbleChance && (REPLACEABLE_MATERIALS.contains(tempOptional.get().getMaterial()))))
+                    if (tempOptional.isEmpty() || tempOptional.get().liquid() || (random.nextFloat() < cobbleChance && tempOptional.get().isSolid()))
                         this.setBlockStateSafeWithPlacement(levelReader, COBBLE_SELECTOR.get(random), temp, structurePlacementData.getMirror(), rotation);
 
                     temp.move(Direction.UP);
@@ -190,7 +169,7 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
                 temp.set(rightPos.relative(facing.getClockWise()));
                 for (int y = 0; y <= 4; y++) {
                     tempOptional = getBlockStateSafe(levelReader, temp);
-                    if (tempOptional.isEmpty() || tempOptional.get().getMaterial().isLiquid() || (random.nextFloat() < cobbleChance && (REPLACEABLE_MATERIALS.contains(tempOptional.get().getMaterial()))))
+                    if (tempOptional.isEmpty() || tempOptional.get().liquid() || (random.nextFloat() < cobbleChance && tempOptional.get().isSolid()))
                         this.setBlockStateSafeWithPlacement(levelReader, COBBLE_SELECTOR.get(random), temp, structurePlacementData.getMirror(), rotation);
 
                     temp.move(Direction.UP);
@@ -313,7 +292,7 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
             this.setBlockStateRandom(levelReader, tombSelector.get(random), rightPos, structurePlacementData.getMirror(), rotation, random, .5f);
 
             // Always replace the warped stair marker with air
-            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, STAIR_SELECTOR.get(random), blockInfoGlobal.nbt);
+            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), STAIR_SELECTOR.get(random), blockInfoGlobal.nbt());
         }
         return blockInfoGlobal;
     }
@@ -342,7 +321,7 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
         // Generate vertical pillar down
         BlockPos.MutableBlockPos mutable = pos.mutable();
         Optional<BlockState> currBlock = getBlockStateSafe(levelReader, mutable);
-        while (mutable.getY() > levelReader.getMinBuildHeight() && (currBlock.isEmpty() || currBlock.get().getMaterial() == Material.AIR || currBlock.get().getMaterial() == Material.WATER || currBlock.get().getMaterial() == Material.LAVA)) {
+        while (mutable.getY() > levelReader.getMinBuildHeight() && (currBlock.isEmpty() || currBlock.get().isAir() || currBlock.get().liquid())) {
             setBlockStateSafe(levelReader, mutable, selector.get(random));
             mutable.move(Direction.DOWN);
             currBlock = getBlockStateSafe(levelReader, mutable);

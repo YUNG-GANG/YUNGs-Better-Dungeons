@@ -28,9 +28,9 @@ public class HeadProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state.getBlock() instanceof AbstractSkullBlock) {
+        if (blockInfoGlobal.state().getBlock() instanceof AbstractSkullBlock) {
             if (!BetterDungeonsCommon.CONFIG.general.enableHeads) {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt());
             }
         }
         return blockInfoGlobal;

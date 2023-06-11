@@ -27,15 +27,15 @@ public class SmallDungeonCeilingLampPropProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state.is(Blocks.CYAN_STAINED_GLASS)) {
-            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos);
+        if (blockInfoGlobal.state().is(Blocks.CYAN_STAINED_GLASS)) {
+            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos());
 
             // Choose lamp prop
             float f = random.nextFloat();
             if (f < 0.625f) { // Chain
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CHAIN.defaultBlockState(), blockInfoGlobal.nbt);
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CHAIN.defaultBlockState(), blockInfoGlobal.nbt());
             } else { // None
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt());
             }
         }
 

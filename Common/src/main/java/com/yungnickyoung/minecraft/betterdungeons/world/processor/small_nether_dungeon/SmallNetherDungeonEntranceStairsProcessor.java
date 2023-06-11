@@ -30,22 +30,22 @@ public class SmallNetherDungeonEntranceStairsProcessor extends StructureProcesso
                                                              StructureTemplate.StructureBlockInfo blockInfoLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state.is(Blocks.BRICK_STAIRS)) {
-            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(new ChunkPos(blockInfoGlobal.pos))) {
+        if (blockInfoGlobal.state().is(Blocks.BRICK_STAIRS)) {
+            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(new ChunkPos(blockInfoGlobal.pos()))) {
                 return blockInfoGlobal;
             }
-            Direction facing = blockInfoGlobal.state.hasProperty(StairBlock.FACING)
-                    ? blockInfoGlobal.state.getValue(StairBlock.FACING)
+            Direction facing = blockInfoGlobal.state().hasProperty(StairBlock.FACING)
+                    ? blockInfoGlobal.state().getValue(StairBlock.FACING)
                     : Direction.NORTH;
             facing = structurePlacementData.getRotation().rotate(facing);
-            BlockPos pos = blockInfoGlobal.pos.relative(facing);
+            BlockPos pos = blockInfoGlobal.pos().relative(facing);
             levelReader.getChunk(pos).setBlockState(
                     pos,
                     Blocks.NETHER_BRICK_STAIRS
-                            .withPropertiesOf(blockInfoGlobal.state)
+                            .withPropertiesOf(blockInfoGlobal.state())
                             .setValue(StairBlock.FACING, facing.getOpposite()),
                     false);
-            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.NETHER_BRICKS.defaultBlockState(), blockInfoGlobal.nbt);
+            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.NETHER_BRICKS.defaultBlockState(), blockInfoGlobal.nbt());
         }
         return blockInfoGlobal;
     }

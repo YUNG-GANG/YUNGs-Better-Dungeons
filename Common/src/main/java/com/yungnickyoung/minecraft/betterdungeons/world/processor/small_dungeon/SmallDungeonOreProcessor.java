@@ -43,9 +43,9 @@ public class SmallDungeonOreProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (isOre.test(blockInfoGlobal.state)) {
+        if (isOre.test(blockInfoGlobal.state())) {
             if (!BetterDungeonsCommon.CONFIG.smallDungeons.enableOreProps) {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt());
             }
         }
         return blockInfoGlobal;

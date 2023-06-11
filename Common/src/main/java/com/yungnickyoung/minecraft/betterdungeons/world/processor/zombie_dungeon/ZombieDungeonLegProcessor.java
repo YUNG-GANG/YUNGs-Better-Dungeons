@@ -17,7 +17,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraft.world.level.material.Material;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
@@ -43,22 +42,22 @@ public class ZombieDungeonLegProcessor extends StructureProcessor implements ISa
                                                              StructureTemplate.StructureBlockInfo blockInfoLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state.getBlock() == Blocks.MAGENTA_STAINED_GLASS) {
-            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(new ChunkPos(blockInfoGlobal.pos))) {
+        if (blockInfoGlobal.state().getBlock() == Blocks.MAGENTA_STAINED_GLASS) {
+            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(new ChunkPos(blockInfoGlobal.pos()))) {
                 return blockInfoGlobal;
             }
 
-            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos);
+            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos());
 
             // Always replace the glass itself with smooth stone
-            Optional<BlockState> blockState = getBlockStateSafe(levelReader, blockInfoGlobal.pos);
-            if (blockState.isEmpty() || blockState.get().getMaterial() == Material.AIR || blockState.get().getMaterial() == Material.WATER || blockState.get().getMaterial() == Material.LAVA) {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SMOOTH_STONE.defaultBlockState(), blockInfoGlobal.nbt);
+            Optional<BlockState> blockState = getBlockStateSafe(levelReader, blockInfoGlobal.pos());
+            if (blockState.isEmpty() || blockState.get().isAir() || blockState.get().liquid()) {
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.SMOOTH_STONE.defaultBlockState(), blockInfoGlobal.nbt());
             } else {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, blockState.get(), blockInfoGlobal.nbt);
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), blockState.get(), blockInfoGlobal.nbt());
             }
 
-            BlockPos.MutableBlockPos mutable = blockInfoGlobal.pos.mutable().move(Direction.DOWN);
+            BlockPos.MutableBlockPos mutable = blockInfoGlobal.pos().mutable().move(Direction.DOWN);
             BlockState currBlockState = levelReader.getBlockState(mutable);
 
             // Generate vertical pillar down
@@ -69,10 +68,10 @@ public class ZombieDungeonLegProcessor extends StructureProcessor implements ISa
                 mutable.move(Direction.DOWN);
                 currBlockState = levelReader.getBlockState(mutable);
             }
-        } else if (blockInfoGlobal.state.getBlock() == Blocks.PURPUR_SLAB) {
-            Optional<BlockState> blockState = getBlockStateSafe(levelReader, blockInfoGlobal.pos);
-            if (blockState.isEmpty() || blockState.get().getMaterial() == Material.AIR || blockState.get().getMaterial() == Material.WATER || blockState.get().getMaterial() == Material.LAVA) {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SMOOTH_STONE_SLAB.defaultBlockState(), blockInfoGlobal.nbt);
+        } else if (blockInfoGlobal.state().getBlock() == Blocks.PURPUR_SLAB) {
+            Optional<BlockState> blockState = getBlockStateSafe(levelReader, blockInfoGlobal.pos());
+            if (blockState.isEmpty() || blockState.get().isAir() || blockState.get().liquid()) {
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.SMOOTH_STONE_SLAB.defaultBlockState(), blockInfoGlobal.nbt());
             } else {
                 blockInfoGlobal = null;
             }

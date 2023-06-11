@@ -28,9 +28,9 @@ public class SmallNetherDungeonHeadProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state.getBlock() instanceof AbstractSkullBlock) {
-            if (!BetterDungeonsCommon.CONFIG.general.enableHeads || structurePlacementData.getRandom(blockInfoGlobal.pos).nextFloat() > 0.167) {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.AIR.defaultBlockState(), blockInfoGlobal.nbt);
+        if (blockInfoGlobal.state().getBlock() instanceof AbstractSkullBlock) {
+            if (!BetterDungeonsCommon.CONFIG.general.enableHeads || structurePlacementData.getRandom(blockInfoGlobal.pos()).nextFloat() > 0.167) {
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.AIR.defaultBlockState(), blockInfoGlobal.nbt());
             }
         }
         return blockInfoGlobal;

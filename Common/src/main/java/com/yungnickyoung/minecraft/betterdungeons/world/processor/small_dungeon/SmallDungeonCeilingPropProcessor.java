@@ -28,34 +28,34 @@ public class SmallDungeonCeilingPropProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state.is(Blocks.MAGENTA_STAINED_GLASS)) {
+        if (blockInfoGlobal.state().is(Blocks.MAGENTA_STAINED_GLASS)) {
             // If ceiling isn't solid, place air since we don't want floating props
-            if (!levelReader.getBlockState(blockInfoGlobal.pos.above()).isFaceSturdy(levelReader, blockInfoGlobal.pos.above(), Direction.DOWN)) {
-                return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
+            if (!levelReader.getBlockState(blockInfoGlobal.pos().above()).isFaceSturdy(levelReader, blockInfoGlobal.pos().above(), Direction.DOWN)) {
+                return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt());
             }
 
-            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos);
+            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos());
             float f = random.nextFloat();
 
             // Choose ceiling prop
-            if (f < .2f) blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CHAIN.defaultBlockState(), blockInfoGlobal.nbt);
-            else blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
-        } else if (blockInfoGlobal.state.is(Blocks.BROWN_STAINED_GLASS)) {
+            if (f < .2f) blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CHAIN.defaultBlockState(), blockInfoGlobal.nbt());
+            else blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt());
+        } else if (blockInfoGlobal.state().is(Blocks.BROWN_STAINED_GLASS)) {
             // If ceiling isn't solid, simply ignore processing since we don't want floating props
-            if (!levelReader.getBlockState(blockInfoGlobal.pos.above(2)).isFaceSturdy(levelReader, blockInfoGlobal.pos.above(), Direction.DOWN)) {
-                return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
+            if (!levelReader.getBlockState(blockInfoGlobal.pos().above(2)).isFaceSturdy(levelReader, blockInfoGlobal.pos().above(), Direction.DOWN)) {
+                return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt());
             }
 
-            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos);
+            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos());
             float f = random.nextFloat();
 
             // Choose ceiling prop
-            if (f < .5f) blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CHAIN.defaultBlockState(), blockInfoGlobal.nbt);
-            else blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
-        } else if (blockInfoGlobal.state.is(Blocks.CHAIN)) {
+            if (f < .5f) blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CHAIN.defaultBlockState(), blockInfoGlobal.nbt());
+            else blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt());
+        } else if (blockInfoGlobal.state().is(Blocks.CHAIN)) {
             // If ceiling isn't solid, don't place top chains for potential double chains if they would be floating
-            if (!levelReader.getBlockState(blockInfoGlobal.pos.above()).isFaceSturdy(levelReader, blockInfoGlobal.pos.above(), Direction.DOWN)) {
-                return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
+            if (!levelReader.getBlockState(blockInfoGlobal.pos().above()).isFaceSturdy(levelReader, blockInfoGlobal.pos().above(), Direction.DOWN)) {
+                return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt());
             }
         }
 

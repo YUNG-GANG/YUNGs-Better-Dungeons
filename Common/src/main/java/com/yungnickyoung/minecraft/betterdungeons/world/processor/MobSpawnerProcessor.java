@@ -53,7 +53,7 @@ public class MobSpawnerProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state.getBlock() instanceof SpawnerBlock) {
+        if (blockInfoGlobal.state().getBlock() instanceof SpawnerBlock) {
             // Create spawner & populate with data
             MobSpawnerData spawner = MobSpawnerData.builder()
                     .spawnPotentials(SimpleWeightedRandomList.single(new SpawnData(
@@ -62,7 +62,7 @@ public class MobSpawnerProcessor extends StructureProcessor {
                     .setEntityType(BuiltInRegistries.ENTITY_TYPE.get(spawnerMob))
                     .build();
             CompoundTag nbt = spawner.save();
-            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SPAWNER.defaultBlockState(), nbt);
+            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.SPAWNER.defaultBlockState(), nbt);
         }
         return blockInfoGlobal;
     }

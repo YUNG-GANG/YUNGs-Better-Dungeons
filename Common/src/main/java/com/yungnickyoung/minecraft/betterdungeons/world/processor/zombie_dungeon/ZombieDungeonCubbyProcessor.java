@@ -40,20 +40,20 @@ public class ZombieDungeonCubbyProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state.getBlock() == Blocks.COBBLESTONE_STAIRS) {
-            BlockState newBlock = SELECTOR.get(structurePlacementData.getRandom(blockInfoGlobal.pos));
+        if (blockInfoGlobal.state().getBlock() == Blocks.COBBLESTONE_STAIRS) {
+            BlockState newBlock = SELECTOR.get(structurePlacementData.getRandom(blockInfoGlobal.pos()));
             if (newBlock.getBlock() instanceof StairBlock) {
                 newBlock = newBlock
-                    .setValue(StairBlock.FACING, blockInfoGlobal.state.getValue(StairBlock.FACING))
-                    .setValue(StairBlock.HALF, blockInfoGlobal.state.getValue(StairBlock.HALF))
-                    .setValue(StairBlock.SHAPE, blockInfoGlobal.state.getValue(StairBlock.SHAPE));
+                    .setValue(StairBlock.FACING, blockInfoGlobal.state().getValue(StairBlock.FACING))
+                    .setValue(StairBlock.HALF, blockInfoGlobal.state().getValue(StairBlock.HALF))
+                    .setValue(StairBlock.SHAPE, blockInfoGlobal.state().getValue(StairBlock.SHAPE));
             }
             if (newBlock.getBlock() instanceof SlabBlock) {
-                if (blockInfoGlobal.state.getValue(StairBlock.HALF) == Half.TOP) {
+                if (blockInfoGlobal.state().getValue(StairBlock.HALF) == Half.TOP) {
                     newBlock = newBlock.setValue(SlabBlock.TYPE, SlabType.TOP);
                 }
             }
-            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, newBlock, blockInfoGlobal.nbt);
+            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), newBlock, blockInfoGlobal.nbt());
         }
         return blockInfoGlobal;
     }

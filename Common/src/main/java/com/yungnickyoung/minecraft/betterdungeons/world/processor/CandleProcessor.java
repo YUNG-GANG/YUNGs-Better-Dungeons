@@ -35,14 +35,14 @@ public class CandleProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state.getBlock() instanceof SeaPickleBlock) {
-            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos);
+        if (blockInfoGlobal.state().getBlock() instanceof SeaPickleBlock) {
+            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos());
             int numCandles = random.nextInt(4) + 1;
             boolean lit = random.nextFloat() < .1f;
             BlockState newBlockState = getRandomCandle(random).defaultBlockState()
                     .setValue(CandleBlock.CANDLES, numCandles)
                     .setValue(CandleBlock.LIT, lit);
-            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, newBlockState, blockInfoGlobal.nbt);
+            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), newBlockState, blockInfoGlobal.nbt());
         }
         return blockInfoGlobal;
     }

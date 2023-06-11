@@ -30,9 +30,9 @@ public class ZombieRotProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state.getBlock() == Blocks.COBBLESTONE || blockInfoGlobal.state.getBlock() == Blocks.CYAN_TERRACOTTA || blockInfoGlobal.state.getBlock() == Blocks.COBBLESTONE_STAIRS) {
-            if (levelReader.getBlockState(blockInfoGlobal.pos).isAir()) {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt);
+        if (blockInfoGlobal.state().getBlock() == Blocks.COBBLESTONE || blockInfoGlobal.state().getBlock() == Blocks.CYAN_TERRACOTTA || blockInfoGlobal.state().getBlock() == Blocks.COBBLESTONE_STAIRS) {
+            if (levelReader.getBlockState(blockInfoGlobal.pos()).isAir()) {
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt());
             }
         }
         return blockInfoGlobal;
