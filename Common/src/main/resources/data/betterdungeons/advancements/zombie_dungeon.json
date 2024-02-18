@@ -1,40 +1,40 @@
 {
-    "parent": "betterdungeons:root",
-    "display": {
-        "icon": {
-            "item": "minecraft:rotten_flesh"
-        },
-        "title": {
-            "translate": "When in Rome"
-        },
-        "description": {
-            "translate": "Set foot in a Catacomb"
-        },
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "betterdungeons:root",
+  "display": {
+    "icon": {
+      "item": "minecraft:rotten_flesh"
     },
-    "criteria": {
-        "in_better_zombie_dungeon": {
-            "trigger": "minecraft:location",
-            "conditions": {
-                "player": [
-                    {
-                        "condition": "minecraft:entity_properties",
-                        "entity": "this",
-                        "predicate": {
-                            "location": {
-                                "structure": "betterdungeons:zombie_dungeon"
-                            }
-                        }
-                    }
-                ]
+    "title": {
+      "translate": "When in Rome"
+    },
+    "description": {
+      "translate": "Set foot in a Catacomb"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "in_better_zombie_dungeon": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "betterdungeons:zombie_dungeon"
+              }
             }
-        }
-    },
-    "requirements": [
-        [
-            "in_better_zombie_dungeon"
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "in_better_zombie_dungeon"
     ]
+  ]
 }

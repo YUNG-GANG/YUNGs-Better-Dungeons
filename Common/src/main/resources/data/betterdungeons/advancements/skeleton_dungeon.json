@@ -1,40 +1,40 @@
 {
-    "parent": "betterdungeons:root",
-    "display": {
-        "icon": {
-            "item": "minecraft:skeleton_skull"
-        },
-        "title": {
-            "translate": "A Bone to Pick"
-        },
-        "description": {
-            "translate": "Enter a Fortress of the Undead"
-        },
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "betterdungeons:root",
+  "display": {
+    "icon": {
+      "item": "minecraft:skeleton_skull"
     },
-    "criteria": {
-        "in_better_skeleton_dungeon": {
-            "trigger": "minecraft:location",
-            "conditions": {
-                "player": [
-                    {
-                        "condition": "minecraft:entity_properties",
-                        "entity": "this",
-                        "predicate": {
-                            "location": {
-                                "structure": "betterdungeons:skeleton_dungeon"
-                            }
-                        }
-                    }
-                ]
+    "title": {
+      "translate": "A Bone to Pick"
+    },
+    "description": {
+      "translate": "Enter a Fortress of the Undead"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "in_better_skeleton_dungeon": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "betterdungeons:skeleton_dungeon"
+              }
             }
-        }
-    },
-    "requirements": [
-        [
-            "in_better_skeleton_dungeon"
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "in_better_skeleton_dungeon"
     ]
+  ]
 }

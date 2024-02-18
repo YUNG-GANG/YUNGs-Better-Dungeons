@@ -1,97 +1,97 @@
 {
-    "parent": "betterdungeons:root",
-    "display": {
-        "icon": {
-            "item": "minecraft:diamond_sword"
-        },
-        "title": {
-            "translate": "Professional Dungeoneer"
-        },
-        "description": {
-            "translate": "Explore all of the Better Dungeons!"
-        },
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "betterdungeons:root",
+  "display": {
+    "icon": {
+      "item": "minecraft:diamond_sword"
     },
-    "criteria": {
-        "in_better_monster_room": {
-            "trigger": "minecraft:location",
-            "conditions": {
-                "player": [
-                    {
-                        "condition": "minecraft:entity_properties",
-                        "entity": "this",
-                        "predicate": {
-                            "location": {
-                                "structure": "betterdungeons:small_dungeon"
-                            }
-                        }
-                    }
-                ]
-            }
-        },
-        "in_better_zombie_dungeon": {
-            "trigger": "minecraft:location",
-            "conditions": {
-                "player": [
-                    {
-                        "condition": "minecraft:entity_properties",
-                        "entity": "this",
-                        "predicate": {
-                            "location": {
-                                "structure": "betterdungeons:zombie_dungeon"
-                            }
-                        }
-                    }
-                ]
-            }
-        },
-        "in_better_skeleton_dungeon": {
-            "trigger": "minecraft:location",
-            "conditions": {
-                "player": [
-                    {
-                        "condition": "minecraft:entity_properties",
-                        "entity": "this",
-                        "predicate": {
-                            "location": {
-                                "structure": "betterdungeons:skeleton_dungeon"
-                            }
-                        }
-                    }
-                ]
-            }
-        },
-        "in_better_spider_dungeon": {
-            "trigger": "minecraft:location",
-            "conditions": {
-                "player": [
-                    {
-                        "condition": "minecraft:entity_properties",
-                        "entity": "this",
-                        "predicate": {
-                            "location": {
-                                "structure": "betterdungeons:spider_dungeon"
-                            }
-                        }
-                    }
-                ]
-            }
-        }
+    "title": {
+      "translate": "Professional Dungeoneer"
     },
-    "requirements": [
-        [
-            "in_better_monster_room"
-        ],
-        [
-            "in_better_zombie_dungeon"
-        ],
-        [
-            "in_better_skeleton_dungeon"
-        ],
-        [
-            "in_better_spider_dungeon"
+    "description": {
+      "translate": "Explore all of the Better Dungeons!"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "in_better_monster_room": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "betterdungeons:small_dungeon"
+              }
+            }
+          }
         ]
+      }
+    },
+    "in_better_zombie_dungeon": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "betterdungeons:zombie_dungeon"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_better_skeleton_dungeon": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "betterdungeons:skeleton_dungeon"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_better_spider_dungeon": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "betterdungeons:spider_dungeon"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "in_better_monster_room"
+    ],
+    [
+      "in_better_zombie_dungeon"
+    ],
+    [
+      "in_better_skeleton_dungeon"
+    ],
+    [
+      "in_better_spider_dungeon"
     ]
+  ]
 }

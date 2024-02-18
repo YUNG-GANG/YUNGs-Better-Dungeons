@@ -1,40 +1,40 @@
 {
-    "parent": "betterdungeons:root",
-    "display": {
-        "icon": {
-            "item": "minecraft:red_nether_bricks"
-        },
-        "title": {
-            "translate": "A Special Addition"
-        },
-        "description": {
-            "translate": "Find a Small Nether Dungeon"
-        },
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": true
+  "parent": "betterdungeons:root",
+  "display": {
+    "icon": {
+      "item": "minecraft:red_nether_bricks"
     },
-    "criteria": {
-        "in_small_nether_dungeon": {
-            "trigger": "minecraft:location",
-            "conditions": {
-                "player": [
-                    {
-                        "condition": "minecraft:entity_properties",
-                        "entity": "this",
-                        "predicate": {
-                            "location": {
-                                "structure": "betterdungeons:small_nether_dungeon"
-                            }
-                        }
-                    }
-                ]
+    "title": {
+      "translate": "A Special Addition"
+    },
+    "description": {
+      "translate": "Find a Small Nether Dungeon"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "in_small_nether_dungeon": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "betterdungeons:small_nether_dungeon"
+              }
             }
-        }
-    },
-    "requirements": [
-        [
-            "in_small_nether_dungeon"
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "in_small_nether_dungeon"
     ]
+  ]
 }
