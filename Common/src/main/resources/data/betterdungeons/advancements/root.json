@@ -1,22 +1,22 @@
 {
-  "display": {
-    "icon": {
-      "item": "minecraft:mossy_stone_bricks"
+    "display": {
+        "icon": {
+            "item": "minecraft:mossy_stone_bricks"
+        },
+        "title": {
+            "translate": "YUNG's Better Dungeons"
+        },
+        "description": {
+            "translate": "Adventure awaits..."
+        },
+        "show_toast": false,
+        "announce_to_chat": false,
+        "hidden": true,
+        "background": "minecraft:textures/block/stone_bricks.png"
     },
-    "title": {
-      "translate": "YUNG's Better Dungeons"
-    },
-    "description": {
-      "translate": "Adventure awaits..."
-    },
-    "show_toast": false,
-    "announce_to_chat": false,
-    "hidden": true,
-    "background": "minecraft:textures/block/stone_bricks.png"
-  },
-  "criteria": {
-    "always": {
-      "trigger": "minecraft:tick"
+    "criteria": {
+        "always": {
+            "trigger": "minecraft:tick"
+        }
     }
-  }
 }

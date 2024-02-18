@@ -15,12 +15,22 @@
     "hidden": false
   },
   "criteria": {
-    "in_better_monster_room": {
-      "trigger": "yungsapi:structure_location",
-      "conditions": {
-        "feature": "betterdungeons:small_dungeon"
+      "in_better_monster_room": {
+          "trigger": "minecraft:location",
+          "conditions": {
+              "player": [
+                  {
+                      "condition": "minecraft:entity_properties",
+                      "entity": "this",
+                      "predicate": {
+                          "location": {
+                              "structure": "betterdungeons:small_dungeon"
+                          }
+                      }
+                  }
+              ]
+          }
       }
-    }
   },
   "requirements": [
     [

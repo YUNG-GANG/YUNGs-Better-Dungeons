@@ -1,30 +1,40 @@
 {
-  "parent": "betterdungeons:root",
-  "display": {
-    "icon": {
-      "item": "minecraft:string"
+    "parent": "betterdungeons:root",
+    "display": {
+        "icon": {
+            "item": "minecraft:string"
+        },
+        "title": {
+            "translate": "Cobweb Entanglement"
+        },
+        "description": {
+            "translate": "Discover a Spider Cave"
+        },
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
     },
-    "title": {
-      "translate": "Cobweb Entanglement"
+    "criteria": {
+        "in_better_spider_dungeon": {
+            "trigger": "minecraft:location",
+            "conditions": {
+                "player": [
+                    {
+                        "condition": "minecraft:entity_properties",
+                        "entity": "this",
+                        "predicate": {
+                            "location": {
+                                "structure": "betterdungeons:spider_dungeon"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
     },
-    "description": {
-      "translate": "Discover a Spider Cave"
-    },
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "criteria": {
-    "in_better_spider_dungeon": {
-      "trigger": "yungsapi:structure_location",
-      "conditions": {
-        "feature": "betterdungeons:spider_dungeon"
-      }
-    }
-  },
-  "requirements": [
-    [
-      "in_better_spider_dungeon"
+    "requirements": [
+        [
+            "in_better_spider_dungeon"
+        ]
     ]
-  ]
 }

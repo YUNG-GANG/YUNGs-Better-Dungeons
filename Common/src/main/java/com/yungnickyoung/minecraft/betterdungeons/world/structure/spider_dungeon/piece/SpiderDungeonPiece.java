@@ -18,7 +18,7 @@ import java.util.BitSet;
 import java.util.Set;
 
 public abstract class SpiderDungeonPiece extends StructurePiece {
-    protected static final Set<Block> BLOCK_BLACKLIST = Sets.newHashSet(Blocks.DIAMOND_BLOCK, Blocks.WHITE_WOOL, Blocks.SPAWNER, Blocks.CHEST, Blocks.ACACIA_LEAVES, Blocks.BIRCH_LEAVES, Blocks.OAK_LEAVES, Blocks.DARK_OAK_LEAVES, Blocks.JUNGLE_LEAVES, Blocks.SPRUCE_LEAVES, Blocks.GRASS, Blocks.TALL_GRASS);
+    protected static final Set<Block> BLOCK_BLACKLIST = Sets.newHashSet(Blocks.DIAMOND_BLOCK, Blocks.WHITE_WOOL, Blocks.SPAWNER, Blocks.CHEST, Blocks.ACACIA_LEAVES, Blocks.BIRCH_LEAVES, Blocks.OAK_LEAVES, Blocks.DARK_OAK_LEAVES, Blocks.JUNGLE_LEAVES, Blocks.SPRUCE_LEAVES, Blocks.SHORT_GRASS, Blocks.TALL_GRASS);
 
     protected SpiderDungeonPiece(StructurePieceType structurePieceTypeIn, int chainLength, BoundingBox box) {
         super(structurePieceTypeIn, chainLength, box);
