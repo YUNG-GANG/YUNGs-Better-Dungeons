@@ -36,10 +36,6 @@ runs {
     }
 }
 
-repositories {
-    mavenLocal() // FIXME Remove
-}
-
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
