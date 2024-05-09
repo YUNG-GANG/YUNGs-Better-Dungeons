@@ -11,7 +11,7 @@ issueTrackerURL="https://github.com/yungnickyoung/YUNGs-Better-Dungeons/issues"
 	authors="YUNGNICKYOUNG, Acarii"
     description="${mod_description}"
 	logoFile="logo.png"
-    displayURL="https://www.curseforge.com/minecraft/mc-mods/yungs-better-dungeons"
+    displayURL="https://www.curseforge.com/minecraft/mc-mods/yungs-better-dungeons-neoforge"
 
 [modproperties.${mod_id}]
     catalogueImageIcon="catalogue_icon.png"
