@@ -1,6 +1,6 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
@@ -32,7 +32,7 @@ import java.util.Optional;
 @MethodsReturnNonnullByDefault
 public class ZombieMainStairsProcessor extends StructureProcessor implements ISafeWorldModifier {
     public static final ZombieMainStairsProcessor INSTANCE = new ZombieMainStairsProcessor();
-    public static final Codec<ZombieMainStairsProcessor> CODEC = Codec.unit(() -> INSTANCE);
+    public static final MapCodec<ZombieMainStairsProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
     private static final BlockStateRandomizer STAIR_SELECTOR = new BlockStateRandomizer(Blocks.COBBLESTONE_STAIRS.defaultBlockState())
         .addBlock(Blocks.MOSSY_COBBLESTONE_STAIRS.defaultBlockState(), 0.4f)

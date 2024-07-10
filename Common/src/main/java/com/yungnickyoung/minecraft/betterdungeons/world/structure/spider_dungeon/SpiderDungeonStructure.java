@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon;
 
 import com.mojang.datafixers.util.Either;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureTypeModule;
 import com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece.SpiderDungeonBigTunnelPiece;
@@ -16,7 +16,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilde
 import java.util.Optional;
 
 public class SpiderDungeonStructure extends Structure {
-    public static final Codec<SpiderDungeonStructure> CODEC = RecordCodecBuilder.create((builder) -> builder
+    public static final MapCodec<SpiderDungeonStructure> CODEC = RecordCodecBuilder.mapCodec((builder) -> builder
                     .group(
                             settingsCodec(builder),
                             HeightProvider.CODEC.fieldOf("start_height").forGetter(structure -> structure.startHeight))

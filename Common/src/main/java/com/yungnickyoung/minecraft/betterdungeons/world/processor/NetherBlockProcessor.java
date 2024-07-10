@@ -1,6 +1,6 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -19,7 +19,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class NetherBlockProcessor extends StructureProcessor {
     public static final NetherBlockProcessor INSTANCE = new NetherBlockProcessor();
-    public static final Codec<NetherBlockProcessor> CODEC = Codec.unit(() -> INSTANCE);
+    public static final MapCodec<NetherBlockProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,

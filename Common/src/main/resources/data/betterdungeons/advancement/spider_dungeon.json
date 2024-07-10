@@ -2,20 +2,21 @@
   "parent": "betterdungeons:root",
   "display": {
     "icon": {
-      "item": "minecraft:rotten_flesh"
+      "count": 1,
+      "id": "minecraft:string"
     },
     "title": {
-      "translate": "When in Rome"
+      "translate": "Cobweb Entanglement"
     },
     "description": {
-      "translate": "Set foot in a Catacomb"
+      "translate": "Discover a Spider Cave"
     },
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false
   },
   "criteria": {
-    "in_better_zombie_dungeon": {
+    "in_better_spider_dungeon": {
       "trigger": "minecraft:location",
       "conditions": {
         "player": [
@@ -24,7 +25,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "betterdungeons:zombie_dungeon"
+                "structures": "betterdungeons:spider_dungeon"
               }
             }
           }
@@ -34,7 +35,7 @@
   },
   "requirements": [
     [
-      "in_better_zombie_dungeon"
+      "in_better_spider_dungeon"
     ]
   ]
 }

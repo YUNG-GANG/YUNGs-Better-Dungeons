@@ -27,7 +27,7 @@ public class LocateSmallNetherDungeonCommandMixin {
                                                        ResourceOrTagKeyArgument.Result<Structure> result,
                                                        CallbackInfoReturnable<Integer> ci) throws CommandSyntaxException {
         Optional<ResourceKey<Structure>> optional = result.unwrap().left();
-        if (!BetterDungeonsCommon.CONFIG.smallNetherDungeons.enabled && optional.isPresent() && optional.get().location().equals(new ResourceLocation(BetterDungeonsCommon.MOD_ID, "small_nether_dungeon"))) {
+        if (!BetterDungeonsCommon.CONFIG.smallNetherDungeons.enabled && optional.isPresent() && optional.get().location().equals(ResourceLocation.fromNamespaceAndPath(BetterDungeonsCommon.MOD_ID, "small_nether_dungeon"))) {
             throw DUNGEON_DISABLED_EXCEPTION.create();
         }
     }

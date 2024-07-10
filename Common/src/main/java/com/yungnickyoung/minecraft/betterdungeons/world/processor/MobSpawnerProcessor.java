@@ -1,6 +1,6 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.world.spawner.MobSpawnerData;
@@ -29,7 +29,7 @@ import java.util.Optional;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class MobSpawnerProcessor extends StructureProcessor {
-    public static final Codec<MobSpawnerProcessor> CODEC = RecordCodecBuilder.create(codecBuilder -> codecBuilder
+    public static final MapCodec<MobSpawnerProcessor> CODEC = RecordCodecBuilder.mapCodec(codecBuilder -> codecBuilder
             .group(
                     ResourceLocation.CODEC
                             .fieldOf("spawner_mob")
@@ -58,6 +58,7 @@ public class MobSpawnerProcessor extends StructureProcessor {
             MobSpawnerData spawner = MobSpawnerData.builder()
                     .spawnPotentials(SimpleWeightedRandomList.single(new SpawnData(
                             Util.make(new CompoundTag(), (compoundTag) -> compoundTag.putString("id", spawnerMob.toString())),
+                            Optional.empty(),
                             Optional.empty())))
                     .setEntityType(BuiltInRegistries.ENTITY_TYPE.get(spawnerMob))
                     .build();

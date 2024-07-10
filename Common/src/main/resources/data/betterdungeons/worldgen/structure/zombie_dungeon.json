@@ -16,6 +16,7 @@
   },
   "use_expansion_hack": false,
   "max_distance_from_center": 120,
+  "liquid_settings": "ignore_waterlogging",
   "adapt_noise": false,
   "spawn_overrides": {
     "monster": {

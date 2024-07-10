@@ -1,7 +1,6 @@
 package com.yungnickyoung.minecraft.betterdungeons.mixin;
 
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
-import com.yungnickyoung.minecraft.betterdungeons.mixin.accessor.WorldGenRegionAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.SectionPos;
@@ -10,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.StructureManager;
-import net.minecraft.world.level.chunk.ChunkStatus;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.feature.BasaltColumnsFeature;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import org.spongepowered.asm.mixin.Mixin;
@@ -35,13 +34,13 @@ public class NoBasaltColumnsInStructuresMixin {
         }
 
         SectionPos sectionPos = SectionPos.of(mutableBlockPos);
-        if (!levelAccessor.getChunk(sectionPos.x(), sectionPos.z()).getStatus().isOrAfter(ChunkStatus.STRUCTURE_REFERENCES)) {
+        if (!levelAccessor.getChunk(sectionPos.x(), sectionPos.z()).getHighestGeneratedStatus().isOrAfter(ChunkStatus.STRUCTURE_REFERENCES)) {
             return;
         }
 
         Registry<Structure> configuredStructureFeatureRegistry = levelAccessor.registryAccess().registryOrThrow(Registries.STRUCTURE);
-        StructureManager structureManager = ((WorldGenRegionAccessor) levelAccessor).getStructureManager();
-        Structure netherDungeonStructure = configuredStructureFeatureRegistry.get(new ResourceLocation(BetterDungeonsCommon.MOD_ID, "small_nether_dungeon"));
+        StructureManager structureManager = ((WorldGenRegion) levelAccessor).getLevel().structureManager();
+        Structure netherDungeonStructure = configuredStructureFeatureRegistry.get(ResourceLocation.fromNamespaceAndPath(BetterDungeonsCommon.MOD_ID, "small_nether_dungeon"));
         if (netherDungeonStructure == null) {
             return;
         }

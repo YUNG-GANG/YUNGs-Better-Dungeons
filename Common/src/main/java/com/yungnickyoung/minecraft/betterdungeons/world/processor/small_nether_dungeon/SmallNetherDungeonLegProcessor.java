@@ -1,6 +1,6 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_dungeon;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
@@ -25,7 +25,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class SmallNetherDungeonLegProcessor extends StructureProcessor {
     public static final SmallNetherDungeonLegProcessor INSTANCE = new SmallNetherDungeonLegProcessor();
-    public static final Codec<SmallNetherDungeonLegProcessor> CODEC = Codec.unit(() -> INSTANCE);
+    public static final MapCodec<SmallNetherDungeonLegProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,

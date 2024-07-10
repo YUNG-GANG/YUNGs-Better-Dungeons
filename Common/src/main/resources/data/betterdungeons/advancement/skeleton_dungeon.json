@@ -2,7 +2,8 @@
   "parent": "betterdungeons:root",
   "display": {
     "icon": {
-      "item": "minecraft:skeleton_skull"
+      "count": 1,
+      "id": "minecraft:skeleton_skull"
     },
     "title": {
       "translate": "A Bone to Pick"
@@ -24,7 +25,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "betterdungeons:skeleton_dungeon"
+                "structures": "betterdungeons:skeleton_dungeon"
               }
             }
           }

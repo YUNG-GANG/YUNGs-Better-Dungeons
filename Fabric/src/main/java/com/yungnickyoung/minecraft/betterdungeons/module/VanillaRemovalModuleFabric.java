@@ -14,7 +14,7 @@ public class VanillaRemovalModuleFabric {
     public static void init() {
         // Remove vanilla dungeons, if enabled
         if (BetterDungeonsCommon.CONFIG.general.removeVanillaDungeons) {
-            BiomeModifications.create(new ResourceLocation(BetterDungeonsCommon.MOD_ID, "vanilla_dungeon_removal"))
+            BiomeModifications.create(ResourceLocation.fromNamespaceAndPath(BetterDungeonsCommon.MOD_ID, "vanilla_dungeon_removal"))
                     .add(ModificationPhase.REMOVALS,
                             biomeSelectionContext -> biomeSelectionContext.hasPlacedFeature(CavePlacements.MONSTER_ROOM),
                             modificationContext -> modificationContext.getGenerationSettings().removeFeature(CavePlacements.MONSTER_ROOM))

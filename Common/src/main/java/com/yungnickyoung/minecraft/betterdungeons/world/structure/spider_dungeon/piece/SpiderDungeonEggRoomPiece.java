@@ -5,7 +5,9 @@ import com.yungnickyoung.minecraft.betterdungeons.mixin.accessor.BoundingBoxAcce
 import com.yungnickyoung.minecraft.betterdungeons.module.StructurePieceTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -208,7 +210,8 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
 
         // Place chest or spawner
         if (randomSource.nextFloat() < .6f) {
-            this.createChest(world, box, randomSource, chestPos.getX(), chestPos.getY(), chestPos.getZ(), new ResourceLocation(BetterDungeonsCommon.MOD_ID, "spider_dungeon/chests/egg_room"));
+            this.createChest(world, box, randomSource, chestPos.getX(), chestPos.getY(), chestPos.getZ(), ResourceKey.create(Registries.LOOT_TABLE,
+                    ResourceLocation.fromNamespaceAndPath(BetterDungeonsCommon.MOD_ID, "spider_dungeon/chests/egg_room")));
         } else {
             if (box.isInside(chestPos)) {
                 this.placeBlock(world, Blocks.SPAWNER.defaultBlockState(), chestPos.getX(), chestPos.getY(), chestPos.getZ(), box);

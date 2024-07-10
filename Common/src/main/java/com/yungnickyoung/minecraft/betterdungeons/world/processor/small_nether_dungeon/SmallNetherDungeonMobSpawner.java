@@ -1,6 +1,6 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_dungeon;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
@@ -12,6 +12,8 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.item.ItemStack;
@@ -31,7 +33,7 @@ import java.util.Optional;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class SmallNetherDungeonMobSpawner extends StructureProcessor {
-    public static final Codec<SmallNetherDungeonMobSpawner> CODEC = RecordCodecBuilder.create(codecBuilder -> codecBuilder
+    public static final MapCodec<SmallNetherDungeonMobSpawner> CODEC = RecordCodecBuilder.mapCodec(codecBuilder -> codecBuilder
             .group(
                     ResourceLocation.CODEC
                             .fieldOf("spawner_mob")
@@ -63,29 +65,20 @@ public class SmallNetherDungeonMobSpawner extends StructureProcessor {
                                 compoundTag.putString("id", spawnerMob.toString());
                                 if (spawnerMob.toString().equals("minecraft:wither_skeleton")) {
                                     compoundTag.put("ArmorItems", Util.make(new ListTag(), (armorItemsNbt) -> {
-                                        ItemStack itemStack = new ItemStack(Items.NETHERITE_BOOTS);
-
                                         // Boots
-                                        CompoundTag bootsNbt = new CompoundTag();
-                                        itemStack.save(bootsNbt);
+                                        Tag bootsNbt = ItemStack.CODEC.encodeStart(NbtOps.INSTANCE, new ItemStack(Items.NETHERITE_BOOTS)).getOrThrow();
                                         armorItemsNbt.add(bootsNbt);
 
                                         // Leggings
-                                        itemStack = new ItemStack(Items.NETHERITE_LEGGINGS);
-                                        CompoundTag leggingsNbt = new CompoundTag();
-                                        itemStack.save(leggingsNbt);
+                                        Tag leggingsNbt = ItemStack.CODEC.encodeStart(NbtOps.INSTANCE, new ItemStack(Items.NETHERITE_LEGGINGS)).getOrThrow();
                                         armorItemsNbt.add(leggingsNbt);
 
                                         // Chestplate
-                                        itemStack = new ItemStack(Items.NETHERITE_CHESTPLATE);
-                                        CompoundTag chestNbt = new CompoundTag();
-                                        itemStack.save(chestNbt);
+                                        Tag chestNbt = ItemStack.CODEC.encodeStart(NbtOps.INSTANCE, new ItemStack(Items.NETHERITE_CHESTPLATE)).getOrThrow();
                                         armorItemsNbt.add(chestNbt);
 
                                         // Helmet
-                                        itemStack = new ItemStack(Items.NETHERITE_HELMET);
-                                        CompoundTag helmetNbt = new CompoundTag();
-                                        itemStack.save(helmetNbt);
+                                        Tag helmetNbt = ItemStack.CODEC.encodeStart(NbtOps.INSTANCE, new ItemStack(Items.NETHERITE_HELMET)).getOrThrow();
                                         armorItemsNbt.add(helmetNbt);
                                     }));
                                     compoundTag.put("ArmorDropChances", Util.make(new ListTag(), (armorDropChancesNbt) -> {
@@ -95,9 +88,7 @@ public class SmallNetherDungeonMobSpawner extends StructureProcessor {
                                         armorDropChancesNbt.add(FloatTag.valueOf(0));
                                     }));
                                     compoundTag.put("HandItems", Util.make(new ListTag(), (handItemsNbt) -> {
-                                        ItemStack itemStack = new ItemStack(Items.STONE_SWORD);
-                                        CompoundTag stoneSwordNbt = new CompoundTag();
-                                        itemStack.save(stoneSwordNbt);
+                                        Tag stoneSwordNbt = ItemStack.CODEC.encodeStart(NbtOps.INSTANCE, new ItemStack(Items.STONE_SWORD)).getOrThrow();
                                         handItemsNbt.add(stoneSwordNbt);
                                     }));
                                     if (!BetterDungeonsCommon.CONFIG.smallNetherDungeons.witherSkeletonsDropWitherSkulls) {
@@ -109,34 +100,26 @@ public class SmallNetherDungeonMobSpawner extends StructureProcessor {
                                     }
                                 }
                             }),
+                            Optional.empty(),
                             Optional.empty())))
                     .setEntityType(BuiltInRegistries.ENTITY_TYPE.get(spawnerMob))
                     .build();
             if (spawnerMob.toString().equals("minecraft:wither_skeleton")) {
                 spawner.nextSpawnData.getEntityToSpawn().put("ArmorItems", Util.make(new ListTag(), (armorItemsNbt) -> {
-                    ItemStack itemStack = new ItemStack(Items.NETHERITE_BOOTS);
-
                     // Boots
-                    CompoundTag bootsNbt = new CompoundTag();
-                    itemStack.save(bootsNbt);
+                    Tag bootsNbt = ItemStack.CODEC.encodeStart(NbtOps.INSTANCE, new ItemStack(Items.NETHERITE_BOOTS)).getOrThrow();
                     armorItemsNbt.add(bootsNbt);
 
                     // Leggings
-                    itemStack = new ItemStack(Items.NETHERITE_LEGGINGS);
-                    CompoundTag leggingsNbt = new CompoundTag();
-                    itemStack.save(leggingsNbt);
+                    Tag leggingsNbt = ItemStack.CODEC.encodeStart(NbtOps.INSTANCE, new ItemStack(Items.NETHERITE_LEGGINGS)).getOrThrow();
                     armorItemsNbt.add(leggingsNbt);
 
                     // Chestplate
-                    itemStack = new ItemStack(Items.NETHERITE_CHESTPLATE);
-                    CompoundTag chestNbt = new CompoundTag();
-                    itemStack.save(chestNbt);
+                    Tag chestNbt = ItemStack.CODEC.encodeStart(NbtOps.INSTANCE, new ItemStack(Items.NETHERITE_CHESTPLATE)).getOrThrow();
                     armorItemsNbt.add(chestNbt);
 
                     // Helmet
-                    itemStack = new ItemStack(Items.NETHERITE_HELMET);
-                    CompoundTag helmetNbt = new CompoundTag();
-                    itemStack.save(helmetNbt);
+                    Tag helmetNbt = ItemStack.CODEC.encodeStart(NbtOps.INSTANCE, new ItemStack(Items.NETHERITE_HELMET)).getOrThrow();
                     armorItemsNbt.add(helmetNbt);
                 }));
                 spawner.nextSpawnData.getEntityToSpawn().put("ArmorDropChances", Util.make(new ListTag(), (armorDropChancesNbt) -> {
@@ -146,9 +129,7 @@ public class SmallNetherDungeonMobSpawner extends StructureProcessor {
                     armorDropChancesNbt.add(FloatTag.valueOf(0));
                 }));
                 spawner.nextSpawnData.getEntityToSpawn().put("HandItems", Util.make(new ListTag(), (handItemsNbt) -> {
-                    ItemStack itemStack = new ItemStack(Items.STONE_SWORD);
-                    CompoundTag stoneSwordNbt = new CompoundTag();
-                    itemStack.save(stoneSwordNbt);
+                    Tag stoneSwordNbt = ItemStack.CODEC.encodeStart(NbtOps.INSTANCE, new ItemStack(Items.STONE_SWORD)).getOrThrow();
                     handItemsNbt.add(stoneSwordNbt);
                 }));
                 if (!BetterDungeonsCommon.CONFIG.smallNetherDungeons.witherSkeletonsDropWitherSkulls) {

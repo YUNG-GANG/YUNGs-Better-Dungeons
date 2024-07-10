@@ -1,21 +1,40 @@
 package com.yungnickyoung.minecraft.betterdungeons.module;
 
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
-import com.yungnickyoung.minecraft.betterdungeons.world.processor.*;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.CandleProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.HeadProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.MobSpawnerProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.NetherBlockProcessor;
 import com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dungeon.RuinedStoneBrickProcessor;
 import com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dungeon.SkeletonDungeonLegProcessor;
 import com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dungeon.SkeletonMobSpawnerProcessor;
-import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon.*;
-import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_dungeon.*;
-import com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon.*;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon.SmallDungeonBannerProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon.SmallDungeonCeilingLampPropProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon.SmallDungeonCeilingProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon.SmallDungeonCeilingPropProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon.SmallDungeonChestProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon.SmallDungeonCobblestoneProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon.SmallDungeonLegProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon.SmallDungeonOreProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_dungeon.SmallNetherDungeonBannerProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_dungeon.SmallNetherDungeonEntranceStairsProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_dungeon.SmallNetherDungeonHeadProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_dungeon.SmallNetherDungeonLavaBlockProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_dungeon.SmallNetherDungeonLegProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_dungeon.SmallNetherDungeonMobSpawner;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon.ZombieDungeonCubbyProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon.ZombieDungeonFlowerPotProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon.ZombieDungeonLegProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon.ZombieDungeonStairProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon.ZombieMainStairsProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon.ZombieMobSpawnerProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon.ZombieRotProcessor;
+import com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon.ZombieTombstoneSpawnerProcessor;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 
 @AutoRegister(BetterDungeonsCommon.MOD_ID)
 public class StructureProcessorTypeModule {
-    @AutoRegister("waterlogged_processor")
-    public static StructureProcessorType<WaterloggedProcessor> WATERLOGGED_PROCESSOR = () -> WaterloggedProcessor.CODEC;
-
     @AutoRegister("mob_spawner_processor")
     public static StructureProcessorType<MobSpawnerProcessor> MOB_SPAWNER_PROCESSOR = () -> MobSpawnerProcessor.CODEC;
 

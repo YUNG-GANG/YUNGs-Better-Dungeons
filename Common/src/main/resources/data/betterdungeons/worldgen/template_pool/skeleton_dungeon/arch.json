@@ -10,7 +10,7 @@
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
         "max_count": 1,
-        "element_type": "yungsapi:max_count_single_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -21,7 +21,7 @@
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
         "max_count": 1,
-        "element_type": "yungsapi:max_count_single_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -32,7 +32,7 @@
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
         "max_count": 1,
-        "element_type": "yungsapi:max_count_single_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -43,7 +43,7 @@
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
         "max_count": 1,
-        "element_type": "yungsapi:max_count_single_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -54,7 +54,7 @@
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
         "max_count": 1,
-        "element_type": "yungsapi:max_count_single_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -65,7 +65,7 @@
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
         "max_count": 1,
-        "element_type": "yungsapi:max_count_single_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -76,7 +76,7 @@
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
         "max_count": 1,
-        "element_type": "yungsapi:max_count_single_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -87,7 +87,7 @@
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
         "max_count": 1,
-        "element_type": "yungsapi:max_count_single_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -98,7 +98,7 @@
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
         "max_count": 1,
-        "element_type": "yungsapi:max_count_single_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -109,7 +109,7 @@
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
         "max_count": 1,
-        "element_type": "yungsapi:max_count_single_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -120,7 +120,7 @@
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
         "max_count": 1,
-        "element_type": "yungsapi:max_count_single_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -131,7 +131,7 @@
         "processors": "betterdungeons:skeleton_dungeon/skeleton_dungeon",
         "projection": "rigid",
         "max_count": 1,
-        "element_type": "yungsapi:max_count_single_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     }
   ]

@@ -10,7 +10,7 @@
         "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
         "projection": "rigid",
         "max_count": 6,
-        "element_type": "yungsapi:max_count_single_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -21,7 +21,7 @@
         "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
         "projection": "rigid",
         "max_count": 6,
-        "element_type": "yungsapi:max_count_single_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     },
 
@@ -33,7 +33,7 @@
         "processors": "betterdungeons:zombie_dungeon/zombie_dungeon",
         "projection": "rigid",
         "max_count": 6,
-        "element_type": "yungsapi:max_count_single_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     }
   ]

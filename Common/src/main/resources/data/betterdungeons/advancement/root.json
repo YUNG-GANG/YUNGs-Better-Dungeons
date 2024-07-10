@@ -1,7 +1,8 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:mossy_stone_bricks"
+      "count": 1,
+      "id": "minecraft:mossy_stone_bricks"
     },
     "title": {
       "translate": "YUNG's Better Dungeons"

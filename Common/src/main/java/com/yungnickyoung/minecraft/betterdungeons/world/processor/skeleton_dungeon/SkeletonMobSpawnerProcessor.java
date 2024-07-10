@@ -1,6 +1,6 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dungeon;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.world.spawner.MobSpawnerData;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -29,7 +29,7 @@ import java.util.Optional;
 @MethodsReturnNonnullByDefault
 public class SkeletonMobSpawnerProcessor extends StructureProcessor {
     public static final SkeletonMobSpawnerProcessor INSTANCE = new SkeletonMobSpawnerProcessor();
-    public static final Codec<SkeletonMobSpawnerProcessor> CODEC = Codec.unit(() -> INSTANCE);
+    public static final MapCodec<SkeletonMobSpawnerProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
@@ -43,6 +43,7 @@ public class SkeletonMobSpawnerProcessor extends StructureProcessor {
             MobSpawnerData spawner = MobSpawnerData.builder()
                     .spawnPotentials(SimpleWeightedRandomList.single(new SpawnData(
                             Util.make(new CompoundTag(), (compoundTag) -> compoundTag.putString("id", "minecraft:skeleton")),
+                            Optional.empty(),
                             Optional.empty())))
                     .requiredPlayerRange(18)
                     .maxNearbyEntities(8)

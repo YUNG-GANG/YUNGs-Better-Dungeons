@@ -1,6 +1,6 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
 import com.yungnickyoung.minecraft.yungsapi.world.structure.processor.ISafeWorldModifier;
@@ -30,7 +30,7 @@ import java.util.Optional;
 @MethodsReturnNonnullByDefault
 public class ZombieDungeonLegProcessor extends StructureProcessor implements ISafeWorldModifier {
     public static final ZombieDungeonLegProcessor INSTANCE = new ZombieDungeonLegProcessor();
-    public static final Codec<ZombieDungeonLegProcessor> CODEC = Codec.unit(() -> INSTANCE);
+    public static final MapCodec<ZombieDungeonLegProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
     private static final BlockStateRandomizer LEG_SELECTOR = new BlockStateRandomizer(Blocks.COBBLESTONE.defaultBlockState())
         .addBlock(Blocks.POLISHED_ANDESITE.defaultBlockState(), 0.8f);

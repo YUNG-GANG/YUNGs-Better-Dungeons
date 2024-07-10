@@ -1,6 +1,6 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonContext;
@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class SmallDungeonChestProcessor extends StructureProcessor {
     public static final SmallDungeonChestProcessor INSTANCE = new SmallDungeonChestProcessor();
-    public static final Codec<SmallDungeonChestProcessor> CODEC = Codec.unit(() -> INSTANCE);
+    public static final MapCodec<SmallDungeonChestProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,

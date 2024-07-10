@@ -1,6 +1,6 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -24,7 +24,7 @@ import java.util.function.Predicate;
 @MethodsReturnNonnullByDefault
 public class SmallDungeonOreProcessor extends StructureProcessor {
     public static final SmallDungeonOreProcessor INSTANCE = new SmallDungeonOreProcessor();
-    public static final Codec<SmallDungeonOreProcessor> CODEC = Codec.unit(() -> INSTANCE);
+    public static final MapCodec<SmallDungeonOreProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
     private static final Predicate<BlockState> isOre = blockState ->
             blockState.is(BlockTags.GOLD_ORES) ||

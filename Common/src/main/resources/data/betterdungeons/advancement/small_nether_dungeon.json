@@ -2,20 +2,21 @@
   "parent": "betterdungeons:root",
   "display": {
     "icon": {
-      "item": "minecraft:spawner"
+      "count": 1,
+      "id": "minecraft:red_nether_bricks"
     },
     "title": {
-      "translate": "Quite the Renovation"
+      "translate": "A Special Addition"
     },
     "description": {
-      "translate": "Find an upgraded Monster Room"
+      "translate": "Find a Small Nether Dungeon"
     },
     "show_toast": true,
     "announce_to_chat": true,
-    "hidden": false
+    "hidden": true
   },
   "criteria": {
-    "in_better_monster_room": {
+    "in_small_nether_dungeon": {
       "trigger": "minecraft:location",
       "conditions": {
         "player": [
@@ -24,7 +25,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "betterdungeons:small_dungeon"
+                "structures": "betterdungeons:small_nether_dungeon"
               }
             }
           }
@@ -34,7 +35,7 @@
   },
   "requirements": [
     [
-      "in_better_monster_room"
+      "in_small_nether_dungeon"
     ]
   ]
 }

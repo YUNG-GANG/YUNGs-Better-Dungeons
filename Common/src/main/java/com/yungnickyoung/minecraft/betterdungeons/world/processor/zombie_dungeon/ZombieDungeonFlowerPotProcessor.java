@@ -1,6 +1,6 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -19,7 +19,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class ZombieDungeonFlowerPotProcessor extends StructureProcessor {
     public static final ZombieDungeonFlowerPotProcessor INSTANCE = new ZombieDungeonFlowerPotProcessor();
-    public static final Codec<ZombieDungeonFlowerPotProcessor> CODEC = Codec.unit(() -> INSTANCE);
+    public static final MapCodec<ZombieDungeonFlowerPotProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
     private static final BlockStateRandomizer FLOWER_SELECTOR = new BlockStateRandomizer(Blocks.FLOWER_POT.defaultBlockState())
         .addBlock(Blocks.POTTED_CORNFLOWER.defaultBlockState(), 0.1f)

@@ -1,6 +1,6 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
@@ -23,7 +23,7 @@ import java.util.List;
 @MethodsReturnNonnullByDefault
 public class CandleProcessor extends StructureProcessor {
     public static final CandleProcessor INSTANCE = new CandleProcessor();
-    public static final Codec<CandleProcessor> CODEC = Codec.unit(() -> INSTANCE);
+    public static final MapCodec<CandleProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
     private static final List<Block> CANDLES = List.of(Blocks.CANDLE, Blocks.WHITE_CANDLE, Blocks.GRAY_CANDLE,
             Blocks.LIGHT_GRAY_CANDLE, Blocks.BROWN_CANDLE, Blocks.GREEN_CANDLE, Blocks.PURPLE_CANDLE, Blocks.BLACK_CANDLE);

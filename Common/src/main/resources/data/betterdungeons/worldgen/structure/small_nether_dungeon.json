@@ -1,5 +1,5 @@
 {
-  "type": "betterdungeons:small_nether_dungeon",
+  "type": "yungsapi:yung_jigsaw",
   "biomes": "#betterdungeons:has_structure/small_nether_dungeon",
   "step": "underground_structures",
   "start_pool": "betterdungeons:small_nether_dungeon",
@@ -14,7 +14,7 @@
       "absolute": 100
     }
   },
-  "use_expansion_hack": false,
   "max_distance_from_center": 80,
-  "spawn_overrides": {}
+  "spawn_overrides": {},
+  "liquid_settings": "ignore_waterlogging"
 }

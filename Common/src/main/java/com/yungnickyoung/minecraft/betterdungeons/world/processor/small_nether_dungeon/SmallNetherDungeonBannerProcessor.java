@@ -1,6 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_dungeon;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
@@ -12,9 +13,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.AbstractBannerBlock;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BannerPatterns;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
@@ -32,18 +35,19 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class SmallNetherDungeonBannerProcessor extends StructureProcessor {
-    public static final Codec<SmallNetherDungeonBannerProcessor> CODEC = RecordCodecBuilder.create(codecBuilder -> codecBuilder
-        .group(
-            Codec.STRING
-                .fieldOf("dungeon_type")
-                .forGetter(processor -> processor.getDungeonType().getName()))
-        .apply(codecBuilder, codecBuilder.stable(SmallNetherDungeonBannerProcessor::new)));
+    public static final MapCodec<SmallNetherDungeonBannerProcessor> CODEC = RecordCodecBuilder.mapCodec(codecBuilder -> codecBuilder
+            .group(
+                    Codec.STRING
+                            .fieldOf("dungeon_type")
+                            .forGetter(processor -> processor.getDungeonType().getName()))
+            .apply(codecBuilder, codecBuilder.stable(SmallNetherDungeonBannerProcessor::new)));
 
     private SmallNetherDungeonBannerProcessor(String dungeonType) {
         this.dungeonType = DungeonType.fromString(dungeonType);
     }
 
     private final DungeonType dungeonType;
+
     public DungeonType getDungeonType() {
         return this.dungeonType;
     }
@@ -51,55 +55,55 @@ public class SmallNetherDungeonBannerProcessor extends StructureProcessor {
     // All banners
     public static final Banner SKELETON_BANNER = new Banner.Builder()
             .blockState(Blocks.BLACK_WALL_BANNER.defaultBlockState())
-            .pattern("cbo", 0)
-            .pattern("cs", 0)
-            .pattern("bs", 15)
-            .pattern("ts", 0)
-            .pattern("cre", 0)
-            .pattern("gra", 15)
+            .pattern(BannerPatterns.CURLY_BORDER, DyeColor.WHITE)
+            .pattern(BannerPatterns.STRIPE_CENTER, DyeColor.WHITE)
+            .pattern(BannerPatterns.STRIPE_BOTTOM, DyeColor.BLACK)
+            .pattern(BannerPatterns.STRIPE_TOP, DyeColor.WHITE)
+            .pattern(BannerPatterns.CREEPER, DyeColor.WHITE)
+            .pattern(BannerPatterns.GRADIENT, DyeColor.BLACK)
             .customName("Vengeful Banner")
             .customColor("dark_gray")
             .build();
 
     public static final Banner WITHER_SKELETON_BANNER = new Banner.Builder()
             .blockState(Blocks.RED_WALL_BANNER.defaultBlockState())
-            .pattern("cbo", 15)
-            .pattern("cs", 15)
-            .pattern("bs", 14)
-            .pattern("cre", 15)
-            .pattern("ts", 15)
-            .pattern("gru", 15)
+            .pattern(BannerPatterns.CURLY_BORDER, DyeColor.BLACK)
+            .pattern(BannerPatterns.STRIPE_CENTER, DyeColor.BLACK)
+            .pattern(BannerPatterns.STRIPE_BOTTOM, DyeColor.RED)
+            .pattern(BannerPatterns.CREEPER, DyeColor.BLACK)
+            .pattern(BannerPatterns.STRIPE_TOP, DyeColor.BLACK)
+            .pattern(BannerPatterns.GRADIENT_UP, DyeColor.BLACK)
             .customName("Banner of Decay")
             .customColor("dark_purple")
             .build();
 
     public static final Banner ZOMBIFIED_PIGLIN_BANNER = new Banner.Builder()
             .blockState(Blocks.PINK_WALL_BANNER.defaultBlockState())
-            .pattern("ls", 13)
-            .pattern("tts", 15)
-            .pattern("tts", 6)
-            .pattern("cs", 6)
-            .pattern("vhr", 8)
-            .pattern("rd", 13)
-            .pattern("cre", 0)
-            .pattern("hhb", 6)
-            .pattern("mr", 6)
-            .pattern("pig", 15)
-            .pattern("gru", 6)
-            .pattern("bs", 15)
+            .pattern(BannerPatterns.STRIPE_LEFT, DyeColor.GREEN)
+            .pattern(BannerPatterns.TRIANGLES_TOP, DyeColor.BLACK)
+            .pattern(BannerPatterns.TRIANGLES_TOP, DyeColor.PINK)
+            .pattern(BannerPatterns.STRIPE_CENTER, DyeColor.PINK)
+            .pattern(BannerPatterns.HALF_VERTICAL_MIRROR, DyeColor.LIGHT_GRAY)
+            .pattern(BannerPatterns.DIAGONAL_RIGHT, DyeColor.GREEN)
+            .pattern(BannerPatterns.CREEPER, DyeColor.WHITE)
+            .pattern(BannerPatterns.HALF_HORIZONTAL_MIRROR, DyeColor.PINK)
+            .pattern(BannerPatterns.RHOMBUS_MIDDLE, DyeColor.PINK)
+            .pattern(BannerPatterns.PIGLIN, DyeColor.BLACK)
+            .pattern(BannerPatterns.GRADIENT_UP, DyeColor.PINK)
+            .pattern(BannerPatterns.STRIPE_BOTTOM, DyeColor.BLACK)
             .customName("Banner of Pork")
             .customColor("light_purple")
             .build();
 
     public static final Banner BLAZE_BANNER = new Banner.Builder()
             .blockState(Blocks.RED_WALL_BANNER.defaultBlockState())
-            .pattern("ss", 4)
-            .pattern("tt", 14)
-            .pattern("tt", 14)
-            .pattern("flo", 1)
-            .pattern("sku", 4)
-            .pattern("cbo", 14)
-            .pattern("gru", 15)
+            .pattern(BannerPatterns.STRIPE_SMALL, DyeColor.YELLOW)
+            .pattern(BannerPatterns.TRIANGLE_TOP, DyeColor.RED)
+            .pattern(BannerPatterns.TRIANGLE_TOP, DyeColor.RED)
+            .pattern(BannerPatterns.FLOWER, DyeColor.ORANGE)
+            .pattern(BannerPatterns.SKULL, DyeColor.YELLOW)
+            .pattern(BannerPatterns.CURLY_BORDER, DyeColor.RED)
+            .pattern(BannerPatterns.GRADIENT_UP, DyeColor.BLACK)
             .customName("Banner of Rage")
             .customColor("gold")
             .build();
@@ -113,7 +117,7 @@ public class SmallNetherDungeonBannerProcessor extends StructureProcessor {
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state().getBlock() instanceof AbstractBannerBlock) {
             // Make sure we only operate on the placeholder banners
-            if (blockInfoGlobal.state().getBlock() == Blocks.GRAY_WALL_BANNER && (blockInfoGlobal.nbt().get("Patterns") == null || blockInfoGlobal.nbt().getList("Patterns", 10).size() == 0)) {
+            if (blockInfoGlobal.state().getBlock() == Blocks.GRAY_WALL_BANNER && (blockInfoGlobal.nbt().get("patterns") == null || blockInfoGlobal.nbt().getList("patterns", 10).isEmpty())) {
                 // Fetch thread-local dungeon context
                 DungeonContext context = DungeonContext.peek();
 
@@ -144,19 +148,16 @@ public class SmallNetherDungeonBannerProcessor extends StructureProcessor {
     }
 
     private Banner getBannerForType() {
-        switch (this.dungeonType) {
-            case SKELETON:
-                return SKELETON_BANNER;
-            case ZOMBIFIED_PIGLIN:
-                return ZOMBIFIED_PIGLIN_BANNER;
-            case WITHER_SKELETON:
-                return WITHER_SKELETON_BANNER;
-            case BLAZE:
-                return BLAZE_BANNER;
-            default:
+        return switch (this.dungeonType) {
+            case SKELETON -> SKELETON_BANNER;
+            case ZOMBIFIED_PIGLIN -> ZOMBIFIED_PIGLIN_BANNER;
+            case WITHER_SKELETON -> WITHER_SKELETON_BANNER;
+            case BLAZE -> BLAZE_BANNER;
+            default -> {
                 BetterDungeonsCommon.LOGGER.warn("Invalid DungeonType {} for small_nether_dungeon_banner_processor! This shouldn't happen!", this.dungeonType);
-                return SKELETON_BANNER;
-        }
+                yield SKELETON_BANNER;
+            }
+        };
     }
 
     private CompoundTag copyNBT(CompoundTag other) {
