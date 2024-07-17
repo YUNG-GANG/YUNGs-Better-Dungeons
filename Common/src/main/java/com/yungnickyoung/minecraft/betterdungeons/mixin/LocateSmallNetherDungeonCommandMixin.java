@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.commands.LocateCommand;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 @Mixin(LocateCommand.class)
 public class LocateSmallNetherDungeonCommandMixin {
+    @Unique
     private static final SimpleCommandExceptionType DUNGEON_DISABLED_EXCEPTION =
             new SimpleCommandExceptionType(Component.translatable("Small Nether Dungeons are currently disabled by default. You can enable them in the mod's config."));
 

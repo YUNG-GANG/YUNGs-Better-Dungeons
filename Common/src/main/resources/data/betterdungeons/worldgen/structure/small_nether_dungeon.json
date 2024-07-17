@@ -1,5 +1,5 @@
 {
-  "type": "yungsapi:yung_jigsaw",
+  "type": "betterdungeons:small_nether_dungeon",
   "biomes": "#betterdungeons:has_structure/small_nether_dungeon",
   "step": "underground_structures",
   "start_pool": "betterdungeons:small_nether_dungeon",
