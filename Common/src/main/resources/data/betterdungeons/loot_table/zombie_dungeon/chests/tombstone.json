@@ -54,9 +54,9 @@
           "functions": [
             {
               "function": "minecraft:enchant_randomly",
-              "enchantments": [
+              "options": [
                 "smite",
-                "sweeping",
+                "sweeping_edge",
                 "fire_aspect"
               ]
             }

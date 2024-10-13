@@ -129,6 +129,7 @@
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
+              "options": "#minecraft:on_random_loot",
               "levels": {
                 "min": 5.0,
                 "max": 25.0,
@@ -144,6 +145,7 @@
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
+              "options": "#minecraft:on_random_loot",
               "levels": {
                 "min": 5.0,
                 "max": 25.0,
@@ -159,6 +161,7 @@
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
+              "options": "#minecraft:on_random_loot",
               "levels": {
                 "min": 5.0,
                 "max": 25.0,
@@ -174,6 +177,7 @@
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
+              "options": "#minecraft:on_random_loot",
               "levels": {
                 "min": 5.0,
                 "max": 25.0,
@@ -189,6 +193,7 @@
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
+              "options": "#minecraft:on_random_loot",
               "levels": {
                 "min": 5.0,
                 "max": 25.0,
@@ -204,6 +209,7 @@
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
+              "options": "#minecraft:on_random_loot",
               "levels": {
                 "min": 10.0,
                 "max": 25.0,
@@ -219,6 +225,7 @@
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
+              "options": "#minecraft:on_random_loot",
               "levels": {
                 "min": 10.0,
                 "max": 25.0,
@@ -234,6 +241,7 @@
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
+              "options": "#minecraft:on_random_loot",
               "levels": {
                 "min": 10.0,
                 "max": 25.0,
@@ -249,6 +257,7 @@
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
+              "options": "#minecraft:on_random_loot",
               "levels": {
                 "min": 10.0,
                 "max": 25.0,
@@ -264,6 +273,7 @@
           "functions": [
             {
               "function": "minecraft:enchant_with_levels",
+              "options": "#minecraft:on_random_loot",
               "levels": {
                 "min": 10.0,
                 "max": 25.0,
@@ -327,7 +337,8 @@
           "weight": 10,
           "functions": [
             {
-              "function": "minecraft:enchant_randomly"
+              "function": "minecraft:enchant_randomly",
+              "options": "#minecraft:on_random_loot"
             }
           ]
         }
