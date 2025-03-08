@@ -8,42 +8,30 @@
   "betterdungeons.small_dungeon.banner.spider": "Призрачное знамя",
   "Haunted Banner": "Призрачное знамя",
 
-  "Banner of Decay": "Знамяраспада",
+  "Banner of Decay": "Знамя распада",
   "Banner of Pork": "Свинознамя",
   "Banner of Rage": "Знамя ярости",
 
   "betterdungeons.advancements.root.title": "Улучшенные сокровищницы YUNG'а",
-  "YUNG's Better Dungeons": "Улучшенные сокровищницы YUNG'а",
-  "betterdungeons.advancements.root.description": "Приключение ждёт…",
-  "Adventure awaits...": "Приключение ждёт…",
+  "betterdungeons.advancements.root.description": "Приключение ждёт...",
 
-  "betterdungeons.advancements.all_dungeons.title": "Профессиональный подземельщик",
-  "Professional Dungeoneer": "Профессиональный подземельщик",
+  "betterdungeons.advancements.all_dungeons.title": "Хозяин подземелий",
   "betterdungeons.advancements.all_dungeons.description": "Исследуйте все улучшенные сокровищницы!",
-  "Explore all of the Better Dungeons!": "Исследуйте все улучшенные сокровищницы!",
 
-  "betterdungeons.advancements.small_dungeon.title": "Неплохой ремонт",
-  "Quite the Renovation": "Неплохой ремонт",
+  "betterdungeons.advancements.small_dungeon.title": "Евроремонт",
   "betterdungeons.advancements.small_dungeon.description": "Найдите улучшенную малую сокровищницу монстров",
-  "Find an upgraded Monster Room": "Найдите улучшенную малую сокровищницу монстров",
 
-  "betterdungeons.advancements.skeleton_dungeon.title": "Кость, которую нужно обглодать",
-  "A Bone to Pick": "Кость, которую нужно обглодать",
+  "betterdungeons.advancements.skeleton_dungeon.title": "Кость брошена",
   "betterdungeons.advancements.skeleton_dungeon.description": "Войдите в крепость нежити",
-  "Enter a Fortress of the Undead": "Войдите в крепость нежити",
 
   "betterdungeons.advancements.spider_dungeon.title": "Запутанность в паутине",
-  "Cobweb Entanglement": "Запутанность в паутине",
   "betterdungeons.advancements.spider_dungeon.description": "Откройте для себя паучью пещеру",
-  "Discover a Spider Cave": "Откройте для себя паучью пещеру",
 
   "betterdungeons.advancements.zombie_dungeon.title": "Когда был в Риме",
-  "When in Rome": "Когда был в Риме",
   "betterdungeons.advancements.zombie_dungeon.description": "Ступите в катакомбы",
-  "Set foot in a Catacomb": "Ступите в катакомбы",
 
-  "A Special Addition": "Специальное дополнение",
-  "Find a Small Nether Dungeon": "Найдите незерскую сокровищницы",
+  "betterdungeons.advancements.small_nether_dungeon.title": "Специальное дополнение",
+  "betterdungeons.advancements.small_nether_dungeon.description": "Найдите незерскую сокровищницу",
 
   "text.autoconfig.betterdungeons-fabric-1_21.title": "Улучшенные сокровищницы YUNG'а",
 
@@ -64,7 +52,7 @@
   "text.autoconfig.betterdungeons-fabric-1_21.option.betterDungeons.general.enableHeads.@Tooltip[2]": "По умолчанию: true",
 
   "text.autoconfig.betterdungeons-fabric-1_21.option.betterDungeons.general.removeVanillaDungeons": "Удалите ванильные сокровищницы",
-  "text.autoconfig.betterdungeons-fabric-1_21.option.betterDungeons.general.removeVanillaDungeons.@Tooltip[0]": "Whether or not vanilla dungeons should be prevented from spawning in the world.",
+  "text.autoconfig.betterdungeons-fabric-1_21.option.betterDungeons.general.removeVanillaDungeons.@Tooltip[0]": "Следует ли предотвратить появление ванильных сокровищниц в мире или нет.",
   "text.autoconfig.betterdungeons-fabric-1_21.option.betterDungeons.general.removeVanillaDungeons.@Tooltip[1]": "Рекомендуется отключить их, так как малые сокровищницы очень похожи по дизайну.",
   "text.autoconfig.betterdungeons-fabric-1_21.option.betterDungeons.general.removeVanillaDungeons.@Tooltip[2]": "По умолчанию: true",
 

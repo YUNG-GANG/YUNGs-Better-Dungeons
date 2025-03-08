@@ -6,10 +6,12 @@
       "id": "minecraft:string"
     },
     "title": {
-      "translate": "Cobweb Entanglement"
+      "translate": "betterdungeons.advancements.spider_dungeon.title",
+      "fallback": "Cobweb Entanglement"
     },
     "description": {
-      "translate": "Discover a Spider Cave"
+      "translate": "betterdungeons.advancements.spider_dungeon.description",
+      "fallback": "Discover a Spider Cave"
     },
     "show_toast": true,
     "announce_to_chat": true,

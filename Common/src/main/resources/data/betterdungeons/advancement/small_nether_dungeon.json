@@ -6,10 +6,12 @@
       "id": "minecraft:red_nether_bricks"
     },
     "title": {
-      "translate": "A Special Addition"
+      "translate": "betterdungeons.advancements.small_nether_dungeon.title",
+      "fallback": "A Special Addition"
     },
     "description": {
-      "translate": "Find a Small Nether Dungeon"
+      "translate": "betterdungeons.advancements.small_nether_dungeon.description",
+      "fallback": "Find a Small Nether Dungeon"
     },
     "show_toast": true,
     "announce_to_chat": true,
