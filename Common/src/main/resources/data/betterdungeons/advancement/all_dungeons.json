@@ -6,10 +6,12 @@
       "id": "minecraft:diamond_sword"
     },
     "title": {
-      "translate": "Professional Dungeoneer"
+      "translate": "betterdungeons.advancements.all_dungeons.title",
+      "fallback": "Professional Dungeoneer"
     },
     "description": {
-      "translate": "Explore all of the Better Dungeons!"
+      "translate": "betterdungeons.advancements.all_dungeons.description",
+      "fallback": "Explore all of the Better Dungeons!"
     },
     "show_toast": true,
     "announce_to_chat": true,
@@ -82,17 +84,9 @@
     }
   },
   "requirements": [
-    [
-      "in_better_monster_room"
-    ],
-    [
-      "in_better_zombie_dungeon"
-    ],
-    [
-      "in_better_skeleton_dungeon"
-    ],
-    [
-      "in_better_spider_dungeon"
-    ]
+    ["in_better_monster_room"],
+    ["in_better_zombie_dungeon"],
+    ["in_better_skeleton_dungeon"],
+    ["in_better_spider_dungeon"]
   ]
 }

@@ -6,10 +6,12 @@
       "id": "minecraft:rotten_flesh"
     },
     "title": {
-      "translate": "When in Rome"
+      "translate": "betterdungeons.advancements.zombie_dungeon.title",
+      "fallback": "When in Rome"
     },
     "description": {
-      "translate": "Set foot in a Catacomb"
+      "translate": "betterdungeons.advancements.zombie_dungeon.description",
+      "fallback": "Set foot in a Catacomb"
     },
     "show_toast": true,
     "announce_to_chat": true,

@@ -6,10 +6,12 @@
       "id": "minecraft:skeleton_skull"
     },
     "title": {
-      "translate": "A Bone to Pick"
+      "translate": "betterdungeons.advancements.skeleton_dungeon.title",
+      "fallback": "A Bone to Pick"
     },
     "description": {
-      "translate": "Enter a Fortress of the Undead"
+      "translate": "betterdungeons.advancements.skeleton_dungeon.description",
+      "fallback": "Enter a Fortress of the Undead"
     },
     "show_toast": true,
     "announce_to_chat": true,

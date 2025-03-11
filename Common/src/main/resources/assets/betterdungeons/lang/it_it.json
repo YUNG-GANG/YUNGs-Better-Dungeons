@@ -1,4 +1,6 @@
 {
+  "Small Nether Dungeons are currently disabled by default. You can enable them in the mod's config.": "Piccoli Dungeon Nether sono attualmente disabilitati per impostazione predefinita. Puoi abilitarli nella configurazione della mod.",
+
   "betterdungeons.small_dungeon.banner.zombie": "Stendardo disgustoso",
   "Foul Banner": "Stendardo disgustoso",
   "betterdungeons.small_dungeon.banner.skeleton": "Stendardo vendicativo",
@@ -6,33 +8,41 @@
   "betterdungeons.small_dungeon.banner.spider": "Stendardo infestato",
   "Haunted Banner": "Stendardo infestato",
 
+  "Banner of Decay": "Stendardo di decadimento",
+  "Banner of Pork": "Stendardo di maiale",
+  "Banner of Rage": "Stendardo della rabbia",
+
   "betterdungeons.advancements.root.title": "YUNG's Better Dungeons",
-  "YUNG's Better Dungeons": "YUNG's Better Dungeons",
   "betterdungeons.advancements.root.description": "Un'avventura ti aspetta...",
-  "Adventure awaits...": "Un'avventura ti aspetta...",
 
   "betterdungeons.advancements.all_dungeons.title": "Dungeoneer professionista",
-  "Professional Dungeoneer": "Dungeoneer professionista",
   "betterdungeons.advancements.all_dungeons.description": "Esplora tutto il Better Dungeons!",
-  "Explore all of the Better Dungeons!": "Esplora tutto il Better Dungeons!",
 
   "betterdungeons.advancements.small_dungeon.title": "Che bella ristrutturazione",
-  "Quite the Renovation": "Che bella ristrutturazione",
   "betterdungeons.advancements.small_dungeon.description": "Trova una stanza dei mostri migliorata",
-  "Find an upgraded Monster Room": "Trova una stanza dei mostri migliorata",
 
   "betterdungeons.advancements.skeleton_dungeon.title": "Una questione in sospeso",
-  "A Bone to Pick": "Una questione in sospeso",
   "betterdungeons.advancements.skeleton_dungeon.description": "Entra in una fortezza dei non-morti",
-  "Enter a Fortress of the Undead": "Entra in una fortezza dei non-morti",
 
   "betterdungeons.advancements.spider_dungeon.title": "Groviglio di ragnatele",
-  "Cobweb Entanglement": "Groviglio di ragnatele",
   "betterdungeons.advancements.spider_dungeon.description": "Scopri una caverna di ragni",
-  "Discover a Spider Cave": "Scopri una caverna di ragni",
 
   "betterdungeons.advancements.zombie_dungeon.title": "Quando a roma",
-  "When in Rome": "Quando a roma",
   "betterdungeons.advancements.zombie_dungeon.description": "Entra in una catacomba",
-  "Set foot in a Catacomb": "Entra in una catacomba"
+
+  "betterdungeons.advancements.small_nether_dungeon.title": "Un'aggiunta speciale",
+  "betterdungeons.advancements.small_nether_dungeon.description": "Trova un piccolo dungeon Nether",
+
+  "text.autoconfig.betterdungeons-fabric-1_21.title": "YUNG's Better Dungeons",
+
+  "text.autoconfig.betterdungeons-fabric-1_21.option.betterDungeons": "YUNG's Better Dungeons",
+
+  "text.autoconfig.betterdungeons-fabric-1_21.option.betterDungeons.general": "Impostazioni generali",
+  "text.autoconfig.betterdungeons-fabric-1_21.option.betterDungeons.general.@Tooltip": "Impostazioni generali",
+  "text.autoconfig.betterdungeons-fabric-1_21.option.betterDungeons.zombieDungeon": "Dungeon Zombie",
+  "text.autoconfig.betterdungeons-fabric-1_21.option.betterDungeons.zombieDungeon.@Tooltip": "Dungeon Zombie",
+  "text.autoconfig.betterdungeons-fabric-1_21.option.betterDungeons.smallDungeon": "Piccoli dungeon",
+  "text.autoconfig.betterdungeons-fabric-1_21.option.betterDungeons.smallDungeon.@Tooltip": "Piccoli dungeon",
+  "text.autoconfig.betterdungeons-fabric-1_21.option.betterDungeons.smallNetherDungeon": "Piccoli dungeon Nether",
+  "text.autoconfig.betterdungeons-fabric-1_21.option.betterDungeons.smallNetherDungeon.@Tooltip": "Piccoli dungeon Nether"
 }
