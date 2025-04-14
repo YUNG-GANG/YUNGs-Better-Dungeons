@@ -61,8 +61,8 @@ public class ZombieDungeonLegProcessor extends StructureProcessor implements ISa
             BlockState currBlockState = levelReader.getBlockState(mutable);
 
             // Generate vertical pillar down
-            while (mutable.getY() > levelReader.getMinBuildHeight()
-                    && mutable.getY() < levelReader.getMaxBuildHeight()
+            while (mutable.getY() > levelReader.getMinY()
+                    && mutable.getY() < levelReader.getMaxY()
                     && (currBlockState.isAir() || !levelReader.getFluidState(mutable).isEmpty())) {
                 levelReader.getChunk(mutable).setBlockState(mutable, LEG_SELECTOR.get(random), false);
                 mutable.move(Direction.DOWN);

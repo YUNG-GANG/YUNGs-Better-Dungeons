@@ -3,7 +3,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world;
 import java.lang.ref.WeakReference;
 
 /**
- * Stores information during dungeon generation for later use.
+ * Stores information during small dungeon generation for later use.
  */
 public class DungeonContext {
     private static final ThreadLocal<DungeonContext> CONTEXT = new ThreadLocal<>();

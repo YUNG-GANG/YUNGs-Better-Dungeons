@@ -102,7 +102,13 @@ public class SmallNetherDungeonMobSpawner extends StructureProcessor {
                             }),
                             Optional.empty(),
                             Optional.empty())))
-                    .setEntityType(BuiltInRegistries.ENTITY_TYPE.get(spawnerMob))
+                    .setEntityType(BuiltInRegistries.ENTITY_TYPE
+                            .get(spawnerMob)
+                            .orElseGet(() -> {
+                                BetterDungeonsCommon.LOGGER.error("Unable to find entity type for spawner: {}. Defaulting to zombie...", spawnerMob);
+                                return BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.withDefaultNamespace("zombie")).get();
+                            })
+                            .value())
                     .build();
             if (spawnerMob.toString().equals("minecraft:wither_skeleton")) {
                 spawner.nextSpawnData.getEntityToSpawn().put("ArmorItems", Util.make(new ListTag(), (armorItemsNbt) -> {

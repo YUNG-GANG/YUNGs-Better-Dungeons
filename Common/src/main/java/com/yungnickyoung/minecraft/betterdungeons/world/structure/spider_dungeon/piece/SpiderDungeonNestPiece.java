@@ -96,7 +96,7 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
         // Temporary chunk-local carving mask to prevent overwriting carved blocks and add decorations
         int xBits = 4;
         int zBits = 4;
-        int yBits = Mth.ceillog2(world.getMaxBuildHeight() - world.getMinBuildHeight());
+        int yBits = Mth.ceillog2(world.getMaxY() - world.getMinY());
         BitSet carvingMask = new BitSet((int) Math.pow(2, xBits + zBits + yBits));
 
         // Create shell selector ahead of time to avoid redundant initialization
@@ -119,8 +119,8 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
         // Min and max values we need to consider for carving
         int minX = Mth.floor(caveStartX - xRadius) - chunkPos.x * 16 - 1;
         int maxX = Mth.floor(caveStartX + xRadius) - chunkPos.x * 16 + 1;
-        int minY = Mth.clamp(Mth.floor(caveStartY - yRadius) - 1, world.getMinBuildHeight(), world.getMaxBuildHeight());
-        int maxY = Mth.clamp(Mth.floor(caveStartY + yRadius) + 1, world.getMinBuildHeight(), world.getMaxBuildHeight());
+        int minY = Mth.clamp(Mth.floor(caveStartY - yRadius) - 1, world.getMinY(), world.getMaxY());
+        int maxY = Mth.clamp(Mth.floor(caveStartY + yRadius) + 1, world.getMinY(), world.getMaxY());
         int minZ = Mth.floor(caveStartZ - zRadius) - chunkPos.z * 16 - 1;
         int maxZ = Mth.floor(caveStartZ + zRadius) - chunkPos.z * 16 + 1;
 
@@ -164,7 +164,7 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
                     float radialYDist = (y - caveStartY - .5f) / yRadius;
 
                     // Calculate the carving mask for this block
-                    int mask = (int)x | (int)z << 4 | ((int)(y - world.getMinBuildHeight())) << 8;
+                    int mask = (int)x | (int)z << 4 | ((int)(y - world.getMinY())) << 8;
 
                     // Carve out blocks within the ellipsoid. Blocks immediately outside the ellipsoid will be turned into a cobblestone shell.
                     float radialDist = radialXDist * radialXDist + radialYDist * radialYDist + radialZDist * radialZDist;

@@ -321,7 +321,7 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
         // Generate vertical pillar down
         BlockPos.MutableBlockPos mutable = pos.mutable();
         Optional<BlockState> currBlock = getBlockStateSafe(levelReader, mutable);
-        while (mutable.getY() > levelReader.getMinBuildHeight() && (currBlock.isEmpty() || currBlock.get().isAir() || currBlock.get().liquid())) {
+        while (mutable.getY() > levelReader.getMinY() && (currBlock.isEmpty() || currBlock.get().isAir() || currBlock.get().liquid())) {
             setBlockStateSafe(levelReader, mutable, selector.get(random));
             mutable.move(Direction.DOWN);
             currBlock = getBlockStateSafe(levelReader, mutable);

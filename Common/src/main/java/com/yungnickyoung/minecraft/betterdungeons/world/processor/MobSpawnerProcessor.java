@@ -2,6 +2,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.world.spawner.MobSpawnerData;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -60,7 +61,13 @@ public class MobSpawnerProcessor extends StructureProcessor {
                             Util.make(new CompoundTag(), (compoundTag) -> compoundTag.putString("id", spawnerMob.toString())),
                             Optional.empty(),
                             Optional.empty())))
-                    .setEntityType(BuiltInRegistries.ENTITY_TYPE.get(spawnerMob))
+                    .setEntityType(BuiltInRegistries.ENTITY_TYPE
+                            .get(spawnerMob)
+                            .orElseGet(() -> {
+                                BetterDungeonsCommon.LOGGER.error("Unable to find entity type for spawner: {}. Defaulting to zombie...", spawnerMob);
+                                return BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.withDefaultNamespace("zombie")).get();
+                            })
+                            .value())
                     .build();
             CompoundTag nbt = spawner.save();
             blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.SPAWNER.defaultBlockState(), nbt);
