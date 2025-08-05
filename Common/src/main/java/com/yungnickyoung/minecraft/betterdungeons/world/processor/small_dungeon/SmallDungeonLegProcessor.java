@@ -54,7 +54,7 @@ public class SmallDungeonLegProcessor extends StructureProcessor {
             while (mutable.getY() > levelReader.getMinY()
                     && mutable.getY() < levelReader.getMaxY()
                     && (currBlockState.isAir() || !levelReader.getFluidState(mutable).isEmpty())) {
-                levelReader.getChunk(mutable).setBlockState(mutable, STONE_BRICK_SELECTOR.get(random), false);
+                levelReader.getChunk(mutable).setBlockState(mutable, STONE_BRICK_SELECTOR.get(random), 0);
                 mutable.move(Direction.DOWN);
                 currBlockState = levelReader.getBlockState(mutable);
             }

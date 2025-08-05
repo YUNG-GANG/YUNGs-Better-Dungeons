@@ -64,7 +64,7 @@ public class ZombieDungeonLegProcessor extends StructureProcessor implements ISa
             while (mutable.getY() > levelReader.getMinY()
                     && mutable.getY() < levelReader.getMaxY()
                     && (currBlockState.isAir() || !levelReader.getFluidState(mutable).isEmpty())) {
-                levelReader.getChunk(mutable).setBlockState(mutable, LEG_SELECTOR.get(random), false);
+                levelReader.getChunk(mutable).setBlockState(mutable, LEG_SELECTOR.get(random), 0);
                 mutable.move(Direction.DOWN);
                 currBlockState = levelReader.getBlockState(mutable);
             }
