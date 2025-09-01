@@ -54,11 +54,11 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
      */
     public SpiderDungeonEggRoomPiece(CompoundTag compoundTag) {
         super(StructurePieceTypeModule.EGG_ROOM, compoundTag);
-        int[] start = compoundTag.getIntArray("startPos");
+        int[] start = compoundTag.getIntArray("startPos").orElseThrow();
         this.startPos = new BlockPos(start[0], start[1], start[2]);
-        this.xRadius = compoundTag.getFloat("xRadius");
-        this.yRadius = compoundTag.getFloat("yRadius");
-        this.zRadius = compoundTag.getFloat("zRadius");
+        this.xRadius = compoundTag.getFloatOr("xRadius", 4);
+        this.yRadius = compoundTag.getFloatOr("yRadius", 4);
+        this.zRadius = compoundTag.getFloatOr("zRadius", 4);
     }
 
     @Override

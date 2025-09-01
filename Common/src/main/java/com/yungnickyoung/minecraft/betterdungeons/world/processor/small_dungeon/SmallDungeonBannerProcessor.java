@@ -98,7 +98,7 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state().getBlock() instanceof AbstractBannerBlock) {
             // Make sure we only operate on the placeholder banners
-            if (blockInfoGlobal.state().getBlock() == Blocks.RED_WALL_BANNER && (blockInfoGlobal.nbt().get("patterns") == null || blockInfoGlobal.nbt().getList("patterns", 10).isEmpty())) {
+            if (blockInfoGlobal.state().getBlock() == Blocks.RED_WALL_BANNER && (blockInfoGlobal.nbt() == null || blockInfoGlobal.nbt().getListOrEmpty("patterns").isEmpty())) {
                 // Fetch thread-local dungeon context
                 DungeonContext context = DungeonContext.peek();
 

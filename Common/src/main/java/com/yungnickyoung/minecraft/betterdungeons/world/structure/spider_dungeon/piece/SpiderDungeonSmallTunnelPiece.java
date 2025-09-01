@@ -51,14 +51,14 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
      */
     public SpiderDungeonSmallTunnelPiece(CompoundTag compoundTag) {
         super(StructurePieceTypeModule.SMALL_TUNNEL, compoundTag);
-        int[] start = compoundTag.getIntArray("startPos");
-        int[] end = compoundTag.getIntArray("endPos");
+        int[] start = compoundTag.getIntArray("startPos").orElseThrow();
+        int[] end = compoundTag.getIntArray("endPos").orElseThrow();
         this.startPos = new BlockPos(start[0], start[1], start[2]);
         this.endPos = new BlockPos(end[0], end[1], end[2]);
-        this.pitch = compoundTag.getFloat("pitch");
-        ListTag yawNbtList = compoundTag.getList("yawList", 5);
+        this.pitch = compoundTag.getFloatOr("pitch", 0);
+        ListTag yawNbtList = compoundTag.getListOrEmpty("yawList");
         for (int i = 0; i < LENGTH; i++) {
-            this.yaws[i] = yawNbtList.getFloat(i);
+            this.yaws[i] = yawNbtList.getFloatOr(i, 0);
         }
     }
 

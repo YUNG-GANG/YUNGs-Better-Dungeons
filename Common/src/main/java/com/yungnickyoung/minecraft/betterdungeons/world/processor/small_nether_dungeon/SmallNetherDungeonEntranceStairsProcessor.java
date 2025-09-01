@@ -44,7 +44,7 @@ public class SmallNetherDungeonEntranceStairsProcessor extends StructureProcesso
                     Blocks.NETHER_BRICK_STAIRS
                             .withPropertiesOf(blockInfoGlobal.state())
                             .setValue(StairBlock.FACING, facing.getOpposite()),
-                    false);
+                    0);
             blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.NETHER_BRICKS.defaultBlockState(), blockInfoGlobal.nbt());
         }
         return blockInfoGlobal;
