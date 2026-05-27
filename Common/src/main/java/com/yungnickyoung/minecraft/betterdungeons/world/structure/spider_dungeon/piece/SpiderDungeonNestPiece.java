@@ -30,7 +30,7 @@ import net.minecraft.world.level.material.Fluids;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.BitSet;
 
-@ParametersAreNonnullByDefault
+
 public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
     private final BlockPos startPos;
     private float xRadius = 0f;
@@ -54,16 +54,15 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
      */
     public SpiderDungeonNestPiece(CompoundTag compoundTag) {
         super(StructurePieceTypeModule.NEST, compoundTag);
-        int[] start = compoundTag.getIntArray("startPos");
-        this.startPos = new BlockPos(start[0], start[1], start[2]);
-        this.xRadius = compoundTag.getFloat("xRadius");
-        this.yRadius = compoundTag.getFloat("yRadius");
-        this.zRadius = compoundTag.getFloat("zRadius");
+        this.startPos = compoundTag.read("startPos", BlockPos.CODEC).orElse(BlockPos.ZERO);
+        this.xRadius = compoundTag.getFloatOr("xRadius", 0f);
+        this.yRadius = compoundTag.getFloatOr("yRadius", 0f);
+        this.zRadius = compoundTag.getFloatOr("zRadius", 0f);
     }
 
     @Override
     protected void addAdditionalSaveData(StructurePieceSerializationContext structurePieceSerializationContext, CompoundTag compoundTag) {
-        compoundTag.putIntArray("startPos", new int[]{startPos.getX(), startPos.getY(), startPos.getZ()});
+        compoundTag.store("startPos", BlockPos.CODEC, this.startPos);
         compoundTag.putFloat("xRadius", xRadius);
         compoundTag.putFloat("yRadius", yRadius);
         compoundTag.putFloat("zRadius", zRadius);
@@ -117,12 +116,12 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
               caveStartZ = startPos.getZ();
 
         // Min and max values we need to consider for carving
-        int minX = Mth.floor(caveStartX - xRadius) - chunkPos.x * 16 - 1;
-        int maxX = Mth.floor(caveStartX + xRadius) - chunkPos.x * 16 + 1;
+        int minX = Mth.floor(caveStartX - xRadius) - chunkPos.x() * 16 - 1;
+        int maxX = Mth.floor(caveStartX + xRadius) - chunkPos.x() * 16 + 1;
         int minY = Mth.clamp(Mth.floor(caveStartY - yRadius) - 1, world.getMinY(), world.getMaxY());
         int maxY = Mth.clamp(Mth.floor(caveStartY + yRadius) + 1, world.getMinY(), world.getMaxY());
-        int minZ = Mth.floor(caveStartZ - zRadius) - chunkPos.z * 16 - 1;
-        int maxZ = Mth.floor(caveStartZ + zRadius) - chunkPos.z * 16 + 1;
+        int minZ = Mth.floor(caveStartZ - zRadius) - chunkPos.z() * 16 - 1;
+        int maxZ = Mth.floor(caveStartZ + zRadius) - chunkPos.z() * 16 + 1;
 
         // Clamp min/max values to ensure the coordinates are chunk-local
         minX = Mth.clamp(minX, 0, 15);
@@ -133,7 +132,7 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
         // Carve out room and surround with cobblestone shell
         for (float x = minX; x <= maxX; x++) {
             // Get global coordinate
-            int globalX = (int)x + chunkPos.x * 16;
+            int globalX = (int)x + chunkPos.x() * 16;
 
             // No need to consider blocks outside this chunk
             if (globalX < chunkPos.getMinBlockX() || globalX > chunkPos.getMaxBlockX()) continue;
@@ -144,7 +143,7 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
 
             for (float z = minZ; z <= maxZ; z++) {
                 // Get global coordinate
-                int globalZ = (int)z + chunkPos.z * 16;
+                int globalZ = (int)z + chunkPos.z() * 16;
 
                 // No need to consider blocks outside this chunk
                 if (globalZ < chunkPos.getMinBlockZ() || globalZ > chunkPos.getMaxBlockZ()) continue;

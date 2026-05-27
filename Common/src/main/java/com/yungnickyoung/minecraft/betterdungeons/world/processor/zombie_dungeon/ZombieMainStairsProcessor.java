@@ -5,7 +5,7 @@ import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
 import com.yungnickyoung.minecraft.yungsapi.world.structure.processor.ISafeWorldModifier;
-import net.minecraft.MethodsReturnNonnullByDefault;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -28,8 +28,8 @@ import java.util.Optional;
 /**
  * Dynamically generates the main staircase when applicable.
  */
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
+
+
 public class ZombieMainStairsProcessor extends StructureProcessor implements ISafeWorldModifier {
     public static final ZombieMainStairsProcessor INSTANCE = new ZombieMainStairsProcessor();
     public static final MapCodec<ZombieMainStairsProcessor> CODEC = MapCodec.unit(() -> INSTANCE);

@@ -37,7 +37,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:chain"
+            "Name": "minecraft:iron_chain"
           },
           "input_predicate": {
             "block": "minecraft:gray_stained_glass",

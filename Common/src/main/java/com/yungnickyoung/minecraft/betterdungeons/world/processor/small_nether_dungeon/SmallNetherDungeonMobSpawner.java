@@ -5,8 +5,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.world.spawner.MobSpawnerData;
-import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.Util;
+
+import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -14,8 +14,8 @@ import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.LevelReader;
@@ -30,23 +30,23 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
+
+
 public class SmallNetherDungeonMobSpawner extends StructureProcessor {
     public static final MapCodec<SmallNetherDungeonMobSpawner> CODEC = RecordCodecBuilder.mapCodec(codecBuilder -> codecBuilder
             .group(
-                    ResourceLocation.CODEC
+                    Identifier.CODEC
                             .fieldOf("spawner_mob")
                             .forGetter(SmallNetherDungeonMobSpawner::getSpawnerMob))
             .apply(codecBuilder, codecBuilder.stable(SmallNetherDungeonMobSpawner::new)));
 
-    private SmallNetherDungeonMobSpawner(ResourceLocation spawnerMob) {
+    private SmallNetherDungeonMobSpawner(Identifier spawnerMob) {
         this.spawnerMob = spawnerMob;
     }
 
-    private final ResourceLocation spawnerMob;
+    private final Identifier spawnerMob;
 
-    public ResourceLocation getSpawnerMob() {
+    public Identifier getSpawnerMob() {
         return this.spawnerMob;
     }
 
@@ -60,7 +60,7 @@ public class SmallNetherDungeonMobSpawner extends StructureProcessor {
         if (blockInfoGlobal.state().getBlock() instanceof SpawnerBlock) {
             // Create spawner & populate with data
             MobSpawnerData spawner = MobSpawnerData.builder()
-                    .spawnPotentials(SimpleWeightedRandomList.single(new SpawnData(
+                    .spawnPotentials(WeightedList.of(new SpawnData(
                             Util.make(new CompoundTag(), (compoundTag) -> {
                                 compoundTag.putString("id", spawnerMob.toString());
                                 if (spawnerMob.toString().equals("minecraft:wither_skeleton")) {
@@ -106,7 +106,7 @@ public class SmallNetherDungeonMobSpawner extends StructureProcessor {
                             .get(spawnerMob)
                             .orElseGet(() -> {
                                 BetterDungeonsCommon.LOGGER.error("Unable to find entity type for spawner: {}. Defaulting to zombie...", spawnerMob);
-                                return BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.withDefaultNamespace("zombie")).get();
+                                return BuiltInRegistries.ENTITY_TYPE.get(Identifier.withDefaultNamespace("zombie")).get();
                             })
                             .value())
                     .build();

@@ -3,11 +3,11 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeo
 import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.world.spawner.MobSpawnerData;
-import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.Util;
+
+import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.SpawnData;
@@ -25,8 +25,8 @@ import java.util.Optional;
  * Sets mob spawners to spawn zombies.
  * Also tweaks the default spawner parameters.
  */
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
+
+
 public class ZombieMobSpawnerProcessor extends StructureProcessor {
     public static final ZombieMobSpawnerProcessor INSTANCE = new ZombieMobSpawnerProcessor();
     public static final MapCodec<ZombieMobSpawnerProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
@@ -41,7 +41,7 @@ public class ZombieMobSpawnerProcessor extends StructureProcessor {
         if (blockInfoGlobal.state().getBlock() instanceof SpawnerBlock) {
             // Create spawner & populate with data
             MobSpawnerData spawner = MobSpawnerData.builder()
-                    .spawnPotentials(SimpleWeightedRandomList.single(new SpawnData(
+                    .spawnPotentials(WeightedList.of(new SpawnData(
                             Util.make(new CompoundTag(), (compoundTag) -> compoundTag.putString("id", "minecraft:zombie")),
                             Optional.empty(),
                             Optional.empty())))

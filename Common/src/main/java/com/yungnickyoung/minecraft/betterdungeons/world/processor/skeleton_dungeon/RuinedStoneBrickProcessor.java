@@ -3,7 +3,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dung
 import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
-import net.minecraft.MethodsReturnNonnullByDefault;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
@@ -21,8 +21,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * giving them a more natural, ruined look that opens up to caves.
  * Replaces them w/ stone bricks otherwise.
  */
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
+
+
 public class RuinedStoneBrickProcessor extends StructureProcessor {
     public static final RuinedStoneBrickProcessor INSTANCE = new RuinedStoneBrickProcessor();
     public static final MapCodec<RuinedStoneBrickProcessor> CODEC = MapCodec.unit(() -> INSTANCE);

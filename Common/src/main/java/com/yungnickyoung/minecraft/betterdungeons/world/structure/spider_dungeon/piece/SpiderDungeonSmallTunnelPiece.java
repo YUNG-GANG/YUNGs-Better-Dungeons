@@ -27,7 +27,7 @@ import net.minecraft.world.level.material.Fluids;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.BitSet;
 
-@ParametersAreNonnullByDefault
+
 public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
     private final BlockPos startPos;
     private BlockPos endPos;
@@ -51,21 +51,19 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
      */
     public SpiderDungeonSmallTunnelPiece(CompoundTag compoundTag) {
         super(StructurePieceTypeModule.SMALL_TUNNEL, compoundTag);
-        int[] start = compoundTag.getIntArray("startPos");
-        int[] end = compoundTag.getIntArray("endPos");
-        this.startPos = new BlockPos(start[0], start[1], start[2]);
-        this.endPos = new BlockPos(end[0], end[1], end[2]);
-        this.pitch = compoundTag.getFloat("pitch");
-        ListTag yawNbtList = compoundTag.getList("yawList", 5);
+        this.startPos = compoundTag.read("startPos", BlockPos.CODEC).orElse(BlockPos.ZERO);
+        this.endPos = compoundTag.read("endPos", BlockPos.CODEC).orElse(BlockPos.ZERO);
+        this.pitch = compoundTag.getFloatOr("pitch", 0f);
+        ListTag yawNbtList = compoundTag.getList("yawList").orElseGet(ListTag::new);
         for (int i = 0; i < LENGTH; i++) {
-            this.yaws[i] = yawNbtList.getFloat(i);
+            this.yaws[i] = yawNbtList.getFloatOr(i, 0f);
         }
     }
 
     @Override
     protected void addAdditionalSaveData(StructurePieceSerializationContext structurePieceSerializationContext, CompoundTag compoundTag) {
-        compoundTag.putIntArray("startPos", new int[]{startPos.getX(), startPos.getY(), startPos.getZ()});
-        compoundTag.putIntArray("endPos", new int[]{endPos.getX(), endPos.getY(), endPos.getZ()});
+        compoundTag.store("startPos", BlockPos.CODEC, this.startPos);
+        compoundTag.store("endPos", BlockPos.CODEC, this.endPos);
         compoundTag.putFloat("pitch", pitch);
         ListTag yawNbtList = new ListTag();
         for (int i = 0; i < LENGTH; i++) {
@@ -190,12 +188,12 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
             float zRadius = Mth.lerp(Mth.sin((float)(i) * (float) Math.PI / LENGTH), Z_MINRADIUS, Z_MAXRADIUS);
 
             // Min and max values we need to consider for carving
-            int minX = Mth.floor(caveStartX - xRadius) - chunkPos.x * 16 - 1;
-            int maxX = Mth.floor(caveStartX + xRadius) - chunkPos.x * 16 + 1;
+            int minX = Mth.floor(caveStartX - xRadius) - chunkPos.x() * 16 - 1;
+            int maxX = Mth.floor(caveStartX + xRadius) - chunkPos.x() * 16 + 1;
             int minY = Mth.clamp(Mth.floor(caveStartY - yRadius) - 1, world.getMinY(), world.getMaxY());
             int maxY = Mth.clamp(Mth.floor(caveStartY + yRadius) + 1, world.getMinY(), world.getMaxY());
-            int minZ = Mth.floor(caveStartZ - zRadius) - chunkPos.z * 16 - 1;
-            int maxZ = Mth.floor(caveStartZ + zRadius) - chunkPos.z * 16 + 1;
+            int minZ = Mth.floor(caveStartZ - zRadius) - chunkPos.z() * 16 - 1;
+            int maxZ = Mth.floor(caveStartZ + zRadius) - chunkPos.z() * 16 + 1;
 
             // Clamp min/max values to ensure the coordinates are chunk-local
             minX = Mth.clamp(minX, 0, 15);
@@ -210,7 +208,7 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
             // -- Carve sphere -- //
             for (float x = minX; x <= maxX; x++) {
                 // Get global coordinate
-                int globalX = (int)x + chunkPos.x * 16;
+                int globalX = (int)x + chunkPos.x() * 16;
 
                 // No need to consider blocks outside this chunk
                 if (globalX < chunkPos.getMinBlockX() || globalX > chunkPos.getMaxBlockX()) continue;
@@ -221,7 +219,7 @@ public class SpiderDungeonSmallTunnelPiece extends SpiderDungeonPiece {
 
                 for (float z = minZ; z <= maxZ; z++) {
                     // Get global coordinate
-                    int globalZ = (int)z + chunkPos.z * 16;
+                    int globalZ = (int)z + chunkPos.z() * 16;
 
                     // No need to consider blocks outside this chunk
                     if (globalZ < chunkPos.getMinBlockZ() || globalZ > chunkPos.getMaxBlockZ()) continue;

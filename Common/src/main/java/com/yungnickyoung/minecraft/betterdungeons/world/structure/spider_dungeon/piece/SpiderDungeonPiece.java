@@ -35,8 +35,8 @@ public abstract class SpiderDungeonPiece extends StructurePiece {
                 int x = mask & 0xF;
                 int z = mask >> 4 & 0xF;
                 int y = (mask >> 8) + world.getMinY();
-                int globalX = x + chunkPos.x * 16;
-                int globalZ = z + chunkPos.z * 16;
+                int globalX = x + chunkPos.x() * 16;
+                int globalZ = z + chunkPos.z() * 16;
 
                 // Ensure cobweb is only placed alongside a wall.
                 // canOcclude probably isn't the best function to use here, but it gets the job done

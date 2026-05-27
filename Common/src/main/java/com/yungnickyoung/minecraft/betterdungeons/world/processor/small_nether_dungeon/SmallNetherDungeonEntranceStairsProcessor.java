@@ -2,7 +2,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_
 
 import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
-import net.minecraft.MethodsReturnNonnullByDefault;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.WorldGenRegion;
@@ -17,8 +17,8 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
+
+
 public class SmallNetherDungeonEntranceStairsProcessor extends StructureProcessor {
     public static final SmallNetherDungeonEntranceStairsProcessor INSTANCE = new SmallNetherDungeonEntranceStairsProcessor();
     public static final MapCodec<SmallNetherDungeonEntranceStairsProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
@@ -31,7 +31,7 @@ public class SmallNetherDungeonEntranceStairsProcessor extends StructureProcesso
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state().is(Blocks.BRICK_STAIRS)) {
-            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(new ChunkPos(blockInfoGlobal.pos()))) {
+            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(ChunkPos.containing(blockInfoGlobal.pos()))) {
                 return blockInfoGlobal;
             }
             Direction facing = blockInfoGlobal.state().hasProperty(StairBlock.FACING)
@@ -39,12 +39,9 @@ public class SmallNetherDungeonEntranceStairsProcessor extends StructureProcesso
                     : Direction.NORTH;
             facing = structurePlacementData.getRotation().rotate(facing);
             BlockPos pos = blockInfoGlobal.pos().relative(facing);
-            levelReader.getChunk(pos).setBlockState(
-                    pos,
-                    Blocks.NETHER_BRICK_STAIRS
-                            .withPropertiesOf(blockInfoGlobal.state())
-                            .setValue(StairBlock.FACING, facing.getOpposite()),
-                    false);
+            levelReader.getChunk(pos).setBlockState(pos, Blocks.NETHER_BRICK_STAIRS
+                    .withPropertiesOf(blockInfoGlobal.state())
+                    .setValue(StairBlock.FACING, facing.getOpposite()));
             blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.NETHER_BRICKS.defaultBlockState(), blockInfoGlobal.nbt());
         }
         return blockInfoGlobal;
