@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonContext;
-import net.minecraft.MethodsReturnNonnullByDefault;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
@@ -15,13 +15,11 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
 /**
  * Replaces some chests with air, ensuring at least 1 per dungeon but no more than 2.
  */
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
+
+
 public class SmallDungeonChestProcessor extends StructureProcessor {
     public static final SmallDungeonChestProcessor INSTANCE = new SmallDungeonChestProcessor();
     public static final MapCodec<SmallDungeonChestProcessor> CODEC = MapCodec.unit(() -> INSTANCE);

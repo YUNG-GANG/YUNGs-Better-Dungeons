@@ -8,7 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
@@ -54,16 +54,15 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
      */
     public SpiderDungeonEggRoomPiece(CompoundTag compoundTag) {
         super(StructurePieceTypeModule.EGG_ROOM, compoundTag);
-        int[] start = compoundTag.getIntArray("startPos");
-        this.startPos = new BlockPos(start[0], start[1], start[2]);
-        this.xRadius = compoundTag.getFloat("xRadius");
-        this.yRadius = compoundTag.getFloat("yRadius");
-        this.zRadius = compoundTag.getFloat("zRadius");
+        this.startPos = compoundTag.read("startPos", BlockPos.CODEC).orElse(BlockPos.ZERO);
+        this.xRadius = compoundTag.getFloatOr("xRadius", 0f);
+        this.yRadius = compoundTag.getFloatOr("yRadius", 0f);
+        this.zRadius = compoundTag.getFloatOr("zRadius", 0f);
     }
 
     @Override
     protected void addAdditionalSaveData(StructurePieceSerializationContext structurePieceSerializationContext, CompoundTag compoundTag) {
-        compoundTag.putIntArray("startPos", new int[]{startPos.getX(), startPos.getY(), startPos.getZ()});
+        compoundTag.store("startPos", BlockPos.CODEC, this.startPos);
         compoundTag.putFloat("xRadius", xRadius);
         compoundTag.putFloat("yRadius", yRadius);
         compoundTag.putFloat("zRadius", zRadius);
@@ -111,12 +110,12 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
               caveStartZ = startPos.getZ();
 
         // Min and max values we need to consider for carving
-        int minX = Mth.floor(caveStartX - xRadius) - chunkPos.x * 16 - 1;
-        int maxX = Mth.floor(caveStartX + xRadius) - chunkPos.x * 16 + 1;
+        int minX = Mth.floor(caveStartX - xRadius) - chunkPos.x() * 16 - 1;
+        int maxX = Mth.floor(caveStartX + xRadius) - chunkPos.x() * 16 + 1;
         int minY = Mth.clamp(Mth.floor(caveStartY - yRadius) - 1, world.getMinY(), world.getMaxY());
         int maxY = Mth.clamp(Mth.floor(caveStartY + yRadius) + 1, world.getMinY(), world.getMaxY());
-        int minZ = Mth.floor(caveStartZ - zRadius) - chunkPos.z * 16 - 1;
-        int maxZ = Mth.floor(caveStartZ + zRadius) - chunkPos.z * 16 + 1;
+        int minZ = Mth.floor(caveStartZ - zRadius) - chunkPos.z() * 16 - 1;
+        int maxZ = Mth.floor(caveStartZ + zRadius) - chunkPos.z() * 16 + 1;
 
         // Clamp min/max values to ensure the coordinates are chunk-local
         minX = Mth.clamp(minX, 0, 15);
@@ -127,7 +126,7 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
         // Carve out room and surround with cobblestone shell
         for (float x = minX; x <= maxX; x++) {
             // Get global coordinate
-            int globalX = (int)x + chunkPos.x * 16;
+            int globalX = (int)x + chunkPos.x() * 16;
 
             // No need to consider blocks outside this chunk
             if (globalX < chunkPos.getMinBlockX() || globalX > chunkPos.getMaxBlockX()) continue;
@@ -138,7 +137,7 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
 
             for (float z = minZ; z <= maxZ; z++) {
                 // Get global coordinate
-                int globalZ = (int)z + chunkPos.z * 16;
+                int globalZ = (int)z + chunkPos.z() * 16;
 
                 // No need to consider blocks outside this chunk
                 if (globalZ < chunkPos.getMinBlockZ() || globalZ > chunkPos.getMaxBlockZ()) continue;
@@ -211,7 +210,7 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
         // Place chest or spawner
         if (randomSource.nextFloat() < .6f) {
             this.createChest(world, box, randomSource, chestPos.getX(), chestPos.getY(), chestPos.getZ(), ResourceKey.create(Registries.LOOT_TABLE,
-                    ResourceLocation.fromNamespaceAndPath(BetterDungeonsCommon.MOD_ID, "spider_dungeon/chests/egg_room")));
+                    Identifier.fromNamespaceAndPath(BetterDungeonsCommon.MOD_ID, "spider_dungeon/chests/egg_room")));
         } else {
             if (box.isInside(chestPos)) {
                 this.placeBlock(world, Blocks.SPAWNER.defaultBlockState(), chestPos.getX(), chestPos.getY(), chestPos.getZ(), box);

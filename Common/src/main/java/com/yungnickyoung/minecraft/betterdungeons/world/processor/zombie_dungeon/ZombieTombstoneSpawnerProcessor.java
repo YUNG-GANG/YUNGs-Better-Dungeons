@@ -3,8 +3,8 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeo
 import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.world.spawner.MobSpawnerData;
-import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.Util;
+
+import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -25,8 +25,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 /**
  * Sets mob spawners to spawn skeletons w/ swords.
  */
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
+
+
 public class ZombieTombstoneSpawnerProcessor extends StructureProcessor {
     public static final ZombieTombstoneSpawnerProcessor INSTANCE = new ZombieTombstoneSpawnerProcessor();
     public static final MapCodec<ZombieTombstoneSpawnerProcessor> CODEC = MapCodec.unit(() -> INSTANCE);

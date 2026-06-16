@@ -2,7 +2,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_
 
 import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
-import net.minecraft.MethodsReturnNonnullByDefault;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.ChunkPos;
@@ -15,8 +15,8 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
+
+
 public class SmallNetherDungeonLavaBlockProcessor extends StructureProcessor {
     public static final SmallNetherDungeonLavaBlockProcessor INSTANCE = new SmallNetherDungeonLavaBlockProcessor();
     public static final MapCodec<SmallNetherDungeonLavaBlockProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
@@ -30,7 +30,7 @@ public class SmallNetherDungeonLavaBlockProcessor extends StructureProcessor {
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state().is(Blocks.ORANGE_WOOL)) {
             blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.LAVA.defaultBlockState(), null);
-            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(new ChunkPos(blockInfoGlobal.pos()))) {
+            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(ChunkPos.containing(blockInfoGlobal.pos()))) {
                 return blockInfoGlobal;
             }
             levelReader.getChunk(blockInfoGlobal.pos()).markPosForPostprocessing(blockInfoGlobal.pos()); // Schedule fluid tick

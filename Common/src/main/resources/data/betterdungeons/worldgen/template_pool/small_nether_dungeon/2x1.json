@@ -179,7 +179,7 @@
       "weight": 3,
       "element": {
         "name": "chest_prop",
-        "location": "betterdungeons:small_nether_dungeon/props/2x1/2x1_21",
+        "location": "betterdungeons:small_nether_dungeon/props/2x1/2x26_1",
         "processors": "betterdungeons:small_nether_dungeon/props",
         "projection": "rigid",
         "max_count": 2,

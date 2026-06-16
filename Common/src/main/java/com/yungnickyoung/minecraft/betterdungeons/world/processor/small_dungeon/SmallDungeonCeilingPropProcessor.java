@@ -2,7 +2,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon
 
 import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
-import net.minecraft.MethodsReturnNonnullByDefault;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -13,10 +13,8 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
+
 public class SmallDungeonCeilingPropProcessor extends StructureProcessor {
     public static final SmallDungeonCeilingPropProcessor INSTANCE = new SmallDungeonCeilingPropProcessor();
     public static final MapCodec<SmallDungeonCeilingPropProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
@@ -38,7 +36,7 @@ public class SmallDungeonCeilingPropProcessor extends StructureProcessor {
             float f = random.nextFloat();
 
             // Choose ceiling prop
-            if (f < .2f) blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CHAIN.defaultBlockState(), blockInfoGlobal.nbt());
+            if (f < .2f) blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.IRON_CHAIN.defaultBlockState(), blockInfoGlobal.nbt());
             else blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt());
         } else if (blockInfoGlobal.state().is(Blocks.BROWN_STAINED_GLASS)) {
             // If ceiling isn't solid, simply ignore processing since we don't want floating props
@@ -50,9 +48,9 @@ public class SmallDungeonCeilingPropProcessor extends StructureProcessor {
             float f = random.nextFloat();
 
             // Choose ceiling prop
-            if (f < .5f) blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CHAIN.defaultBlockState(), blockInfoGlobal.nbt());
+            if (f < .5f) blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.IRON_CHAIN.defaultBlockState(), blockInfoGlobal.nbt());
             else blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt());
-        } else if (blockInfoGlobal.state().is(Blocks.CHAIN)) {
+        } else if (blockInfoGlobal.state().is(Blocks.IRON_CHAIN)) {
             // If ceiling isn't solid, don't place top chains for potential double chains if they would be floating
             if (!levelReader.getBlockState(blockInfoGlobal.pos().above()).isFaceSturdy(levelReader, blockInfoGlobal.pos().above(), Direction.DOWN)) {
                 return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), null);

@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
 import com.yungnickyoung.minecraft.yungsapi.world.structure.processor.ISafeWorldModifier;
-import net.minecraft.MethodsReturnNonnullByDefault;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.WorldGenRegion;
@@ -26,8 +26,8 @@ import java.util.Optional;
  * Magenta stained glass is used to mark the positions where the legs will spawn for simplicity.
  * Purpur slabs are to be replaced with smooth stone slabs if air is present.
  */
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
+
+
 public class ZombieDungeonLegProcessor extends StructureProcessor implements ISafeWorldModifier {
     public static final ZombieDungeonLegProcessor INSTANCE = new ZombieDungeonLegProcessor();
     public static final MapCodec<ZombieDungeonLegProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
@@ -43,7 +43,7 @@ public class ZombieDungeonLegProcessor extends StructureProcessor implements ISa
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state().getBlock() == Blocks.MAGENTA_STAINED_GLASS) {
-            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(new ChunkPos(blockInfoGlobal.pos()))) {
+            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(ChunkPos.containing(blockInfoGlobal.pos()))) {
                 return blockInfoGlobal;
             }
 
@@ -64,7 +64,7 @@ public class ZombieDungeonLegProcessor extends StructureProcessor implements ISa
             while (mutable.getY() > levelReader.getMinY()
                     && mutable.getY() < levelReader.getMaxY()
                     && (currBlockState.isAir() || !levelReader.getFluidState(mutable).isEmpty())) {
-                levelReader.getChunk(mutable).setBlockState(mutable, LEG_SELECTOR.get(random), false);
+                levelReader.getChunk(mutable).setBlockState(mutable, LEG_SELECTOR.get(random));
                 mutable.move(Direction.DOWN);
                 currBlockState = levelReader.getBlockState(mutable);
             }

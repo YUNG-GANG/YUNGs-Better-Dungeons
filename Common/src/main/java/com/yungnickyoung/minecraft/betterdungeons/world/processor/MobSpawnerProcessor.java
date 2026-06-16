@@ -5,13 +5,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.world.spawner.MobSpawnerData;
-import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.SpawnData;
 import net.minecraft.world.level.block.Blocks;
@@ -27,23 +26,23 @@ import java.util.Optional;
 /**
  * Sets mob spawners to spawn the proper mob based on its spawner_mob JSON entry.
  */
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
+
+
 public class MobSpawnerProcessor extends StructureProcessor {
     public static final MapCodec<MobSpawnerProcessor> CODEC = RecordCodecBuilder.mapCodec(codecBuilder -> codecBuilder
             .group(
-                    ResourceLocation.CODEC
+                    Identifier.CODEC
                             .fieldOf("spawner_mob")
                             .forGetter(MobSpawnerProcessor::getSpawnerMob))
             .apply(codecBuilder, codecBuilder.stable(MobSpawnerProcessor::new)));
 
-    private MobSpawnerProcessor(ResourceLocation spawnerMob) {
+    private MobSpawnerProcessor(Identifier spawnerMob) {
         this.spawnerMob = spawnerMob;
     }
 
-    private final ResourceLocation spawnerMob;
+    private final Identifier spawnerMob;
 
-    public ResourceLocation getSpawnerMob() {
+    public Identifier getSpawnerMob() {
         return this.spawnerMob;
     }
 
@@ -57,7 +56,7 @@ public class MobSpawnerProcessor extends StructureProcessor {
         if (blockInfoGlobal.state().getBlock() instanceof SpawnerBlock) {
             // Create spawner & populate with data
             MobSpawnerData spawner = MobSpawnerData.builder()
-                    .spawnPotentials(SimpleWeightedRandomList.single(new SpawnData(
+                    .spawnPotentials(WeightedList.of(new SpawnData(
                             Util.make(new CompoundTag(), (compoundTag) -> compoundTag.putString("id", spawnerMob.toString())),
                             Optional.empty(),
                             Optional.empty())))
@@ -65,7 +64,7 @@ public class MobSpawnerProcessor extends StructureProcessor {
                             .get(spawnerMob)
                             .orElseGet(() -> {
                                 BetterDungeonsCommon.LOGGER.error("Unable to find entity type for spawner: {}. Defaulting to zombie...", spawnerMob);
-                                return BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.withDefaultNamespace("zombie")).get();
+                                return BuiltInRegistries.ENTITY_TYPE.get(Identifier.withDefaultNamespace("zombie")).get();
                             })
                             .value())
                     .build();

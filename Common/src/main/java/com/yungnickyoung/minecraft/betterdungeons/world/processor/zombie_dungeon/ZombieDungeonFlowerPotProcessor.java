@@ -3,7 +3,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeo
 import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
-import net.minecraft.MethodsReturnNonnullByDefault;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
@@ -15,8 +15,8 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
+
+
 public class ZombieDungeonFlowerPotProcessor extends StructureProcessor {
     public static final ZombieDungeonFlowerPotProcessor INSTANCE = new ZombieDungeonFlowerPotProcessor();
     public static final MapCodec<ZombieDungeonFlowerPotProcessor> CODEC = MapCodec.unit(() -> INSTANCE);

@@ -8,10 +8,11 @@ import com.yungnickyoung.minecraft.betterdungeons.module.StructureTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.YungJigsawManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.WorldGenerationContext;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pools.DimensionPadding;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.templatesystem.LiquidSettings;
+import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
 
 import java.util.Optional;
 
@@ -33,11 +35,11 @@ public class SmallNetherDungeonStructure extends Structure {
             .group(
                     settingsCodec(builder),
                     StructureTemplatePool.CODEC.fieldOf("start_pool").forGetter(structure -> structure.startPool),
-                    ResourceLocation.CODEC.optionalFieldOf("start_jigsaw_name").forGetter(structure -> structure.startJigsawName),
+                    Identifier.CODEC.optionalFieldOf("start_jigsaw_name").forGetter(structure -> structure.startJigsawName),
                     Codec.intRange(0, 128).fieldOf("size").forGetter(structure -> structure.maxDepth),
                     HeightProvider.CODEC.fieldOf("start_height").forGetter(structure -> structure.startHeight),
-                    IntProvider.codec(0, 15).optionalFieldOf("x_offset_in_chunk", ConstantInt.of(0)).forGetter(structure -> structure.xOffsetInChunk),
-                    IntProvider.codec(0, 15).optionalFieldOf("z_offset_in_chunk", ConstantInt.of(0)).forGetter(structure -> structure.zOffsetInChunk),
+                    IntProviders.codec(0, 15).optionalFieldOf("x_offset_in_chunk", ConstantInt.of(0)).forGetter(structure -> structure.xOffsetInChunk),
+                    IntProviders.codec(0, 15).optionalFieldOf("z_offset_in_chunk", ConstantInt.of(0)).forGetter(structure -> structure.zOffsetInChunk),
                     Codec.BOOL.optionalFieldOf("use_expansion_hack", false).forGetter(structure -> structure.useExpansionHack),
                     Heightmap.Types.CODEC.optionalFieldOf("project_start_to_heightmap").forGetter(structure -> structure.projectStartToHeightmap),
                     Codec.intRange(1, MAX_TOTAL_STRUCTURE_RADIUS).fieldOf("max_distance_from_center").forGetter(structure -> structure.maxDistanceFromCenter),
@@ -48,7 +50,7 @@ public class SmallNetherDungeonStructure extends Structure {
             .apply(builder, SmallNetherDungeonStructure::new));
 
     public final Holder<StructureTemplatePool> startPool;
-    private final Optional<ResourceLocation> startJigsawName;
+    private final Optional<Identifier> startJigsawName;
     public final int maxDepth;
     public final HeightProvider startHeight;
     public final IntProvider xOffsetInChunk;
@@ -64,7 +66,7 @@ public class SmallNetherDungeonStructure extends Structure {
     public SmallNetherDungeonStructure(
             Structure.StructureSettings structureSettings,
             Holder<StructureTemplatePool> startPool,
-            Optional<ResourceLocation> startJigsawName,
+            Optional<Identifier> startJigsawName,
             int maxDepth,
             HeightProvider startHeight,
             IntProvider xOffsetInChunk,

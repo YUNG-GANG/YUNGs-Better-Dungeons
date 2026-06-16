@@ -3,7 +3,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon
 import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
-import net.minecraft.MethodsReturnNonnullByDefault;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.WorldGenRegion;
@@ -23,8 +23,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * Dynamically generates support legs below small dungeons.
  * Yellow stained glass is used to mark the corner positions where the legs will spawn for simplicity.
  */
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
+
+
 public class SmallDungeonLegProcessor extends StructureProcessor {
     public static final SmallDungeonLegProcessor INSTANCE = new SmallDungeonLegProcessor();
     public static final MapCodec<SmallDungeonLegProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
@@ -41,7 +41,7 @@ public class SmallDungeonLegProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state().getBlock() == Blocks.YELLOW_STAINED_GLASS) {
-            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(new ChunkPos(blockInfoGlobal.pos()))) {
+            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(ChunkPos.containing(blockInfoGlobal.pos()))) {
                 return blockInfoGlobal;
             }
 
@@ -54,7 +54,7 @@ public class SmallDungeonLegProcessor extends StructureProcessor {
             while (mutable.getY() > levelReader.getMinY()
                     && mutable.getY() < levelReader.getMaxY()
                     && (currBlockState.isAir() || !levelReader.getFluidState(mutable).isEmpty())) {
-                levelReader.getChunk(mutable).setBlockState(mutable, STONE_BRICK_SELECTOR.get(random), false);
+                levelReader.getChunk(mutable).setBlockState(mutable, STONE_BRICK_SELECTOR.get(random));
                 mutable.move(Direction.DOWN);
                 currBlockState = levelReader.getBlockState(mutable);
             }
