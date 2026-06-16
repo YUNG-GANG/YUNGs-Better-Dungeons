@@ -15,7 +15,7 @@
     "show_toast": false,
     "announce_to_chat": false,
     "hidden": true,
-    "background": "minecraft:textures/block/stone_bricks.png"
+    "background": "minecraft:block/stone_bricks"
   },
   "criteria": {
     "always": {
