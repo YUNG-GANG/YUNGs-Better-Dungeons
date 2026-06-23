@@ -62,7 +62,7 @@ public class SmallNetherDungeonBannerProcessor extends StructureProcessor {
             .pattern(BannerPatterns.STRIPE_TOP, DyeColor.WHITE)
             .pattern(BannerPatterns.CREEPER, DyeColor.WHITE)
             .pattern(BannerPatterns.GRADIENT, DyeColor.BLACK)
-            .customName("Vengeful Banner")
+            .customName("betterdungeons.small_dungeon.banner.skeleton", "Vengeful Banner")
             .customColor("dark_gray")
             .build();
 
@@ -74,7 +74,7 @@ public class SmallNetherDungeonBannerProcessor extends StructureProcessor {
             .pattern(BannerPatterns.CREEPER, DyeColor.BLACK)
             .pattern(BannerPatterns.STRIPE_TOP, DyeColor.BLACK)
             .pattern(BannerPatterns.GRADIENT_UP, DyeColor.BLACK)
-            .customName("Banner of Decay")
+            .customName("betterdungeons.nether_dungeon.banner.decay", "Banner of Decay")
             .customColor("dark_purple")
             .build();
 
@@ -92,7 +92,7 @@ public class SmallNetherDungeonBannerProcessor extends StructureProcessor {
             .pattern(BannerPatterns.PIGLIN, DyeColor.BLACK)
             .pattern(BannerPatterns.GRADIENT_UP, DyeColor.PINK)
             .pattern(BannerPatterns.STRIPE_BOTTOM, DyeColor.BLACK)
-            .customName("Banner of Pork")
+            .customName("betterdungeons.nether_dungeon.banner.pork", "Banner of Pork")
             .customColor("light_purple")
             .build();
 
@@ -105,7 +105,7 @@ public class SmallNetherDungeonBannerProcessor extends StructureProcessor {
             .pattern(BannerPatterns.SKULL, DyeColor.YELLOW)
             .pattern(BannerPatterns.CURLY_BORDER, DyeColor.RED)
             .pattern(BannerPatterns.GRADIENT_UP, DyeColor.BLACK)
-            .customName("Banner of Rage")
+            .customName("betterdungeons.nether_dungeon.banner.rage", "Banner of Rage")
             .customColor("gold")
             .build();
 
