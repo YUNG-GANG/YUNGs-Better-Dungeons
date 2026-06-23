@@ -61,7 +61,7 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
             .pattern(BannerPatterns.STRIPE_TOP, DyeColor.WHITE)
             .pattern(BannerPatterns.CREEPER, DyeColor.WHITE)
             .pattern(BannerPatterns.GRADIENT, DyeColor.BLACK)
-            .customName("Vengeful Banner")
+            .customName("betterdungeons.small_dungeon.banner.skeleton", "Vengeful Banner")
             .customColor("dark_gray")
             .build();
 
@@ -73,7 +73,7 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
             .pattern(BannerPatterns.TRIANGLES_TOP, DyeColor.WHITE)
             .pattern(BannerPatterns.TRIANGLES_BOTTOM, DyeColor.WHITE)
             .pattern(BannerPatterns.BORDER, DyeColor.GREEN)
-            .customName("Foul Banner")
+            .customName("betterdungeons.small_dungeon.banner.zombie", "Foul Banner")
             .customColor("dark_green")
             .build();
 
@@ -85,7 +85,7 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
             .pattern(BannerPatterns.HALF_HORIZONTAL, DyeColor.GRAY)
             .pattern(BannerPatterns.STRIPE_BOTTOM, DyeColor.GRAY)
             .pattern(BannerPatterns.GRADIENT, DyeColor.BLACK)
-            .customName("Haunted Banner")
+            .customName("betterdungeons.small_dungeon.banner.spider", "Haunted Banner")
             .customColor("dark_red")
             .build();
 
