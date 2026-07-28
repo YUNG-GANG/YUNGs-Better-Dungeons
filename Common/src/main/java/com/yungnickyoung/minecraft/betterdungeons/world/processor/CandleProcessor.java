@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor;
+import net.minecraft.world.item.DyeColor;
 
 import com.mojang.serialization.MapCodec;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.SeaPickleBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -21,30 +20,30 @@ import java.util.List;
 
 
 
-public class CandleProcessor extends StructureProcessor {
+public class CandleProcessor implements StructureProcessor {
     public static final CandleProcessor INSTANCE = new CandleProcessor();
     public static final MapCodec<CandleProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
-    private static final List<Block> CANDLES = List.of(Blocks.CANDLE, Blocks.WHITE_CANDLE, Blocks.GRAY_CANDLE,
-            Blocks.LIGHT_GRAY_CANDLE, Blocks.BROWN_CANDLE, Blocks.GREEN_CANDLE, Blocks.PURPLE_CANDLE, Blocks.BLACK_CANDLE);
+    private static final List<Block> CANDLES = List.of(Blocks.CANDLE, Blocks.DYED_CANDLE.pick(DyeColor.WHITE), Blocks.DYED_CANDLE.pick(DyeColor.GRAY),
+            Blocks.DYED_CANDLE.pick(DyeColor.LIGHT_GRAY), Blocks.DYED_CANDLE.pick(DyeColor.BROWN), Blocks.DYED_CANDLE.pick(DyeColor.GREEN), Blocks.DYED_CANDLE.pick(DyeColor.PURPLE), Blocks.DYED_CANDLE.pick(DyeColor.BLACK));
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
-                                                             StructureTemplate.StructureBlockInfo blockInfoGlobal,
+                                                                                                                          BlockPos blockPos,
+                                                             StructureTemplate.StructureBlockInfo blockInfo,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state().getBlock() instanceof SeaPickleBlock) {
-            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos());
+        if (blockInfo.state().getBlock() instanceof SeaPickleBlock) {
+            RandomSource random = structurePlacementData.getRandom(blockInfo.pos());
             int numCandles = random.nextInt(4) + 1;
             boolean lit = random.nextFloat() < .1f;
             BlockState newBlockState = getRandomCandle(random).defaultBlockState()
                     .setValue(CandleBlock.CANDLES, numCandles)
                     .setValue(CandleBlock.LIT, lit);
-            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), newBlockState, blockInfoGlobal.nbt());
+            blockInfo = new StructureTemplate.StructureBlockInfo(blockInfo.pos(), newBlockState, blockInfo.nbt());
         }
-        return blockInfoGlobal;
+        return blockInfo;
     }
 
     private static Block getRandomCandle(RandomSource random) {
@@ -52,7 +51,8 @@ public class CandleProcessor extends StructureProcessor {
         return CANDLES.get(i);
     }
 
-    protected StructureProcessorType<?> getType() {
-        return StructureProcessorTypeModule.CANDLE_PROCESSOR;
+    @Override
+    public MapCodec<? extends StructureProcessor> codec() {
+        return CODEC;
     }
 }

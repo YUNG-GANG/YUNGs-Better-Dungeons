@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonContext;
 import com.yungnickyoung.minecraft.betterdungeons.world.DungeonType;
 import com.yungnickyoung.minecraft.yungsapi.world.banner.Banner;
@@ -22,7 +21,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -35,7 +33,7 @@ import java.util.Objects;
  */
 
 
-public class SmallNetherDungeonBannerProcessor extends StructureProcessor {
+public class SmallNetherDungeonBannerProcessor implements StructureProcessor {
     public static final MapCodec<SmallNetherDungeonBannerProcessor> CODEC = RecordCodecBuilder.mapCodec(codecBuilder -> codecBuilder
             .group(
                     Codec.STRING
@@ -55,7 +53,7 @@ public class SmallNetherDungeonBannerProcessor extends StructureProcessor {
 
     // All banners
     public static final Banner SKELETON_BANNER = new Banner.Builder()
-            .blockState(Blocks.BLACK_WALL_BANNER.defaultBlockState())
+            .blockState(Blocks.WALL_BANNER.pick(DyeColor.BLACK).defaultBlockState())
             .pattern(BannerPatterns.CURLY_BORDER, DyeColor.WHITE)
             .pattern(BannerPatterns.STRIPE_CENTER, DyeColor.WHITE)
             .pattern(BannerPatterns.STRIPE_BOTTOM, DyeColor.BLACK)
@@ -67,7 +65,7 @@ public class SmallNetherDungeonBannerProcessor extends StructureProcessor {
             .build();
 
     public static final Banner WITHER_SKELETON_BANNER = new Banner.Builder()
-            .blockState(Blocks.RED_WALL_BANNER.defaultBlockState())
+            .blockState(Blocks.WALL_BANNER.pick(DyeColor.RED).defaultBlockState())
             .pattern(BannerPatterns.CURLY_BORDER, DyeColor.BLACK)
             .pattern(BannerPatterns.STRIPE_CENTER, DyeColor.BLACK)
             .pattern(BannerPatterns.STRIPE_BOTTOM, DyeColor.RED)
@@ -79,7 +77,7 @@ public class SmallNetherDungeonBannerProcessor extends StructureProcessor {
             .build();
 
     public static final Banner ZOMBIFIED_PIGLIN_BANNER = new Banner.Builder()
-            .blockState(Blocks.PINK_WALL_BANNER.defaultBlockState())
+            .blockState(Blocks.WALL_BANNER.pick(DyeColor.PINK).defaultBlockState())
             .pattern(BannerPatterns.STRIPE_LEFT, DyeColor.GREEN)
             .pattern(BannerPatterns.TRIANGLES_TOP, DyeColor.BLACK)
             .pattern(BannerPatterns.TRIANGLES_TOP, DyeColor.PINK)
@@ -97,7 +95,7 @@ public class SmallNetherDungeonBannerProcessor extends StructureProcessor {
             .build();
 
     public static final Banner BLAZE_BANNER = new Banner.Builder()
-            .blockState(Blocks.RED_WALL_BANNER.defaultBlockState())
+            .blockState(Blocks.WALL_BANNER.pick(DyeColor.RED).defaultBlockState())
             .pattern(BannerPatterns.STRIPE_SMALL, DyeColor.YELLOW)
             .pattern(BannerPatterns.TRIANGLE_TOP, DyeColor.RED)
             .pattern(BannerPatterns.TRIANGLE_TOP, DyeColor.RED)
@@ -113,41 +111,42 @@ public class SmallNetherDungeonBannerProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
-                                                             StructureTemplate.StructureBlockInfo blockInfoGlobal,
+                                                                                                                          BlockPos blockPos,
+                                                             StructureTemplate.StructureBlockInfo blockInfo,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state().getBlock() instanceof AbstractBannerBlock) {
+        if (blockInfo.state().getBlock() instanceof AbstractBannerBlock) {
             // Make sure we only operate on the placeholder banners
-            var globalNbt = Objects.requireNonNullElseGet(blockInfoGlobal.nbt(), CompoundTag::new);
-            if (blockInfoGlobal.state().getBlock() == Blocks.GRAY_WALL_BANNER &&
+            var globalNbt = Objects.requireNonNullElseGet(blockInfo.nbt(), CompoundTag::new);
+            if (blockInfo.state().getBlock() == Blocks.WALL_BANNER.pick(DyeColor.GRAY) &&
                 globalNbt.getList("patterns").filter(l -> !l.isEmpty()).isEmpty()) {
                 // Fetch thread-local dungeon context
                 DungeonContext context = DungeonContext.peek();
 
                 // Check dungeon context to see if we have reached the max banner count for this structure piece
                 if (context.getBannerCount() >= BetterDungeonsCommon.CONFIG.smallNetherDungeons.bannerMaxCount)
-                    return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.AIR.defaultBlockState(), null);
+                    return new StructureTemplate.StructureBlockInfo(blockInfo.pos(), Blocks.AIR.defaultBlockState(), null);
 
                 // Chance of a banner spawning
-                RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos());
+                RandomSource random = structurePlacementData.getRandom(blockInfo.pos());
                 if (random.nextFloat() > .1f) {
-                    return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.AIR.defaultBlockState(), null);
+                    return new StructureTemplate.StructureBlockInfo(blockInfo.pos(), Blocks.AIR.defaultBlockState(), null);
                 }
 
                 Banner banner = getBannerForType();
-                Direction facing = blockInfoGlobal.state().getValue(BlockStateProperties.HORIZONTAL_FACING);
+                Direction facing = blockInfo.state().getValue(BlockStateProperties.HORIZONTAL_FACING);
                 BlockState newState = banner.getState().setValue(BlockStateProperties.HORIZONTAL_FACING, facing);
                 CompoundTag newNBT = copyNBT(banner.getNbt());
 
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), newState, newNBT);
+                blockInfo = new StructureTemplate.StructureBlockInfo(blockInfo.pos(), newState, newNBT);
                 context.incrementBannerCount();
             }
         }
-        return blockInfoGlobal;
+        return blockInfo;
     }
 
-    protected StructureProcessorType<?> getType() {
-        return StructureProcessorTypeModule.SMALL_NETHER_DUNGEON_BANNER_PROCESSOR;
+    @Override
+    public MapCodec<? extends StructureProcessor> codec() {
+        return CODEC;
     }
 
     private Banner getBannerForType() {

@@ -1,7 +1,9 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon;
+import net.minecraft.resources.Identifier;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.DyeColor;
 
 import com.mojang.serialization.MapCodec;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.world.spawner.MobSpawnerData;
 
 import net.minecraft.util.Util;
@@ -17,7 +19,6 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -27,7 +28,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 
 
-public class ZombieTombstoneSpawnerProcessor extends StructureProcessor {
+public class ZombieTombstoneSpawnerProcessor implements StructureProcessor {
     public static final ZombieTombstoneSpawnerProcessor INSTANCE = new ZombieTombstoneSpawnerProcessor();
     public static final MapCodec<ZombieTombstoneSpawnerProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -35,25 +36,26 @@ public class ZombieTombstoneSpawnerProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
-                                                             StructureTemplate.StructureBlockInfo blockInfoGlobal,
+                                                                                                                          BlockPos blockPos,
+                                                             StructureTemplate.StructureBlockInfo blockInfo,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state().getBlock() == Blocks.BLACK_STAINED_GLASS) {
+        if (blockInfo.state().getBlock() == Blocks.STAINED_GLASS.pick(DyeColor.BLACK)) {
             // Create spawner & populate with data
             MobSpawnerData spawner = MobSpawnerData.builder()
-                    .setEntityType(EntityType.SKELETON)
+                    .setEntityType(BuiltInRegistries.ENTITY_TYPE.get(Identifier.fromNamespaceAndPath("minecraft", "skeleton")).orElseThrow().value())
                     .build();
             spawner.nextSpawnData.getEntityToSpawn().put("HandItems", Util.make(new ListTag(), (handItemsTag) -> {
                 Tag ironSwordNbt = ItemStack.CODEC.encodeStart(NbtOps.INSTANCE, new ItemStack(Items.IRON_SWORD)).getOrThrow();
                 handItemsTag.add(ironSwordNbt);
             }));
             CompoundTag nbt = spawner.save();
-            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.SPAWNER.defaultBlockState(), nbt);
+            blockInfo = new StructureTemplate.StructureBlockInfo(blockInfo.pos(), Blocks.SPAWNER.defaultBlockState(), nbt);
         }
-        return blockInfoGlobal;
+        return blockInfo;
     }
 
-    protected StructureProcessorType<?> getType() {
-        return StructureProcessorTypeModule.ZOMBIE_TOMBSTONE_SPAWNER_PROCESSOR;
+    @Override
+    public MapCodec<? extends StructureProcessor> codec() {
+        return CODEC;
     }
 }
