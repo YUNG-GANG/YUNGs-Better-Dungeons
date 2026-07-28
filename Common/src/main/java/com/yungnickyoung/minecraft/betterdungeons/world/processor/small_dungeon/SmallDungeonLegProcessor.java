@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_dungeon;
+import net.minecraft.world.item.DyeColor;
 
 import com.mojang.serialization.MapCodec;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
 
 import net.minecraft.core.BlockPos;
@@ -14,7 +14,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -25,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 
 
-public class SmallDungeonLegProcessor extends StructureProcessor {
+public class SmallDungeonLegProcessor implements StructureProcessor {
     public static final SmallDungeonLegProcessor INSTANCE = new SmallDungeonLegProcessor();
     public static final MapCodec<SmallDungeonLegProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -37,18 +36,18 @@ public class SmallDungeonLegProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
-                                                             StructureTemplate.StructureBlockInfo blockInfoGlobal,
+                                                                                                                          BlockPos blockPos,
+                                                             StructureTemplate.StructureBlockInfo blockInfo,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state().getBlock() == Blocks.YELLOW_STAINED_GLASS) {
-            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(ChunkPos.containing(blockInfoGlobal.pos()))) {
-                return blockInfoGlobal;
+        if (blockInfo.state().getBlock() == Blocks.STAINED_GLASS.pick(DyeColor.YELLOW)) {
+            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(ChunkPos.containing(blockInfo.pos()))) {
+                return blockInfo;
             }
 
-            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos());
+            RandomSource random = structurePlacementData.getRandom(blockInfo.pos());
 
-            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.MOSSY_COBBLESTONE.defaultBlockState(), null);
-            BlockPos.MutableBlockPos mutable = blockInfoGlobal.pos().mutable().move(Direction.DOWN);
+            blockInfo = new StructureTemplate.StructureBlockInfo(blockInfo.pos(), Blocks.MOSSY_COBBLESTONE.defaultBlockState(), null);
+            BlockPos.MutableBlockPos mutable = blockInfo.pos().mutable().move(Direction.DOWN);
             BlockState currBlockState = levelReader.getBlockState(mutable);
 
             while (mutable.getY() > levelReader.getMinY()
@@ -60,10 +59,11 @@ public class SmallDungeonLegProcessor extends StructureProcessor {
             }
         }
 
-        return blockInfoGlobal;
+        return blockInfo;
     }
 
-    protected StructureProcessorType<?> getType() {
-        return StructureProcessorTypeModule.SMALL_DUNGEON_LEG_PROCESSOR;
+    @Override
+    public MapCodec<? extends StructureProcessor> codec() {
+        return CODEC;
     }
 }

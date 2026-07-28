@@ -1,7 +1,6 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon;
 
 import com.mojang.serialization.MapCodec;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
 
 import net.minecraft.core.BlockPos;
@@ -11,7 +10,6 @@ import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -21,7 +19,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 
 
-public class ZombieDungeonStairProcessor extends StructureProcessor {
+public class ZombieDungeonStairProcessor implements StructureProcessor {
     public static final ZombieDungeonStairProcessor INSTANCE = new ZombieDungeonStairProcessor();
     public static final MapCodec<ZombieDungeonStairProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -37,28 +35,29 @@ public class ZombieDungeonStairProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
-                                                             StructureTemplate.StructureBlockInfo blockInfoGlobal,
+                                                                                                                          BlockPos blockPos,
+                                                             StructureTemplate.StructureBlockInfo blockInfo,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state().getBlock() == Blocks.COBBLESTONE_STAIRS) {
-            if (levelReader.getBlockState(blockInfoGlobal.pos()).isAir()) {
+        if (blockInfo.state().getBlock() == Blocks.COBBLESTONE_STAIRS) {
+            if (levelReader.getBlockState(blockInfo.pos()).isAir()) {
                 // Don't replace air to maintain rotted look
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), null);
+                blockInfo = new StructureTemplate.StructureBlockInfo(blockInfo.pos(), Blocks.CAVE_AIR.defaultBlockState(), null);
             } else {
-                BlockState newBlock = SELECTOR.get(structurePlacementData.getRandom(blockInfoGlobal.pos()));
+                BlockState newBlock = SELECTOR.get(structurePlacementData.getRandom(blockInfo.pos()));
                 if (newBlock.getBlock() instanceof StairBlock) {
                     newBlock = newBlock
-                        .setValue(StairBlock.FACING, blockInfoGlobal.state().getValue(StairBlock.FACING))
-                        .setValue(StairBlock.HALF, blockInfoGlobal.state().getValue(StairBlock.HALF))
-                        .setValue(StairBlock.SHAPE, blockInfoGlobal.state().getValue(StairBlock.SHAPE));
+                        .setValue(StairBlock.FACING, blockInfo.state().getValue(StairBlock.FACING))
+                        .setValue(StairBlock.HALF, blockInfo.state().getValue(StairBlock.HALF))
+                        .setValue(StairBlock.SHAPE, blockInfo.state().getValue(StairBlock.SHAPE));
                 }
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), newBlock, null);
+                blockInfo = new StructureTemplate.StructureBlockInfo(blockInfo.pos(), newBlock, null);
             }
         }
-        return blockInfoGlobal;
+        return blockInfo;
     }
 
-    protected StructureProcessorType<?> getType() {
-        return StructureProcessorTypeModule.ZOMBIE_DUNGEON_STAIR_PROCESSOR;
+    @Override
+    public MapCodec<? extends StructureProcessor> codec() {
+        return CODEC;
     }
 }

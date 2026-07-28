@@ -1,4 +1,5 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece;
+import net.minecraft.world.item.DyeColor;
 
 import com.google.common.collect.Sets;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
@@ -18,7 +19,7 @@ import java.util.BitSet;
 import java.util.Set;
 
 public abstract class SpiderDungeonPiece extends StructurePiece {
-    protected static final Set<Block> BLOCK_BLACKLIST = Sets.newHashSet(Blocks.DIAMOND_BLOCK, Blocks.WHITE_WOOL, Blocks.SPAWNER, Blocks.CHEST, Blocks.ACACIA_LEAVES, Blocks.BIRCH_LEAVES, Blocks.OAK_LEAVES, Blocks.DARK_OAK_LEAVES, Blocks.JUNGLE_LEAVES, Blocks.SPRUCE_LEAVES, Blocks.SHORT_GRASS, Blocks.TALL_GRASS);
+    protected static final Set<Block> BLOCK_BLACKLIST = Sets.newHashSet(Blocks.DIAMOND_BLOCK, Blocks.WOOL.pick(DyeColor.WHITE), Blocks.SPAWNER, Blocks.CHEST, Blocks.ACACIA_LEAVES, Blocks.BIRCH_LEAVES, Blocks.OAK_LEAVES, Blocks.DARK_OAK_LEAVES, Blocks.JUNGLE_LEAVES, Blocks.SPRUCE_LEAVES, Blocks.SHORT_GRASS, Blocks.TALL_GRASS);
 
     protected SpiderDungeonPiece(StructurePieceType structurePieceTypeIn, int chainLength, BoundingBox box) {
         super(structurePieceTypeIn, chainLength, box);

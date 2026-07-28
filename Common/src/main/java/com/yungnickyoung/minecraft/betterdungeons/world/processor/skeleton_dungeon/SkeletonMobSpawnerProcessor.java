@@ -1,7 +1,8 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dungeon;
+import net.minecraft.resources.Identifier;
+import net.minecraft.core.registries.BuiltInRegistries;
 
 import com.mojang.serialization.MapCodec;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.world.spawner.MobSpawnerData;
 
 import net.minecraft.util.Util;
@@ -15,7 +16,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SpawnerBlock;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -27,7 +27,7 @@ import java.util.Optional;
  */
 
 
-public class SkeletonMobSpawnerProcessor extends StructureProcessor {
+public class SkeletonMobSpawnerProcessor implements StructureProcessor {
     public static final SkeletonMobSpawnerProcessor INSTANCE = new SkeletonMobSpawnerProcessor();
     public static final MapCodec<SkeletonMobSpawnerProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -35,10 +35,10 @@ public class SkeletonMobSpawnerProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
-                                                             StructureTemplate.StructureBlockInfo blockInfoGlobal,
+                                                                                                                          BlockPos blockPos,
+                                                             StructureTemplate.StructureBlockInfo blockInfo,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state().getBlock() instanceof SpawnerBlock) {
+        if (blockInfo.state().getBlock() instanceof SpawnerBlock) {
             // Create spawner & populate with data
             MobSpawnerData spawner = MobSpawnerData.builder()
                     .spawnPotentials(WeightedList.of(new SpawnData(
@@ -48,15 +48,16 @@ public class SkeletonMobSpawnerProcessor extends StructureProcessor {
                     .requiredPlayerRange(18)
                     .maxNearbyEntities(8)
                     .maxSpawnDelay(650)
-                    .setEntityType(EntityType.SKELETON)
+                    .setEntityType(BuiltInRegistries.ENTITY_TYPE.get(Identifier.fromNamespaceAndPath("minecraft", "skeleton")).orElseThrow().value())
                     .build();
             CompoundTag nbt = spawner.save();
-            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.SPAWNER.defaultBlockState(), nbt);
+            blockInfo = new StructureTemplate.StructureBlockInfo(blockInfo.pos(), Blocks.SPAWNER.defaultBlockState(), nbt);
         }
-        return blockInfoGlobal;
+        return blockInfo;
     }
 
-    protected StructureProcessorType<?> getType() {
-        return StructureProcessorTypeModule.SKELETON_MOB_SPAWNER_PROCESSOR;
+    @Override
+    public MapCodec<? extends StructureProcessor> codec() {
+        return CODEC;
     }
 }

@@ -3,7 +3,6 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.world.spawner.MobSpawnerData;
 
 import net.minecraft.util.Util;
@@ -24,7 +23,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SpawnerBlock;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -32,7 +30,7 @@ import java.util.Optional;
 
 
 
-public class SmallNetherDungeonMobSpawner extends StructureProcessor {
+public class SmallNetherDungeonMobSpawner implements StructureProcessor {
     public static final MapCodec<SmallNetherDungeonMobSpawner> CODEC = RecordCodecBuilder.mapCodec(codecBuilder -> codecBuilder
             .group(
                     Identifier.CODEC
@@ -54,10 +52,10 @@ public class SmallNetherDungeonMobSpawner extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
-                                                             StructureTemplate.StructureBlockInfo blockInfoGlobal,
+                                                                                                                          BlockPos blockPos,
+                                                             StructureTemplate.StructureBlockInfo blockInfo,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state().getBlock() instanceof SpawnerBlock) {
+        if (blockInfo.state().getBlock() instanceof SpawnerBlock) {
             // Create spawner & populate with data
             MobSpawnerData spawner = MobSpawnerData.builder()
                     .spawnPotentials(WeightedList.of(new SpawnData(
@@ -147,12 +145,13 @@ public class SmallNetherDungeonMobSpawner extends StructureProcessor {
                 }
             }
             CompoundTag nbt = spawner.save();
-            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.SPAWNER.defaultBlockState(), nbt);
+            blockInfo = new StructureTemplate.StructureBlockInfo(blockInfo.pos(), Blocks.SPAWNER.defaultBlockState(), nbt);
         }
-        return blockInfoGlobal;
+        return blockInfo;
     }
 
-    protected StructureProcessorType<?> getType() {
-        return StructureProcessorTypeModule.SMALL_NETHER_DUNGEON_MOB_SPAWNER_PROCESSOR;
+    @Override
+    public MapCodec<? extends StructureProcessor> codec() {
+        return CODEC;
     }
 }
