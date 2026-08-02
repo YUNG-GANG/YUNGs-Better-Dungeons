@@ -10,14 +10,13 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 
 
-public class ZombieDungeonFlowerPotProcessor extends StructureProcessor {
+public class ZombieDungeonFlowerPotProcessor implements StructureProcessor {
     public static final ZombieDungeonFlowerPotProcessor INSTANCE = new ZombieDungeonFlowerPotProcessor();
     public static final MapCodec<ZombieDungeonFlowerPotProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -33,7 +32,7 @@ public class ZombieDungeonFlowerPotProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             BlockPos templateRelativePos,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state().is(Blocks.POTTED_CORNFLOWER)) {
@@ -44,7 +43,7 @@ public class ZombieDungeonFlowerPotProcessor extends StructureProcessor {
         return blockInfoGlobal;
     }
 
-    protected StructureProcessorType<?> getType() {
+    public MapCodec<? extends StructureProcessor> codec() {
         return StructureProcessorTypeModule.ZOMBIE_DUNGEON_FLOWER_POT_PROCESSOR;
     }
 }

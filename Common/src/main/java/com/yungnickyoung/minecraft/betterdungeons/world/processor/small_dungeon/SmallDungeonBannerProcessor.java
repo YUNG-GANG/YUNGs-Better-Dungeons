@@ -22,7 +22,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.Objects;
@@ -34,7 +33,7 @@ import java.util.Objects;
  */
 
 
-public class SmallDungeonBannerProcessor extends StructureProcessor {
+public class SmallDungeonBannerProcessor implements StructureProcessor {
     public static final MapCodec<SmallDungeonBannerProcessor> CODEC = RecordCodecBuilder.mapCodec(codecBuilder -> codecBuilder
             .group(
                     Codec.STRING
@@ -54,7 +53,7 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
 
     // All banners
     public static final Banner SMALL_DUNGEON_SKELETON_BANNER = new Banner.Builder()
-            .blockState(Blocks.BLACK_WALL_BANNER.defaultBlockState())
+            .blockState(Blocks.WALL_BANNER.black().defaultBlockState())
             .pattern(BannerPatterns.CURLY_BORDER, DyeColor.WHITE)
             .pattern(BannerPatterns.STRIPE_CENTER, DyeColor.WHITE)
             .pattern(BannerPatterns.STRIPE_BOTTOM, DyeColor.BLACK)
@@ -66,7 +65,7 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
             .build();
 
     public static final Banner SMALL_DUNGEON_ZOMBIE_BANNER = new Banner.Builder()
-            .blockState(Blocks.RED_WALL_BANNER.defaultBlockState())
+            .blockState(Blocks.WALL_BANNER.red().defaultBlockState())
             .pattern(BannerPatterns.TRIANGLE_BOTTOM, DyeColor.PINK)
             .pattern(BannerPatterns.CIRCLE_MIDDLE, DyeColor.GRAY)
             .pattern(BannerPatterns.GRADIENT, DyeColor.BLACK)
@@ -78,7 +77,7 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
             .build();
 
     public static final Banner SMALL_DUNGEON_SPIDER_BANNER = new Banner.Builder()
-            .blockState(Blocks.RED_WALL_BANNER.defaultBlockState())
+            .blockState(Blocks.WALL_BANNER.red().defaultBlockState())
             .pattern(BannerPatterns.FLOWER, DyeColor.GRAY)
             .pattern(BannerPatterns.BORDER, DyeColor.GRAY)
             .pattern(BannerPatterns.STRAIGHT_CROSS, DyeColor.GRAY)
@@ -93,13 +92,13 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             BlockPos templateRelativePos,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state().getBlock() instanceof AbstractBannerBlock) {
             // Make sure we only operate on the placeholder banners
             var globalNbt = Objects.requireNonNullElseGet(blockInfoGlobal.nbt(), CompoundTag::new);
-            if (blockInfoGlobal.state().getBlock() == Blocks.RED_WALL_BANNER &&
+            if (blockInfoGlobal.state().getBlock() == Blocks.WALL_BANNER.red() &&
                 globalNbt.getList("patterns").filter(l -> !l.isEmpty()).isEmpty()) {
                 // Fetch thread-local dungeon context
                 DungeonContext context = DungeonContext.peek();
@@ -126,7 +125,7 @@ public class SmallDungeonBannerProcessor extends StructureProcessor {
         return blockInfoGlobal;
     }
 
-    protected StructureProcessorType<?> getType() {
+    public MapCodec<? extends StructureProcessor> codec() {
         return StructureProcessorTypeModule.SMALL_DUNGEON_BANNER_PROCESSOR;
     }
 

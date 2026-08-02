@@ -14,7 +14,6 @@ import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -24,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 
 
-public class ZombieDungeonCubbyProcessor extends StructureProcessor {
+public class ZombieDungeonCubbyProcessor implements StructureProcessor {
     public static final ZombieDungeonCubbyProcessor INSTANCE = new ZombieDungeonCubbyProcessor();
     public static final MapCodec<ZombieDungeonCubbyProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -37,7 +36,7 @@ public class ZombieDungeonCubbyProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             BlockPos templateRelativePos,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state().getBlock() == Blocks.COBBLESTONE_STAIRS) {
@@ -58,7 +57,7 @@ public class ZombieDungeonCubbyProcessor extends StructureProcessor {
         return blockInfoGlobal;
     }
 
-    protected StructureProcessorType<?> getType() {
+    public MapCodec<? extends StructureProcessor> codec() {
         return StructureProcessorTypeModule.ZOMBIE_DUNGEON_CUBBY_PROCESSOR;
     }
 }

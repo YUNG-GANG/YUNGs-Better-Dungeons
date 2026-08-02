@@ -10,12 +10,11 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 
 
-public class SmallDungeonCeilingPropProcessor extends StructureProcessor {
+public class SmallDungeonCeilingPropProcessor implements StructureProcessor {
     public static final SmallDungeonCeilingPropProcessor INSTANCE = new SmallDungeonCeilingPropProcessor();
     public static final MapCodec<SmallDungeonCeilingPropProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -23,10 +22,10 @@ public class SmallDungeonCeilingPropProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             BlockPos templateRelativePos,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state().is(Blocks.MAGENTA_STAINED_GLASS)) {
+        if (blockInfoGlobal.state().is(Blocks.STAINED_GLASS.magenta())) {
             // If ceiling isn't solid, place air since we don't want floating props
             if (!levelReader.getBlockState(blockInfoGlobal.pos().above()).isFaceSturdy(levelReader, blockInfoGlobal.pos().above(), Direction.DOWN)) {
                 return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), null);
@@ -38,7 +37,7 @@ public class SmallDungeonCeilingPropProcessor extends StructureProcessor {
             // Choose ceiling prop
             if (f < .2f) blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.IRON_CHAIN.defaultBlockState(), blockInfoGlobal.nbt());
             else blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), blockInfoGlobal.nbt());
-        } else if (blockInfoGlobal.state().is(Blocks.BROWN_STAINED_GLASS)) {
+        } else if (blockInfoGlobal.state().is(Blocks.STAINED_GLASS.brown())) {
             // If ceiling isn't solid, simply ignore processing since we don't want floating props
             if (!levelReader.getBlockState(blockInfoGlobal.pos().above(2)).isFaceSturdy(levelReader, blockInfoGlobal.pos().above(), Direction.DOWN)) {
                 return new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), null);
@@ -60,7 +59,7 @@ public class SmallDungeonCeilingPropProcessor extends StructureProcessor {
         return blockInfoGlobal;
     }
 
-    protected StructureProcessorType<?> getType() {
+    public MapCodec<? extends StructureProcessor> codec() {
         return StructureProcessorTypeModule.SMALL_DUNGEON_CEILING_PROP_PROCESSOR;
     }
 }
