@@ -1,5 +1,5 @@
 {
-  "Small Nether Dungeons are currently disabled by default. You can enable them in the mod's config.": "Las mazmorras pequeñas del Nether están actualmente deshabilitadas de forma predeterminada. Puedes habilitarlos en la configuración del mod.",
+  "command.betterdungeons.locate.small_nether_dungeons": "Las mazmorras pequeñas del Nether están actualmente deshabilitadas de forma predeterminada. Puedes habilitarlos en la configuración del mod.",
 
   "betterdungeons.small_dungeon.banner.zombie": "Estandarte sucio",
   "Foul Banner": "Estandarte sucio",

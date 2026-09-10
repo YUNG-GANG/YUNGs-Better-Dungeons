@@ -1,5 +1,5 @@
 {
-  "Small Nether Dungeons are currently disabled by default. You can enable them in the mod's config.": "Piccoli Dungeon Nether sono attualmente disabilitati per impostazione predefinita. Puoi abilitarli nella configurazione della mod.",
+  "command.betterdungeons.locate.small_nether_dungeons": "Piccoli Dungeon Nether sono attualmente disabilitati per impostazione predefinita. Puoi abilitarli nella configurazione della mod.",
 
   "betterdungeons.small_dungeon.banner.zombie": "Stendardo disgustoso",
   "Foul Banner": "Stendardo disgustoso",

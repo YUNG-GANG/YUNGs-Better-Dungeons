@@ -1,5 +1,5 @@
 {
-  "Small Nether Dungeons are currently disabled by デフォルト. You can enable them in the mod's config.": "小さなネザーダンジョンは現在デフォルトで無効になっています。modのコンフィグで有効にできます。",
+  "command.betterdungeons.locate.small_nether_dungeons": "小さなネザーダンジョンは現在デフォルトで無効になっています。modのコンフィグで有効にできます。",
 
   "betterdungeons.small_dungeon.banner.zombie": "ファウルの旗",
   "Foul Banner": "ファウルの旗",

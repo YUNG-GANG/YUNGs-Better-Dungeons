@@ -1,5 +1,5 @@
 {
-  "Small Nether Dungeons are currently disabled by default. You can enable them in the mod's config.": "Сокровищницы в незере по умолчанию отключены. Вы можете включить их в настройках мода.",
+  "command.betterdungeons.locate.small_nether_dungeons": "Сокровищницы в незере по умолчанию отключены. Вы можете включить их в настройках мода.",
 
   "betterdungeons.small_dungeon.banner.zombie": "Грязное знамя",
   "Foul Banner": "Грязное знамя",
