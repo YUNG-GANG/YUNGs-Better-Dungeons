@@ -2,7 +2,6 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeo
 
 import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
 import com.yungnickyoung.minecraft.yungsapi.world.structure.processor.ISafeWorldModifier;
 
@@ -19,7 +18,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -30,7 +28,7 @@ import java.util.Optional;
  */
 
 
-public class ZombieMainStairsProcessor extends StructureProcessor implements ISafeWorldModifier {
+public class ZombieMainStairsProcessor implements StructureProcessor,  ISafeWorldModifier {
     public static final ZombieMainStairsProcessor INSTANCE = new ZombieMainStairsProcessor();
     public static final MapCodec<ZombieMainStairsProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -49,36 +47,36 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
-                                                             StructureTemplate.StructureBlockInfo blockInfoGlobal,
+                                                                                                                          BlockPos blockPos,
+                                                             StructureTemplate.StructureBlockInfo blockInfo,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state().getBlock() == Blocks.WARPED_STAIRS) { // Warped stairs are the marker for the main staircase
-            BlockPos.MutableBlockPos temp = blockInfoGlobal.pos().mutable();
-            Direction facing = structurePlacementData.getRotation().rotate(blockInfoGlobal.state().getValue(StairBlock.FACING));
+        if (blockInfo.state().getBlock() == Blocks.WARPED_STAIRS) { // Warped stairs are the marker for the main staircase
+            BlockPos.MutableBlockPos temp = blockInfo.pos().mutable();
+            Direction facing = structurePlacementData.getRotation().rotate(blockInfo.state().getValue(StairBlock.FACING));
             Rotation rotation = structurePlacementData.getRotation().getRotated(Rotation.CLOCKWISE_180);
 
             // Check if the surface is close enough to warrant a staircase
             int maxLength = BetterDungeonsCommon.CONFIG.zombieDungeons.zombieDungeonMaxSurfaceStaircaseLength; // Max distance our staircase can go horizontally
 
             // The highest allowable position at the end of the staircase
-            BlockPos maxSurfacePos = blockInfoGlobal.pos().relative(facing, maxLength).relative(Direction.UP, maxLength);
+            BlockPos maxSurfacePos = blockInfo.pos().relative(facing, maxLength).relative(Direction.UP, maxLength);
 
             // Get the surface height at the end of the staircase
             temp.move(facing, maxLength);
             int surfaceHeight = levelReader.getHeight(Heightmap.Types.WORLD_SURFACE_WG, temp.getX(), temp.getZ());
 
             // Don't spawn staircase if we won't penetrate the surface
-            if (surfaceHeight >= maxSurfacePos.getY() || surfaceHeight <= blockInfoGlobal.pos().getY()) {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), null);
-                return blockInfoGlobal;
+            if (surfaceHeight >= maxSurfacePos.getY() || surfaceHeight <= blockInfo.pos().getY()) {
+                blockInfo = new StructureTemplate.StructureBlockInfo(blockInfo.pos(), Blocks.CAVE_AIR.defaultBlockState(), null);
+                return blockInfo;
             }
 
             // Begin spawning staircase
-            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos());
+            RandomSource random = structurePlacementData.getRandom(blockInfo.pos());
 
-            BlockPos.MutableBlockPos leftPos = new BlockPos(blockInfoGlobal.pos().relative(facing.getCounterClockWise())).mutable();
-            BlockPos.MutableBlockPos middlePos = new BlockPos(blockInfoGlobal.pos()).mutable();
-            BlockPos.MutableBlockPos rightPos = new BlockPos(blockInfoGlobal.pos().relative(facing.getClockWise())).mutable();
+            BlockPos.MutableBlockPos leftPos = new BlockPos(blockInfo.pos().relative(facing.getCounterClockWise())).mutable();
+            BlockPos.MutableBlockPos middlePos = new BlockPos(blockInfo.pos()).mutable();
+            BlockPos.MutableBlockPos rightPos = new BlockPos(blockInfo.pos().relative(facing.getClockWise())).mutable();
             BlockState tempBlock;
             Optional<BlockState> tempOptional;
 
@@ -292,13 +290,14 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
             this.setBlockStateRandom(levelReader, tombSelector.get(random), rightPos, structurePlacementData.getMirror(), rotation, random, .5f);
 
             // Always replace the warped stair marker with air
-            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), STAIR_SELECTOR.get(random), blockInfoGlobal.nbt());
+            blockInfo = new StructureTemplate.StructureBlockInfo(blockInfo.pos(), STAIR_SELECTOR.get(random), blockInfo.nbt());
         }
-        return blockInfoGlobal;
+        return blockInfo;
     }
 
-    protected StructureProcessorType<?> getType() {
-        return StructureProcessorTypeModule.ZOMBIE_MAIN_STAIRS_PROCESSOR;
+    @Override
+    public MapCodec<? extends StructureProcessor> codec() {
+        return CODEC;
     }
 
     private void setBlockStateSafeWithPlacement(LevelReader levelReader, BlockState blockState, BlockPos pos, Mirror mirror, Rotation rotation) {

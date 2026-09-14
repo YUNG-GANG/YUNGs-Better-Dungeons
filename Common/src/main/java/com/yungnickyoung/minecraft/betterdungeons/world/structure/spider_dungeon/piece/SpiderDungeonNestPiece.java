@@ -1,4 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.structure.spider_dungeon.piece;
+import net.minecraft.resources.Identifier;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.DyeColor;
 
 import com.yungnickyoung.minecraft.betterdungeons.BetterDungeonsCommon;
 import com.yungnickyoung.minecraft.betterdungeons.mixin.accessor.BoundingBoxAccessor;
@@ -42,7 +45,7 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
                                Z_MINRADIUS = 6, Z_MAXRADIUS = 10;
 
     private static final BlockStateRandomizer COBWEB_SELECTOR = BlockStateRandomizer.from(Blocks.COBWEB.defaultBlockState());
-    private static final BlockStateRandomizer WOOL_SELECTOR = BlockStateRandomizer.from(Blocks.WHITE_WOOL.defaultBlockState());
+    private static final BlockStateRandomizer WOOL_SELECTOR = BlockStateRandomizer.from(Blocks.WOOL.pick(DyeColor.WHITE).defaultBlockState());
 
     public SpiderDungeonNestPiece(BlockPos startPos, int pieceChainLength) {
         super(StructurePieceTypeModule.NEST, pieceChainLength, getInitialBoundingBox(startPos));
@@ -169,7 +172,7 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
                     float radialDist = radialXDist * radialXDist + radialYDist * radialYDist + radialZDist * radialZDist;
                     if (radialDist < 1.0) {
                         if (globalX == caveStartX && globalZ == caveStartZ && globalY > caveStartY) {
-                            this.placeBlock(world, Blocks.WHITE_WOOL.defaultBlockState(), globalX, globalY, globalZ, box);
+                            this.placeBlock(world, Blocks.WOOL.pick(DyeColor.WHITE).defaultBlockState(), globalX, globalY, globalZ, box);
                         } else if (!carvingMask.get(mask)) {
                             if (!BLOCK_BLACKLIST.contains(this.getBlock(world, globalX, globalY, globalZ, box).getBlock())) {
                                 this.placeBlock(world, Blocks.CAVE_AIR.defaultBlockState(), globalX, globalY, globalZ, box);
@@ -185,7 +188,7 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
                         float radialDistShell = radialXDistShell * radialXDistShell + radialYDistShell * radialYDistShell + radialZDistShell * radialZDistShell;
                         if (radialDistShell < 1.0) {
                             if (globalX == caveStartX && globalZ == caveStartZ && globalY > caveStartY) { // Guarantee wool up to ceiling
-                                this.placeBlock(world, Blocks.WHITE_WOOL.defaultBlockState(), globalX, globalY, globalZ, box);
+                                this.placeBlock(world, Blocks.WOOL.pick(DyeColor.WHITE).defaultBlockState(), globalX, globalY, globalZ, box);
                             } else if (!carvingMask.get(mask)) { // Only place cobble shell on outer rim
                                 BlockState state = this.getBlock(world, globalX, globalY, globalZ, box);
 //                                if (!BLOCK_BLACKLIST.contains(state.getBlock())) { // Ignore blacklisted blocks
@@ -212,11 +215,11 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
         this.placeSphereRandomized(world, box, (int) caveStartX, (int) caveStartY + 1, (int) caveStartZ, 2, decoRand, .5f, WOOL_SELECTOR, true);
 
         // Guarantee wool immediately around spawner
-        this.placeBlock(world, Blocks.WHITE_WOOL.defaultBlockState(), (int) caveStartX + 1, (int) caveStartY + 1, (int) caveStartZ, box);
-        this.placeBlock(world, Blocks.WHITE_WOOL.defaultBlockState(), (int) caveStartX - 1, (int) caveStartY + 1, (int) caveStartZ, box);
-        this.placeBlock(world, Blocks.WHITE_WOOL.defaultBlockState(), (int) caveStartX, (int) caveStartY + 1, (int) caveStartZ + 1, box);
-        this.placeBlock(world, Blocks.WHITE_WOOL.defaultBlockState(), (int) caveStartX, (int) caveStartY + 1, (int) caveStartZ - 1, box);
-        this.placeBlock(world, Blocks.WHITE_WOOL.defaultBlockState(), (int) caveStartX, (int) caveStartY, (int) caveStartZ, box);
+        this.placeBlock(world, Blocks.WOOL.pick(DyeColor.WHITE).defaultBlockState(), (int) caveStartX + 1, (int) caveStartY + 1, (int) caveStartZ, box);
+        this.placeBlock(world, Blocks.WOOL.pick(DyeColor.WHITE).defaultBlockState(), (int) caveStartX - 1, (int) caveStartY + 1, (int) caveStartZ, box);
+        this.placeBlock(world, Blocks.WOOL.pick(DyeColor.WHITE).defaultBlockState(), (int) caveStartX, (int) caveStartY + 1, (int) caveStartZ + 1, box);
+        this.placeBlock(world, Blocks.WOOL.pick(DyeColor.WHITE).defaultBlockState(), (int) caveStartX, (int) caveStartY + 1, (int) caveStartZ - 1, box);
+        this.placeBlock(world, Blocks.WOOL.pick(DyeColor.WHITE).defaultBlockState(), (int) caveStartX, (int) caveStartY, (int) caveStartZ, box);
 
         // Surround cocoon with more cobweb
         this.placeSphereRandomized(world, box, (int) caveStartX, (int) caveStartY + 1, (int) caveStartZ, 3, decoRand, .5f, COBWEB_SELECTOR, true);
@@ -226,7 +229,7 @@ public class SpiderDungeonNestPiece extends SpiderDungeonPiece {
         if (box.isInside(startPos)) {
             BlockEntity spawnerTileEntity = world.getBlockEntity(startPos.relative(Direction.UP));
             if (spawnerTileEntity instanceof SpawnerBlockEntity) {
-                ((SpawnerBlockEntity) spawnerTileEntity).setEntityId(EntityType.CAVE_SPIDER, randomSource);
+                ((SpawnerBlockEntity) spawnerTileEntity).setEntityId(BuiltInRegistries.ENTITY_TYPE.get(Identifier.fromNamespaceAndPath("minecraft", "cave_spider")).orElseThrow().value(), randomSource);
             } else {
                 BetterDungeonsCommon.LOGGER.warn("Expected cave spider spawner entity at {}, but found none!", startPos.relative(Direction.UP));
             }

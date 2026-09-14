@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.skeleton_dungeon;
+import net.minecraft.world.item.DyeColor;
 
 import com.mojang.serialization.MapCodec;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
 
 import net.minecraft.core.BlockPos;
@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -23,7 +22,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 
 
-public class RuinedStoneBrickProcessor extends StructureProcessor {
+public class RuinedStoneBrickProcessor implements StructureProcessor {
     public static final RuinedStoneBrickProcessor INSTANCE = new RuinedStoneBrickProcessor();
     public static final MapCodec<RuinedStoneBrickProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -38,26 +37,27 @@ public class RuinedStoneBrickProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
-                                                             StructureTemplate.StructureBlockInfo blockInfoGlobal,
+                                                                                                                          BlockPos blockPos,
+                                                             StructureTemplate.StructureBlockInfo blockInfo,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state().getBlock() == Blocks.YELLOW_STAINED_GLASS) {
-            if (levelReader.getBlockState(blockInfoGlobal.pos()).isAir()) {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), null);
+        if (blockInfo.state().getBlock() == Blocks.STAINED_GLASS.pick(DyeColor.YELLOW)) {
+            if (levelReader.getBlockState(blockInfo.pos()).isAir()) {
+                blockInfo = new StructureTemplate.StructureBlockInfo(blockInfo.pos(), Blocks.CAVE_AIR.defaultBlockState(), null);
             } else {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), STONE_BRICK_SELECTOR.get(structurePlacementData.getRandom(blockInfoGlobal.pos())), null);
+                blockInfo = new StructureTemplate.StructureBlockInfo(blockInfo.pos(), STONE_BRICK_SELECTOR.get(structurePlacementData.getRandom(blockInfo.pos())), null);
             }
-        } else if (blockInfoGlobal.state().getBlock() == Blocks.PRISMARINE_BRICK_SLAB) {
-            if (levelReader.getBlockState(blockInfoGlobal.pos()).isAir()) {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), null);
+        } else if (blockInfo.state().getBlock() == Blocks.PRISMARINE_BRICK_SLAB) {
+            if (levelReader.getBlockState(blockInfo.pos()).isAir()) {
+                blockInfo = new StructureTemplate.StructureBlockInfo(blockInfo.pos(), Blocks.CAVE_AIR.defaultBlockState(), null);
             } else {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), STONE_BRICK_SLAB_SELECTOR.get(structurePlacementData.getRandom(blockInfoGlobal.pos())), blockInfoGlobal.nbt());
+                blockInfo = new StructureTemplate.StructureBlockInfo(blockInfo.pos(), STONE_BRICK_SLAB_SELECTOR.get(structurePlacementData.getRandom(blockInfo.pos())), blockInfo.nbt());
             }
         }
-        return blockInfoGlobal;
+        return blockInfo;
     }
 
-    protected StructureProcessorType<?> getType() {
-        return StructureProcessorTypeModule.SKELETON_DUNGEON_RUINED_STONE_BRICKS_PROCESSOR;
+    @Override
+    public MapCodec<? extends StructureProcessor> codec() {
+        return CODEC;
     }
 }

@@ -1,14 +1,13 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon;
+import net.minecraft.world.item.DyeColor;
 
 import com.mojang.serialization.MapCodec;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 /**
@@ -17,7 +16,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
  */
 
 
-public class ZombieRotProcessor extends StructureProcessor {
+public class ZombieRotProcessor implements StructureProcessor {
     public static final ZombieRotProcessor INSTANCE = new ZombieRotProcessor();
     public static final MapCodec<ZombieRotProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -25,18 +24,19 @@ public class ZombieRotProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
-                                                             StructureTemplate.StructureBlockInfo blockInfoGlobal,
+                                                                                                                          BlockPos blockPos,
+                                                             StructureTemplate.StructureBlockInfo blockInfo,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state().getBlock() == Blocks.COBBLESTONE || blockInfoGlobal.state().getBlock() == Blocks.CYAN_TERRACOTTA || blockInfoGlobal.state().getBlock() == Blocks.COBBLESTONE_STAIRS) {
-            if (levelReader.getBlockState(blockInfoGlobal.pos()).isAir()) {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.CAVE_AIR.defaultBlockState(), null);
+        if (blockInfo.state().getBlock() == Blocks.COBBLESTONE || blockInfo.state().getBlock() == Blocks.DYED_TERRACOTTA.pick(DyeColor.CYAN) || blockInfo.state().getBlock() == Blocks.COBBLESTONE_STAIRS) {
+            if (levelReader.getBlockState(blockInfo.pos()).isAir()) {
+                blockInfo = new StructureTemplate.StructureBlockInfo(blockInfo.pos(), Blocks.CAVE_AIR.defaultBlockState(), null);
             }
         }
-        return blockInfoGlobal;
+        return blockInfo;
     }
 
-    protected StructureProcessorType<?> getType() {
-        return StructureProcessorTypeModule.ZOMBIE_ROT_PROCESSOR;
+    @Override
+    public MapCodec<? extends StructureProcessor> codec() {
+        return CODEC;
     }
 }

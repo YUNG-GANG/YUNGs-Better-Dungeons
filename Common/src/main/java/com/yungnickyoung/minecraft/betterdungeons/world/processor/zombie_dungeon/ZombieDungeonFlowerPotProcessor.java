@@ -1,7 +1,6 @@
 package com.yungnickyoung.minecraft.betterdungeons.world.processor.zombie_dungeon;
 
 import com.mojang.serialization.MapCodec;
-import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
 
 import net.minecraft.core.BlockPos;
@@ -10,14 +9,13 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 
 
-public class ZombieDungeonFlowerPotProcessor extends StructureProcessor {
+public class ZombieDungeonFlowerPotProcessor implements StructureProcessor {
     public static final ZombieDungeonFlowerPotProcessor INSTANCE = new ZombieDungeonFlowerPotProcessor();
     public static final MapCodec<ZombieDungeonFlowerPotProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -33,18 +31,19 @@ public class ZombieDungeonFlowerPotProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
-                                                             StructureTemplate.StructureBlockInfo blockInfoGlobal,
+                                                                                                                          BlockPos blockPos,
+                                                             StructureTemplate.StructureBlockInfo blockInfo,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state().is(Blocks.POTTED_CORNFLOWER)) {
-            RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos());
-            blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), FLOWER_SELECTOR.get(random), blockInfoGlobal.nbt());
+        if (blockInfo.state().is(Blocks.POTTED_CORNFLOWER)) {
+            RandomSource random = structurePlacementData.getRandom(blockInfo.pos());
+            blockInfo = new StructureTemplate.StructureBlockInfo(blockInfo.pos(), FLOWER_SELECTOR.get(random), blockInfo.nbt());
         }
 
-        return blockInfoGlobal;
+        return blockInfo;
     }
 
-    protected StructureProcessorType<?> getType() {
-        return StructureProcessorTypeModule.ZOMBIE_DUNGEON_FLOWER_POT_PROCESSOR;
+    @Override
+    public MapCodec<? extends StructureProcessor> codec() {
+        return CODEC;
     }
 }
