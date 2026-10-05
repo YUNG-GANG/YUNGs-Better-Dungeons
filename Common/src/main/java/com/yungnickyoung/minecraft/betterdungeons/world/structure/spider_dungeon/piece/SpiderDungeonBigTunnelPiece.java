@@ -20,7 +20,7 @@ import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
-import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.material.Fluids;
 
@@ -71,8 +71,8 @@ public class SpiderDungeonBigTunnelPiece extends SpiderDungeonPiece {
 
     private SpiderDungeonBigTunnelPiece(BlockPos startPos, int pieceChainLength) {
         super(StructurePieceTypeModule.BIG_TUNNEL, pieceChainLength, getInitialBoundingBox(startPos));
-        this.startPos = new BlockPos(startPos);
-        this.endPos = new BlockPos(startPos);
+        this.startPos = startPos.immutable();
+        this.endPos = startPos.immutable();
     }
 
     @Override
@@ -88,7 +88,7 @@ public class SpiderDungeonBigTunnelPiece extends SpiderDungeonPiece {
     }
 
     @Override
-    public void addChildren(StructurePiece structurePiece, StructurePieceAccessor structurePieceAccessor, RandomSource randomSource) {
+    public void addChildren(StructurePiece structurePiece, StructurePiecesBuilder structurePieceAccessor, RandomSource randomSource) {
         // Determine pitch
         if (this.pitch == 0)
             this.pitch = Mth.clamp(randomSource.nextFloat() * ((float) -Math.PI), -2.6f, -.6f);

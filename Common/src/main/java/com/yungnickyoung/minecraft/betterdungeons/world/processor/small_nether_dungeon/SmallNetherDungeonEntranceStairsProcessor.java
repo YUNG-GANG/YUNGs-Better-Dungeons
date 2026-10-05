@@ -12,14 +12,13 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 
 
-public class SmallNetherDungeonEntranceStairsProcessor extends StructureProcessor {
+public class SmallNetherDungeonEntranceStairsProcessor implements StructureProcessor {
     public static final SmallNetherDungeonEntranceStairsProcessor INSTANCE = new SmallNetherDungeonEntranceStairsProcessor();
     public static final MapCodec<SmallNetherDungeonEntranceStairsProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -27,7 +26,7 @@ public class SmallNetherDungeonEntranceStairsProcessor extends StructureProcesso
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             BlockPos templateRelativePos,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state().is(Blocks.BRICK_STAIRS)) {
@@ -47,7 +46,7 @@ public class SmallNetherDungeonEntranceStairsProcessor extends StructureProcesso
         return blockInfoGlobal;
     }
 
-    protected StructureProcessorType<?> getType() {
+    public MapCodec<? extends StructureProcessor> codec() {
         return StructureProcessorTypeModule.SMALL_NETHER_DUNGEON_ENTRANCE_STAIRS_PROCESSOR;
     }
 }

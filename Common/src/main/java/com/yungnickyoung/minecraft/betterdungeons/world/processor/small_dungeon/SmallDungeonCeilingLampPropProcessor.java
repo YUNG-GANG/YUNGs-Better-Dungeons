@@ -5,16 +5,16 @@ import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeM
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 
 
-public class SmallDungeonCeilingLampPropProcessor extends StructureProcessor {
+public class SmallDungeonCeilingLampPropProcessor implements StructureProcessor {
     public static final SmallDungeonCeilingLampPropProcessor INSTANCE = new SmallDungeonCeilingLampPropProcessor();
     public static final MapCodec<SmallDungeonCeilingLampPropProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -22,10 +22,10 @@ public class SmallDungeonCeilingLampPropProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             BlockPos templateRelativePos,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state().is(Blocks.CYAN_STAINED_GLASS)) {
+        if (blockInfoGlobal.state().is(Blocks.STAINED_GLASS.pick(DyeColor.CYAN))) {
             RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos());
 
             // Choose lamp prop
@@ -40,7 +40,7 @@ public class SmallDungeonCeilingLampPropProcessor extends StructureProcessor {
         return blockInfoGlobal;
     }
 
-    protected StructureProcessorType<?> getType() {
+    public MapCodec<? extends StructureProcessor> codec() {
         return StructureProcessorTypeModule.SMALL_DUNGEON_CEILING_LAMP_PROCESSOR;
     }
 }

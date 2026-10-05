@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.function.Predicate;
@@ -21,25 +20,17 @@ import java.util.function.Predicate;
  */
 
 
-public class SmallDungeonOreProcessor extends StructureProcessor {
+public class SmallDungeonOreProcessor implements StructureProcessor {
     public static final SmallDungeonOreProcessor INSTANCE = new SmallDungeonOreProcessor();
     public static final MapCodec<SmallDungeonOreProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
-    private static final Predicate<BlockState> isOre = blockState ->
-            blockState.is(BlockTags.GOLD_ORES) ||
-            blockState.is(BlockTags.IRON_ORES) ||
-            blockState.is(BlockTags.DIAMOND_ORES) ||
-            blockState.is(BlockTags.REDSTONE_ORES) ||
-            blockState.is(BlockTags.LAPIS_ORES) ||
-            blockState.is(BlockTags.COAL_ORES) ||
-            blockState.is(BlockTags.EMERALD_ORES) ||
-            blockState.is(BlockTags.COPPER_ORES);
+    private static final Predicate<BlockState> isOre = blockState -> blockState.is(BlockTags.ORES);
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             BlockPos templateRelativePos,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (isOre.test(blockInfoGlobal.state())) {
@@ -50,7 +41,7 @@ public class SmallDungeonOreProcessor extends StructureProcessor {
         return blockInfoGlobal;
     }
 
-    protected StructureProcessorType<?> getType() {
+    public MapCodec<? extends StructureProcessor> codec() {
         return StructureProcessorTypeModule.SMALL_DUNGEON_ORE_PROCESSOR;
     }
 }

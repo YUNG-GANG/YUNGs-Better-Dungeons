@@ -2,7 +2,6 @@
   "parent": "betterdungeons:root",
   "display": {
     "icon": {
-      "count": 1,
       "id": "minecraft:diamond_sword"
     },
     "title": {
@@ -21,72 +20,72 @@
     "in_better_monster_room": {
       "trigger": "minecraft:location",
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "location": {
-                "structures": "betterdungeons:small_dungeon"
-              }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:location": {
+              "structures": "betterdungeons:small_dungeon"
             }
           }
-        ]
+        }
       }
     },
     "in_better_zombie_dungeon": {
       "trigger": "minecraft:location",
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "location": {
-                "structures": "betterdungeons:zombie_dungeon"
-              }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:location": {
+              "structures": "betterdungeons:zombie_dungeon"
             }
           }
-        ]
+        }
       }
     },
     "in_better_skeleton_dungeon": {
       "trigger": "minecraft:location",
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "location": {
-                "structures": "betterdungeons:skeleton_dungeon"
-              }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:location": {
+              "structures": "betterdungeons:skeleton_dungeon"
             }
           }
-        ]
+        }
       }
     },
     "in_better_spider_dungeon": {
       "trigger": "minecraft:location",
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "location": {
-                "structures": "betterdungeons:spider_dungeon"
-              }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:location": {
+              "structures": "betterdungeons:spider_dungeon"
             }
           }
-        ]
+        }
       }
     }
   },
   "requirements": [
-    ["in_better_monster_room"],
-    ["in_better_zombie_dungeon"],
-    ["in_better_skeleton_dungeon"],
-    ["in_better_spider_dungeon"]
+    [
+      "in_better_monster_room"
+    ],
+    [
+      "in_better_zombie_dungeon"
+    ],
+    [
+      "in_better_skeleton_dungeon"
+    ],
+    [
+      "in_better_spider_dungeon"
+    ]
   ]
 }

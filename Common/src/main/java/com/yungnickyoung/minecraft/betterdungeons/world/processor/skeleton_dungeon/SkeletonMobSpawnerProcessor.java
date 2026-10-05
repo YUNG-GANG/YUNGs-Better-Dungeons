@@ -9,13 +9,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.SpawnData;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SpawnerBlock;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -27,7 +27,7 @@ import java.util.Optional;
  */
 
 
-public class SkeletonMobSpawnerProcessor extends StructureProcessor {
+public class SkeletonMobSpawnerProcessor implements StructureProcessor {
     public static final SkeletonMobSpawnerProcessor INSTANCE = new SkeletonMobSpawnerProcessor();
     public static final MapCodec<SkeletonMobSpawnerProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -35,7 +35,7 @@ public class SkeletonMobSpawnerProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             BlockPos templateRelativePos,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state().getBlock() instanceof SpawnerBlock) {
@@ -48,7 +48,7 @@ public class SkeletonMobSpawnerProcessor extends StructureProcessor {
                     .requiredPlayerRange(18)
                     .maxNearbyEntities(8)
                     .maxSpawnDelay(650)
-                    .setEntityType(EntityType.SKELETON)
+                    .setEntityType(EntityTypes.SKELETON)
                     .build();
             CompoundTag nbt = spawner.save();
             blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.SPAWNER.defaultBlockState(), nbt);
@@ -56,7 +56,7 @@ public class SkeletonMobSpawnerProcessor extends StructureProcessor {
         return blockInfoGlobal;
     }
 
-    protected StructureProcessorType<?> getType() {
+    public MapCodec<? extends StructureProcessor> codec() {
         return StructureProcessorTypeModule.SKELETON_MOB_SPAWNER_PROCESSOR;
     }
 }
