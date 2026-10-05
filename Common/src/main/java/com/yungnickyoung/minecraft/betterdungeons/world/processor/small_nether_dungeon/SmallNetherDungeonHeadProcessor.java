@@ -10,14 +10,13 @@ import net.minecraft.world.level.block.AbstractSkullBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 
 
-public class SmallNetherDungeonHeadProcessor extends StructureProcessor {
+public class SmallNetherDungeonHeadProcessor implements StructureProcessor {
     public static final SmallNetherDungeonHeadProcessor INSTANCE = new SmallNetherDungeonHeadProcessor();
     public static final MapCodec<SmallNetherDungeonHeadProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -25,7 +24,7 @@ public class SmallNetherDungeonHeadProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             BlockPos templateRelativePos,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state().getBlock() instanceof AbstractSkullBlock) {
@@ -36,7 +35,7 @@ public class SmallNetherDungeonHeadProcessor extends StructureProcessor {
         return blockInfoGlobal;
     }
 
-    protected StructureProcessorType<?> getType() {
+    public MapCodec<? extends StructureProcessor> codec() {
         return StructureProcessorTypeModule.SMALL_NETHER_DUNGEON_HEAD_PROCESSOR;
     }
 }

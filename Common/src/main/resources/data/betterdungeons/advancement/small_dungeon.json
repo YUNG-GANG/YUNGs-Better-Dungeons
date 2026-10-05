@@ -2,7 +2,6 @@
   "parent": "betterdungeons:root",
   "display": {
     "icon": {
-      "count": 1,
       "id": "minecraft:spawner"
     },
     "title": {
@@ -21,19 +20,21 @@
     "in_better_monster_room": {
       "trigger": "minecraft:location",
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "location": {
-                "structures": "betterdungeons:small_dungeon"
-              }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:location": {
+              "structures": "betterdungeons:small_dungeon"
             }
           }
-        ]
+        }
       }
     }
   },
-  "requirements": [["in_better_monster_room"]]
+  "requirements": [
+    [
+      "in_better_monster_room"
+    ]
+  ]
 }

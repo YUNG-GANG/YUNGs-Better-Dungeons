@@ -2,7 +2,6 @@
   "parent": "betterdungeons:root",
   "display": {
     "icon": {
-      "count": 1,
       "id": "minecraft:rotten_flesh"
     },
     "title": {
@@ -21,17 +20,15 @@
     "in_better_zombie_dungeon": {
       "trigger": "minecraft:location",
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "location": {
-                "structures": "betterdungeons:zombie_dungeon"
-              }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:location": {
+              "structures": "betterdungeons:zombie_dungeon"
             }
           }
-        ]
+        }
       }
     }
   },

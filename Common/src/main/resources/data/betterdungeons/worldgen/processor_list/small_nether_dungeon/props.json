@@ -7,11 +7,11 @@
       "rules": [
         {
           "output_state": {
-            "Name": "minecraft:nether_quartz_ore"
+            "id": "minecraft:nether_quartz_ore"
           },
           "input_predicate": {
             "block": "minecraft:nether_gold_ore",
-            "probability": 0.50,
+            "probability": 0.5,
             "predicate_type": "minecraft:random_block_match"
           },
           "location_predicate": {
@@ -20,11 +20,11 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:iron_chain"
+            "id": "minecraft:iron_chain"
           },
           "input_predicate": {
             "block": "minecraft:gray_stained_glass",
-            "probability": 0.50,
+            "probability": 0.5,
             "predicate_type": "minecraft:random_block_match"
           },
           "location_predicate": {
@@ -33,7 +33,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:air"
+            "id": "minecraft:air"
           },
           "input_predicate": {
             "block": "minecraft:gray_stained_glass",
@@ -45,7 +45,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:lava"
+            "id": "minecraft:lava"
           },
           "input_predicate": {
             "block": "minecraft:orange_wool",
@@ -57,7 +57,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:crying_obsidian"
+            "id": "minecraft:crying_obsidian"
           },
           "input_predicate": {
             "block": "minecraft:purple_terracotta",
@@ -70,7 +70,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:obsidian"
+            "id": "minecraft:obsidian"
           },
           "input_predicate": {
             "block": "minecraft:purple_terracotta",

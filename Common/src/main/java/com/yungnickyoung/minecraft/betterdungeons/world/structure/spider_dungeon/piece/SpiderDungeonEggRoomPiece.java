@@ -11,7 +11,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
@@ -25,7 +27,7 @@ import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
-import net.minecraft.world.level.levelgen.structure.StructurePieceAccessor;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.material.Fluids;
 
@@ -41,12 +43,12 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
                                Y_MINRADIUS = 2, Y_MAXRADIUS = 3,
                                Z_MINRADIUS = 2, Z_MAXRADIUS = 3;
 
-    private static final BlockStateRandomizer WOOL_SELECTOR = BlockStateRandomizer.from(Blocks.WHITE_WOOL.defaultBlockState());
+    private static final BlockStateRandomizer WOOL_SELECTOR = BlockStateRandomizer.from(Blocks.WOOL.pick(DyeColor.WHITE).defaultBlockState());
     private static final BlockStateRandomizer COBWEB_SELECTOR = BlockStateRandomizer.from(Blocks.COBWEB.defaultBlockState());
 
     public SpiderDungeonEggRoomPiece(BlockPos startPos, int pieceChainLength) {
         super(StructurePieceTypeModule.EGG_ROOM, pieceChainLength, getInitialBoundingBox(startPos));
-        this.startPos = new BlockPos(startPos);
+        this.startPos = startPos.immutable();
     }
 
     /**
@@ -69,7 +71,7 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
     }
 
     @Override
-    public void addChildren(StructurePiece structurePiece, StructurePieceAccessor structurePieceAccessor, RandomSource randomSource) {
+    public void addChildren(StructurePiece structurePiece, StructurePiecesBuilder structurePieceAccessor, RandomSource randomSource) {
         this.xRadius = randomSource.nextFloat() * (X_MAXRADIUS - X_MINRADIUS) + X_MINRADIUS;
         this.yRadius = randomSource.nextFloat() * (Y_MAXRADIUS - Y_MINRADIUS) + Y_MINRADIUS;
         this.zRadius = randomSource.nextFloat() * (Z_MAXRADIUS - Z_MINRADIUS) + Z_MINRADIUS;
@@ -197,12 +199,12 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
         this.placeSphereRandomized(world, box, chestPos, 2, decoRand, .5f, WOOL_SELECTOR, false);
 
         // Guarantee wool immediately around chest
-        this.placeBlock(world, Blocks.WHITE_WOOL.defaultBlockState(), chestPos.getX() + 1, chestPos.getY(), chestPos.getZ(), box);
-        this.placeBlock(world, Blocks.WHITE_WOOL.defaultBlockState(), chestPos.getX() - 1, chestPos.getY(), chestPos.getZ(), box);
-        this.placeBlock(world, Blocks.WHITE_WOOL.defaultBlockState(), chestPos.getX(), chestPos.getY(), chestPos.getZ() + 1, box);
-        this.placeBlock(world, Blocks.WHITE_WOOL.defaultBlockState(), chestPos.getX(), chestPos.getY(), chestPos.getZ() - 1, box);
-        this.placeBlock(world, Blocks.WHITE_WOOL.defaultBlockState(), chestPos.getX(), chestPos.getY() - 1, chestPos.getZ(), box);
-        this.placeBlock(world, Blocks.WHITE_WOOL.defaultBlockState(), chestPos.getX(), chestPos.getY() + 1, chestPos.getZ(), box);
+        this.placeBlock(world, Blocks.WOOL.pick(DyeColor.WHITE).defaultBlockState(), chestPos.getX() + 1, chestPos.getY(), chestPos.getZ(), box);
+        this.placeBlock(world, Blocks.WOOL.pick(DyeColor.WHITE).defaultBlockState(), chestPos.getX() - 1, chestPos.getY(), chestPos.getZ(), box);
+        this.placeBlock(world, Blocks.WOOL.pick(DyeColor.WHITE).defaultBlockState(), chestPos.getX(), chestPos.getY(), chestPos.getZ() + 1, box);
+        this.placeBlock(world, Blocks.WOOL.pick(DyeColor.WHITE).defaultBlockState(), chestPos.getX(), chestPos.getY(), chestPos.getZ() - 1, box);
+        this.placeBlock(world, Blocks.WOOL.pick(DyeColor.WHITE).defaultBlockState(), chestPos.getX(), chestPos.getY() - 1, chestPos.getZ(), box);
+        this.placeBlock(world, Blocks.WOOL.pick(DyeColor.WHITE).defaultBlockState(), chestPos.getX(), chestPos.getY() + 1, chestPos.getZ(), box);
 
         // Surround egg with more cobweb
         this.placeSphereRandomized(world, box, chestPos.getX(), chestPos.getY(), chestPos.getZ(), 2, decoRand, .4f, COBWEB_SELECTOR, true);
@@ -216,7 +218,7 @@ public class SpiderDungeonEggRoomPiece extends SpiderDungeonPiece {
                 this.placeBlock(world, Blocks.SPAWNER.defaultBlockState(), chestPos.getX(), chestPos.getY(), chestPos.getZ(), box);
                 BlockEntity spawnerBlockEntity = world.getBlockEntity(chestPos);
                 if (spawnerBlockEntity instanceof SpawnerBlockEntity) {
-                    ((SpawnerBlockEntity) spawnerBlockEntity).setEntityId(EntityType.SPIDER, randomSource);
+                    ((SpawnerBlockEntity) spawnerBlockEntity).setEntityId(EntityTypes.SPIDER, randomSource);
                 } else {
                     BetterDungeonsCommon.LOGGER.warn("Expected spider spawner entity at {}, but found none!", chestPos);
                 }

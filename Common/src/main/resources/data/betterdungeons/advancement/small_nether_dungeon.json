@@ -2,7 +2,6 @@
   "parent": "betterdungeons:root",
   "display": {
     "icon": {
-      "count": 1,
       "id": "minecraft:red_nether_bricks"
     },
     "title": {
@@ -21,17 +20,15 @@
     "in_small_nether_dungeon": {
       "trigger": "minecraft:location",
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "location": {
-                "structures": "betterdungeons:small_nether_dungeon"
-              }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:location": {
+              "structures": "betterdungeons:small_nether_dungeon"
             }
           }
-        ]
+        }
       }
     }
   },

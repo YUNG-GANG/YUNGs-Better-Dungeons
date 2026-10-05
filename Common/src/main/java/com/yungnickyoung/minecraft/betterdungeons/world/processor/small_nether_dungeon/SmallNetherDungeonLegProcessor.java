@@ -3,6 +3,7 @@ package com.yungnickyoung.minecraft.betterdungeons.world.processor.small_nether_
 import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.betterdungeons.module.StructureProcessorTypeModule;
 
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.WorldGenRegion;
@@ -12,7 +13,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 
 
-public class SmallNetherDungeonLegProcessor extends StructureProcessor {
+public class SmallNetherDungeonLegProcessor implements StructureProcessor {
     public static final SmallNetherDungeonLegProcessor INSTANCE = new SmallNetherDungeonLegProcessor();
     public static final MapCodec<SmallNetherDungeonLegProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -31,10 +31,10 @@ public class SmallNetherDungeonLegProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             BlockPos templateRelativePos,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state().getBlock() == Blocks.ORANGE_TERRACOTTA) {
+        if (blockInfoGlobal.state().getBlock() == Blocks.DYED_TERRACOTTA.pick(DyeColor.ORANGE)) {
             if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(ChunkPos.containing(blockInfoGlobal.pos()))) {
                 return blockInfoGlobal;
             }
@@ -55,7 +55,7 @@ public class SmallNetherDungeonLegProcessor extends StructureProcessor {
         return blockInfoGlobal;
     }
 
-    protected StructureProcessorType<?> getType() {
+    public MapCodec<? extends StructureProcessor> codec() {
         return StructureProcessorTypeModule.SMALL_NETHER_DUNGEON_LEG_PROCESSOR;
     }
 }

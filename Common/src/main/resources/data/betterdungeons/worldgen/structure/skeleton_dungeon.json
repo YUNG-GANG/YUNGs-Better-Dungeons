@@ -24,8 +24,11 @@
         {
           "type": "minecraft:skeleton",
           "weight": 100,
-          "minCount": 4,
-          "maxCount": 15
+          "count": {
+            "type": "minecraft:uniform",
+            "min_inclusive": 4,
+            "max_inclusive": 15
+          }
         }
       ]
     }

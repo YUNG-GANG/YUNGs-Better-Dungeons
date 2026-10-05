@@ -2,7 +2,6 @@
   "parent": "betterdungeons:root",
   "display": {
     "icon": {
-      "count": 1,
       "id": "minecraft:skeleton_skull"
     },
     "title": {
@@ -21,17 +20,15 @@
     "in_better_skeleton_dungeon": {
       "trigger": "minecraft:location",
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "location": {
-                "structures": "betterdungeons:skeleton_dungeon"
-              }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:location": {
+              "structures": "betterdungeons:skeleton_dungeon"
             }
           }
-        ]
+        }
       }
     }
   },

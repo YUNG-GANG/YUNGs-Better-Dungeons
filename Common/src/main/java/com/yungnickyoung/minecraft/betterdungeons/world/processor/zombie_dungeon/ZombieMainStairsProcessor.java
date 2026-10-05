@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -30,7 +29,7 @@ import java.util.Optional;
  */
 
 
-public class ZombieMainStairsProcessor extends StructureProcessor implements ISafeWorldModifier {
+public class ZombieMainStairsProcessor implements StructureProcessor, ISafeWorldModifier {
     public static final ZombieMainStairsProcessor INSTANCE = new ZombieMainStairsProcessor();
     public static final MapCodec<ZombieMainStairsProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
@@ -49,7 +48,7 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,
                                                              BlockPos jigsawPiecePos,
                                                              BlockPos jigsawPieceBottomCenterPos,
-                                                             StructureTemplate.StructureBlockInfo blockInfoLocal,
+                                                             BlockPos templateRelativePos,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state().getBlock() == Blocks.WARPED_STAIRS) { // Warped stairs are the marker for the main staircase
@@ -76,9 +75,9 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
             // Begin spawning staircase
             RandomSource random = structurePlacementData.getRandom(blockInfoGlobal.pos());
 
-            BlockPos.MutableBlockPos leftPos = new BlockPos(blockInfoGlobal.pos().relative(facing.getCounterClockWise())).mutable();
-            BlockPos.MutableBlockPos middlePos = new BlockPos(blockInfoGlobal.pos()).mutable();
-            BlockPos.MutableBlockPos rightPos = new BlockPos(blockInfoGlobal.pos().relative(facing.getClockWise())).mutable();
+            BlockPos.MutableBlockPos leftPos = blockInfoGlobal.pos().relative(facing.getCounterClockWise()).mutable();
+            BlockPos.MutableBlockPos middlePos = blockInfoGlobal.pos().mutable();
+            BlockPos.MutableBlockPos rightPos = blockInfoGlobal.pos().relative(facing.getClockWise()).mutable();
             BlockState tempBlock;
             Optional<BlockState> tempOptional;
 
@@ -297,7 +296,7 @@ public class ZombieMainStairsProcessor extends StructureProcessor implements ISa
         return blockInfoGlobal;
     }
 
-    protected StructureProcessorType<?> getType() {
+    public MapCodec<? extends StructureProcessor> codec() {
         return StructureProcessorTypeModule.ZOMBIE_MAIN_STAIRS_PROCESSOR;
     }
 
